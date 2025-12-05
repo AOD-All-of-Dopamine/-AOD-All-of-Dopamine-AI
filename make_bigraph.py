@@ -2,9 +2,14 @@
 
 import os
 import re
+import json
 import pandas as pd
-from typing import Optional, List
+from typing import Optional, List, Dict
 
+# API 모드 사용 여부 (True: JSON POST 데이터 사용, False: CSV 파일 사용)
+USE_API_MODE = False
+
+# CSV 파일 경로 (로컬 테스트용)
 BASE = r"csv 데이터\clean"
 PATH_CONTENTS = os.path.join(BASE, "contents.csv")
 PATH_AV       = os.path.join(BASE, "av_contents.csv")
@@ -18,11 +23,56 @@ OUT_RAWGEN    = os.path.join(BASE, "content_raw_genres.csv")       # (최종) co
 OUT_META      = os.path.join(BASE, "meta_nodes.csv")               # 메타노드 목록
 OUT_EDGES_BI  = os.path.join(BASE, "graph_edges_bipartite.csv")    # 콘텐츠→메타 엣지
 
+# API 데이터 저장소 (POST로 받은 JSON을 저장)
+_api_data = {
+    "contents": None,
+    "av": None,
+    "game": None,
+    "webnovel": None,
+    "raw_item": None
+}
+
 # 엣지 가중치(필요 시 조정)
 DOMAIN_EDGE_WEIGHT = 1.0
 GENRE_EDGE_WEIGHT  = 1.0
 
 ENCODINGS = ["utf-8-sig","utf-8","cp949","euc-kr","latin1"]
+
+def load_json_to_df(json_data: Dict) -> pd.DataFrame:
+    """
+    JSON 데이터를 DataFrame으로 변환
+    Args:
+        json_data: List[Dict] 또는 Dict 형태의 JSON 데이터
+    Returns:
+        pd.DataFrame
+    """
+    if json_data is None:
+        return None
+    try:
+        # JSON이 리스트면 직접 DataFrame 생성, Dict면 리스트로 감싸기
+        if isinstance(json_data, list):
+            return pd.DataFrame(json_data)
+        elif isinstance(json_data, dict):
+            return pd.DataFrame([json_data])
+        else:
+            return None
+    except Exception as e:
+        print(f"⚠️ JSON→DataFrame 변환 실패: {e}")
+        return None
+
+def set_api_data(contents_json=None, av_json=None, game_json=None, 
+                 webnovel_json=None, raw_item_json=None):
+    """
+    API POST로 받은 JSON 데이터를 전역 저장소에 저장
+    각 인자는 List[Dict] 형태여야 함
+    """
+    global _api_data
+    _api_data["contents"] = load_json_to_df(contents_json)
+    _api_data["av"] = load_json_to_df(av_json)
+    _api_data["game"] = load_json_to_df(game_json)
+    _api_data["webnovel"] = load_json_to_df(webnovel_json)
+    _api_data["raw_item"] = load_json_to_df(raw_item_json)
+
 def read_csv_retry(path, **kwargs):
     last = None
     for enc in ENCODINGS:
@@ -32,7 +82,20 @@ def read_csv_retry(path, **kwargs):
             last = e
     raise last
 
-def safe_read(path):
+def safe_read(path, data_type=None):
+    """
+    데이터 읽기 (API 모드 또는 CSV 모드)
+    Args:
+        path: CSV 파일 경로
+        data_type: API 모드에서 사용할 데이터 타입 ('contents', 'av', 'game', 'webnovel', 'raw_item')
+    """
+    if USE_API_MODE and data_type:
+        df = _api_data.get(data_type)
+        if df is not None:
+            return df.copy() if not df.empty else None
+        return None
+    
+    # CSV 모드
     if not os.path.exists(path):
         print(f"⚠️ 없음: {path}")
         return None
@@ -74,15 +137,15 @@ def parse_genres(genres_str: str) -> List[str]:
 
 # 1) 콘텐츠 노드 생성(그대로 유지)
 def build_nodes():
-    contents = safe_read(PATH_CONTENTS)
+    contents = safe_read(PATH_CONTENTS, data_type="contents")
     if contents is None or contents.empty:
         raise RuntimeError("❌ contents.csv 비어있음/로드 실패")
     if "content_id" not in contents.columns or "domain" not in contents.columns:
         raise RuntimeError("❌ contents.csv에 content_id/domain 컬럼 필요")
 
-    av   = add_prefix_except_key(safe_read(PATH_AV), "av_")
-    game = add_prefix_except_key(safe_read(PATH_GAME), "game_")
-    web  = add_prefix_except_key(safe_read(PATH_WEBNOVEL), "webnovel_")
+    av   = add_prefix_except_key(safe_read(PATH_AV, data_type="av"), "av_")
+    game = add_prefix_except_key(safe_read(PATH_GAME, data_type="game"), "game_")
+    web  = add_prefix_except_key(safe_read(PATH_WEBNOVEL, data_type="webnovel"), "webnovel_")
 
     def typed_left_merge(left, right, key="content_id"):
         if right is None or right.empty:
@@ -125,7 +188,7 @@ def build_raw_genres(nodes):
     rows = []
 
     # ----- AV: TMDB 장르 (genres.tmdb_genres.N.name) -----
-    av = safe_read(PATH_AV)
+    av = safe_read(PATH_AV, data_type="av")
     if av is not None and not av.empty:
         av = av.copy()
         av.columns = [c.strip() for c in av.columns]
@@ -138,7 +201,7 @@ def build_raw_genres(nodes):
             rows.append(tmp[["content_id","source","raw_genre"]])
 
     # ----- GAME: Steam 장르 (genres_str: "A;B;C") -----
-    game = safe_read(PATH_GAME)
+    game = safe_read(PATH_GAME, data_type="game")
     if game is not None and not game.empty:
         game = game.copy()
         game.columns = [c.strip() for c in game.columns]
@@ -152,7 +215,7 @@ def build_raw_genres(nodes):
             rows.append(g2[["content_id","source","raw_genre"]])
 
     # ----- WEBNOVEL: 장르 컬럼이 있다면 분해 (예: 'genres'가 "판타지;로맨스") -----
-    web = safe_read(PATH_WEBNOVEL)
+    web = safe_read(PATH_WEBNOVEL, data_type="webnovel")
     if web is not None and not web.empty:
         web = web.copy()
         web.columns = [c.strip() for c in web.columns]
@@ -182,7 +245,7 @@ def build_raw_genres(nodes):
         cg = pd.DataFrame(columns=["content_id","source","raw_genre"])
 
     # ----- 2-2) raw_item.csv 의 genres_str 를 이용해 raw_genre_1~3 생성 -----
-    ri = safe_read(PATH_RAW_ITEM)
+    ri = safe_read(PATH_RAW_ITEM, data_type="raw_item")
     if ri is not None and not ri.empty:
         ri = ri.copy()
         ri.columns = [c.strip() for c in ri.columns]

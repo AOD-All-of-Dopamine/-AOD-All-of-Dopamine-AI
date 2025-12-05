@@ -1,0 +1,10 @@
+fastapi
+uvicorn[standard]
+nbformat
+pandas
+numpy
+networkx
+flask
+flask-cors
+flasgger
+requests
