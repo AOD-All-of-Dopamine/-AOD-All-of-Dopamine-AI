@@ -2,6 +2,7 @@
 
 - 작성일: 2026-06-28
 - 상태: 승인 대기 (브레인스토밍 산출물)
+- 개정: **2026-07-02** — 서빙을 기존 백엔드 API로 흡수(별도 FastAPI 제거), 벡터 ANN을 pgvector DB내 HNSW로, 배치 오케스트레이션을 Airflow로 확정. Vane=Perplexica 리브랜딩(별도 도커) 명시. → §1·§2·§5·§9·§10·§11 반영
 - 원본 기획: `aod_reccomendation.md` (fun_tag 기반 cross-domain 추천)
 - 범위: 기획서를 **현재 당장 서비스 가능한 형태**로 구현하기 위한 첫 슬라이스 설계
 
@@ -20,10 +21,12 @@
 | 항목 | 결정 | 근거 |
 |---|---|---|
 | 첫 슬라이스 범위 | **fun_tag 풀 파이프라인** (기획대로) | 핵심 가설(fun_tag)을 바로 검증 |
-| 모델 호스팅 | **하이브리드** — 배치는 관리형 API(Qwen LLM + Qwen Embedding), 서빙은 CPU Python 서비스 | 무거운 모델은 전부 오프라인 배치에서만 쓰임. 서빙은 모델 호출 0 |
-| 리뷰 수집(Vane) | Perplexica 자가호스팅을 **리뷰 retrieval 레이어**로 사용 | `sources[]` 원본 스니펫을 evidence로 확보 |
+| 모델 호스팅 | **하이브리드** — 배치는 관리형 API(Qwen LLM + Qwen Embedding), 서빙은 모델 호출 0 | 무거운 모델은 전부 오프라인 배치에서만 쓰임 |
+| **서빙 위치** | **기존 백엔드 API 서버(Spring, :8080)에 흡수** — 별도 FastAPI 서비스 없음 | 서빙은 `aod_ai` 완제품 조회 + pgvector ANN + 자바 스코어링뿐 → 새 상시 서비스 불필요 |
+| 리뷰 수집(Vane) | **Perplexica가 리브랜딩한 Vane**(2026-03) 자가호스팅을 리뷰 retrieval로 사용 — **별도 Docker 컨테이너** | `sources[]` 원본 스니펫을 evidence로 확보. SearXNG는 Vane 이미지에 내장 |
 | 데이터 접근 | **같은 RDS, 단 스키마+권한으로 격리** — `aod_ai` 스키마(읽기쓰기) + `public` 읽기전용 role | 두번째 DB 없이 스키마/마이그레이션 충돌 회피 |
-| 벡터 저장소 | **pgvector** (`aod_ai`) + 서빙은 **인프로세스 ANN** | 수만 건 규모엔 충분, 인덱스 파일 lifecycle 제거 |
+| 벡터 저장소 / ANN | **pgvector** (`aod_ai`) + 서빙은 **DB내 HNSW 조회**(`<=>` 연산자) | 수만 건 규모엔 충분. 인프로세스 ANN·벡터 램적재·별도 서빙 프로세스 제거 |
+| 오케스트레이션 | **Airflow** (도커, 홈서버 또는 배치 전용 박스) — 배치 ①~⑥을 DAG로 단계별 실행 | 재시도·백필·스케줄·진행 UI. 단 **M1까진 스크립트, M2부터 도입** |
 | fun_tag 사전 | **하이브리드** — 시드 30~60개 + Qwen 제안 → 검수 후 확장 | 매칭 일관성과 확장성의 균형 |
 
 ### 1.1 핵심 통찰 — 무거운 모델은 배치에서만
@@ -34,25 +37,25 @@
 | profile_text 임베딩 | Qwen Embedding | 배치 | 콘텐츠당 1회 |
 | **추천 서빙** | **모델 호출 없음** | 요청 시 | 매 요청 |
 
-서빙 경로는 인프로세스 ANN 검색 + 점수 산술뿐이라 **GPU가 전혀 필요 없다.** 유저 프로파일 벡터도 미리 만들어둔 콘텐츠 임베딩의 가중평균이라 요청 때 모델을 부르지 않는다.
+서빙 경로는 **pgvector DB내 HNSW 조회 + 점수 산술뿐**이라 GPU도, 별도 서빙 프로세스도 필요 없다 — 기존 백엔드 API가 그대로 수행한다. 유저 프로파일 벡터도 미리 만들어둔 콘텐츠 임베딩의 가중평균이라 요청 때 모델을 부르지 않는다.
 
 ---
 
 ## 2. 시스템 아키텍처
 
-3개 구성요소 + 관리형 API + 공유 RDS.
+배치 구성요소(홈서버) + 관리형 API + 공유 RDS + 서빙(기존 백엔드 API).
 
 ```
                     ┌─────────────── 관리형 API (DashScope 등) ───────────────┐
                     │           Qwen LLM  ·  Qwen Embedding                    │
                     └────────▲──────────────────▲─────────────────▲───────────┘
                              │                  │                 │
-[배치/오프라인]              │                  │                 │
+[배치/오프라인 — 홈서버]     │                  │                 │
   ┌──────────┐   ┌───────────┴───┐   ┌──────────┴────┐   ┌────────┴────────┐
-  │ Vane +   │──▶│ ReviewCollect │──▶│ Qwen Extract  │──▶│ Embed + Quality │
-  │ SearXNG  │   │ (sources[])   │   │ (fun_tags..)  │   │ Score           │
+  │  Vane    │──▶│ ReviewCollect │──▶│ Qwen Extract  │──▶│ Embed + Quality │
+  │(별도도커)│   │ (sources[])   │   │ (fun_tags..)  │   │ Score           │
   └──────────┘   └───────────────┘   └───────────────┘   └────────┬────────┘
-   (배치박스 docker)                                               │ upsert
+   ▲ SearXNG 내장    └──── Airflow가 ①~⑥ DAG로 오케스트레이션 ────┘ │ upsert
                                                                    ▼
                               ┌──────────────── RDS PostgreSQL ─────────────┐
    공유 읽기(read-only) ◀─────│ public: contents, *_contents, platform_data,│
@@ -64,12 +67,13 @@
                               │         user_profile_cache,                 │
                               │         rec_impression, rec_event           │
                               └───────────────▲─────────────────────────────┘
-[온라인/서빙]                                  │ read assets + write logs
+[온라인/서빙 — 기존 백엔드]                    │ read assets + write logs
   ┌─────────────────────────────────────────┐ │
-  │ AI Serving API (FastAPI, CPU)            │─┘
-  │  candidate gen(인프로세스 ANN+fun_tag SQL)│◀──── 프론트(home-page / work-detail)
-  │  → feature → ranking(home/related)       │       또는 백엔드 프록시
+  │ 백엔드 API 서버 (Spring, :8080)          │─┘
+  │  candidate gen(pgvector HNSW+fun_tag SQL)│◀──── 프론트(home-page / work-detail)
+  │  → feature → ranking(home/related)       │
   │  → post-processing → Top-N + 로깅        │
+  │  ※ 홈 Top-N 캐싱(t3.small 부하 대비)     │
   └─────────────────────────────────────────┘
 ```
 
@@ -77,18 +81,20 @@
 
 | 구성요소 | 기술 | 역할 |
 |---|---|---|
-| **배치 워커** | Python | Vane 호출→Qwen 추출→임베딩→품질점수→`aod_ai` upsert. 신규/변경 콘텐츠 또는 주기 실행 |
-| **서빙 API** | FastAPI (CPU only) | 요청 시 후보생성→스코어링→랭킹→후처리→Top-N. 모델 호출 없음 |
-| **Vane + SearXNG** | Docker (Next.js + SearXNG) | 배치에서만 쓰는 리뷰 retrieval. 내부 LLM/임베딩은 관리형 API에 연결 |
+| **배치 워커** | Python (홈서버) | Vane 호출→Qwen 추출→임베딩→품질점수→`aod_ai` upsert. 신규/변경 콘텐츠 또는 주기 실행 |
+| **오케스트레이터** | Airflow (도커) | 배치 ①~⑥을 DAG로 스케줄·재시도·백필. **M2부터 도입**(M1까진 스크립트) |
+| **Vane** | Docker 단일 컨테이너 (Next.js+Node+**SearXNG 내장**, ~3.6GB) | 배치에서만 쓰는 리뷰 retrieval. HTTP `POST /api/search`로 호출. 내부 LLM/임베딩은 관리형 API에 연결 |
+| **서빙** | 기존 백엔드 API 서버 (Spring, :8080) | 요청 시 `aod_ai` 조회 + pgvector ANN → 스코어링→랭킹→후처리→Top-N. **모델 호출·별도 서비스 없음** |
 
-배치 워커와 서빙은 **한 코드베이스, 두 실행모드**로 둔다(공유 모델/스키마/스코어링 로직 재사용).
+배치(Python·홈서버)와 서빙(자바·기존 API)은 분리된다. 서빙이 스코어링 대부분을 요청 시 수행하므로 배치와 공유할 로직은 거의 없다(배치는 asset 생산만 담당). Vane·Airflow는 서로, 그리고 서빙과도 **별개 컨테이너/프로세스**다 — Airflow가 있어도 Vane은 여전히 독립 컨테이너로 띄워 HTTP로 부린다.
 
 ### 2.2 데이터 접근 원칙
 
-> **읽기는 공유, 쓰기는 스키마 격리, 서빙은 인프로세스 ANN으로 DB 부하 최소화.**
+> **읽기는 공유, 쓰기는 스키마 격리, 서빙은 기존 API 서버가 pgvector DB내 HNSW로 직접 조회.**
 
 - AI 자산(임베딩·프로파일·점수·로그)은 **전부 `aod_ai` 스키마에만** 기록 → 백엔드 `public`/Flyway와 충돌 0.
-- AI 계정: `public`에 **읽기전용 role**, `aod_ai`에 읽기쓰기 → 백엔드 테이블 실수로 못 건드림.
+- 배치 AI 계정: `public`에 **읽기전용 role**, `aod_ai`에 읽기쓰기 → 백엔드 테이블 실수로 못 건드림.
+- **백엔드 API 계정**: 서빙이 API 서버에 있으므로 `aod_ai` **읽기** + `rec_impression`/`rec_event` **쓰기** 권한 부여(추천 조회·로깅용).
 - pgvector는 **`aod_ai`에만** 설치.
 - 배치 읽기는 **off-peak·throttle** (AOD는 크롤/변환을 새벽에 돌리므로 그 시간대 활용).
 - 유저 상호작용(bookmarks·content_likes·reviews)은 **복제하지 않고** `public`에서 읽어 `user_profile_cache`만 갱신.
@@ -150,6 +156,8 @@ Qwen이 사전에 없는 태그를 제안하면 `fun_tag_dict(status=proposed)`�
 
 ## 5. 서빙 파이프라인 (온라인, 모델호출 0)
 
+> **실행 위치: 기존 백엔드 API 서버(Spring, :8080).** 별도 FastAPI 없음. 후보의 벡터 검색은 **pgvector DB내 HNSW 인덱스**(`ORDER BY embedding <=> :vec LIMIT k`), 나머지는 SQL + 자바 산술. t3.small 부하 대비 **홈 Top-N은 캐싱**(프로파일 변경 시/야간 갱신), related는 실시간 계산 + 페이지네이션.
+
 요청: `{user_id, location: home|related, selected_content_id?}`
 
 ```
@@ -160,9 +168,9 @@ Qwen이 사전에 없는 태그를 제안하면 `fun_tag_dict(status=proposed)`�
 
 | 소스 | home | related | 방식 | 후보수 |
 |---|---|---|---|---|
-| user profile vector ANN | ✓ | ✓ | 인프로세스 ANN | ~300 |
+| user profile vector ANN | ✓ | ✓ | pgvector HNSW 조회(`<=>`) | ~300 |
 | user fun_tag match | ✓ | ✓ | `content_fun_tag` SQL, 유저 top태그 | ~300 |
-| selected content ANN | | ✓ | 클릭 콘텐츠 유사 | ~300 |
+| selected content ANN | | ✓ | pgvector HNSW, 클릭 콘텐츠 벡터 | ~300 |
 | selected fun_tag match | | ✓ | 클릭 콘텐츠 태그 매칭 | ~300 |
 | quality/popularity | ✓ | ✓ | fallback | ~100 |
 | metadata similarity | ✓ | ✓ | 장르·creator·platform | ~100 |
@@ -264,9 +272,9 @@ candidate pool 500~1000 → ranking Top 100 → post-processing Top 50 → 초�
 
 | | 내용 | 체크포인트 |
 |---|---|---|
-| **M0** | Python 서비스 골격(batch/serve 2모드), `aod_ai` 마이그레이션 + 읽기전용 role, 시크릿/관리형API 설정, Vane+SearXNG 도커, **시드 fun_tag 사전(30~60) 작성** | 인프라 기동 |
-| **M1** | 샘플(웹소설 100~200건) Content Intelligence 풀가동 | **fun_tag 품질 눈검수 ← 핵심 가설 검증(가장 싸게)** |
-| **M2** | 홈 서빙(후보→피처→랭킹→기본 후처리), 테스트 유저 프로파일 | 추천결과 오프라인 검수 |
+| **M0** | Python 배치 골격(스크립트), `aod_ai` 마이그레이션 + **pgvector** + 읽기전용 role, 시크릿/관리형API 설정, **Vane 도커**, **시드 fun_tag 사전(30~60) 작성** | 인프라 기동 |
+| **M1** | 샘플(웹소설 100~200건) Content Intelligence 풀가동 (**Airflow 없이 스크립트로**) | **fun_tag 품질 눈검수 ← 핵심 가설 검증(가장 싸게)** |
+| **M2** | 홈 서빙을 **백엔드 API에 구현**(후보→피처→랭킹→기본 후처리) + **Airflow 도입**(배치 DAG화), 테스트 유저 프로파일 | 추천결과 오프라인 검수 |
 | **M3** | 유저 프로파일 구축 + 콜드스타트 + 상세(related) 추천 | |
 | **M4** | 로깅 + 오프라인 평가, 프론트(home·work-detail) 연동 | 엔드투엔드 |
 | **M5** | 전체 카탈로그 배치 확장 + 로그 기반 weight 튜닝 | 운영 |
@@ -277,13 +285,15 @@ candidate pool 500~1000 → ranking Top 100 → post-processing Top 50 → 초�
 
 | # | 이슈 | 영향 | 비고 |
 |---|---|---|---|
-| 1 | RDS PostgreSQL **버전 15+** 및 pgvector 설치 가능 여부 | 벡터 저장소 전체 | 매니지드 정책 확인 |
-| 2 | Vane+SearXNG **배치 박스 호스팅 위치/비용** | 리뷰수집 인프라 | 별도 박스 또는 배치 때만 기동 |
+| 1 | RDS PostgreSQL **버전 15+** 및 pgvector 설치 가능 여부 | **벡터 저장소 + 서빙 전체**(API 서버 ANN이 DB pgvector에 의존) | 매니지드 정책 확인 — 불가 시 서빙 ANN 방식 재설계 |
+| 2 | **Airflow·Vane 호스팅 위치**(홈서버 vs 배치 전용 EC2) | 배치 인프라 | 홈서버면 Vane 상시 or 배치 때만 기동 + **RDS 접근(SG/SSH터널/VPN) 필요**. EC2면 비용 |
 | 3 | 관리형 API **제공자 확정(DashScope 등)·단가·rate limit** | 배치 비용·속도 | M0 전 |
-| 4 | **임베딩 차원**(8B는 ~3.5~4k dim) | pgvector 인덱스·메모리·인프로세스 ANN | 차원 클수록 메모리↑ — 필요시 경량 임베딩 검토 |
+| 4 | **임베딩 차원**(8B는 ~3.5~4k dim) | pgvector HNSW 인덱스·메모리 | 차원 클수록 DB 인덱스↑ — 필요시 경량 임베딩 검토 |
 | 5 | **age_rating 데이터** 백엔드 Content 보유 여부 | hard filter | 없으면 해당 필터 보류 |
 | 6 | 시드 fun_tag 사전 **초기 30~60개 확정 주체** | 추출 품질 | M0 산출물 |
 | 7 | 프론트가 추천 행동에 **request_id 전달** 가능 여부 | 로그 출처 귀속 | M4 프론트 연동 |
+| 8 | **API 서버(t3.small) 추천 서빙 부하** | 홈 추천 응답 지연·기존 API 트래픽 경합 | 홈 Top-N 캐싱(프로파일 변경/야간 갱신), related 페이지네이션. 부하 시 서빙 분리 재검토 |
+| 9 | **Vane(리브랜딩) `/api/search` 응답 스키마** 검증 | evidence 수집(§4.1의 `sources[].content` 의존) | 배포할 Vane 버전에서 실제 응답 형태 확인 |
 
 ---
 
@@ -293,3 +303,5 @@ candidate pool 500~1000 → ranking Top 100 → post-processing Top 50 → 초�
 - 실시간 임베딩/온라인 학습
 - CDC/논리복제 기반 완전 DB 분리 — 규모 커지면 검토
 - A/B 테스트 인프라
+- **인프로세스 ANN / 독립 FastAPI 서빙 서비스** — 서빙을 백엔드 API로 흡수하고 ANN은 pgvector DB내 HNSW로 대체(2026-07-02 결정). DB ANN 부하가 병목이 되면 재도입 검토.
+- **AI 배치 워커의 자바(크롤러) 통합** — 모델이 원격 API라 기술적으론 가능하나, `aod_ai` 격리·파이썬 벡터 생태계·Airflow 채택과 상충하여 채택하지 않음(경로 비교 결과 파이썬·분리로 확정).
