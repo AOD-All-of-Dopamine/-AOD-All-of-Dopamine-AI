@@ -1,0 +1,8 @@
+# SearXNG JSON 출력 활성화 — spec §4.1: search.formats 에 json 포함.
+use_default_settings: true
+server:
+  secret_key: "change-me-please"   # 운영에선 강한 랜덤값으로 교체
+search:
+  formats:
+    - html
+    - json

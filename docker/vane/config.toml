@@ -1,0 +1,12 @@
+# Vane(Perplexica) 관리형 API 연결 초안. 아래 키 구조는 §10 #9에서
+# 고정한 VANE_REF 버전의 sample.config.toml 과 대조해 확정할 것.
+[GENERAL]
+SIMILARITY_MEASURE = "cosine"
+
+[MODELS.CUSTOM_OPENAI]
+API_KEY = "sk-REPLACE"          # = .env OPENAI_API_KEY
+API_URL = "https://REPLACE/v1"  # = .env OPENAI_BASE_URL
+MODEL_NAME = "qwen-plus"        # = .env LLM_MODEL
+
+[API_ENDPOINTS]
+SEARXNG = "http://searxng:8080"
