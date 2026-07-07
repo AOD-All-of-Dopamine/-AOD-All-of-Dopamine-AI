@@ -1,6 +1,5 @@
-import hashlib
-
 from aod_ai.models import SelectedTarget
+from aod_ai.models import content_hash as _content_hash
 
 _CANDIDATE_SQL = """
 SELECT c.content_id, c.domain, c.master_title, c.original_title,
@@ -14,8 +13,8 @@ _EXISTING_SQL = "SELECT content_id, content_hash FROM aod_ai.content_semantic_pr
 
 
 def compute_content_hash(master_title, original_title, synopsis, genres):
-    payload = f"{master_title}|{original_title}|{synopsis}|{sorted(genres)}"
-    return hashlib.sha256(payload.encode("utf-8")).hexdigest()
+    # §3.1 공식의 단일 구현은 models.content_hash — 중복 구현 금지 (리뷰 F#5)
+    return _content_hash(master_title, original_title, synopsis, genres)
 
 
 def select_targets(conn, domain: str, limit: int) -> list[SelectedTarget]:

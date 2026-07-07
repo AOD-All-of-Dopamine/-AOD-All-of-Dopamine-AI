@@ -16,16 +16,24 @@ WHERE c.content_id = %s
 _GLOBAL_SQL = """
 SELECT AVG(average_score), MAX(review_count)
 FROM public.contents
-WHERE average_score IS NOT NULL
+WHERE average_score IS NOT NULL AND domain = %s
 """
 
 
-def compute_quality(conn, target) -> QualityScore:
+def compute_global_stats(conn, domain: str) -> tuple:
+    """도메인 스코프 전역 통계 (C, max_reviews). 배치당 1회 계산해 재사용."""
+    with conn.cursor() as cur:
+        cur.execute(_GLOBAL_SQL, (domain,))
+        return cur.fetchone()
+
+
+def compute_quality(conn, target, global_stats: tuple | None = None) -> QualityScore:
     with conn.cursor() as cur:
         cur.execute(_TARGET_SQL, (target.content_id,))
         avg_score, review_count, release_date, best_rank = cur.fetchone()
-        cur.execute(_GLOBAL_SQL)
-        global_avg, max_reviews = cur.fetchone()
+    if global_stats is None:
+        global_stats = compute_global_stats(conn, target.domain)
+    global_avg, max_reviews = global_stats
 
     C = float(global_avg or 0.0)
     R = float(avg_score) if avg_score is not None else C
@@ -39,7 +47,7 @@ def compute_quality(conn, target) -> QualityScore:
     review_count_score = math.log1p(v) / math.log1p(max_reviews) if max_reviews > 0 else 0.0
 
     if release_date is not None:
-        days = (date.today() - release_date).days
+        days = max(0, (date.today() - release_date).days)  # 미래 출시일 클램프
         recency = 0.5 ** (days / RECENCY_HALFLIFE_DAYS)
     else:
         recency = 0.0
