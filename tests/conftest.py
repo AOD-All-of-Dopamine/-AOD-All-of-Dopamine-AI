@@ -180,6 +180,21 @@ def fake_llm():
     return lambda extraction: _FakeLlm(extraction)
 
 
+class _FakeEmb:
+    def __init__(self, vector):
+        self.vector = vector
+        self.texts = []
+
+    def embed_text(self, text):
+        self.texts.append(text)
+        return list(self.vector)
+
+
+@pytest.fixture()
+def fake_emb():
+    return lambda vector: _FakeEmb(vector)
+
+
 @pytest.fixture()
 def db(_schema, m1_dsn):
     conn = psycopg.connect(m1_dsn, autocommit=True)
