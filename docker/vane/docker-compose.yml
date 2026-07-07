@@ -1,29 +1,18 @@
 services:
-  searxng:
-    image: docker.io/searxng/searxng:latest   # 운영 시 dated 릴리스 태그로 고정
-    container_name: aod-searxng
-    volumes:
-      - ./searxng:/etc/searxng:rw
-    environment:
-      SEARXNG_BASE_URL: "http://localhost:8080/"
-    restart: unless-stopped
-
   vane:
-    # Vane = Perplexica 자가호스팅. 조작된 이미지 태그 대신 상류를 '고정 ref'로 빌드한다.
-    # VANE_REF = §10 #9에서 /api/search 응답 스키마를 실제 검증한 커밋/태그.
+    # Vane(구 Perplexica) v1.12.x: SearXNG 내장 단일 이미지.
+    # 조작된 이미지 태그 대신 상류를 '고정 ref'(VANE_REF)로 빌드한다.
+    # LLM 프로바이더 설정은 config.toml이 아니라 POST /api/providers(→ data 볼륨에 영속).
     build:
-      context: "https://github.com/ItzCrazyKns/Perplexica.git#${VANE_REF}"
+      context: "https://github.com/ItzCrazyKns/Vane.git#${VANE_REF}"
     container_name: aod-vane
-    depends_on:
-      - searxng
     ports:
       - "3000:3000"
     volumes:
-      # 관리형 API(LLM/임베딩) + SearXNG 연결. 키 구조는 VANE_REF 버전의
-      # sample.config.toml 기준으로 §10 #9에서 확정.
-      - ./config.toml:/home/perplexica/config.toml:ro
-      - vane-data:/home/perplexica/data
+      - vane-data:/home/vane/data
+      - vane-uploads:/home/vane/uploads
     restart: unless-stopped
 
 volumes:
   vane-data:
+  vane-uploads:

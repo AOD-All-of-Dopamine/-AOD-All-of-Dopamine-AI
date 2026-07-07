@@ -18,4 +18,4 @@
 - `aod_ai/models.py` — CONTRACTS §3 Pydantic + content_hash
 - `aod_ai/clients/{llm,embedding,vane}.py` — CONTRACTS §4 (시그니처 고정)
 - `resources/seed_fun_tags.yaml` + `aod_ai/funtag_dict.py` — 시드 사전 (출처: 원본 기획 aod_reccomendation.md)
-- `docker/vane/` — 고정 상류 ref 빌드 Vane + SearXNG JSON settings.yml
+- `docker/vane/` — 고정 상류 ref(v1.12.2, SearXNG 내장 단일 이미지) 빌드; LLM 프로바이더는 POST /api/providers로 자동 등록
