@@ -8,6 +8,46 @@ def test_parse_args_defaults_and_values():
     args = run._parse_args(["--domain", "WEBNOVEL", "--limit", "200"])
     assert args.domain == "WEBNOVEL"
     assert args.limit == 200
+    assert args.recollect is False
+    assert args.delay == 0.0
+
+
+def test_parse_args_recollect_and_delay():
+    args = run._parse_args(
+        ["--domain", "WEBNOVEL", "--recollect", "--delay", "20"])
+    assert args.recollect is True
+    assert args.delay == 20.0
+
+
+def test_run_pipeline_recollect_reprocesses_sourceless_profiles(
+        db, fake_vane, fake_llm, fake_emb, m1_env):
+    # M1.1: 이미 프로파일이 있어도 source_count=0이면 재수집 모드로 다시 처리돼야 한다
+    with db.cursor() as cur:
+        cur.execute(
+            "INSERT INTO public.contents (content_id, domain, master_title) "
+            "VALUES (1, 'WEBNOVEL', '재수집대상')")
+        cur.execute(
+            "INSERT INTO public.webnovel_contents (content_id, genres, platforms) "
+            "VALUES (1, %s, %s)", (["판타지"], []))
+        cur.execute(
+            "INSERT INTO aod_ai.content_semantic_profile "
+            "(content_id, domain, profile_text, content_hash, source_count) "
+            "VALUES (1, 'WEBNOVEL', '옛프로파일', 'STALE', 0)")
+
+    vane = fake_vane([ReviewSource(content="드디어 리뷰", url="http://u/1")])
+    extraction = Extraction(
+        fun_tags=[], normalized_summary="새요약", profile_text="새프로파일",
+        extraction_quality=0.8)
+    records = run.run_pipeline(
+        db, "WEBNOVEL", 200, vane=vane, llm=fake_llm(extraction),
+        emb=fake_emb([0.05] * 1024), recollect=True)
+
+    assert len(records) == 1
+    with db.cursor() as cur:
+        cur.execute(
+            "SELECT profile_text, source_count FROM aod_ai.content_semantic_profile "
+            "WHERE content_id = 1")
+        assert cur.fetchone() == ("새프로파일", 1)  # 재처리로 갱신됨
 
 
 class _PoisonLlm:

@@ -11,6 +11,18 @@ ORDER BY c.content_id
 """
 _EXISTING_SQL = "SELECT content_id, content_hash FROM aod_ai.content_semantic_profile"
 
+# M1.1 재수집: 프로파일은 있으나 리뷰 소스를 못 모은(source_count=0) 콘텐츠
+_RECOLLECT_SQL = """
+SELECT c.content_id, c.domain, c.master_title, c.original_title,
+       c.synopsis, COALESCE(w.genres, '{}') AS genres
+FROM public.contents c
+JOIN public.webnovel_contents w ON w.content_id = c.content_id
+JOIN aod_ai.content_semantic_profile p ON p.content_id = c.content_id
+WHERE c.domain = %s AND p.source_count = 0
+ORDER BY c.content_id
+LIMIT %s
+"""
+
 
 def compute_content_hash(master_title, original_title, synopsis, genres):
     # §3.1 공식의 단일 구현은 models.content_hash — 중복 구현 금지 (리뷰 F#5)
@@ -44,3 +56,23 @@ def select_targets(conn, domain: str, limit: int) -> list[SelectedTarget]:
         if len(out) >= limit:
             break
     return out
+
+
+def select_recollect_targets(conn, domain: str, limit: int) -> list[SelectedTarget]:
+    """재수집 대상: 프로파일 존재 + source_count=0 (해시 일치 여부 무관)."""
+    with conn.cursor() as cur:
+        cur.execute(_RECOLLECT_SQL, (domain, limit))
+        rows = cur.fetchall()
+    return [
+        SelectedTarget(
+            content_id=content_id,
+            domain=dom,
+            master_title=master_title,
+            original_title=original_title,
+            synopsis=synopsis,
+            genres=list(genres or []),
+            content_hash=compute_content_hash(
+                master_title, original_title, synopsis, list(genres or [])),
+        )
+        for content_id, dom, master_title, original_title, synopsis, genres in rows
+    ]
