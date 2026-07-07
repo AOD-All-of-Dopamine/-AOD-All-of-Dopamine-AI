@@ -1,0 +1,48 @@
+# 시드 fun_tag 사전 (30~60개, spec §1/§9 M0). 태그 내용 출처: 원본 기획 aod_reccomendation.md.
+# status 는 적재 시 전부 active (신규 제안 태그는 배치 런타임에 proposed 로 별도 적재 — spec §4.2).
+tags:
+  - { name: "회귀", aliases: ["회귀물"], description: "죽거나 실패한 뒤 과거 시점으로 되돌아가 다시 사는 전개" }
+  - { name: "환생", aliases: [], description: "죽은 뒤 다른 존재/세계로 다시 태어나는 전개" }
+  - { name: "빙의", aliases: [], description: "다른 인물의 몸/작품 속으로 들어가는 전개" }
+  - { name: "회빙환", aliases: ["회귀 빙의 환생"], description: "회귀·빙의·환생 클리셰 묶음" }
+  - { name: "먼치킨", aliases: ["압도적 강함"], description: "압도적으로 강한 주인공" }
+  - { name: "힘을 숨김", aliases: ["능력 숨김", "숨긴 실력"], description: "진짜 실력을 숨기고 다니는 주인공" }
+  - { name: "사이다", aliases: ["통쾌"], description: "막힘없이 통쾌하게 문제를 해결하는 전개" }
+  - { name: "고구마", aliases: ["답답 전개"], description: "답답하고 억눌리는 전개" }
+  - { name: "피폐", aliases: ["피폐물"], description: "정신적·감정적으로 극한까지 몰아붙이는 어두운 전개" }
+  - { name: "혐관", aliases: ["혐관물"], description: "서로 미워하면서 얽히는 관계" }
+  - { name: "구원 서사", aliases: ["구원물"], description: "망가진 인물을 구원해가는 서사" }
+  - { name: "잔혹한 동화", aliases: [], description: "동화적 외피 속 잔혹한 이야기" }
+  - { name: "복수극", aliases: ["복수물"], description: "억울함을 갚아나가는 복수 중심 전개" }
+  - { name: "성장 서사", aliases: ["성장물"], description: "약자가 성장해가는 이야기" }
+  - { name: "학원물", aliases: ["아카데미"], description: "학교/아카데미 배경 성장·경쟁" }
+  - { name: "헌터물", aliases: ["게이트", "던전"], description: "게이트·던전·헌터 세계관 액션" }
+  - { name: "정통 판타지", aliases: ["하이 판타지"], description: "정통 검과 마법 판타지" }
+  - { name: "현대 판타지", aliases: ["현판"], description: "현대 배경에 초자연 요소" }
+  - { name: "무협", aliases: [], description: "무림·강호 세계관" }
+  - { name: "로맨스 판타지", aliases: ["로판"], description: "판타지 세계관 로맨스" }
+  - { name: "계약 관계", aliases: ["계약 연애"], description: "계약으로 시작되는 관계" }
+  - { name: "츤데레", aliases: [], description: "겉은 차갑고 속은 다정한 캐릭터성" }
+  - { name: "다정한 남주", aliases: ["순애"], description: "일편단심 다정한 남자주인공" }
+  - { name: "집착", aliases: ["집착남", "집착녀"], description: "상대에게 강하게 집착하는 관계성" }
+  - { name: "삼각관계", aliases: [], description: "세 인물 사이의 감정 갈등" }
+  - { name: "반전", aliases: ["반전 서사"], description: "예상을 뒤엎는 전개/떡밥 회수" }
+  - { name: "다크 히어로", aliases: [], description: "어두운 방식으로 정의를 실현하는 주인공" }
+  - { name: "안티히어로", aliases: [], description: "선악이 모호한 주인공" }
+  - { name: "정치 암투", aliases: ["궁중암투"], description: "권력·정치 중심의 두뇌 싸움" }
+  - { name: "두뇌 싸움", aliases: ["지능전"], description: "머리싸움·전략 중심 전개" }
+  - { name: "하렘", aliases: [], description: "다수의 이성이 주인공에게 호감" }
+  - { name: "역하렘", aliases: [], description: "다수의 남성이 여주인공에게 호감" }
+  - { name: "힐링", aliases: ["힐링물"], description: "따뜻하고 편안한 정서" }
+  - { name: "일상", aliases: ["일상물"], description: "잔잔한 일상 중심 전개" }
+  - { name: "코미디", aliases: ["개그"], description: "웃음 중심 전개" }
+  - { name: "하드고어", aliases: ["고어", "잔혹"], description: "잔혹·유혈 묘사 강한 전개" }
+  - { name: "감정선 섬세", aliases: ["섬세한 감정선"], description: "인물 감정 묘사가 섬세한 작품" }
+  - { name: "신파", aliases: ["최루"], description: "눈물을 자극하는 감정 과잉 전개" }
+  - { name: "데스게임", aliases: ["생존게임"], description: "목숨을 건 게임 서바이벌" }
+  - { name: "생존물", aliases: ["서바이벌"], description: "극한 환경에서 살아남기" }
+  - { name: "느와르", aliases: ["누아르"], description: "범죄·조직 중심의 어두운 분위기" }
+  - { name: "성좌물", aliases: ["성좌"], description: "성좌·후원자 시스템 세계관" }
+  - { name: "게임판타지", aliases: ["가상현실", "VRMMO"], description: "게임 시스템 기반 판타지" }
+  - { name: "빌런 서사", aliases: ["악역", "악녀"], description: "악역·빌런 시점의 이야기" }
+  - { name: "세계관 몰입", aliases: ["세계관"], description: "촘촘한 설정으로 몰입시키는 세계관" }
