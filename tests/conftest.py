@@ -163,6 +163,23 @@ def fake_vane():
     return lambda results: _FakeVane(results)
 
 
+class _FakeLlm:
+    def __init__(self, extraction):
+        self.extraction = extraction
+        self.calls = []
+
+    def extract(self, *, metadata, sources, active_tags):
+        self.calls.append(
+            {"metadata": metadata, "sources": sources, "active_tags": active_tags}
+        )
+        return self.extraction
+
+
+@pytest.fixture()
+def fake_llm():
+    return lambda extraction: _FakeLlm(extraction)
+
+
 @pytest.fixture()
 def db(_schema, m1_dsn):
     conn = psycopg.connect(m1_dsn, autocommit=True)
