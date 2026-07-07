@@ -146,6 +146,23 @@ def _schema(m1_dsn):
     yield
 
 
+class _FakeVane:
+    def __init__(self, results):
+        self.results = results
+        self.calls = []
+
+    def search(self, *, query, sources, system_instructions=None):
+        self.calls.append(
+            {"query": query, "sources": sources, "system_instructions": system_instructions}
+        )
+        return list(self.results)
+
+
+@pytest.fixture()
+def fake_vane():
+    return lambda results: _FakeVane(results)
+
+
 @pytest.fixture()
 def db(_schema, m1_dsn):
     conn = psycopg.connect(m1_dsn, autocommit=True)
