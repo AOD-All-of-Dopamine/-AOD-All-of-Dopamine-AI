@@ -36,6 +36,8 @@ class VaneClient:
         resp.raise_for_status()
         providers = resp.json().get("providers", []) or []
 
+        # LLM 키를 실제로 제공하는 프로바이더만 사용 (기본 'Transformers'처럼
+        # chatModels가 빈 프로바이더로 fallback하면 /api/search가 500을 낸다)
         chosen = next(
             (
                 p for p in providers
@@ -43,12 +45,6 @@ class VaneClient:
             ),
             None,
         )
-        if chosen is None and providers:
-            chosen = providers[0]
-            logger.warning(
-                "chatModels에 %r 가 있는 프로바이더가 없어 첫 프로바이더(%s) 사용",
-                llm_key, chosen.get("name"),
-            )
         if chosen is None:
             body = {
                 "type": "openai",

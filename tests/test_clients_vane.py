@@ -87,6 +87,40 @@ def test_search_caches_provider_resolution_across_calls(monkeypatch, vane_env):
 
 
 @respx.mock
+def test_search_provisions_openai_even_if_chatless_provider_exists(monkeypatch, vane_env):
+    # 실통합 발견 버그: Vane 기본 'Transformers' 프로바이더는 chatModels가 비어 있음.
+    # 이런 프로바이더로 fallback하면 500 — 반드시 openai를 새로 등록해야 한다.
+    monkeypatch.delenv("VANE_MAX_SOURCES", raising=False)
+    respx.get("http://vane.test/api/providers").mock(
+        return_value=Response(
+            200,
+            json={
+                "providers": [
+                    {
+                        "id": "uuid-transformers",
+                        "name": "Transformers",
+                        "chatModels": [],
+                        "embeddingModels": [{"name": "MiniLM", "key": "Xenova/all-MiniLM-L6-v2"}],
+                    }
+                ]
+            },
+        )
+    )
+    create_route = respx.post("http://vane.test/api/providers").mock(
+        return_value=Response(200, json={"provider": {"id": "uuid-new"}})
+    )
+    search_route = respx.post("http://vane.test/api/search").mock(
+        return_value=Response(200, json={"sources": []})
+    )
+    client = VaneClient(base_url="http://vane.test")
+    client.search(query="q", sources=["web"])
+
+    assert create_route.call_count == 1
+    body = json.loads(search_route.calls.last.request.content)
+    assert body["chatModel"]["providerId"] == "uuid-new"
+
+
+@respx.mock
 def test_search_auto_provisions_openai_provider_when_absent(monkeypatch, vane_env):
     monkeypatch.delenv("VANE_MAX_SOURCES", raising=False)
     respx.get("http://vane.test/api/providers").mock(
