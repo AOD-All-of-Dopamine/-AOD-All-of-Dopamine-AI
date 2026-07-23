@@ -1,0 +1,150 @@
+{
+  "provenance": {
+    "evaluation_type": "LLM_PROXY",
+    "evaluator": "GPT-5.6 Thinking",
+    "rubric_note": "Judged from liked-game and candidate name/genres/descriptions; strategy ranks/scores were not used.",
+    "profile_id_leakage_note": "profile_id strings are semantically descriptive; evaluator intentionally ignored their semantic content. Use opaque IDs in future exports."
+  },
+  "dev": {
+    "profiles": 12,
+    "pairs": 235,
+    "overall": {
+      "MAX": {
+        "P@10": 0.8083333333333332,
+        "NDCG@10": 0.818827824164979,
+        "Conf@10": 2.091666666666667
+      },
+      "MEAN": {
+        "P@10": 0.7833333333333333,
+        "NDCG@10": 0.7790227407347271,
+        "Conf@10": 2.033333333333333
+      },
+      "TOP2_MEAN": {
+        "P@10": 0.7833333333333333,
+        "NDCG@10": 0.7727567843533665,
+        "Conf@10": 1.9916666666666665
+      }
+    },
+    "by_profile_type": {
+      "coherent": {
+        "MAX": {
+          "P@10": 0.7333333333333334,
+          "NDCG@10": 0.7665811457395509,
+          "Conf@10": 1.8833333333333335
+        },
+        "MEAN": {
+          "P@10": 0.7666666666666666,
+          "NDCG@10": 0.7845543568547145,
+          "Conf@10": 2.0
+        },
+        "TOP2_MEAN": {
+          "P@10": 0.7999999999999999,
+          "NDCG@10": 0.785958918493859,
+          "Conf@10": 2.0
+        }
+      },
+      "mixed": {
+        "MAX": {
+          "P@10": 0.8833333333333333,
+          "NDCG@10": 0.8710745025904071,
+          "Conf@10": 2.3000000000000003
+        },
+        "MEAN": {
+          "P@10": 0.7999999999999999,
+          "NDCG@10": 0.7734911246147395,
+          "Conf@10": 2.066666666666667
+        },
+        "TOP2_MEAN": {
+          "P@10": 0.7666666666666666,
+          "NDCG@10": 0.7595546502128739,
+          "Conf@10": 1.9833333333333334
+        }
+      }
+    },
+    "selection": {
+      "frozen_strategy": "MAX",
+      "reason": "Highest Dev NDCG@10; MEAN and TOP2_MEAN each had P@10 delta -0.025 vs MAX, exceeding the predefined -0.02 guardrail."
+    }
+  },
+  "validation": {
+    "profiles": 8,
+    "pairs": 153,
+    "overall": {
+      "MAX": {
+        "P@10": 0.8,
+        "NDCG@10": 0.8125675992323017,
+        "Conf@10": 2.2125
+      },
+      "MEAN": {
+        "P@10": 0.9,
+        "NDCG@10": 0.8506835499805285,
+        "Conf@10": 2.2875
+      },
+      "TOP2_MEAN": {
+        "P@10": 0.8875,
+        "NDCG@10": 0.8711553580784704,
+        "Conf@10": 2.3625
+      }
+    },
+    "by_profile_type": {
+      "coherent": {
+        "MAX": {
+          "P@10": 0.775,
+          "NDCG@10": 0.8022787408440439,
+          "Conf@10": 2.2
+        },
+        "MEAN": {
+          "P@10": 0.95,
+          "NDCG@10": 0.8664983691435433,
+          "Conf@10": 2.3
+        },
+        "TOP2_MEAN": {
+          "P@10": 0.875,
+          "NDCG@10": 0.8709927348672459,
+          "Conf@10": 2.375
+        }
+      },
+      "mixed": {
+        "MAX": {
+          "P@10": 0.825,
+          "NDCG@10": 0.8228564576205595,
+          "Conf@10": 2.225
+        },
+        "MEAN": {
+          "P@10": 0.85,
+          "NDCG@10": 0.8348687308175138,
+          "Conf@10": 2.275
+        },
+        "TOP2_MEAN": {
+          "P@10": 0.9,
+          "NDCG@10": 0.871317981289695,
+          "Conf@10": 2.35
+        }
+      }
+    },
+    "protocol_note": "Validation does not change the frozen Dev strategy. Alternative variants are diagnostic only."
+  },
+  "combined_diagnostic_not_for_selection": {
+    "MAX": {
+      "P@10": 0.805,
+      "NDCG@10": 0.8163237341919081,
+      "Conf@10": 2.1399999999999997
+    },
+    "MEAN": {
+      "P@10": 0.8300000000000001,
+      "NDCG@10": 0.8076870644330476,
+      "Conf@10": 2.1350000000000002
+    },
+    "TOP2_MEAN": {
+      "P@10": 0.825,
+      "NDCG@10": 0.812116213843408,
+      "Conf@10": 2.1399999999999997
+    }
+  },
+  "conclusion": {
+    "official_p1_baseline": "MAX",
+    "status": "BASELINE_FREEZE_WITH_INSTABILITY_WARNING",
+    "warning": "Validation rankings favored TOP2_MEAN/MEAN, contrary to Dev. Do not retune on validation; treat this as evidence that the 20-profile LLM-proxy experiment is too small/noisy to establish a robust aggregation winner.",
+    "recommended_next": "Use MAX as the simple deployable P1 baseline, preserve TOP2_MEAN as a challenger, and compare them on a fresh human-blind or larger independent test set."
+  }
+}

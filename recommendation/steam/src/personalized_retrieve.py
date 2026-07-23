@@ -1,65 +1,103 @@
+import argparse
+from pathlib import Path
+
 import numpy as np
-import pandas as pd
+import yaml
 
-CORPUS_EMBEDDINGS = "artifacts/s1_v2/corpus_embeddings.npy"
-CORPUS_INDEX = "artifacts/s1_v2/corpus_index.parquet"
-DATASET = "artifacts/s1_v2/dataset.parquet"
+from config import PROJECT_ROOT, ensure_artifacts_dir
+from personalization.seed_loader import SeedLoader
+from personalization.candidate_retriever import CandidateRetriever
+from personalization.score_aggregator import ScoreAggregator
+from personalization.personalized_ranker import PersonalizedRanker
 
 
-class PersonalizedRetriever:
-    def __init__(self, rec_boost: float = 0.03):
-        self.embeddings = np.load(CORPUS_EMBEDDINGS, mmap_mode="r")
-        self.index = pd.read_parquet(CORPUS_INDEX)
-        self.dataset = pd.read_parquet(DATASET)
-        self.rec_boost = rec_boost
+def run_multi(
+    liked_appids: list[int],
+    strategies: list[str] | None = None,
+    top_n: int = 300,
+    rec_boost: float = 0.03,
+    output_dir: str | None = None,
+) -> dict[str, dict]:
+    if strategies is None:
+        strategies = ["max", "mean", "top2_mean"]
 
-        self._build_recommendations_percentile()
+    loader = SeedLoader()
+    seed_embs = loader.load(liked_appids)
 
-    def _build_recommendations_percentile(self):
-        recs = self.dataset["recommendations_total"].fillna(0).values
-        ranks = pd.Series(recs).rank(pct=True, ascending=True).values
-        self.rec_percentile = ranks
+    retriever = CandidateRetriever()
+    sim_matrix = retriever.compute_similarity_matrix(seed_embs)
+    corpus_df = retriever.full_corpus_frame()
 
-    def retrieve(
-        self,
-        user_vector: np.ndarray,
-        owned_appids: set[int] | None = None,
-        exclude_appids: set[int] | None = None,
-        top_n: int = 300,
-    ) -> pd.DataFrame:
-        sims = np.dot(self.embeddings, user_vector)
-        top_idx = np.argsort(sims)[::-1]
-        exclude = set()
-        if owned_appids:
-            exclude |= owned_appids
-        if exclude_appids:
-            exclude |= exclude_appids
+    aggregator = ScoreAggregator()
+    aggregated = aggregator.aggregate_all(sim_matrix, seed_embs, corpus_df, strategies=strategies)
 
-        results = []
-        for idx in top_idx:
-            if len(results) >= top_n:
-                break
-            row = self.index.iloc[idx]
-            appid = int(row["steam_appid"])
-            if appid in exclude:
-                continue
-            sim = float(sims[idx])
-            results.append({
-                "steam_appid": appid,
-                "name": row["name"],
-                "cosine_similarity": sim,
-            })
+    ranker = PersonalizedRanker(rec_boost=rec_boost)
 
-        df = pd.DataFrame(results)
-
-        rec_percentiles = self.rec_percentile[[
-            self.index[self.index["steam_appid"] == appid].index[0]
-            for appid in df["steam_appid"]
-        ]]
-        df["recommendations_percentile"] = rec_percentiles
-        df["final_score"] = df["cosine_similarity"] * (
-            1 + df["recommendations_percentile"] * self.rec_boost
+    results = {}
+    for strategy in strategies:
+        ranked = ranker.rank(
+            aggregated[strategy],
+            exclude_appids=set(liked_appids),
+            top_n=top_n,
         )
-        df = df.sort_values("final_score", ascending=False).reset_index(drop=True)
-        df["rank"] = range(1, len(df) + 1)
-        return df
+        results[strategy] = ranked
+        if output_dir:
+            out_path = Path(output_dir) / f"ranked_{strategy}.parquet"
+            ranked.to_parquet(out_path, index=False)
+            print(f"  Saved: {out_path}")
+
+    return results
+
+
+def main():
+    parser = argparse.ArgumentParser(description="P1 Multi-Seed Personalized Retrieval (Full Corpus)")
+    parser.add_argument("--config", type=str, default=None)
+    parser.add_argument("--liked-appids", type=int, nargs="+", help="Seed game appids")
+    parser.add_argument("--strategies", type=str, nargs="+", default=["max", "mean", "top2_mean"])
+    parser.add_argument("--top-n", type=int, default=300)
+    parser.add_argument("--rec-boost", type=float, default=0.03)
+    parser.add_argument("--output-dir", type=str, default=None)
+    args = parser.parse_args()
+
+    if args.config:
+        with open(args.config) as f:
+            cfg = yaml.safe_load(f)
+        liked = cfg.get("liked_appids", args.liked_appids)
+        strategies = cfg.get("aggregation", {}).get("strategies", args.strategies)
+        top_n = cfg.get("aggregation", {}).get("top_n", args.top_n)
+        rec_boost = cfg.get("aggregation", {}).get("rec_boost", args.rec_boost)
+        output_dir = cfg.get("paths", {}).get("ranked_dir", args.output_dir)
+    else:
+        liked = args.liked_appids
+        strategies = args.strategies
+        top_n = args.top_n
+        rec_boost = args.rec_boost
+        output_dir = args.output_dir
+
+    if not liked:
+        parser.error("--liked-appids is required (or set liked_appids in config)")
+
+    if output_dir:
+        Path(output_dir).mkdir(parents=True, exist_ok=True)
+    else:
+        output_dir = str(ensure_artifacts_dir())
+
+    results = run_multi(
+        liked_appids=liked,
+        strategies=strategies,
+        top_n=top_n,
+        rec_boost=rec_boost,
+        output_dir=output_dir,
+    )
+
+    for strategy, df in results.items():
+        print(f"\n=== {strategy.upper()} ===")
+        print(f"  Candidates: {len(df)}")
+        if len(df) > 0:
+            print(f"  Top-5:")
+            for _, r in df.head(5).iterrows():
+                print(f"    #{r['rank']} {r['name']}  (score={r['final_score']:.4f})")
+
+
+if __name__ == "__main__":
+    main()

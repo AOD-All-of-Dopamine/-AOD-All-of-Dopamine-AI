@@ -1,0 +1,19 @@
+experiment:
+  id: "steam_p1_v1"
+  seed: 42
+
+aggregation:
+  strategies: ["max", "mean", "top2_mean"]
+  top_k_per_seed: 100
+  top_n: 300
+  rec_boost: 0.03
+
+profiles:
+  n_coherent: 10
+  n_multi_interest: 10
+  split: [12, 8]
+
+paths:
+  profiles: "artifacts/p1/profiles.parquet"
+  ranked_dir: "artifacts/p1/"
+  export: "artifacts/p1/p1_export.xlsx"
