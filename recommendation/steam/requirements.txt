@@ -1,0 +1,11 @@
+torch
+transformers>=4.51.0
+sentence-transformers>=2.7.0
+numpy
+pandas
+pyarrow
+openpyxl
+scikit-learn
+tqdm
+pyyaml
+pytest
