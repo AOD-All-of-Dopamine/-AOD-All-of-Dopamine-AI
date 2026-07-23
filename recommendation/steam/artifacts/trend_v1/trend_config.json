@@ -1,0 +1,13 @@
+{
+  "as_of_date": "2026-07-23",
+  "min_cohort_size": 50,
+  "feature_version": "v1",
+  "freshness_weights": {
+    "0_90d": 1.0,
+    "91_365d": 0.75,
+    "1_3y": 0.35,
+    "3y_plus": 0.0
+  },
+  "total_games": 19476,
+  "games_with_trend_signal_gt_0": 1
+}
