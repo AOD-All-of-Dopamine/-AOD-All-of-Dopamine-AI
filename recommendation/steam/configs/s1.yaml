@@ -3,7 +3,7 @@ experiment:
   seed: 42
 
 data:
-  input_path: "/home/jiho/projects/-AOD-All-of-Dopamine-back/steam_games.jsonl"
+  input_path: "${AOD_BACK_ROOT}/steam_games.jsonl"
   min_description_chars: 30
 
 representation:

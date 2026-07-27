@@ -6,9 +6,8 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-from src.config import PROJECT_ROOT, ARTIFACTS_DIR
+from src.config import ARTIFACTS_DIR, PROJECT_ROOT, load_config, resolve_path
 
-RAW_DATA = "/home/jiho/projects/-AOD-All-of-Dopamine-back/steam_games.jsonl"
 DATASET = ARTIFACTS_DIR / "dataset.parquet"
 TREND_DIR = PROJECT_ROOT / "artifacts" / "trend_v1"
 
@@ -49,7 +48,8 @@ def assign_age_bucket(age_days: int) -> str:
 
 def build_release_date_map() -> dict[int, str]:
     mapping: dict[int, str] = {}
-    with open(RAW_DATA, encoding="utf-8") as f:
+    raw_data = resolve_path(load_config()["data"]["input_path"])
+    with open(raw_data, encoding="utf-8") as f:
         for line in f:
             r = json.loads(line)
             aid = r.get("steam_appid")

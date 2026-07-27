@@ -49,7 +49,7 @@ from pathlib import Path
 
 import pandas as pd
 
-from src.config import ARTIFACTS_DIR, ensure_artifacts_dir, load_config
+from src.config import ARTIFACTS_DIR, ensure_artifacts_dir, load_config, resolve_path
 
 
 def iter_records(path: str | Path):
@@ -126,9 +126,10 @@ def compute_profile(raw_count: int, df: pd.DataFrame) -> dict:
 def main():
     cfg = load_config()
     out = ensure_artifacts_dir()
-    raw = list(iter_records(cfg["data"]["input_path"]))
+    raw = list(iter_records(resolve_path(cfg["data"]["input_path"])))
     df = build_dataset(raw, cfg["data"]["min_description_chars"])
-    df = join_ranking(df, cfg["data"].get("ranking_path"))
+    ranking_path = cfg["data"].get("ranking_path")
+    df = join_ranking(df, resolve_path(ranking_path) if ranking_path else None)
     profile = compute_profile(len(raw), df)
     df.to_parquet(out / "dataset.parquet", index=False)
     with open(out / "dataset_profile.json", "w", encoding="utf-8") as f:

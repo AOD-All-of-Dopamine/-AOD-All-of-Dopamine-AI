@@ -7,21 +7,10 @@ from src.personalization.seed_loader import SeedLoader
 from src.personalization.candidate_retriever import CandidateRetriever
 from src.personalization.score_aggregator import ScoreAggregator
 from src.personalization.personalized_ranker import PersonalizedRanker
+from src.config import PROJECT_ROOT
 from src.trend.trend_ranker import TrendRanker
 
-PROFILES = [
-    ("Cozy Craft", [413150, 105600, 648800]),
-    ("Survival", [108600, 219740, 242760]),
-    ("FPS", [730, 578080, 359550]),
-    ("RPG", [374320, 292030, 489830]),
-    ("Mixed FPS+Cozy+Cities", [730, 413150, 255710]),
-    ("Vehicle Sim", [227300, 284160, 244210]),
-    ("Strategy", [289070, 268500, 281990]),
-    ("Indie Platformer", [367520, 588650, 504230]),
-    ("Mixed Survival+FPS", [108600, 242760, 730]),
-    ("Classic Multi", [4000, 440, 550]),
-]
-
+PROFILES_PATH = PROJECT_ROOT / "artifacts" / "p1" / "profiles.parquet"
 TOP_N = 20
 TREND_WEIGHTS = [0.0, 0.005, 0.01, 0.02]
 STRATEGY = "max"
@@ -33,7 +22,22 @@ NAME_MAP_PATH = Path(__file__).resolve().parent.parent / "artifacts" / "s1_v2" /
 NAME_MAP = pd.read_parquet(NAME_MAP_PATH).set_index("steam_appid")["name"].to_dict()
 
 
+def load_profiles() -> list[tuple[str, list[int]]]:
+    """프로필 정의의 단일 소스는 build_p1_profiles.py 다.
+
+    예전에는 여기에 별도의 10개짜리 목록이 하드코딩돼 있어 P1 평가와 T1 diff 가
+    서로 다른 프로필을 보고 있었다.
+    """
+    if not PROFILES_PATH.exists():
+        raise SystemExit(
+            f"{PROFILES_PATH} 없음 — python -m src.build_p1_profiles 를 먼저 실행하세요."
+        )
+    df = pd.read_parquet(PROFILES_PATH)
+    return [(r["profile_id"], list(r["liked_appids"])) for _, r in df.iterrows()]
+
+
 def generate_all():
+    profiles = load_profiles()
     loader = SeedLoader()
     retriever = CandidateRetriever()
     aggregator = ScoreAggregator()
@@ -42,7 +46,7 @@ def generate_all():
 
     all_results = []
 
-    for profile_name, liked in PROFILES:
+    for profile_name, liked in profiles:
         seed_embs = loader.load(liked)
         sim = retriever.compute_similarity_matrix(seed_embs)
         corpus = retriever.full_corpus_frame()

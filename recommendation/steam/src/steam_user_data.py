@@ -1,22 +1,28 @@
 import os
+
 import requests
 
-STEAM_API_KEY_PATH = os.path.expanduser(
-    "~/projects/-AOD-All-of-Dopamine-back/.env"
-)
+from src.config import resolve_path
+
 API_BASE = "https://api.steampowered.com"
+# 백엔드 리포의 .env 를 그대로 읽는다. 경로는 환경변수로 주입한다(.env.example 참고).
+STEAM_API_KEY_ENV_FILE = "${AOD_BACK_ROOT}/.env"
 
 
 def _load_api_key() -> str:
-    if not os.path.exists(STEAM_API_KEY_PATH):
+    """STEAM_API_KEY 를 환경변수에서, 없으면 백엔드 .env 파일에서 읽는다."""
+    if key := os.environ.get("STEAM_API_KEY"):
+        return key
+    path = resolve_path(STEAM_API_KEY_ENV_FILE)
+    if not path.exists():
         raise FileNotFoundError(
-            f"Steam API key not found at {STEAM_API_KEY_PATH}"
+            f"STEAM_API_KEY 환경변수도 없고 {path} 도 없습니다. "
+            f".env.example 을 참고해 STEAM_API_KEY 또는 AOD_BACK_ROOT 를 설정하세요."
         )
-    with open(STEAM_API_KEY_PATH) as f:
-        for line in f:
-            if line.startswith("STEAM_API_KEY="):
-                return line.strip().split("=", 1)[1]
-    raise KeyError("STEAM_API_KEY not found in .env")
+    for line in path.read_text(encoding="utf-8").splitlines():
+        if line.startswith("STEAM_API_KEY="):
+            return line.split("=", 1)[1].strip()
+    raise KeyError(f"{path} 안에 STEAM_API_KEY 가 없습니다")
 
 
 def fetch_owned_games(steam_id: str) -> list[dict]:
