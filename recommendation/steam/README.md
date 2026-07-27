@@ -7,6 +7,9 @@
 
 관련 스펙: [P1 multi-seed 설계](../../docs/superpowers/specs/2026-07-23-steam-p1-multiseed-personalization-design.md)
 
+**진행 상황 (2026-07-27)**: §8 의 평가 하네스(B1~B4·B7)와 재현성(A1~A5) 항목은 해결됐다.
+§9 에 각 항목의 해결 방안과 실제 적용 결과를 적어두었다. 남은 것은 모델링(C)·서빙(D) 축이다.
+
 ---
 
 ## 1. 한눈에 보기
@@ -187,9 +190,13 @@ final_score  = score × (1 + rec_pct × 0.03 + trend_signal × w)
 ```bash
 python3 -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
+cp .env.example .env      # AOD_BACK_ROOT 설정 (원본 jsonl 을 읽는 단계에만 필요)
 ```
 
-### S1 (모듈 실행 — `src.` 프리픽스)
+> 평가/랭킹만 돌릴 거라면 torch 계열은 빼도 된다 — `requirements.txt` 하단 주석 참고.
+> 모든 진입점은 `python -m src.X` 규약으로 통일돼 있다.
+
+### S1
 ```bash
 python -m src.data_loader
 python -m src.text_builder
@@ -202,28 +209,28 @@ python -m src.retrieve
 python -m src.rank --r1-boost 0.03
 python -m src.rank --meta-boost 0.02
 python -m src.export_evaluation [--pilot]
-#  (사람/LLM) evaluation.xlsx Judgments 채점
-python -m src.validate_evaluation fill  artifacts/s1_v2/evaluation.xlsx
-python -m src.validate_evaluation check artifacts/s1_v2/evaluation.xlsx
-python -m src.evaluate
-python -m src.report
+#  (사람/LLM) evaluation_pilot.xlsx 의 Judgments 시트 채점  ← 아직 미완료(§8 B8)
+python -m src.validate_evaluation fill  artifacts/s1_v2/evaluation_pilot.xlsx
+python -m src.validate_evaluation check artifacts/s1_v2/evaluation_pilot.xlsx
+python -m src.evaluate artifacts/s1_v2/evaluation_pilot.xlsx   # tfidf 대비 비교 + 품질 게이트
+python -m src.report   artifacts/s1_v2/evaluation_pilot.xlsx
+
+python -m src.eval_ranking                 # R1/R2 변형 비교 (판정 완료됨)
 ```
 
-### P1 / T1 (스크립트 실행 — `src/`를 sys.path에 넣고)
+### P1 / T1
 ```bash
-python src/build_p1_profiles.py
-python src/personalized_retrieve.py --liked-appids 730 578080 359550 --top-n 20
-python src/export_personalization_eval.py
-python src/eval_personalization.py
-python src/trend/trend_features.py         # T1 피처
-python src/eval_trend.py                   # T1 diff 분석
+python -m src.build_p1_profiles
+python -m src.personalized_retrieve --liked-appids 730 578080 359550 --top-n 20
+python -m src.export_personalization_eval
+python -m src.eval_personalization         # 판정 기반 + leave-one-out
+python -m src.trend.trend_features         # T1 피처 (원본 jsonl 필요)
+python -m src.eval_trend                   # T1 diff 분석
 ```
-
-> ⚠️ 두 계열은 **import 규약이 다르다**(`from src.config` vs `from config`). 같은 프로세스에서 함께 import할 수 없다. 아래 §8-A2 참조.
 
 ### 테스트
 ```bash
-pytest tests/          # 14개 파일
+pytest tests/          # 17개 파일 / 104 tests
 ```
 
 ---
@@ -232,7 +239,8 @@ pytest tests/          # 14개 파일
 
 ```
 src/
-  config.py                     설정/아티팩트 경로 (항상 configs/s1_v2.yaml 로드)
+  config.py                     설정 로드(AOD_CONFIG) + ${VAR} 경로 해석(resolve_path)
+  metrics.py                    NDCG/P@k gain 단일 소스 + pool 커버리지 계약
   data_loader.py                jsonl → 정제 dataset.parquet
   text_builder.py               semantic_text 조립
   anchor_builder.py             층화 앵커 후보 생성 / 사람 선별 결과 확정
@@ -251,8 +259,11 @@ src/
     trend_ranker.py             PersonalizedRanker + 트렌드 항
   user_profile.py               (미사용) playtime 로그가중 단일벡터 프로파일
   steam_user_data.py            (미연결) Steam Web API 소유게임/플레이타임 조회
-  build_p1_profiles.py          합성 프로필 20개 + Dev/Val split 검증
-  export_*.py / eval_* / evaluate.py / report.py / validate_evaluation.py
+  build_p1_profiles.py          합성 프로필 20개 + Dev/Val split 검증 (프로필 단일 소스)
+  evaluate.py                   S1 앵커별 지표 + tfidf 대비 비교/품질 게이트
+  eval_ranking.py               R1/R2 변형 비교 (pool 커버리지 강제)
+  eval_personalization.py       P1 판정 기반(프로필별 macro-avg) + leave-one-out
+  export_*.py / report.py / validate_evaluation.py
 ```
 
 ---
@@ -260,6 +271,10 @@ src/
 ## 8. 피드백이 필요한 부분
 
 우선순위 순. **[Bug]** = 지금 결과를 왜곡하고 있는 것, **[Decision]** = 사람이 정해야 하는 것.
+
+> **✅ 해결됨 (2026-07-27)**: A1·A2·A3·A4·A5 · B1·B2·B3·B4·B7 · E1·E2·E3·E4.
+> 적용 내용과 실측 결과는 [§9 해결 방안](#9-해결-방안)에 항목별로 기록했다.
+> **남은 것**: B5·B6(판정 신뢰도·표본), C 전체(모델링), D 전체(서빙), 그리고 아래 **B8**.
 
 ### A. 재현성 · 코드 위생
 
@@ -281,6 +296,7 @@ src/
 | B4 | **[Decision] 미판정 후보 처리 규칙 상충** | `eval_ranking.py`는 판정 없는 후보를 relevance 0으로 채우고, `eval_personalization.py`는 `notna()`로 제외한다. pooled 평가에서 전자는 커버리지 낮은 변형에 불리, 후자는 유리. 규칙을 하나로 정해야 변형 비교가 성립. |
 | B5 | **[Decision] 정답이 LLM proxy 단독** | 사람 판정 0건. summary.json 스스로 "opaque ID를 썼어야 했다(profile_id 문자열이 의미 노출)"고 기록. **최소 규모라도 사람 블라인드 판정 세트**가 필요하다 — 특히 Dev/Val 역전(§5) 때문에. |
 | B6 | **[Decision] 표본 크기** | 20 프로필 × Top-10 = 판정 388쌍으로 P@10 차이 0.025를 판정하려 했다. 신뢰구간이 전략 간 차이보다 훨씬 넓다. 프로필 수를 늘릴지, 아니면 "집계 전략은 결정 불가"로 못 박고 다른 축(다양성·필터)에 자원을 쓸지. |
+| **B8** | **[Bug·신규] TF-IDF 대비 Qwen 우위가 한 번도 측정된 적이 없다** | B3 을 고치고 나서 드러났다. `evaluation_pilot.xlsx` 는 **200행 전부 미판정**이다(`steam_s1_qwen_v2` 100행, `steam_s1_tfidf_v2` 100행 모두 0건). 판정된 S1 데이터(`ranking_eval_pilot.xlsx` 130쌍, `ranking_eval_validation_30.xlsx` 369쌍)는 **R1/R2 랭킹 변형 비교용**이라 `experiment_id` 자체가 없다. 즉 **"Qwen 임베딩이 TF-IDF 보다 낫다"는 S1 트랙의 근간 주장에 실측 근거가 없다.** 판정 100쌍이면 되므로 비용은 작다 — B5(사람 검증)와 함께 처리하는 것을 권장. |
 | B7 | **[Bug] 평가 함수가 프로필 단위로 집계하지 않음** | `evaluate_from_judgments()`·`compute_pooled_ndcg()` 둘 다 `profile_id` groupby 없이 **split 전체를 한 덩어리로 놓고** `nlargest(10)`을 한다 → 절대 유사도가 높은 한두 프로필이 지표를 독식한다. 반면 `summary.json`의 Dev MAX P@10 `0.8083 = 97/120`은 **프로필별 P@10을 12개 평균**한 값이다. 즉 **공식 P1 숫자는 이 스크립트로 재생성되지 않는다** — 리포 밖(수기/LLM)에서 계산됐다. |
 
 ### C. 모델링
@@ -317,14 +333,49 @@ src/
 
 ## 9. 해결 방안
 
+### ✅ 적용 결과 (2026-07-27, 커밋 `1755419` · `798769b`)
+
+1단계(평가)와 2단계(재현성)를 적용했다. **테스트 78 passed / 2 failed → 104 passed / 0 failed.**
+(기존 실패 2건은 공교롭게도 B3 의 원인인 v1/v2 실험 ID 드리프트를 그대로 박아둔 테스트였다.)
+
+**핵심 게이트 — B7 재현 검증: 통과.** 프로필 단위 집계를 복구한 뒤 `summary.json` 의 공식 수치
+**18개(2 split × 3 전략 × 3 지표)를 전부 재현**했다. 원본은 `linear` gain + 프로필별 pooled IDCG 였다.
+
+| | MAX | MEAN | TOP2_MEAN |
+|---|---|---|---|
+| Dev NDCG / P@10 / Conf@10 | 0.8188 / 0.8083 / 2.0917 | 0.7790 / 0.7833 / 2.0333 | 0.7728 / 0.7833 / 1.9917 |
+| Val NDCG / P@10 / Conf@10 | 0.8126 / 0.8000 / 2.2125 | 0.8507 / 0.9000 / 2.2875 | 0.8712 / 0.8875 / 2.3625 |
+
+→ **동결된 MAX 베이스라인의 근거가 검증됐다.** `tests/test_eval_personalization.py` 가 이 값을 고정한다.
+
+그 과정에서 얻은 부수 결과:
+
+- **버그가 얼마나 심각했는지**: 예전 방식(프로필 groupby 없이 전체 풀 상위 10개)으로는
+  Dev MEAN·TOP2_MEAN 이 **P@10 = 1.0000** 으로 계산됐다. 실제 값은 0.7833 이다.
+- **Conf@10 은 다른 컬럼이었다**: `recommendation_confidence` 의 평균인데 예전 코드는
+  `relevance` 를 넣어 P@10 과 중복된 값을 Conf 라는 이름으로 보고했다.
+- **Dev/Val 역전은 gain 탓이 아니다**: exponential 로 바꿔도 Dev 는 MAX, Val 은 TOP2_MEAN 이
+  이긴다. 지표 정의 문제가 아니라 표본 크기 문제라는 결론이 확인됐다(테스트로 고정).
+- **A3 는 확정적으로 비활성이었다**: Top Sellers 분기를 제거한 뒤 `add_semantic_text` 가
+  19,476행 전부에 대해 기존 `semantic_text` 를 **바이트 단위로 동일하게** 재생성한다.
+- **다음 라운드 C1 의 힌트**: `eval_ranking` 을 돌려보니 R1-final 과 R2-1% 가 10개 앵커
+  **전부에서 동일**하다. 메타크리틱 1% 부스트는 순위를 전혀 바꾸지 못한다.
+- **LOO 가 실제로 값을 낸다**: MRR 0.0026(MAX) / 0.0049(MEAN·TOP2), HitRate@300 15~17%.
+  상수 3.33 이 아니라 전략별로 다른 값이 나온다.
+- **누락 의존성**: `requests` 가 `requirements.txt` 에 없어 `steam_user_data` 가 새 환경에서
+  import 조차 실패했다.
+- **새 발견**: B8 — tfidf 대비 Qwen 비교가 한 번도 판정된 적이 없다(§8 참고).
+
+아래는 각 항목의 해결 방안 원문이다. 해결된 항목에는 실제 적용 결과를 덧붙였다.
+
 ### 권장 순서
 
 ```
-1단계 (평가 신뢰 회복)  B3 → B7 → B1 → B2 → B4     ← 이게 끝나야 나머지 판단이 가능
-2단계 (재현성 확보)      A1 → A2 → A3 → A5
-3단계 (모델링 결정)      C1 → C2 → C4 → C3 → C5 → C6
+1단계 (평가 신뢰 회복)  B3 → B7 → B1 → B2 → B4     ✅ 완료
+2단계 (재현성 확보)      A1 → A2 → A3 → A5          ✅ 완료
+3단계 (모델링 결정)      C1 → C2 → C4 → C3 → C5 → C6   ← 다음
 4단계 (서빙 준비)        D2 → D1 → D4 → D3 → D5
-상시                    E1~E4, A4, B5, B6
+상시                    E1~E4 ✅, A4 ✅, B5, B6, B8
 ```
 
 > **왜 B가 먼저인가**: C·D의 모든 항목은 "바꿨더니 좋아졌는가"를 판정해야 결론이 난다. 지금은 그 판정기가 고장나 있어서, C를 먼저 손대면 개선인지 퇴보인지 알 수 없다.

@@ -4,7 +4,6 @@ experiment:
 
 aggregation:
   strategies: ["max", "mean", "top2_mean"]
-  top_k_per_seed: 100
   top_n: 300
   rec_boost: 0.03
 

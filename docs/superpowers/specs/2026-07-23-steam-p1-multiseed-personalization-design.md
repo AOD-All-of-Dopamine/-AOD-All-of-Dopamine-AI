@@ -32,9 +32,9 @@ Single weighted average는 embedding 공간에서 정보 손실(여러 방향의
 liked_appids [3~5개]
     ↓
 seed_loader: appid → embedding lookup
-    ↓ (각 seed별)
-candidate_retriever: cosine Top-100 per seed → union
-    ↓ (공통 candidate pool)
+    ↓
+candidate_retriever: seed_vecs @ corpus.T → [n_seeds × 19,476] 전량 유사도 행렬
+    ↓ (전 코퍼스)
 score_aggregator: MAX / MEAN / TOP2_MEAN
     ↓
 personalized_ranker: R1 final_score (rec_boost) 적용, seed 제외
@@ -42,17 +42,22 @@ personalized_ranker: R1 final_score (rec_boost) 적용, seed 제외
 ranked results per aggregation
 ```
 
+> **개정 (P1-Fix-01)**: 초안은 "seed별 Top-100 → union" 이었으나 **전 코퍼스 집계**로 바꿨다.
+> Top-k union 은 어떤 seed 의 Top-100 에도 못 든 후보를 전략들이 아예 볼 수 없게 만든다
+> (특히 MEAN/TOP2_MEAN 처럼 여러 seed 에 고루 가까운 후보를 찾는 전략이 불리해진다).
+> 19,476 × 1024 전량 내적은 수십 ms 라 union 으로 아낄 이유가 없다.
+> 이에 따라 `configs/p1.yaml` 의 `top_k_per_seed` 는 사용하지 않는다.
+
 ## 3. Components
 
 ### `src/personalization/seed_loader.py`
 - Input: list[int] steam_appid
-- Output: dict[int, np.ndarray] mapping appid → embedding vector (3584-dim)
+- Output: dict[int, np.ndarray] mapping appid → embedding vector (**1024-dim**, Qwen3-Embedding-0.6B)
 - Validates all appids exist in corpus; raises ValueError if not
 
 ### `src/personalization/candidate_retriever.py`
-- Input: seed_embeddings dict, top_k_per_seed=100
-- For each seed: cosine similarity, sort, take top_k
-- Union all candidates across seeds (dedup by appid)
+- Input: seed_embeddings dict
+- `seed_vecs @ corpus.T` → `[n_seeds × 19,476]` 유사도 행렬 (전 코퍼스, exact 내적)
 - Output: DataFrame with columns [steam_appid, name]
 
 ### `src/personalization/score_aggregator.py`
@@ -71,9 +76,10 @@ ranked results per aggregation
 Experiment configuration.
 
 ### `src/personalized_retrieve.py` (CLI)
-- Unified entry point
-- Modes: `single` (legacy UserProfileBuilder), `multi` (new pipeline)
-- For multi: runs all 3 aggregations, saves results per strategy
+- Unified entry point — multi-seed 파이프라인만 제공한다.
+  (초안의 `single` 모드 = `UserProfileBuilder` 단일 가중평균 벡터는 §1 "Why not weighted average?"
+  에서 기각됐고 CLI 에 구현되지 않았다.)
+- 3개 aggregation 을 모두 돌려 전략별로 저장
 - Output: `artifacts/p1/ranked_{strategy}.parquet`
 
 ## 4. Evaluation
