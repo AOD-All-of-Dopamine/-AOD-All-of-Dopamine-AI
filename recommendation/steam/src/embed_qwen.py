@@ -1,6 +1,8 @@
 # src/embed_qwen.py
 import json
+import sys
 import time
+from pathlib import Path
 
 import numpy as np
 import pandas as pd
@@ -16,6 +18,19 @@ QUERY_PROMPT = (
 EXPERIMENT_ID = "steam_s1_qwen_v2"
 
 
+def _apply_seq_cap(model, cfg: dict):
+    """max_seq_length 를 실제 텍스트 길이에 맞게 제한한다.
+
+    Qwen3-Embedding 의 기본값은 32768 이다. semantic_text 는 p99 가 277토큰, 최대 359토큰
+    (전체 코퍼스 표본 기준)이라 그 길이가 필요 없고, CPU 에서는 배치 인코딩 시 거대한
+    할당을 유발해 프로세스가 OOM 으로 조용히 죽는다. 512 는 최대 관측치를 충분히 덮는다.
+    """
+    cap = cfg["runtime"].get("max_seq_length")
+    if cap and model.max_seq_length > cap:
+        model.max_seq_length = cap
+    return model
+
+
 def resolve_runtime(cfg: dict):
     """(model, device, batch_size) 반환. GPU smoke 실패 시 CPU fallback (고정 정책)."""
     import torch
@@ -29,6 +44,7 @@ def resolve_runtime(cfg: dict):
                 model_name, device=device,
                 model_kwargs={"torch_dtype": "float16"},
             )
+            _apply_seq_cap(model, cfg)
             model.encode(["smoke test"] * 32, batch_size=batch, show_progress_bar=False)
             return model, device, batch
         except Exception as e:
@@ -38,6 +54,7 @@ def resolve_runtime(cfg: dict):
         model_name, device=device,
         model_kwargs={"torch_dtype": "float32"},  # CPU(fp32) 고정 정책 (Qwen3 기본 bf16 방지)
     )
+    _apply_seq_cap(model, cfg)
     return model, device, batch
 
 
@@ -56,11 +73,27 @@ def encode_with_backoff(model, texts, batch: int, **kw) -> np.ndarray:
             raise
 
 
+def _parse_out_dir() -> tuple[Path, Path]:
+    """(입력 아티팩트 디렉터리, 출력 디렉터리) — `--out DIR` 로 출력을 분리할 수 있다.
+
+    기존 임베딩을 덮어쓰지 않고 재현성을 검증할 때 쓴다.
+    """
+    src = ensure_artifacts_dir()
+    for i, arg in enumerate(sys.argv):
+        if arg == "--out" and i + 1 < len(sys.argv):
+            dst = Path(sys.argv[i + 1])
+            dst.mkdir(parents=True, exist_ok=True)
+            return src, dst
+    return src, src
+
+
 def main():
     cfg = load_config()
-    out = ensure_artifacts_dir()
-    df = pd.read_parquet(out / "dataset.parquet")
-    anchors = pd.read_parquet(out / "anchors_40.parquet")
+    src, out = _parse_out_dir()
+    df = pd.read_parquet(src / "dataset.parquet")
+    anchors = pd.read_parquet(src / "anchors_40.parquet")
+    if out != src:
+        print(f"입력 {src} → 출력 {out} (기존 임베딩 보존)")
 
     model, device, batch = resolve_runtime(cfg)
     print(f"device={device} batch={batch}")

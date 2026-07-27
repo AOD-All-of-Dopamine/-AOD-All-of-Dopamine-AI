@@ -28,7 +28,13 @@ embedding:
 runtime:
   prefer_device: "cuda"
   gpu_batch_size: 8
+  # 4 를 키우지 말 것. 실행 환경의 cgroup 메모리 한도가 4 GiB 이고
+  # Qwen3-0.6B fp32 가중치만 ~2.4GB 라 배치 8 이상은 OOM 으로 죽는다
+  # (free 가 보여주는 호스트 메모리 15GB 는 무의미하다 — /sys/fs/cgroup/memory.max 확인).
   cpu_batch_size: 4
+  # Qwen3 기본 32768. semantic_text 는 최대 359토큰이라 512 로 충분하며,
+  # 제한하지 않으면 배치 인코딩이 거대한 할당을 잡아 역시 OOM 으로 죽는다.
+  max_seq_length: 512
   benchmark_items: 500
 
 tfidf:
