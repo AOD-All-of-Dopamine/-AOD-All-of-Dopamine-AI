@@ -79,9 +79,14 @@ def report_quality(scored: pd.DataFrame, mode: str):
     print()
 
 
-def report_llm_agreement(scored: pd.DataFrame):
+def report_llm_agreement(scored: pd.DataFrame, evaluator: str = "사람"):
+    is_human = evaluator == "사람"
     print("=" * 68)
-    print("3. LLM proxy 일치도 — 지금까지의 P1 결론을 믿어도 되는가")
+    if is_human:
+        print("3. LLM proxy 일치도 — 지금까지의 P1 결론을 믿어도 되는가")
+    else:
+        print(f"3. 판정자 간 일치도 ({evaluator} vs GPT-5.6)")
+        print("   ※ 둘 다 LLM 이므로 이것은 사람 검증이 아니다. LLM 판정의 '안정성'만 잰다.")
     print("=" * 68)
     llm = load_llm_judgments()
     both = scored.merge(llm, on=["profile_id", "candidate_appid"], how="inner")
@@ -100,29 +105,43 @@ def report_llm_agreement(scored: pd.DataFrame):
 
     kappa = float(cohen_kappa_score(h.astype(int), l.astype(int), weights="linear"))
 
+    gap = both["llm_relevance"].astype(float) - both["relevance"].astype(float)
+    higher, same, lower = int((gap > 0).sum()), int((gap == 0).sum()), int((gap < 0).sum())
+
     print(f"  비교 가능한 쌍: {len(both)}")
     print(f"  정확 일치      : {exact:.1%}")
     print(f"  ±1 이내        : {within1:.1%}")
     print(f"  Spearman ρ     : {spearman:.3f}")
     print(f"  가중 Cohen's κ : {kappa:.3f}")
-    print(f"  편향(사람-LLM) : {bias:+.2f}  ({'사람이 더 후함' if bias > 0 else 'LLM이 더 후함'})")
+    print(f"  편향({evaluator}-GPT): {bias:+.2f}  "
+          f"({evaluator + '이 더 후함' if bias > 0 else 'GPT-5.6 이 더 후함'})")
+    print(f"  방향성         : GPT 높음 {higher} / 동일 {same} / {evaluator} 높음 {lower}")
+
+    # 불일치가 한쪽으로만 쏠리면 '노이즈'가 아니라 '기준 차이'다 — 처방이 달라진다.
+    one_sided = min(higher, lower) == 0 and max(higher, lower) > 0
+    if one_sided:
+        print("    → 불일치가 **한 방향으로만** 발생한다. 랜덤 노이즈가 아니라 계통적인")
+        print("      기준(캘리브레이션) 차이다. 순위 비교는 살아남지만 절대 수치는 못 믿는다.")
 
     print("\n  판정:")
     if kappa >= 0.6:
-        print("    κ >= 0.6 — LLM proxy 를 계속 신뢰할 수 있습니다.")
-        print("    → 표본 확대(B6)를 LLM 으로 진행해도 됩니다.")
+        print(f"    κ >= 0.6 — 판정이 안정적이다.")
+        if is_human:
+            print("    → 표본 확대(B6)를 LLM 으로 진행해도 됩니다.")
     elif kappa >= 0.4:
         print("    0.4 <= κ < 0.6 — 중간 정도 일치. 방향성은 믿되 0.05 미만의 지표 차이로는")
-        print("    결론을 내리지 마세요. 중요한 결정에는 사람 판정을 병행해야 합니다.")
+        print("    결론을 내리지 마세요.")
+        if not is_human:
+            print("    → 절대 수치(P@10 = 0.8 같은)를 성과 지표로 인용하지 마세요.")
     else:
-        print("    κ < 0.4 — LLM proxy 를 신뢰하기 어렵습니다.")
-        print("    → 지금까지의 P1 결론(MAX 동결 포함)을 사람 판정 기준으로 다시 세워야 합니다.")
+        print("    κ < 0.4 — 판정을 신뢰하기 어렵습니다.")
+        print("    → 지금까지의 P1 결론(MAX 동결 포함)을 다시 세워야 합니다.")
 
-    print("\n  구간별 불일치 (사람 점수 기준):")
+    print(f"\n  구간별 불일치 ({evaluator} 점수 기준):")
     for score in [0, 1, 2, 3]:
         sub = both[both["relevance"] == score]
         if len(sub):
-            print(f"    사람 {score}점 ({len(sub):3d}쌍) → LLM 평균 {sub['llm_relevance'].mean():.2f}")
+            print(f"    {evaluator} {score}점 ({len(sub):3d}쌍) → GPT-5.6 평균 {sub['llm_relevance'].mean():.2f}")
     print()
 
 
@@ -175,13 +194,23 @@ def report_worst_profiles(scored: pd.DataFrame):
     print()
 
 
+def _evaluator_label() -> str:
+    """--evaluator 로 판정자를 밝힌다. 사람이 아니면 리포트 문구가 달라진다."""
+    for i, a in enumerate(sys.argv):
+        if a == "--evaluator" and i + 1 < len(sys.argv):
+            return sys.argv[i + 1]
+    return "사람"
+
+
 def main():
-    xlsx = sys.argv[1] if len(sys.argv) > 1 else str(OUT_DIR / "recommendation_review.xlsx")
+    args = [a for a in sys.argv[1:] if not a.startswith("--")]
+    xlsx = args[0] if args else str(OUT_DIR / "recommendation_review.xlsx")
+    evaluator = _evaluator_label()
     mode = load_config()["evaluation"]["ndcg_gain"]
     joined = load_human(xlsx)
     scored = report_progress(joined)
     report_quality(scored, mode)
-    report_llm_agreement(scored)
+    report_llm_agreement(scored, evaluator)
     report_tags(scored)
     report_worst_profiles(scored)
 
