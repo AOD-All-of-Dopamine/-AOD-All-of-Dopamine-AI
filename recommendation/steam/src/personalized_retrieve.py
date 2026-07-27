@@ -4,11 +4,24 @@ from pathlib import Path
 import numpy as np
 import yaml
 
-from config import PROJECT_ROOT, ensure_artifacts_dir
-from personalization.seed_loader import SeedLoader
-from personalization.candidate_retriever import CandidateRetriever
-from personalization.score_aggregator import ScoreAggregator
-from personalization.personalized_ranker import PersonalizedRanker
+from src.config import PROJECT_ROOT, ensure_artifacts_dir
+from src.personalization.seed_loader import SeedLoader
+from src.personalization.candidate_retriever import CandidateRetriever
+from src.personalization.score_aggregator import ScoreAggregator
+from src.personalization.personalized_ranker import PersonalizedRanker
+
+
+def build_components(rec_boost: float = 0.03):
+    """코퍼스 임베딩(76MB)과 dataset 을 읽는 무거운 생성자들을 한 번만 만든다.
+
+    LOO 평가처럼 수십 번 호출하는 경우 `run_multi(..., components=...)` 로 재사용한다.
+    """
+    return (
+        SeedLoader(),
+        CandidateRetriever(),
+        ScoreAggregator(),
+        PersonalizedRanker(rec_boost=rec_boost),
+    )
 
 
 def run_multi(
@@ -17,21 +30,17 @@ def run_multi(
     top_n: int = 300,
     rec_boost: float = 0.03,
     output_dir: str | None = None,
+    components: tuple | None = None,
 ) -> dict[str, dict]:
     if strategies is None:
         strategies = ["max", "mean", "top2_mean"]
 
-    loader = SeedLoader()
-    seed_embs = loader.load(liked_appids)
+    loader, retriever, aggregator, ranker = components or build_components(rec_boost)
 
-    retriever = CandidateRetriever()
+    seed_embs = loader.load(liked_appids)
     sim_matrix = retriever.compute_similarity_matrix(seed_embs)
     corpus_df = retriever.full_corpus_frame()
-
-    aggregator = ScoreAggregator()
     aggregated = aggregator.aggregate_all(sim_matrix, seed_embs, corpus_df, strategies=strategies)
-
-    ranker = PersonalizedRanker(rec_boost=rec_boost)
 
     results = {}
     for strategy in strategies:

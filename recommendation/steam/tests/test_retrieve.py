@@ -98,9 +98,8 @@ def test_main_writes_qwen_top100(tmp_path, monkeypatch):
     retrieve_mod.main()
 
     out = pd.read_parquet(tmp_path / "qwen_top100.parquet")
-    assert retrieve_mod.QWEN_EXPERIMENT_ID == "steam_s1_qwen_v1"
     assert len(out) == 2 * 3
-    assert out["experiment_id"].unique().tolist() == ["steam_s1_qwen_v1"]
+    assert out["experiment_id"].unique().tolist() == [retrieve_mod.QWEN_EXPERIMENT_ID]
 
     # anchor 10 (query=[0,1]): sims 20→0.9, 50→0.7, 40→0.4 (self 제외)
     a10 = out[out["anchor_steam_appid"] == 10].sort_values("rank")
@@ -119,3 +118,10 @@ def test_main_writes_qwen_top100(tmp_path, monkeypatch):
     assert 20 not in a20["candidate_steam_appid"].tolist()
     assert a20["similarity"].is_monotonic_decreasing
     assert float(a20.iloc[0]["similarity"]) == pytest.approx(1.0, abs=1e-6)
+
+
+def test_qwen_experiment_id_matches_config_treatment():
+    """설정의 treatment ID와 어긋나면 evaluate.py 의 비교 블록이 무효가 된다."""
+    from src.config import load_config
+
+    assert retrieve_mod.QWEN_EXPERIMENT_ID == load_config()["evaluation"]["treatment_experiment_id"]

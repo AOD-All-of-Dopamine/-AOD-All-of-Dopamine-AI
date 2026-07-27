@@ -6,7 +6,7 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-from config import PROJECT_ROOT, ARTIFACTS_DIR
+from src.config import PROJECT_ROOT, ARTIFACTS_DIR
 
 RAW_DATA = "/home/jiho/projects/-AOD-All-of-Dopamine-back/steam_games.jsonl"
 DATASET = ARTIFACTS_DIR / "dataset.parquet"

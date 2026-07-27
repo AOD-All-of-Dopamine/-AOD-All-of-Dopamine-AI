@@ -30,5 +30,12 @@ def test_build_tfidf_matrix_shape_and_params():
     assert diag.max() <= 1.0 + 1e-9
 
 
-def test_experiment_id():
-    assert EXPERIMENT_ID == "steam_s1_tfidf_v1"
+def test_experiment_id_matches_config_baseline():
+    """리터럴이 아니라 설정과 대조한다.
+
+    예전에는 `steam_s1_tfidf_v1` 로 하드코딩돼 있었고, 실험이 v2로 올라간 뒤
+    evaluate.py 의 비교 블록이 조용히 스킵됐다(품질 게이트가 한 번도 안 돌았다).
+    """
+    from src.config import load_config
+
+    assert EXPERIMENT_ID == load_config()["evaluation"]["baseline_experiment_id"]

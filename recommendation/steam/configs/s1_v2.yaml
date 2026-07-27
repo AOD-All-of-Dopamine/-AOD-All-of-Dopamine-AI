@@ -40,5 +40,11 @@ tfidf:
 
 evaluation:
   relevance_positive_threshold: 2
-  ndcg_gain: "linear"
+  # gain 함수는 src/metrics.py 단일 소스에서 이 값을 읽는다.
+  # linear -> exponential 로 변경(2026-07): 0~3 척도에서 3점과 2점의 차이를 벌린다.
+  ndcg_gain: "exponential"
   ndcg_k: 10
+  # 비교 대상 실험 ID. 판정 데이터에 없으면 evaluate.py 가 실패한다(조용한 스킵 금지).
+  baseline_experiment_id: "steam_s1_tfidf_v2"
+  treatment_experiment_id: "steam_s1_qwen_v2"
+  precision_gate: 0.70

@@ -4,12 +4,11 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
-from personalization.seed_loader import SeedLoader
-from personalization.candidate_retriever import CandidateRetriever
-from personalization.score_aggregator import ScoreAggregator
-from personalization.personalized_ranker import PersonalizedRanker
+from src.personalization.seed_loader import SeedLoader
+from src.personalization.candidate_retriever import CandidateRetriever
+from src.personalization.score_aggregator import ScoreAggregator
+from src.personalization.personalized_ranker import PersonalizedRanker
 
 
 def test_seed_loader_valid():

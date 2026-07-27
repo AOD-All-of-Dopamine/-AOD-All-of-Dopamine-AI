@@ -202,7 +202,6 @@ def build_profiles_df(max_retries: int = 100) -> pd.DataFrame:
 
 if __name__ == "__main__":
     import sys
-    sys.path.insert(0, "src")
     from config import ensure_artifacts_dir
 
     out_dir = ensure_artifacts_dir()

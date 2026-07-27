@@ -3,11 +3,11 @@ from pathlib import Path
 
 import pandas as pd
 
-from personalization.seed_loader import SeedLoader
-from personalization.candidate_retriever import CandidateRetriever
-from personalization.score_aggregator import ScoreAggregator
-from personalization.personalized_ranker import PersonalizedRanker
-from trend.trend_ranker import TrendRanker
+from src.personalization.seed_loader import SeedLoader
+from src.personalization.candidate_retriever import CandidateRetriever
+from src.personalization.score_aggregator import ScoreAggregator
+from src.personalization.personalized_ranker import PersonalizedRanker
+from src.trend.trend_ranker import TrendRanker
 
 PROFILES = [
     ("Cozy Craft", [413150, 105600, 648800]),

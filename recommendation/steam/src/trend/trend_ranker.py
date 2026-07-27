@@ -2,8 +2,8 @@ from pathlib import Path
 
 import pandas as pd
 
-from personalization.personalized_ranker import PersonalizedRanker
-from trend.trend_features import TREND_DIR
+from src.personalization.personalized_ranker import PersonalizedRanker
+from src.trend.trend_features import TREND_DIR
 
 
 class TrendRanker(PersonalizedRanker):

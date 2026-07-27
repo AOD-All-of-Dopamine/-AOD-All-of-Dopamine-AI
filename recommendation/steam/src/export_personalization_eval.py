@@ -4,7 +4,6 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-sys.path.insert(0, str(Path(__file__).parent))
 
 DATASET = "artifacts/s1_v2/dataset.parquet"
 STRATEGIES = ["max", "mean", "top2_mean"]
@@ -134,7 +133,6 @@ def export_pooled_eval(
 
 def main():
     import sys
-    sys.path.insert(0, "src")
     from config import PROJECT_ROOT
 
     profiles_path = PROJECT_ROOT / "artifacts" / "p1" / "profiles.parquet"
