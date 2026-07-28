@@ -58,6 +58,16 @@ def load_config(path: str | Path | None = None) -> dict:
         return yaml.safe_load(f)
 
 
+def artifact_dir(path: str | Path | None = None) -> Path:
+    """추천 파이프라인이 읽을 아티팩트 디렉터리.
+
+    표현을 바꿔 실험하려면 임베딩/데이터셋 경로를 갈아끼울 수 있어야 한다.
+    우선순위: 인자 > AOD_ARTIFACTS 환경변수 > artifacts/s1_v2.
+    """
+    p = Path(path or os.environ.get("AOD_ARTIFACTS") or ARTIFACTS_DIR)
+    return p if p.is_absolute() else PROJECT_ROOT / p
+
+
 def ensure_artifacts_dir() -> Path:
     ARTIFACTS_DIR.mkdir(parents=True, exist_ok=True)
     return ARTIFACTS_DIR

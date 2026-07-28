@@ -1,12 +1,14 @@
+from pathlib import Path
+
 import pandas as pd
 
-CORPUS_INDEX = "artifacts/s1_v2/corpus_index.parquet"
-DATASET = "artifacts/s1_v2/dataset.parquet"
+from src.config import artifact_dir
 
 
 class PersonalizedRanker:
-    def __init__(self, rec_boost: float = 0.03):
-        self.dataset = pd.read_parquet(DATASET)
+    def __init__(self, rec_boost: float = 0.03, artifacts: str | Path | None = None):
+        self.artifacts = artifact_dir(artifacts)
+        self.dataset = pd.read_parquet(self.artifacts / "dataset.parquet")
         self.rec_boost = rec_boost
         self.dataset = self.dataset.set_index("steam_appid")
 

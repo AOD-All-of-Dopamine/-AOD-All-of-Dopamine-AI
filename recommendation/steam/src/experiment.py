@@ -248,6 +248,8 @@ def main():
     elif cmd == "diagnose":
         exp_id = sys.argv[2]
         art = Path(_arg("--artifacts", str(ARTIFACTS_DIR)))
+        if not art.is_absolute():
+            art = PROJECT_ROOT / art
         emb, idx = art / "corpus_embeddings.npy", art / "corpus_index.parquet"
         cfg = load_config()
         print(f"진단 중: {emb}")

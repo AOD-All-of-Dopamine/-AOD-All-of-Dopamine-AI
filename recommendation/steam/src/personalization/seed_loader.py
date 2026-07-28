@@ -1,14 +1,17 @@
+from pathlib import Path
+
 import numpy as np
 import pandas as pd
 
-CORPUS_EMBEDDINGS = "artifacts/s1_v2/corpus_embeddings.npy"
-CORPUS_INDEX = "artifacts/s1_v2/corpus_index.parquet"
+from src.config import artifact_dir
 
 
 class SeedLoader:
-    def __init__(self):
-        self.embeddings = np.load(CORPUS_EMBEDDINGS, mmap_mode="r")
-        self.index = pd.read_parquet(CORPUS_INDEX)
+    def __init__(self, artifacts: str | Path | None = None):
+        d = artifact_dir(artifacts)
+        self.artifacts = d
+        self.embeddings = np.load(d / "corpus_embeddings.npy", mmap_mode="r")
+        self.index = pd.read_parquet(d / "corpus_index.parquet")
         self.appid_to_row = dict(zip(self.index["steam_appid"], self.index["embedding_row"]))
 
     def load(self, liked_appids: list[int]) -> dict[int, np.ndarray]:

@@ -1,16 +1,18 @@
+from pathlib import Path
+
 import numpy as np
 import pandas as pd
 
-CORPUS_EMBEDDINGS = "artifacts/s1_v2/corpus_embeddings.npy"
-CORPUS_INDEX = "artifacts/s1_v2/corpus_index.parquet"
-DATASET = "artifacts/s1_v2/dataset.parquet"
+from src.config import artifact_dir
 
 
 class CandidateRetriever:
-    def __init__(self):
-        self.embeddings = np.load(CORPUS_EMBEDDINGS, mmap_mode="r")
-        self.index = pd.read_parquet(CORPUS_INDEX)
-        self.dataset = pd.read_parquet(DATASET)
+    def __init__(self, artifacts: str | Path | None = None):
+        d = artifact_dir(artifacts)
+        self.artifacts = d
+        self.embeddings = np.load(d / "corpus_embeddings.npy", mmap_mode="r")
+        self.index = pd.read_parquet(d / "corpus_index.parquet")
+        self.dataset = pd.read_parquet(d / "dataset.parquet")
 
     def compute_similarity_matrix(
         self, seed_embeddings: dict[int, np.ndarray]
