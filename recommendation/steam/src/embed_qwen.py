@@ -73,18 +73,23 @@ def encode_with_backoff(model, texts, batch: int, **kw) -> np.ndarray:
             raise
 
 
-def _parse_out_dir() -> tuple[Path, Path]:
-    """(입력 아티팩트 디렉터리, 출력 디렉터리) — `--out DIR` 로 출력을 분리할 수 있다.
-
-    기존 임베딩을 덮어쓰지 않고 재현성을 검증할 때 쓴다.
-    """
-    src = ensure_artifacts_dir()
+def _dir_arg(flag: str, default: Path) -> Path:
     for i, arg in enumerate(sys.argv):
-        if arg == "--out" and i + 1 < len(sys.argv):
-            dst = Path(sys.argv[i + 1])
-            dst.mkdir(parents=True, exist_ok=True)
-            return src, dst
-    return src, src
+        if arg == flag and i + 1 < len(sys.argv):
+            return Path(sys.argv[i + 1])
+    return default
+
+
+def _parse_out_dir() -> tuple[Path, Path]:
+    """(입력 디렉터리, 출력 디렉터리).
+
+    `--in DIR` / `--out DIR` 로 표현별 아티팩트를 분리한다. 표현을 바꿔 실험할 때
+    기존 임베딩을 덮어쓰면 두 표현을 비교할 수 없으므로 반드시 분리해야 한다.
+    """
+    src = _dir_arg("--in", ensure_artifacts_dir())
+    dst = _dir_arg("--out", src)
+    dst.mkdir(parents=True, exist_ok=True)
+    return src, dst
 
 
 def main():

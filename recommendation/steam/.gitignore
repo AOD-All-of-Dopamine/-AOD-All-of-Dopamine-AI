@@ -9,3 +9,7 @@ __pycache__/
 
 # 실 Steam ID/라이브러리 등 개인 데이터
 artifacts/user_*
+
+# 표현 실험 아티팩트 — 임베딩(76MB)이 완성된 뒤 선별 커밋한다
+artifacts/rep_*/corpus_embeddings.npy
+artifacts/rep_*/anchor_embeddings.npy
