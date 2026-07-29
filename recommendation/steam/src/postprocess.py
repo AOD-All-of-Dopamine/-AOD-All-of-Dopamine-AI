@@ -63,10 +63,20 @@ def apply_hard_filters(
     drop_unreleased: bool = True,
     drop_adult: bool = True,
     drop_vr_only: bool = True,
+    require_known_reviews: bool = False,
 ) -> pd.DataFrame:
     """추천으로 내보내면 안 되는 것을 제거한다.
 
     고어/폭력은 거르지 않는다 — 그건 취향이지 결격 사유가 아니다.
+
+    `require_known_reviews` — 품질 하한. Steam 은 리뷰 수가 일정 이상일 때만
+    `recommendations.total` 을 보고한다. 실측: 코퍼스 19,476개 중 값이 있는 것은
+    7,558개(39%)뿐이고 **있는 값은 전부 100 이상**이다. 즉 결측 = "리뷰가 거의 없는 게임"
+    이라는 깨끗한 이진 신호다.
+
+    깊은 페이지가 무너지는 원인이 이것이다 — 유사도는 거의 안 변하는데(1페이지 0.75 →
+    5페이지 0.71) 리뷰 수 중앙값이 2,831 → 434 로 붕괴한다. 관련성이 떨어지는 게 아니라
+    아무도 안 해본 게임으로 채워진다.
     """
     df = ranked.copy()
     meta = dataset.set_index("steam_appid") if "steam_appid" in dataset.columns else dataset
@@ -79,6 +89,9 @@ def apply_hard_filters(
     if drop_vr_only and "categories" in meta.columns:
         cats = df["steam_appid"].map(lambda a: set(meta["categories"].get(a, [])))
         keep &= ~cats.map(lambda c: VR_ONLY_CATEGORY in c)
+
+    if require_known_reviews and "has_recommendations" in meta.columns:
+        keep &= df["steam_appid"].map(lambda a: bool(meta["has_recommendations"].get(a, False)))
 
     if drop_unreleased:
         dates = _load_release_dates()
@@ -155,11 +168,12 @@ def postprocess(
     seed_interleave: bool = True,
     series_max: int = 1,
     hard_filters: bool = True,
+    require_known_reviews: bool = False,
 ) -> pd.DataFrame:
     """스펙 §5.4 순서: hard filter → 시리즈 상한 → 다양성 → Top-N."""
     df = ranked
     if hard_filters:
-        df = apply_hard_filters(df, dataset)
+        df = apply_hard_filters(df, dataset, require_known_reviews=require_known_reviews)
     if series_max:
         df = cap_series(df, dataset, series_max)
     if seed_interleave:

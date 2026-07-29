@@ -80,23 +80,44 @@ def run_multi(
     return results
 
 
+# 새로고침 3페이지까지 품질이 유지되도록 맞춘 값. 근거는 next_page docstring 참고.
+REFRESH_REC_BOOST = 0.15
+
+
 def next_page(
     liked_appids: list[int],
     seen_appids: set[int] | list[int] | None = None,
     page_size: int = 10,
     strategy: str = "max",
-    rec_boost: float = 0.03,
+    rec_boost: float = REFRESH_REC_BOOST,
     components: tuple | None = None,
     postprocess: bool = True,
+    require_known_reviews: bool = True,
 ):
     """새로고침 한 번 = 이 함수 한 번. 서빙이 쓸 계약을 코드로 고정한다.
 
     호출자는 반환된 `steam_appid` 를 `seen_appids` 에 누적해서 다음 호출에 넘겨야 한다.
     그 누적을 어디에 저장할지가 서빙의 과제다(`aod_ai.rec_impression`).
 
-    주의: 이 함수는 **탐색(exploration)을 하지 않는다.** 점수 순으로 계속 깊이 들어가므로
-    새로고침을 거듭할수록 품질이 떨어진다(실측: 1페이지 유사도 0.800 → 5페이지 0.744).
-    몇 페이지까지 내보낼지는 제품 결정이고, 깊이별 품질 측정이 선행돼야 한다.
+    **기본값이 run_multi 와 다른 이유** — 깊은 페이지가 무너지는 것을 막기 위해서다.
+    원인은 관련성 붕괴가 아니라 품질 붕괴였다: 유사도는 1→5페이지에서 0.75→0.71 로 거의
+    안 변하는데 리뷰 수 중앙값이 2,831 → 434 로 무너진다. 유사도가 평평한 구간에서는
+    미세한 유사도 차이보다 인기도가 훨씬 나은 정렬 기준이다.
+
+      · `require_known_reviews=True` — Steam 이 리뷰 수를 보고하는 게임만(코퍼스의 39%).
+        결측 = "리뷰가 거의 없음"이라는 이진 신호다.
+      · `rec_boost=0.15` — 기본 0.03 은 유사도 스프레드보다 작아 정렬을 거의 못 바꾼다.
+
+    판정 결과 (4개 프로필 × 페이지당 10개, Claude 판정, 각 페이지 40쌍 전수):
+
+      페이지   현재(0.03,하한X)      개선(0.15,하한O)
+        1      평균 1.79 / P@10 .64   평균 1.85 / P@10 .68
+        2      평균 1.44 / P@10 .49   평균 1.53 / P@10 .53
+        3      평균 1.06 / P@10 .32   평균 1.63 / P@10 .55
+
+    현재 설정은 3페이지에서 41% 무너지지만(1.79→1.06) 개선 설정은 12% 하락에 그치고
+    2→3페이지에서는 오히려 오른다. `run_multi` 기본값은 기존 실험 재현성 때문에 건드리지
+    않는다 — 제품 경로인 이 함수에서만 바꾼다.
     """
     seen = set(seen_appids or ())
     # 후처리가 상위를 걸러내므로 넉넉히 뽑는다
@@ -107,6 +128,7 @@ def next_page(
         rec_boost=rec_boost,
         components=components,
         postprocess=postprocess,
+        postprocess_kwargs={"require_known_reviews": require_known_reviews},
         exclude_appids=seen,
     )[strategy]
     return ranked.head(page_size).reset_index(drop=True)

@@ -61,3 +61,22 @@ def test_next_page_keeps_seed_diversity_at_depth(comp):
         share = page["dominant_seed"].value_counts().iloc[0] / len(page)
         assert share <= 0.6, f"한 시드가 {share:.0%} 차지"
         seen |= set(page["steam_appid"])
+
+
+def test_next_page_holds_quality_floor_at_depth(comp):
+    """3페이지까지 리뷰 수가 알려진 게임만 나와야 한다.
+
+    깊은 페이지가 무너지던 원인은 관련성이 아니라 품질이었다 — 유사도는 평평한데
+    리뷰 수 중앙값이 2,831 -> 434 로 붕괴했다.
+    """
+    import pandas as pd
+
+    from src.config import artifact_dir
+
+    ds = pd.read_parquet(artifact_dir(ART) / "dataset.parquet").set_index("steam_appid")
+    seen = set()
+    for page_no in range(1, 4):
+        page = next_page(SEEDS, seen_appids=seen, page_size=10, components=comp)
+        known = page["steam_appid"].map(lambda a: bool(ds.loc[a, "has_recommendations"]))
+        assert known.all(), f"{page_no}페이지에 리뷰수 미상 게임 {(~known).sum()}개"
+        seen |= set(page["steam_appid"])
