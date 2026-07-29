@@ -33,10 +33,17 @@ def run_multi(
     components: tuple | None = None,
     postprocess: bool = False,
     postprocess_kwargs: dict | None = None,
+    exclude_appids: set[int] | list[int] | None = None,
 ) -> dict[str, dict]:
     """`postprocess=True` 면 랭킹 뒤에 다양성 후처리(시드 인터리빙·시리즈 상한·hard filter)를 건다.
 
     후처리는 상위를 걸러내므로 랭커에서 넉넉히(top_n × 5) 뽑은 뒤 잘라야 한다.
+
+    `exclude_appids` — **새로고침 제품의 필수 입력.** 이게 없으면 이 함수는 순수 함수라
+    같은 입력에 같은 목록을 낸다(= 새로고침해도 화면이 안 바뀐다). 여기에 넣을 것:
+      · 이미 보여준 것    (`aod_ai.rec_impression`)
+      · 이미 아는 것      (LIKE / DISLIKE / bookmark / 리뷰 작성한 콘텐츠)
+    시드(`liked_appids`)는 자동으로 합쳐지므로 따로 넣지 않아도 된다.
     """
     if strategies is None:
         strategies = ["max", "mean", "top2_mean"]
@@ -48,12 +55,13 @@ def run_multi(
     corpus_df = retriever.full_corpus_frame()
     aggregated = aggregator.aggregate_all(sim_matrix, seed_embs, corpus_df, strategies=strategies)
 
+    excluded = set(liked_appids) | set(exclude_appids or ())
     rank_n = top_n * 5 if postprocess else top_n
     results = {}
     for strategy in strategies:
         ranked = ranker.rank(
             aggregated[strategy],
-            exclude_appids=set(liked_appids),
+            exclude_appids=excluded,
             top_n=rank_n,
         )
         if postprocess:
@@ -70,6 +78,38 @@ def run_multi(
             print(f"  Saved: {out_path}")
 
     return results
+
+
+def next_page(
+    liked_appids: list[int],
+    seen_appids: set[int] | list[int] | None = None,
+    page_size: int = 10,
+    strategy: str = "max",
+    rec_boost: float = 0.03,
+    components: tuple | None = None,
+    postprocess: bool = True,
+):
+    """새로고침 한 번 = 이 함수 한 번. 서빙이 쓸 계약을 코드로 고정한다.
+
+    호출자는 반환된 `steam_appid` 를 `seen_appids` 에 누적해서 다음 호출에 넘겨야 한다.
+    그 누적을 어디에 저장할지가 서빙의 과제다(`aod_ai.rec_impression`).
+
+    주의: 이 함수는 **탐색(exploration)을 하지 않는다.** 점수 순으로 계속 깊이 들어가므로
+    새로고침을 거듭할수록 품질이 떨어진다(실측: 1페이지 유사도 0.800 → 5페이지 0.744).
+    몇 페이지까지 내보낼지는 제품 결정이고, 깊이별 품질 측정이 선행돼야 한다.
+    """
+    seen = set(seen_appids or ())
+    # 후처리가 상위를 걸러내므로 넉넉히 뽑는다
+    ranked = run_multi(
+        liked_appids,
+        strategies=[strategy],
+        top_n=page_size * 30,
+        rec_boost=rec_boost,
+        components=components,
+        postprocess=postprocess,
+        exclude_appids=seen,
+    )[strategy]
+    return ranked.head(page_size).reset_index(drop=True)
 
 
 def main():
