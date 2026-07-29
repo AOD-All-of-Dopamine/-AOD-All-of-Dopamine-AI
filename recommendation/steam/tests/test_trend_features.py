@@ -125,3 +125,33 @@ def test_3y_plus_trend_signal_zero():
     old = df[df["age_bucket"] == "3y_plus"]
     # Freshness weight is 0 for 3y_plus, so trend_signal should be 0
     assert (old["trend_signal"] == 0).all(), "3y_plus games should have trend_signal=0"
+
+
+# --- 새 크롤러의 dict 형식 (src/crawl_steam.py) ---
+
+def test_parse_release_date_accepts_dict():
+    from datetime import datetime
+
+    assert parse_release_date({"coming_soon": False, "date": "2000년 11월 1일"}) == datetime(2000, 11, 1)
+
+
+def test_parse_release_date_dict_coming_soon_is_none():
+    """coming_soon 플래그가 '출시 예정' 문자열 매칭보다 정확하다."""
+    assert parse_release_date({"coming_soon": True, "date": "2027년"}) is None
+    # 날짜 문자열이 멀쩡해도 coming_soon 이면 미출시다
+    assert parse_release_date({"coming_soon": True, "date": "2030년 1월 1일"}) is None
+
+
+def test_parse_release_date_dict_missing_date():
+    assert parse_release_date({"coming_soon": False}) is None
+    assert parse_release_date({}) is None
+
+
+def test_parse_release_date_still_accepts_str():
+    """구 jsonl 형식도 계속 지원한다."""
+    from datetime import datetime
+
+    assert parse_release_date("2000년 11월 1일") == datetime(2000, 11, 1)
+    assert parse_release_date("출시 예정") is None
+    assert parse_release_date("") is None
+    assert parse_release_date(None) is None

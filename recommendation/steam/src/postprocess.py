@@ -106,6 +106,24 @@ def apply_hard_filters(
     return df[keep].reset_index(drop=True)
 
 
+def series_group(name: str, publisher: str = "") -> str:
+    """시리즈 식별자. 퍼블리셔가 있으면 `퍼블리셔|이름앞부분` 으로 더 정확해진다.
+
+    이름만으로는 한계가 있다 — 판정에서 잡힌 실패 사례:
+      'WT2' vs 'War Trigger 3'          (같은 시리즈인데 이름이 완전히 다름)
+      'MadOut' vs 'MadOut Ice Storm'    (앞 2단어가 'madout' vs 'madout ice')
+    퍼블리셔를 붙이면 같은 회사의 유사 이름 작품이 한 그룹으로 묶인다.
+    구 데이터처럼 퍼블리셔가 없으면 이름 기반으로 자동 폴백한다.
+    """
+    key = series_key(name)
+    pub = str(publisher or "").strip().lower()
+    if not pub:
+        return key
+    # 퍼블리셔 + 이름 첫 단어 — 같은 회사의 다작을 전부 묶어버리지 않도록 이름도 남긴다
+    head = key.split()[0] if key.split() else key
+    return f"{pub}|{head}"
+
+
 def cap_series(df: pd.DataFrame, dataset: pd.DataFrame, series_max: int = 1) -> pd.DataFrame:
     """같은 시리즈를 최대 series_max 개만 남긴다.
 
@@ -116,8 +134,13 @@ def cap_series(df: pd.DataFrame, dataset: pd.DataFrame, series_max: int = 1) -> 
     if df.empty:
         return df.reset_index(drop=True)
     meta = dataset.set_index("steam_appid") if "steam_appid" in dataset.columns else dataset
-    names = df["steam_appid"].map(lambda a: meta["name"].get(a, ""))
-    keys = names.map(series_key)
+    has_pub = "publisher" in meta.columns
+    keys = df["steam_appid"].map(
+        lambda a: series_group(
+            meta["name"].get(a, ""),
+            meta["publisher"].get(a, "") if has_pub else "",
+        )
+    )
     seen: dict[str, int] = {}
     keep = []
     for k in keys:

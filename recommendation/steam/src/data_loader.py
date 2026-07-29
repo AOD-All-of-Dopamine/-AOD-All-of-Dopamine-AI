@@ -74,12 +74,18 @@ def record_to_row(obj: dict, min_desc_chars: int) -> dict | None:
         return None
     has_meta, meta_score = parse_metacritic(obj)
     has_rec, rec_total = parse_recommendations(obj)
+    devs = _parse_str_list(obj, "developers")
+    pubs = _parse_str_list(obj, "publishers")
     return {
         "steam_appid": appid,
         "name": name,
         "short_description": desc,
         "genres": parse_genres(obj),
         "categories": parse_categories(obj),
+        # 시리즈 판정용. 이름 휴리스틱은 'WT2' vs 'War Trigger 3' 를 못 잡는다.
+        # 구 jsonl 에는 없던 필드라 빈 문자열로 떨어지고, 그 경우 이름 기반으로 되돌아간다.
+        "developer": devs[0] if devs else "",
+        "publisher": pubs[0] if pubs else "",
         "has_metacritic": has_meta,
         "metacritic_score": meta_score,
         "has_recommendations": has_rec,

@@ -152,3 +152,44 @@ def test_postprocess_handles_everything_filtered_out():
     ranked = _ranked([1], [10])
     ds = _dataset([{"steam_appid": 1, "name": "성인", "genres": ["선정적 콘텐츠"], "categories": []}])
     assert postprocess(ranked, ds, top_n=10).empty
+
+
+# --------------------------------------------------- publisher 기반 시리즈
+
+def test_series_group_uses_publisher_to_catch_renamed_sequels():
+    """이름만으로는 못 잡던 사례 — 판정에서 FRANCHISE_OR_VARIANT 로 걸렸던 것들."""
+    from src.postprocess import series_group
+
+    # 'WT2' 와 'War Trigger 3' 는 이름이 완전히 달라 이름 휴리스틱이 실패한다
+    assert series_key("WT2") != series_key("War Trigger 3")
+    # 'MadOut' 과 'MadOut Ice Storm' 은 앞 2단어가 달라 실패한다
+    assert series_key("MadOut") != series_key("MadOut Ice Storm")
+    from src.postprocess import series_group as sg
+
+    assert sg("MadOut", "MadOut Games") == sg("MadOut Ice Storm", "MadOut Games")
+
+
+def test_series_group_falls_back_to_name_without_publisher():
+    """구 데이터에는 publisher 가 없다 — 이름 기반으로 되돌아가야 한다."""
+    from src.postprocess import series_group
+
+    assert series_group("Counter-Strike 2", "") == series_key("Counter-Strike 2")
+    assert series_group("Counter-Strike 2", "") == series_group("Counter-Strike: Source", "")
+
+
+def test_series_group_does_not_merge_unrelated_games_of_same_publisher():
+    """같은 퍼블리셔라도 다른 시리즈면 따로 세야 한다 (Valve 의 CS 와 Portal)."""
+    from src.postprocess import series_group
+
+    assert series_group("Counter-Strike 2", "Valve") != series_group("Portal 2", "Valve")
+
+
+def test_cap_series_uses_publisher_column_when_present():
+    ranked = _ranked([1, 2, 3], [10, 10, 10])
+    ds = _dataset([
+        {"steam_appid": 1, "name": "MadOut", "publisher": "MadOut Games"},
+        {"steam_appid": 2, "name": "MadOut Ice Storm", "publisher": "MadOut Games"},
+        {"steam_appid": 3, "name": "Stardew Valley", "publisher": "ConcernedApe"},
+    ])
+    out = cap_series(ranked, ds, series_max=1)
+    assert out["steam_appid"].tolist() == [1, 3]

@@ -23,10 +23,24 @@ FRESHNESS_WEIGHTS: dict[str, float] = {
 }
 
 
-def parse_release_date(s: str) -> datetime | None:
-    if not isinstance(s, str) or not s.strip():
+def parse_release_date(value) -> datetime | None:
+    """출시일 파싱. 미출시면 None.
+
+    두 형식을 모두 받는다:
+      · dict  — `{"coming_soon": bool, "date": "2000년 11월 1일"}` (Steam appdetails 원형)
+      · str   — `"2000년 11월 1일"` (구 jsonl 이 평탄화해둔 형태)
+
+    dict 쪽이 정확하다. `coming_soon` 은 Steam 이 직접 주는 플래그라, 문자열에서
+    `"출시 예정"` 접두어를 찾는 것보다 언어·표기 변화에 안전하다.
+    """
+    if isinstance(value, dict):
+        if value.get("coming_soon"):
+            return None
+        value = value.get("date") or ""
+
+    if not isinstance(value, str) or not value.strip():
         return None
-    s = s.strip()
+    s = value.strip()
     for pat in FUTURE_RELEASE_DATE_PATTERNS:
         if s.startswith(pat):
             return None
@@ -46,16 +60,22 @@ def assign_age_bucket(age_days: int) -> str:
     return "3y_plus"
 
 
-def build_release_date_map() -> dict[int, str]:
-    mapping: dict[int, str] = {}
+def build_release_date_map() -> dict[int, object]:
+    """appid → release_date 원본(dict 또는 str). 파싱은 parse_release_date 가 한다."""
+    mapping: dict[int, object] = {}
     raw_data = resolve_path(load_config()["data"]["input_path"])
     with open(raw_data, encoding="utf-8") as f:
         for line in f:
-            r = json.loads(line)
+            line = line.strip()
+            if not line:
+                continue
+            try:
+                r = json.loads(line)
+            except json.JSONDecodeError:
+                continue
             aid = r.get("steam_appid")
             if isinstance(aid, int):
-                rd = r.get("release_date", "")
-                mapping[aid] = rd.strip() if isinstance(rd, str) else ""
+                mapping[aid] = r.get("release_date") or ""
     return mapping
 
 
@@ -70,8 +90,14 @@ def build_full_features(
 
     df = dataset[["steam_appid", "name", "has_recommendations", "recommendations_total"]].copy()
 
-    df["raw_release_date"] = df["steam_appid"].map(date_map)
-    df["parsed_date"] = df["raw_release_date"].apply(parse_release_date)
+    raw = df["steam_appid"].map(date_map)
+    df["parsed_date"] = raw.apply(parse_release_date)
+    # dict 는 parquet 에 그대로 못 넣는다 — 표시용 문자열과 플래그로 분리해 저장한다
+    df["coming_soon"] = raw.apply(lambda v: bool(v.get("coming_soon")) if isinstance(v, dict) else
+                                  (isinstance(v, str) and v.strip().startswith(tuple(FUTURE_RELEASE_DATE_PATTERNS))))
+    df["raw_release_date"] = raw.apply(
+        lambda v: (v.get("date") or "") if isinstance(v, dict) else (v if isinstance(v, str) else "")
+    )
     df["has_valid_date"] = df["parsed_date"].notna()
 
     df["age_days"] = None
@@ -120,6 +146,7 @@ def build_output_features(full: pd.DataFrame) -> pd.DataFrame:
             "steam_appid",
             "name",
             "raw_release_date",
+            "coming_soon",
             "parsed_date",
             "age_days",
             "age_bucket",
@@ -153,10 +180,8 @@ def print_coverage_audit(df: pd.DataFrame):
     print(f"  Both known:                  {both_ok:>6d}  ({both_ok/total*100:5.1f}%)")
 
     invalid = total - dates_ok
-    future = df["raw_release_date"].apply(
-        lambda s: any(s.startswith(p) for p in FUTURE_RELEASE_DATE_PATTERNS) if isinstance(s, str) else False
-    ).sum()
-    print(f"  Invalid / future date:       {invalid:>6d}  (future in dataset: {future})")
+    future = int(df["coming_soon"].sum()) if "coming_soon" in df.columns else 0
+    print(f"  Invalid / future date:       {invalid:>6d}  (미출시: {future})")
 
     print()
     print("--- Age cohort sizes (both-known) ---")

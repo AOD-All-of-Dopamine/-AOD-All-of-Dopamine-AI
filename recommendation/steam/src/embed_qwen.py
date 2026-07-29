@@ -92,6 +92,47 @@ def _parse_out_dir() -> tuple[Path, Path]:
     return src, dst
 
 
+def select_targets(df: pd.DataFrame, out: Path) -> tuple[pd.DataFrame, pd.DataFrame | None]:
+    """이번에 임베딩할 행과, 이미 만들어둔 인덱스를 고른다.
+
+    17만 건을 한 번에 임베딩하면 24시간이 넘는다. 그런데 우리가 실제로 추천하는 것은
+    리뷰 수가 알려진 게임뿐이다(`has_recommendations`). 그래서 **가치 있는 것부터
+    임베딩하고 나머지는 나중에 이어붙이는** 두 단계로 나눈다.
+
+        1단계: --only-with-reviews   리뷰 있는 것만 (약 6시간)
+        2단계: --append             나머지를 이어붙임 (필요해지면)
+
+    `--append` 는 기존 corpus_index 에 있는 appid 를 건너뛴다. 부분 커버리지는
+    문제가 되지 않는다 — 후보 생성이 dataset 이 아니라 corpus_index 를 기준으로 돌기
+    때문에, 임베딩된 것만 추천 후보가 된다.
+    """
+    existing_idx = None
+    idx_path, emb_path = out / "corpus_index.parquet", out / "corpus_embeddings.npy"
+
+    if "--append" in sys.argv:
+        if not (idx_path.exists() and emb_path.exists()):
+            raise SystemExit(f"--append 인데 {out} 에 기존 임베딩이 없습니다.")
+        existing_idx = pd.read_parquet(idx_path)
+        done = set(existing_idx["steam_appid"])
+        df = df[~df["steam_appid"].isin(done)]
+        print(f"--append: 이미 {len(done):,}건 임베딩됨 → 이번에 {len(df):,}건 추가")
+    elif emb_path.exists() and "--force" not in sys.argv:
+        raise SystemExit(
+            f"{out} 에 이미 corpus_embeddings.npy 가 있습니다.\n"
+            f"  이어붙이려면 --append, 처음부터 다시 만들려면 --force 를 쓰세요."
+        )
+
+    if "--only-with-reviews" in sys.argv:
+        before = len(df)
+        if "has_recommendations" not in df.columns:
+            raise SystemExit("dataset 에 has_recommendations 컬럼이 없습니다.")
+        df = df[df["has_recommendations"].fillna(False).astype(bool)]
+        print(f"--only-with-reviews: {before:,} → {len(df):,}건 "
+              f"({len(df) / before * 100:.0f}%, 리뷰 수가 알려진 게임만)")
+
+    return df.reset_index(drop=True), existing_idx
+
+
 def main():
     cfg = load_config()
     src, out = _parse_out_dir()
@@ -100,8 +141,13 @@ def main():
     if out != src:
         print(f"입력 {src} → 출력 {out} (기존 임베딩 보존)")
 
+    df, existing_idx = select_targets(df, out)
+    if df.empty:
+        print("임베딩할 대상이 없습니다.")
+        return
+
     model, device, batch = resolve_runtime(cfg)
-    print(f"device={device} batch={batch}")
+    print(f"device={device} batch={batch} | 대상 {len(df):,}건")
 
     # --- 500건 benchmark ---
     n_bench = cfg["runtime"]["benchmark_items"]
@@ -123,9 +169,19 @@ def main():
 
     # --- corpus embedding ---
     corpus_emb = encode_with_backoff(model, df["semantic_text"].tolist(), batch).astype("float32")
-    np.save(out / "corpus_embeddings.npy", corpus_emb)
     corpus_index = df[["steam_appid", "name"]].reset_index(drop=True)
-    corpus_index.insert(0, "embedding_row", range(len(corpus_index)))
+
+    if existing_idx is not None:
+        # 이어붙이기 — 기존 행 번호를 유지해야 이미 저장된 벡터와 어긋나지 않는다
+        old_emb = np.load(out / "corpus_embeddings.npy")
+        corpus_index.insert(0, "embedding_row", range(len(old_emb), len(old_emb) + len(corpus_index)))
+        corpus_emb = np.concatenate([old_emb, corpus_emb], axis=0)
+        corpus_index = pd.concat([existing_idx, corpus_index], ignore_index=True)
+        print(f"이어붙임: {len(old_emb):,} + {len(df):,} = {len(corpus_emb):,}건")
+    else:
+        corpus_index.insert(0, "embedding_row", range(len(corpus_index)))
+
+    np.save(out / "corpus_embeddings.npy", corpus_emb)
     corpus_index.to_parquet(out / "corpus_index.parquet", index=False)
 
     # --- anchor query embedding (custom instruction) ---
