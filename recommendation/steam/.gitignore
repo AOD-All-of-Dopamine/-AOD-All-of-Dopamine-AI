@@ -13,3 +13,6 @@ artifacts/user_*
 # 표현 실험 아티팩트 — 임베딩(76MB)이 완성된 뒤 선별 커밋한다
 artifacts/rep_*/corpus_embeddings.npy
 artifacts/rep_*/anchor_embeddings.npy
+
+# 크롤링 원본 (17만 건, 수 GB) — 재수집 가능하므로 커밋하지 않는다
+data/steam_games_full.jsonl
