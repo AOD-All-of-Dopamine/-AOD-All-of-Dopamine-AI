@@ -31,7 +31,13 @@ def run_multi(
     rec_boost: float = 0.03,
     output_dir: str | None = None,
     components: tuple | None = None,
+    postprocess: bool = False,
+    postprocess_kwargs: dict | None = None,
 ) -> dict[str, dict]:
+    """`postprocess=True` 면 랭킹 뒤에 다양성 후처리(시드 인터리빙·시리즈 상한·hard filter)를 건다.
+
+    후처리는 상위를 걸러내므로 랭커에서 넉넉히(top_n × 5) 뽑은 뒤 잘라야 한다.
+    """
     if strategies is None:
         strategies = ["max", "mean", "top2_mean"]
 
@@ -42,13 +48,21 @@ def run_multi(
     corpus_df = retriever.full_corpus_frame()
     aggregated = aggregator.aggregate_all(sim_matrix, seed_embs, corpus_df, strategies=strategies)
 
+    rank_n = top_n * 5 if postprocess else top_n
     results = {}
     for strategy in strategies:
         ranked = ranker.rank(
             aggregated[strategy],
             exclude_appids=set(liked_appids),
-            top_n=top_n,
+            top_n=rank_n,
         )
+        if postprocess:
+            from src.postprocess import postprocess as apply_postprocess
+
+            ranked = apply_postprocess(
+                ranked, ranker.dataset.reset_index(), top_n=top_n,
+                **(postprocess_kwargs or {}),
+            )
         results[strategy] = ranked
         if output_dir:
             out_path = Path(output_dir) / f"ranked_{strategy}.parquet"

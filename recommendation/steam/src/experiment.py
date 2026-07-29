@@ -25,7 +25,7 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-from src.config import ARTIFACTS_DIR, PROJECT_ROOT, load_config
+from src.config import ARTIFACTS_DIR, PROJECT_ROOT, artifact_dir, load_config
 
 EXP_DIR = PROJECT_ROOT / "artifacts" / "experiments"
 REGISTRY = EXP_DIR / "registry.jsonl"
@@ -122,6 +122,74 @@ def compute_diagnostics(
         "n_corpus": int(len(E)),
         "dim": int(E.shape[1]),
     }
+
+
+def compute_ranking_diagnostics(
+    artifacts: str | Path | None = None,
+    postprocess: bool = False,
+    ks: tuple[int, ...] = (10, 30, 100),
+    page_size: int = 10,
+) -> dict:
+    """추천 목록의 다양성 — 판정 불필요. 새로고침 제품의 핵심 지표다.
+
+    `max_seed_share` : 한 시드가 먹은 비율. 사용자가 "내가 고른 3개 중 하나만 반영됐다"고
+                       느끼는 정도. 시드 3개면 이론 하한 0.33.
+    `effective_genres`: exp(장르 엔트로피) = "사실상 몇 개 장르에 걸쳐 있나".
+                       max_genre_share 는 쓰지 않는다 — `인디`가 코퍼스의 71.5% 에 붙어 있어
+                       우리 랭킹이 아니라 코퍼스 구성을 재는 지표가 되어버린다.
+    `unique_series`   : 서로 다른 시리즈 비율.
+    `page_turnover`   : 연속한 두 페이지의 시드 **구성** 차이(0~1).
+                        ⚠ 단독으로 높/낮음을 판단하면 안 된다. 인터리빙을 걸면 모든 페이지가
+                        같은 균형 구성(예: 3/3/4)이 되어 이 값이 **내려간다** — 그건 정상이다.
+                        `max_seed_share@10`(페이지 내부 다양성)과 **함께** 읽어야 한다.
+                        이상적인 상태는 seed_share 낮음 + turnover 낮음이다.
+    """
+    import numpy as np
+
+    from src.personalized_retrieve import build_components, run_multi
+    from src.postprocess import series_key
+
+    profiles = pd.read_parquet(PROJECT_ROOT / "artifacts" / "p1" / "profiles.parquet")
+    dataset = pd.read_parquet(artifact_dir(artifacts) / "dataset.parquet").set_index("steam_appid")
+    comp = build_components(0.03, artifacts=artifacts)
+
+    acc = {k: {"seed": [], "genres": [], "series": []} for k in ks}
+    turnover = []
+    for _, p in profiles.iterrows():
+        r = run_multi(
+            list(p["liked_appids"]), strategies=["max"], top_n=max(ks),
+            components=comp, postprocess=postprocess,
+        )["max"]
+        for k in ks:
+            t = r.head(k)
+            if not len(t):
+                continue
+            acc[k]["seed"].append(t["dominant_seed"].value_counts().iloc[0] / len(t))
+            counts = pd.Series(
+                [g for a in t["steam_appid"] for g in dataset.loc[a, "genres"]]
+            ).value_counts()
+            probs = counts / counts.sum()
+            acc[k]["genres"].append(float(np.exp(-(probs * np.log(probs)).sum())))
+            acc[k]["series"].append(
+                len({series_key(dataset.loc[a, "name"]) for a in t["steam_appid"]}) / len(t)
+            )
+        # 페이지 간 시드 구성 변화
+        pages = [r.iloc[i:i + page_size] for i in range(0, min(len(r), max(ks)), page_size)]
+        diffs = []
+        for a, b in zip(pages, pages[1:]):
+            sa = a["dominant_seed"].value_counts(normalize=True)
+            sb = b["dominant_seed"].value_counts(normalize=True)
+            idx = sa.index.union(sb.index)
+            diffs.append(float(sa.reindex(idx, fill_value=0).sub(sb.reindex(idx, fill_value=0)).abs().sum() / 2))
+        if diffs:
+            turnover.append(float(np.mean(diffs)))
+
+    out = {"page_turnover": round(float(np.mean(turnover)), 4) if turnover else None}
+    for k in ks:
+        out[f"max_seed_share@{k}"] = round(float(np.mean(acc[k]["seed"])), 4)
+        out[f"effective_genres@{k}"] = round(float(np.mean(acc[k]["genres"])), 4)
+        out[f"unique_series@{k}"] = round(float(np.mean(acc[k]["series"])), 4)
+    return out
 
 
 def compute_loo(rec_boost: float = 0.03) -> dict:
