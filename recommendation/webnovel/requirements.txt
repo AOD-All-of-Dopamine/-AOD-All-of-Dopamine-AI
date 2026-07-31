@@ -1,0 +1,18 @@
+# 임베딩 생성용 — 평가/랭킹 작업만 할 거라면 설치하지 않아도 된다(아래 주석 참고)
+torch
+transformers>=4.51.0
+sentence-transformers>=2.7.0
+
+# 파이프라인 공통
+numpy
+pandas
+pyarrow
+openpyxl
+scikit-learn
+tqdm
+pyyaml
+requests
+pytest
+
+# 평가만 돌릴 때(embed_qwen 제외):
+#   pip install numpy pandas pyarrow openpyxl scikit-learn pyyaml requests pytest

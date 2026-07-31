@@ -1,0 +1,27 @@
+{
+  "total_raw_records": 390,
+  "valid_corpus_records": 390,
+  "genres_coverage": 1.0,
+  "author_coverage": 1.0,
+  "publisher_coverage": 1.0,
+  "interest_coverage": 1.0,
+  "completed_ratio": 0.5358974358974359,
+  "synopsis_chars": {
+    "median": 110.5,
+    "p25": 61.0,
+    "p75": 260.75,
+    "under_30_ratio": 0.09230769230769231,
+    "empty_ratio": 0.0
+  },
+  "interest_count": {
+    "median": 32000.0,
+    "p25": 0.0,
+    "p75": 324750.0,
+    "p90": 1221800.0000000014
+  },
+  "genre_distribution": {
+    "판타지": 298,
+    "로맨스": 50,
+    "미스터리": 42
+  }
+}

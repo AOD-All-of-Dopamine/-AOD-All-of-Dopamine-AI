@@ -1,0 +1,10 @@
+.env
+.venv
+# 크롤 산출물 — 재생성 가능하고 크다
+data/*.jsonl
+data/*.log
+data/product_ids*.json
+# 임베딩 — 27,000건이면 약 110MB
+artifacts/**/*.npy
+__pycache__/
+*.pyc
