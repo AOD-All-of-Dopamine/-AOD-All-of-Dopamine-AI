@@ -75,6 +75,13 @@ def encode_with_backoff(model, texts, batch: int, show_progress_bar: bool = True
             raise
 
 
+def _arg_value(flag: str, default):
+    for i, a in enumerate(sys.argv):
+        if a == flag and i + 1 < len(sys.argv):
+            return sys.argv[i + 1]
+    return default
+
+
 def _dir_arg(flag: str, default: Path) -> Path:
     for i, arg in enumerate(sys.argv):
         if arg == flag and i + 1 < len(sys.argv):
@@ -131,8 +138,49 @@ def stream_texts(texts_path: Path, chunk: int, skip: int = 0):
         yield buf
 
 
+def drop_model_page_cache(model) -> float:
+    """모델 파일이 차지한 페이지 캐시를 커널에 돌려준다.
+
+    cgroup v2 는 페이지 캐시도 한도에 넣는다. 실측: RSS 2.92GB 인데 cgroup 은 4.25GB
+    (한도 4.29GB, 99%). 차이는 safetensors 2.4GB 를 읽으면서 생긴 캐시다. 가중치는 이미
+    프로세스 메모리에 올라와 있으므로 이 캐시는 필요 없다.
+
+    posix_fadvise(DONTNEED) 로 반환하면 한도에 여유가 생긴다. 반환량(GB)을 돌려준다.
+    """
+    import glob
+    import os as _os
+
+    before = _cgroup_gb()
+    try:
+        cache_dir = _os.path.expanduser("~/.cache/huggingface")
+        for pat in ("**/*.safetensors", "**/*.bin"):
+            for f in glob.glob(_os.path.join(cache_dir, pat), recursive=True):
+                try:
+                    fd = _os.open(f, _os.O_RDONLY)
+                    _os.posix_fadvise(fd, 0, 0, _os.POSIX_FADV_DONTNEED)
+                    _os.close(fd)
+                except OSError:
+                    pass
+    except Exception:
+        return 0.0
+    return before - _cgroup_gb()
+
+
+def _cgroup_gb() -> float:
+    """cgroup 이 실제로 세는 값. RSS 와 다르다 — 페이지 캐시·커널 메모리가 포함된다.
+
+    실측: RSS 2.81GB 인데 OOM 이 났다. 모델 safetensors(2.4GB)를 읽은 페이지 캐시가
+    한도를 함께 먹기 때문이다. 그래서 RSS 만 보면 원인을 놓친다.
+    """
+    try:
+        return int(open("/sys/fs/cgroup/memory.current").read()) / 1e9
+    except Exception:
+        return 0.0
+
+
 def encode_to_shard(
-    model, texts_path: Path, n_total: int, batch: int, out: Path, dim: int, chunk: int = CHUNK
+    model, texts_path: Path, n_total: int, batch: int, out: Path, dim: int,
+    chunk: int = CHUNK, max_items: int = 0,
 ) -> Path:
     """청크마다 원시 float32 바이트를 파일에 append 한다.
 
@@ -158,8 +206,12 @@ def encode_to_shard(
             el = time.time() - t0
             rate = t_done / el if el else 0
             remain = (n_total - done - t_done) / rate / 3600 if rate else 0
+            rss = int(open("/proc/self/status").read().split("VmRSS:")[1].split()[0]) / 1024 / 1024
             print(f"  {done + t_done:,}/{n_total:,}  {rate:.2f} items/s  "
-                  f"남은 {remain:.1f}h", flush=True)
+                  f"남은 {remain:.1f}h  RSS {rss:.2f}GB cg {_cgroup_gb():.2f}GB", flush=True)
+            if max_items and t_done >= max_items:
+                print(f"  --max-items {max_items} 도달 — 프로세스를 종료한다(재실행하면 이어감)", flush=True)
+                break
     return shard
 
 
@@ -225,7 +277,10 @@ def select_targets(df: pd.DataFrame, out: Path) -> tuple[pd.DataFrame, pd.DataFr
 def main():
     cfg = load_config()
     src, out = _parse_out_dir()
-    df = pd.read_parquet(src / "dataset.parquet")
+    df = pd.read_parquet(
+        src / "dataset.parquet",
+        columns=["steam_appid", "name", "semantic_text", "has_recommendations"],
+    )
     anchors = pd.read_parquet(src / "anchors_40.parquet")
     if out != src:
         print(f"입력 {src} → 출력 {out} (기존 임베딩 보존)")
@@ -247,12 +302,18 @@ def main():
     gc.collect()
 
     model, device, batch = resolve_runtime(cfg)
-    print(f"device={device} batch={batch} | 대상 {n_total:,}건", flush=True)
+    freed = drop_model_page_cache(model)
+    print(f"device={device} batch={batch} | 대상 {n_total:,}건 | "
+          f"cgroup {_cgroup_gb():.2f}GB (페이지 캐시 {freed:.2f}GB 반환)", flush=True)
 
     dim = int(model.get_sentence_embedding_dimension())
 
     # --- corpus embedding: 청크마다 원시 파일에 append (중단 시 이어받기) ---
-    shard = encode_to_shard(model, texts_path, n_total, batch, out, dim)
+    max_items = int(_arg_value("--max-items", 0))
+    shard = encode_to_shard(model, texts_path, n_total, batch, out, dim, max_items=max_items)
+    if max_items and _shard_rows(shard, dim) < n_total:
+        print(f"부분 완료: {_shard_rows(shard, dim):,}/{n_total:,} — 같은 명령으로 재실행하세요")
+        return
 
     # --- anchor query embedding (검색용 지시문 프리픽스) ---
     anchor_emb = model.encode(
@@ -268,11 +329,10 @@ def main():
     n_existing = len(existing_idx) if existing_idx is not None else 0
     prefix = np.load(out / "corpus_embeddings.npy")[:n_existing] if n_existing else None
     total = shard_to_npy(shard, out / "corpus_embeddings.npy", dim, prefix=prefix)
+    corpus_index = pd.read_parquet(out / INDEX_FILE)
     shard.unlink(missing_ok=True)
     texts_path.unlink(missing_ok=True)
     (out / INDEX_FILE).unlink(missing_ok=True)
-
-    corpus_index = pd.read_parquet(out / INDEX_FILE)
     corpus_index.insert(0, "embedding_row", range(n_existing, n_existing + len(corpus_index)))
     if existing_idx is not None:
         corpus_index = pd.concat([existing_idx, corpus_index], ignore_index=True)
