@@ -94,3 +94,26 @@ def test_build_dataset_quality_flags():
     assert bool(row1["has_recommendations"]) and row1["recommendations_total"] == 500
     assert bool(row1["has_metacritic"]) and row1["metacritic_score"] == 88
     assert not bool(row2["has_recommendations"]) and not bool(row2["has_metacritic"])
+
+
+# --- Steam appdetails 원형: [{"id":..,"description":..}] (src/crawl_steam.py) ---
+
+def test_parse_genres_accepts_steam_dict_format():
+    """dict 를 못 읽으면 장르 커버리지가 0% 가 되고 임베딩이 조용히 나빠진다."""
+    obj = {"genres": [{"id": "1", "description": "액션"}, {"id": "25", "description": "어드벤처"}]}
+    assert parse_genres(obj) == ["액션", "어드벤처"]
+
+
+def test_parse_categories_accepts_steam_dict_format():
+    obj = {"categories": [{"id": 1, "description": "멀티플레이어"}, {"id": 49, "description": "PvP"}]}
+    assert parse_categories(obj) == ["멀티플레이어", "PvP"]
+
+
+def test_parse_genres_still_accepts_flat_strings():
+    """구 jsonl 은 평탄화된 문자열이었다 — 계속 지원해야 한다."""
+    assert parse_genres({"genres": ["전략"]}) == ["전략"]
+
+
+def test_parse_genres_mixed_and_garbage():
+    obj = {"genres": [{"id": "1", "description": "액션"}, "인디", {"id": "2"}, None, 42]}
+    assert parse_genres(obj) == ["액션", "인디"]

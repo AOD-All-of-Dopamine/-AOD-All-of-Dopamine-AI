@@ -1,0 +1,8 @@
+{
+  "total_raw_records": 175767,
+  "valid_corpus_records": 173691,
+  "short_description_coverage": 1.0,
+  "genres_coverage": 0.9992918458642072,
+  "metacritic_coverage": 0.02356483640487993,
+  "recommendations_coverage": 0.1260399214697365
+}

@@ -1,0 +1,53 @@
+# Steam 전체 크롤링(2026-08, 175,767건) 기준 설정.
+# 기존 s1_v2.yaml 은 19,476개 코퍼스용이므로 그대로 둔다 — 두 코퍼스를 비교해야 한다.
+experiment:
+  id: "steam_full_v1"
+  seed: 42
+
+data:
+  # src/crawl_steam.py 산출물. 리포에 없다(684MB, .gitignore).
+  input_path: "data/steam_games_full.jsonl"
+  min_description_chars: 30
+  ranking_path: "data/steam_ranking.parquet"
+
+representation:
+  type: "description_genres_modes"
+
+anchor:
+  candidate_count: 80
+  final_count: 40
+  indie_max_count: 30
+
+retrieval:
+  candidate_k: 100
+  evaluation_k: 10
+
+embedding:
+  model_name: "Qwen/Qwen3-Embedding-0.6B"
+  normalize: true
+  query_instruction: >
+    Given a Steam game, retrieve other Steam games
+    that a player who likes this game would likely find relevant.
+
+runtime:
+  prefer_device: "cuda"
+  gpu_batch_size: 8
+  # cgroup 4GiB 한도 때문에 4 를 넘기면 OOM. 자세한 근거는 s1_v2.yaml 주석 참고.
+  cpu_batch_size: 4
+  max_seq_length: 512
+  benchmark_items: 500
+
+tfidf:
+  ngram_min: 1
+  ngram_max: 2
+  min_df: 2
+  max_df: 0.98
+  max_features: 120000
+
+evaluation:
+  relevance_positive_threshold: 2
+  ndcg_gain: "exponential"
+  ndcg_k: 10
+  baseline_experiment_id: "steam_s1_tfidf_v2"
+  treatment_experiment_id: "steam_s1_qwen_v2"
+  precision_gate: 0.70

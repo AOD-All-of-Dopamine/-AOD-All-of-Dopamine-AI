@@ -58,12 +58,12 @@ def resolve_runtime(cfg: dict):
     return model, device, batch
 
 
-def encode_with_backoff(model, texts, batch: int, **kw) -> np.ndarray:
+def encode_with_backoff(model, texts, batch: int, show_progress_bar: bool = True, **kw) -> np.ndarray:
     while True:
         try:
             return model.encode(
                 texts, batch_size=batch, normalize_embeddings=True,
-                show_progress_bar=True, **kw,
+                show_progress_bar=show_progress_bar, **kw,
             )
         except RuntimeError as e:
             if "out of memory" in str(e).lower() and batch > 1:
@@ -92,6 +92,56 @@ def _parse_out_dir() -> tuple[Path, Path]:
     return src, dst
 
 
+PROGRESS_FILE = "_embed_progress.json"
+
+
+def _load_progress(out: Path) -> dict:
+    p = out / PROGRESS_FILE
+    return json.loads(p.read_text()) if p.exists() else {}
+
+
+def _save_progress(out: Path, **kw) -> None:
+    (out / PROGRESS_FILE).write_text(json.dumps(kw, ensure_ascii=False))
+
+
+def encode_to_memmap(
+    model, texts: list[str], batch: int, out: Path, dim: int,
+    n_existing: int = 0, chunk: int = 2000,
+) -> np.ndarray:
+    """청크 단위로 인코딩해 디스크에 바로 쓴다.
+
+    17만 건을 한 번에 encode 하면 두 가지가 문제다:
+      1) 결과 배열 0.7GB 를 모델(2.4GB)과 함께 들고 있어야 해서 cgroup 4GiB 를 위협한다
+      2) 35시간 중 34시간째에 죽으면 전부 날아간다
+
+    memmap 에 청크마다 flush 하고 진행 상황을 기록해, 재실행하면 남은 것부터 이어서 한다.
+    """
+    total = n_existing + len(texts)
+    emb_path = out / "corpus_embeddings.npy"
+    done = _load_progress(out).get("rows_done", n_existing)
+
+    if done > n_existing:
+        print(f"이어받기: {done - n_existing:,}/{len(texts):,} 건 이미 완료")
+
+    mm = np.lib.format.open_memmap(
+        emb_path, mode="r+" if emb_path.exists() else "w+",
+        dtype="float32", shape=(total, dim),
+    )
+    t0 = time.time()
+    for start in range(done - n_existing, len(texts), chunk):
+        part = texts[start : start + chunk]
+        vecs = encode_with_backoff(model, part, batch, show_progress_bar=False)
+        mm[n_existing + start : n_existing + start + len(part)] = vecs.astype("float32")
+        mm.flush()
+        _save_progress(out, rows_done=n_existing + start + len(part), total=total)
+        n_done = start + len(part)
+        el = time.time() - t0
+        rate = n_done / el if el else 0
+        eta = (len(texts) - n_done) / rate / 3600 if rate else 0
+        print(f"  {n_done:,}/{len(texts):,}  {rate:.2f} items/s  남은 {eta:.1f}h", flush=True)
+    return mm
+
+
 def select_targets(df: pd.DataFrame, out: Path) -> tuple[pd.DataFrame, pd.DataFrame | None]:
     """이번에 임베딩할 행과, 이미 만들어둔 인덱스를 고른다.
 
@@ -117,10 +167,14 @@ def select_targets(df: pd.DataFrame, out: Path) -> tuple[pd.DataFrame, pd.DataFr
         df = df[~df["steam_appid"].isin(done)]
         print(f"--append: 이미 {len(done):,}건 임베딩됨 → 이번에 {len(df):,}건 추가")
     elif emb_path.exists() and "--force" not in sys.argv:
-        raise SystemExit(
-            f"{out} 에 이미 corpus_embeddings.npy 가 있습니다.\n"
-            f"  이어붙이려면 --append, 처음부터 다시 만들려면 --force 를 쓰세요."
-        )
+        prog = _load_progress(out)
+        if prog and prog.get("rows_done", 0) < prog.get("total", 0):
+            print(f"중단된 작업 발견: {prog['rows_done']:,}/{prog['total']:,} — 이어서 진행합니다")
+        else:
+            raise SystemExit(
+                f"{out} 에 이미 완료된 corpus_embeddings.npy 가 있습니다.\n"
+                f"  이어붙이려면 --append, 처음부터 다시 만들려면 --force 를 쓰세요."
+            )
 
     if "--only-with-reviews" in sys.argv:
         before = len(df)
@@ -167,22 +221,20 @@ def main():
         json.dump(bench, f, indent=2)
     print(json.dumps(bench, indent=2))
 
-    # --- corpus embedding ---
-    corpus_emb = encode_with_backoff(model, df["semantic_text"].tolist(), batch).astype("float32")
+    # --- corpus embedding (청크 단위로 디스크에 직접 기록, 중단 시 이어받기) ---
+    n_existing = len(existing_idx) if existing_idx is not None else 0
+    dim = int(model.get_sentence_embedding_dimension())
+    corpus_emb = encode_to_memmap(
+        model, df["semantic_text"].tolist(), batch, out, dim, n_existing=n_existing
+    )
+
     corpus_index = df[["steam_appid", "name"]].reset_index(drop=True)
-
+    corpus_index.insert(0, "embedding_row", range(n_existing, n_existing + len(corpus_index)))
     if existing_idx is not None:
-        # 이어붙이기 — 기존 행 번호를 유지해야 이미 저장된 벡터와 어긋나지 않는다
-        old_emb = np.load(out / "corpus_embeddings.npy")
-        corpus_index.insert(0, "embedding_row", range(len(old_emb), len(old_emb) + len(corpus_index)))
-        corpus_emb = np.concatenate([old_emb, corpus_emb], axis=0)
         corpus_index = pd.concat([existing_idx, corpus_index], ignore_index=True)
-        print(f"이어붙임: {len(old_emb):,} + {len(df):,} = {len(corpus_emb):,}건")
-    else:
-        corpus_index.insert(0, "embedding_row", range(len(corpus_index)))
-
-    np.save(out / "corpus_embeddings.npy", corpus_emb)
+        print(f"이어붙임: {n_existing:,} + {len(df):,} = {len(corpus_index):,}건")
     corpus_index.to_parquet(out / "corpus_index.parquet", index=False)
+    (out / PROGRESS_FILE).unlink(missing_ok=True)  # 완료 표시
 
     # --- anchor query embedding (custom instruction) ---
     anchor_emb = model.encode(

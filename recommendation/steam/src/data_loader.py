@@ -16,10 +16,25 @@ def clean_text(text: str) -> str:
 
 
 def _parse_str_list(obj: dict, key: str) -> list[str]:
+    """genres / categories / developers 등 문자열 리스트 필드를 정규화한다.
+
+    두 형태를 모두 받는다:
+      · `[{"id": "1", "description": "액션"}]` — Steam appdetails 원형 (crawl_steam.py)
+      · `["액션"]`                            — 평탄화된 형태 (구 jsonl)
+
+    dict 를 걸러버리면 장르가 통째로 0% 가 되고, 그러면 semantic_text 에서 `Genres:` 줄이
+    사라져 임베딩 품질이 조용히 무너진다.
+    """
     values = obj.get(key) or []
     if not isinstance(values, list):
         return []
-    return [c for v in values if isinstance(v, str) and (c := clean_text(v))]
+    out = []
+    for v in values:
+        if isinstance(v, dict):
+            v = v.get("description") or v.get("name") or ""
+        if isinstance(v, str) and (c := clean_text(v)):
+            out.append(c)
+    return out
 
 
 def parse_genres(obj: dict) -> list[str]:
