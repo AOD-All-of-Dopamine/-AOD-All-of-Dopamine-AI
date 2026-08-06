@@ -1,5 +1,7 @@
 # src/embed_qwen.py
+import gc
 import json
+import os
 import sys
 import time
 from pathlib import Path
@@ -92,54 +94,91 @@ def _parse_out_dir() -> tuple[Path, Path]:
     return src, dst
 
 
-PROGRESS_FILE = "_embed_progress.json"
+SHARD_FILE = "_embeddings.raw"
+TEXTS_FILE = "_texts.parquet"
+INDEX_FILE = "_index.parquet"
+
+# cgroup 4GiB 에서 모델만 2.98GB 다. 실측: 200건 인코딩은 3.11GB 로 통과하지만
+# 2000건은 OOM. 순간 할당을 줄이려면 청크를 작게 가져가는 수밖에 없다.
+CHUNK = 256
 
 
-def _load_progress(out: Path) -> dict:
-    p = out / PROGRESS_FILE
-    return json.loads(p.read_text()) if p.exists() else {}
+def _shard_rows(path: Path, dim: int) -> int:
+    """원시 파일 크기가 곧 진행 상황이다 — 별도 진행 파일이 필요 없다."""
+    return path.stat().st_size // (dim * 4) if path.exists() else 0
 
 
-def _save_progress(out: Path, **kw) -> None:
-    (out / PROGRESS_FILE).write_text(json.dumps(kw, ensure_ascii=False))
+def stream_texts(texts_path: Path, chunk: int, skip: int = 0):
+    """semantic_text 를 parquet 에서 청크 단위로 흘려보낸다.
 
-
-def encode_to_memmap(
-    model, texts: list[str], batch: int, out: Path, dim: int,
-    n_existing: int = 0, chunk: int = 2000,
-) -> np.ndarray:
-    """청크 단위로 인코딩해 디스크에 바로 쓴다.
-
-    17만 건을 한 번에 encode 하면 두 가지가 문제다:
-      1) 결과 배열 0.7GB 를 모델(2.4GB)과 함께 들고 있어야 해서 cgroup 4GiB 를 위협한다
-      2) 35시간 중 34시간째에 죽으면 전부 날아간다
-
-    memmap 에 청크마다 flush 하고 진행 상황을 기록해, 재실행하면 남은 것부터 이어서 한다.
+    17만 건을 `df[...].tolist()` 로 올리면 0.5GB 인데, 모델(2.4GB)과 합치면 cgroup 4GiB
+    한도를 넘어 첫 청크도 못 돌고 OOM 이 난다(실측). 텍스트는 메모리에 두지 않는다.
     """
-    total = n_existing + len(texts)
-    emb_path = out / "corpus_embeddings.npy"
-    done = _load_progress(out).get("rows_done", n_existing)
+    import pyarrow.parquet as pq
 
-    if done > n_existing:
-        print(f"이어받기: {done - n_existing:,}/{len(texts):,} 건 이미 완료")
+    seen, buf = 0, []
+    for rb in pq.ParquetFile(texts_path).iter_batches(batch_size=chunk, columns=["semantic_text"]):
+        col = rb.column(0).to_pylist()
+        for t in col:
+            seen += 1
+            if seen <= skip:
+                continue
+            buf.append(t)
+            if len(buf) >= chunk:
+                yield buf
+                buf = []
+    if buf:
+        yield buf
 
-    mm = np.lib.format.open_memmap(
-        emb_path, mode="r+" if emb_path.exists() else "w+",
-        dtype="float32", shape=(total, dim),
-    )
-    t0 = time.time()
-    for start in range(done - n_existing, len(texts), chunk):
-        part = texts[start : start + chunk]
-        vecs = encode_with_backoff(model, part, batch, show_progress_bar=False)
-        mm[n_existing + start : n_existing + start + len(part)] = vecs.astype("float32")
-        mm.flush()
-        _save_progress(out, rows_done=n_existing + start + len(part), total=total)
-        n_done = start + len(part)
-        el = time.time() - t0
-        rate = n_done / el if el else 0
-        eta = (len(texts) - n_done) / rate / 3600 if rate else 0
-        print(f"  {n_done:,}/{len(texts):,}  {rate:.2f} items/s  남은 {eta:.1f}h", flush=True)
-    return mm
+
+def encode_to_shard(
+    model, texts_path: Path, n_total: int, batch: int, out: Path, dim: int, chunk: int = CHUNK
+) -> Path:
+    """청크마다 원시 float32 바이트를 파일에 append 한다.
+
+    memmap 을 쓰면 안 되는 이유: 더티 페이지가 디스크로 내려가기 전까지 cgroup 메모리로
+    잡힌다. append 방식은 청크 하나(2,000 x 1024 x 4 = 8MB)만 들고 있으면 된다.
+    파일 크기가 곧 진행 상황이라 재실행하면 자동으로 이어간다.
+    """
+    shard = out / SHARD_FILE
+    done = _shard_rows(shard, dim)
+    if done:
+        print(f"이어받기: {done:,}/{n_total:,} 건 완료됨", flush=True)
+    if done >= n_total:
+        return shard
+
+    t0, t_done = time.time(), 0
+    with open(shard, "ab") as f:
+        for part in stream_texts(texts_path, chunk, skip=done):
+            vecs = encode_with_backoff(model, part, batch, show_progress_bar=False)
+            f.write(np.ascontiguousarray(vecs, dtype="float32").tobytes())
+            f.flush()
+            os.fsync(f.fileno())
+            t_done += len(part)
+            el = time.time() - t0
+            rate = t_done / el if el else 0
+            remain = (n_total - done - t_done) / rate / 3600 if rate else 0
+            print(f"  {done + t_done:,}/{n_total:,}  {rate:.2f} items/s  "
+                  f"남은 {remain:.1f}h", flush=True)
+    return shard
+
+
+def shard_to_npy(shard: Path, dest: Path, dim: int, prefix: np.ndarray | None = None,
+                 chunk: int = 20000) -> int:
+    """원시 파일을 .npy 로 변환한다. 모델을 내린 뒤 호출해야 메모리가 넉넉하다."""
+    n_new = _shard_rows(shard, dim)
+    n_pre = len(prefix) if prefix is not None else 0
+    mm = np.lib.format.open_memmap(dest, mode="w+", dtype="float32", shape=(n_pre + n_new, dim))
+    if prefix is not None:
+        mm[:n_pre] = prefix
+    with open(shard, "rb") as f:
+        for start in range(0, n_new, chunk):
+            k = min(chunk, n_new - start)
+            buf = np.frombuffer(f.read(k * dim * 4), dtype="float32").reshape(k, dim)
+            mm[n_pre + start : n_pre + start + k] = buf
+            mm.flush()
+    del mm
+    return n_pre + n_new
 
 
 def select_targets(df: pd.DataFrame, out: Path) -> tuple[pd.DataFrame, pd.DataFrame | None]:
@@ -167,14 +206,10 @@ def select_targets(df: pd.DataFrame, out: Path) -> tuple[pd.DataFrame, pd.DataFr
         df = df[~df["steam_appid"].isin(done)]
         print(f"--append: 이미 {len(done):,}건 임베딩됨 → 이번에 {len(df):,}건 추가")
     elif emb_path.exists() and "--force" not in sys.argv:
-        prog = _load_progress(out)
-        if prog and prog.get("rows_done", 0) < prog.get("total", 0):
-            print(f"중단된 작업 발견: {prog['rows_done']:,}/{prog['total']:,} — 이어서 진행합니다")
-        else:
-            raise SystemExit(
-                f"{out} 에 이미 완료된 corpus_embeddings.npy 가 있습니다.\n"
-                f"  이어붙이려면 --append, 처음부터 다시 만들려면 --force 를 쓰세요."
-            )
+        raise SystemExit(
+            f"{out} 에 이미 완료된 corpus_embeddings.npy 가 있습니다.\n"
+            f"  이어붙이려면 --append, 처음부터 다시 만들려면 --force 를 쓰세요."
+        )
 
     if "--only-with-reviews" in sys.argv:
         before = len(df)
@@ -200,51 +235,49 @@ def main():
         print("임베딩할 대상이 없습니다.")
         return
 
+    # 텍스트는 메모리에 올리지 않는다 — 임시 parquet 으로 내보내고 청크로 흘려 읽는다.
+    # 17만 건 리스트(0.5GB) + 모델(2.4GB) 이면 cgroup 4GiB 를 넘겨 첫 청크도 못 돈다.
+    texts_path = out / TEXTS_FILE
+    df[["semantic_text"]].to_parquet(texts_path, index=False)
+    n_total = len(df)
+    # 인덱스도 디스크로 내린다 — 17만 행을 들고 있으면 모델 로드 후 여유가 1GB 밖에 안 남는다
+    df[["steam_appid", "name"]].reset_index(drop=True).to_parquet(out / INDEX_FILE, index=False)
+    anchor_texts = anchors["semantic_text"].tolist()
+    del df, anchors
+    gc.collect()
+
     model, device, batch = resolve_runtime(cfg)
-    print(f"device={device} batch={batch} | 대상 {len(df):,}건")
+    print(f"device={device} batch={batch} | 대상 {n_total:,}건", flush=True)
 
-    # --- 500건 benchmark ---
-    n_bench = cfg["runtime"]["benchmark_items"]
-    sample = df["semantic_text"].tolist()[:n_bench]
-    t0 = time.perf_counter()
-    encode_with_backoff(model, sample, batch)
-    elapsed = time.perf_counter() - t0
-    bench = {
-        "device": device,
-        "batch_size": batch,
-        "benchmark_items": len(sample),
-        "elapsed_seconds": round(elapsed, 2),
-        "items_per_second": round(len(sample) / elapsed, 2),
-        "estimated_total_seconds": round(elapsed * len(df) / len(sample), 1),
-    }
-    with open(out / "runtime_benchmark.json", "w") as f:
-        json.dump(bench, f, indent=2)
-    print(json.dumps(bench, indent=2))
-
-    # --- corpus embedding (청크 단위로 디스크에 직접 기록, 중단 시 이어받기) ---
-    n_existing = len(existing_idx) if existing_idx is not None else 0
     dim = int(model.get_sentence_embedding_dimension())
-    corpus_emb = encode_to_memmap(
-        model, df["semantic_text"].tolist(), batch, out, dim, n_existing=n_existing
-    )
 
-    corpus_index = df[["steam_appid", "name"]].reset_index(drop=True)
+    # --- corpus embedding: 청크마다 원시 파일에 append (중단 시 이어받기) ---
+    shard = encode_to_shard(model, texts_path, n_total, batch, out, dim)
+
+    # --- anchor query embedding (검색용 지시문 프리픽스) ---
+    anchor_emb = model.encode(
+        anchor_texts, prompt=QUERY_PROMPT, batch_size=batch,
+        normalize_embeddings=True, show_progress_bar=False,
+    ).astype("float32")
+    np.save(out / "anchor_embeddings.npy", anchor_emb)
+
+    # 모델을 내려야 .npy 변환에 쓸 메모리가 생긴다
+    del model
+    gc.collect()
+
+    n_existing = len(existing_idx) if existing_idx is not None else 0
+    prefix = np.load(out / "corpus_embeddings.npy")[:n_existing] if n_existing else None
+    total = shard_to_npy(shard, out / "corpus_embeddings.npy", dim, prefix=prefix)
+    shard.unlink(missing_ok=True)
+    texts_path.unlink(missing_ok=True)
+    (out / INDEX_FILE).unlink(missing_ok=True)
+
+    corpus_index = pd.read_parquet(out / INDEX_FILE)
     corpus_index.insert(0, "embedding_row", range(n_existing, n_existing + len(corpus_index)))
     if existing_idx is not None:
         corpus_index = pd.concat([existing_idx, corpus_index], ignore_index=True)
-        print(f"이어붙임: {n_existing:,} + {len(df):,} = {len(corpus_index):,}건")
     corpus_index.to_parquet(out / "corpus_index.parquet", index=False)
-    (out / PROGRESS_FILE).unlink(missing_ok=True)  # 완료 표시
-
-    # --- anchor query embedding (custom instruction) ---
-    anchor_emb = model.encode(
-        anchors["semantic_text"].tolist(),
-        prompt=QUERY_PROMPT,
-        batch_size=batch,
-        normalize_embeddings=True,
-        show_progress_bar=False,
-    ).astype("float32")
-    np.save(out / "anchor_embeddings.npy", anchor_emb)
+    print(f"완료: {total:,}건 x {dim}차원")
 
     run_config = {
         "experiment_id": EXPERIMENT_ID,
@@ -256,8 +289,8 @@ def main():
         "candidate_k": cfg["retrieval"]["candidate_k"],
         "device": device,
         "batch_size": batch,
-        "corpus_rows": int(corpus_emb.shape[0]),
-        "embedding_dim": int(corpus_emb.shape[1]),
+        "corpus_rows": int(total),
+        "embedding_dim": int(dim),
     }
     with open(out / "qwen_run_config.json", "w") as f:
         json.dump(run_config, f, ensure_ascii=False, indent=2)
