@@ -88,3 +88,39 @@ def test_append_row_numbers_continue_from_existing():
     new_index = pd.DataFrame({"steam_appid": [200, 201], "name": ["a", "b"]})
     new_index.insert(0, "embedding_row", range(len(old_emb), len(old_emb) + len(new_index)))
     assert new_index["embedding_row"].tolist() == [3, 4]
+
+
+# --- 이어받기 중 dataset 변경 감지 ---
+
+def test_fingerprint_blocks_changed_dataset(tmp_path):
+    """재시작 사이에 dataset 이 바뀌면 벡터가 조용히 어긋난다 — 막아야 한다."""
+    from src.embed_qwen import SHARD_FILE, check_targets_unchanged
+
+    df = pd.DataFrame({"steam_appid": [1, 2], "semantic_text": ["a", "b"]})
+    check_targets_unchanged(tmp_path, df)          # 최초 실행 — 지문 기록
+    (tmp_path / SHARD_FILE).write_bytes(b"x" * 8)  # 진행 중 상태
+
+    check_targets_unchanged(tmp_path, df)          # 같은 대상 — 통과
+    changed = pd.DataFrame({"steam_appid": [1, 2, 3], "semantic_text": ["a", "b", "c"]})
+    with pytest.raises(SystemExit, match="대상이 달라졌습니다"):
+        check_targets_unchanged(tmp_path, changed)
+
+
+def test_fingerprint_detects_row_reorder(tmp_path):
+    """행 순서만 바뀌어도 벡터-appid 대응이 깨진다."""
+    from src.embed_qwen import SHARD_FILE, check_targets_unchanged
+
+    df = pd.DataFrame({"steam_appid": [1, 2], "semantic_text": ["a", "b"]})
+    check_targets_unchanged(tmp_path, df)
+    (tmp_path / SHARD_FILE).write_bytes(b"x" * 8)
+    reordered = pd.DataFrame({"steam_appid": [2, 1], "semantic_text": ["b", "a"]})
+    with pytest.raises(SystemExit):
+        check_targets_unchanged(tmp_path, reordered)
+
+
+def test_fingerprint_allows_fresh_start(tmp_path):
+    """진행 중인 shard 가 없으면 대상이 달라도 새로 시작한다."""
+    from src.embed_qwen import check_targets_unchanged
+
+    check_targets_unchanged(tmp_path, pd.DataFrame({"steam_appid": [1], "semantic_text": ["a"]}))
+    check_targets_unchanged(tmp_path, pd.DataFrame({"steam_appid": [9], "semantic_text": ["z"]}))

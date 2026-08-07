@@ -117,3 +117,39 @@ def test_parse_genres_still_accepts_flat_strings():
 def test_parse_genres_mixed_and_garbage():
     obj = {"genres": [{"id": "1", "description": "액션"}, "인디", {"id": "2"}, None, 42]}
     assert parse_genres(obj) == ["액션", "인디"]
+
+
+# --- 미출시 판정: dataset 이 직접 들고 있어야 전체 코퍼스에 적용된다 ---
+
+def test_parse_release_dict_format():
+    from src.data_loader import parse_release
+
+    assert parse_release({"release_date": {"coming_soon": False, "date": "2000년 11월 1일"}}) == (False, "2000년 11월 1일")
+    assert parse_release({"release_date": {"coming_soon": True, "date": "2027년"}})[0] is True
+
+
+def test_parse_release_str_format():
+    from src.data_loader import parse_release
+
+    assert parse_release({"release_date": "2000년 11월 1일"}) == (False, "2000년 11월 1일")
+    assert parse_release({"release_date": "출시 예정"})[0] is True
+
+
+def test_parse_release_missing():
+    from src.data_loader import parse_release
+
+    assert parse_release({}) == (False, "")
+
+
+def test_record_to_row_carries_release_and_publisher():
+    from src.data_loader import record_to_row
+
+    obj = {
+        "type": "game", "steam_appid": 1, "name": "g",
+        "short_description": "x" * 40,
+        "release_date": {"coming_soon": True, "date": "2027년"},
+        "publishers": ["Valve"], "developers": ["Valve"],
+    }
+    row = record_to_row(obj, 30)
+    assert row["coming_soon"] is True
+    assert row["publisher"] == "Valve"

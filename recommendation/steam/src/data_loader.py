@@ -45,6 +45,24 @@ def parse_categories(obj: dict) -> list[str]:
     return _parse_str_list(obj, "categories")
 
 
+def parse_release(obj: dict) -> tuple[bool, str]:
+    """(미출시 여부, 표시용 날짜 문자열).
+
+    Steam appdetails 는 `{"coming_soon": bool, "date": "2000년 11월 1일"}` 을 준다.
+    구 jsonl 은 문자열로 평탄화돼 있었다 — 양쪽을 받는다.
+
+    이 값을 dataset 에 넣지 않으면 미출시 필터가 trend_features.parquet 에 의존하게 되는데,
+    그건 구 코퍼스(19,476건) 기준이라 전체 코퍼스의 **11% 만 판정 가능**하다.
+    """
+    rd = obj.get("release_date")
+    if isinstance(rd, dict):
+        return bool(rd.get("coming_soon")), clean_text(rd.get("date") or "")
+    if isinstance(rd, str):
+        text = clean_text(rd)
+        return text.startswith("출시 예정"), text
+    return False, ""
+
+
 def parse_metacritic(obj: dict) -> tuple[bool, int | None]:
     m = obj.get("metacritic")
     if isinstance(m, dict) and isinstance(m.get("score"), (int, float)):
@@ -91,6 +109,7 @@ def record_to_row(obj: dict, min_desc_chars: int) -> dict | None:
     has_rec, rec_total = parse_recommendations(obj)
     devs = _parse_str_list(obj, "developers")
     pubs = _parse_str_list(obj, "publishers")
+    coming_soon, release_date = parse_release(obj)
     return {
         "steam_appid": appid,
         "name": name,
@@ -101,6 +120,8 @@ def record_to_row(obj: dict, min_desc_chars: int) -> dict | None:
         # 구 jsonl 에는 없던 필드라 빈 문자열로 떨어지고, 그 경우 이름 기반으로 되돌아간다.
         "developer": devs[0] if devs else "",
         "publisher": pubs[0] if pubs else "",
+        "coming_soon": coming_soon,
+        "release_date": release_date,
         "has_metacritic": has_meta,
         "metacritic_score": meta_score,
         "has_recommendations": has_rec,

@@ -1,5 +1,6 @@
 # src/embed_qwen.py
 import gc
+import hashlib
 import json
 import os
 import sys
@@ -104,10 +105,41 @@ def _parse_out_dir() -> tuple[Path, Path]:
 SHARD_FILE = "_embeddings.raw"
 TEXTS_FILE = "_texts.parquet"
 INDEX_FILE = "_index.parquet"
+FINGERPRINT_FILE = "_targets.sha256"
 
 # cgroup 4GiB 에서 모델만 2.98GB 다. 실측: 200건 인코딩은 3.11GB 로 통과하지만
 # 2000건은 OOM. 순간 할당을 줄이려면 청크를 작게 가져가는 수밖에 없다.
 CHUNK = 256
+
+
+def _targets_fingerprint(df: pd.DataFrame) -> str:
+    """이번에 임베딩할 대상의 지문. 행 순서와 텍스트 내용을 함께 담는다."""
+    h = hashlib.sha256()
+    h.update(str(len(df)).encode())
+    for aid, txt in zip(df["steam_appid"], df["semantic_text"]):
+        h.update(f"{aid}\x00{txt}\x00".encode("utf-8"))
+    return h.hexdigest()[:16]
+
+
+def check_targets_unchanged(out: Path, df: pd.DataFrame) -> None:
+    """이어받기 중에 dataset 이 바뀌면 막는다.
+
+    embed_loop.sh 는 프로세스를 주기적으로 재시작하고, 재시작마다 dataset.parquet 을
+    다시 읽어 _texts.parquet 을 새로 만든다. 그 사이 dataset 이 바뀌면(컬럼 추가로 행
+    순서가 흔들리거나 필터가 달라지면) 이미 계산된 벡터와 **조용히 어긋난다** —
+    에러 없이 잘못된 추천이 나오므로 발견이 매우 늦다.
+    """
+    fp_path = out / FINGERPRINT_FILE
+    current = _targets_fingerprint(df)
+    if (out / SHARD_FILE).exists() and fp_path.exists():
+        previous = fp_path.read_text().strip()
+        if previous != current:
+            raise SystemExit(
+                f"진행 중이던 임베딩과 대상이 달라졌습니다 ({previous} -> {current}).\n"
+                f"  dataset.parquet 이 바뀌었을 가능성이 높습니다. 이어받으면 벡터가 어긋납니다.\n"
+                f"  처음부터 다시 하려면 {out}/_embeddings.raw 를 지우고 실행하세요."
+            )
+    fp_path.write_text(current)
 
 
 def _shard_rows(path: Path, dim: int) -> int:
@@ -292,6 +324,7 @@ def main():
 
     # 텍스트는 메모리에 올리지 않는다 — 임시 parquet 으로 내보내고 청크로 흘려 읽는다.
     # 17만 건 리스트(0.5GB) + 모델(2.4GB) 이면 cgroup 4GiB 를 넘겨 첫 청크도 못 돈다.
+    check_targets_unchanged(out, df)
     texts_path = out / TEXTS_FILE
     df[["semantic_text"]].to_parquet(texts_path, index=False)
     n_total = len(df)
@@ -333,6 +366,7 @@ def main():
     shard.unlink(missing_ok=True)
     texts_path.unlink(missing_ok=True)
     (out / INDEX_FILE).unlink(missing_ok=True)
+    (out / FINGERPRINT_FILE).unlink(missing_ok=True)
     corpus_index.insert(0, "embedding_row", range(n_existing, n_existing + len(corpus_index)))
     if existing_idx is not None:
         corpus_index = pd.concat([existing_idx, corpus_index], ignore_index=True)

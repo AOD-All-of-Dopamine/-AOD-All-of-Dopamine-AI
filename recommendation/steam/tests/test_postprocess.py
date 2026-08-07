@@ -193,3 +193,49 @@ def test_cap_series_uses_publisher_column_when_present():
     ])
     out = cap_series(ranked, ds, series_max=1)
     assert out["steam_appid"].tolist() == [1, 3]
+
+
+# ------------------------------------------------- 퍼블리셔 상한
+
+def test_cap_publisher_catches_what_series_key_misses():
+    """'War Trigger 3' / 'WT2' 는 이름이 달라 시리즈 판정이 못 잡는다(실측)."""
+    from src.postprocess import cap_publisher, series_group
+
+    assert series_group("War Trigger 3", "Rocketeer") != series_group("WT2", "Rocketeer")
+    ranked = _ranked([1, 2, 3], [10, 10, 10])
+    ds = _dataset([
+        {"steam_appid": 1, "name": "War Trigger 3", "publisher": "Rocketeer"},
+        {"steam_appid": 2, "name": "WT2", "publisher": "Rocketeer"},
+        {"steam_appid": 3, "name": "War Trigger 2", "publisher": "Rocketeer"},
+    ])
+    out = cap_publisher(ranked, ds, publisher_max=2)
+    assert out["steam_appid"].tolist() == [1, 2]  # 3개 중 2개만
+
+
+def test_cap_publisher_allows_different_series_of_same_publisher():
+    """Skyrim 과 Elder Scrolls Online 은 같은 Bethesda 지만 다른 경험이다."""
+    from src.postprocess import cap_publisher
+
+    ranked = _ranked([1, 2], [10, 10])
+    ds = _dataset([
+        {"steam_appid": 1, "name": "Skyrim", "publisher": "Bethesda"},
+        {"steam_appid": 2, "name": "The Elder Scrolls Online", "publisher": "Bethesda"},
+    ])
+    assert len(cap_publisher(ranked, ds, publisher_max=2)) == 2
+
+
+def test_cap_publisher_ignores_unknown_publisher():
+    from src.postprocess import cap_publisher
+
+    ranked = _ranked([1, 2, 3], [10, 10, 10])
+    ds = _dataset([{"steam_appid": i, "name": f"g{i}", "publisher": ""} for i in [1, 2, 3]])
+    assert len(cap_publisher(ranked, ds, publisher_max=1)) == 3
+
+
+def test_cap_publisher_noop_without_column():
+    """구 데이터에는 publisher 컬럼이 없다."""
+    from src.postprocess import cap_publisher
+
+    ranked = _ranked([1, 2], [10, 10])
+    ds = _dataset([{"steam_appid": 1, "name": "a"}, {"steam_appid": 2, "name": "b"}])
+    assert len(cap_publisher(ranked, ds, publisher_max=1)) == 2

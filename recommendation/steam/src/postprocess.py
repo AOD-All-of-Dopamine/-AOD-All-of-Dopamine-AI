@@ -93,7 +93,11 @@ def apply_hard_filters(
     if require_known_reviews and "has_recommendations" in meta.columns:
         keep &= df["steam_appid"].map(lambda a: bool(meta["has_recommendations"].get(a, False)))
 
-    if drop_unreleased:
+    if drop_unreleased and "coming_soon" in meta.columns:
+        # dataset 이 직접 들고 있으면 그것을 쓴다 — 전체 코퍼스에 적용된다
+        keep &= ~df["steam_appid"].map(lambda a: bool(meta["coming_soon"].get(a, False)))
+    elif drop_unreleased:
+        # 구 dataset 에는 컬럼이 없다 → trend_features 로 폴백(커버리지 11%)
         dates = _load_release_dates()
         if len(dates):
             # "표에 없다"(모름)와 "표에 있는데 날짜가 없다"(미출시/파싱실패)를 구분한다.
@@ -109,19 +113,55 @@ def apply_hard_filters(
 def series_group(name: str, publisher: str = "") -> str:
     """시리즈 식별자. 퍼블리셔가 있으면 `퍼블리셔|이름앞부분` 으로 더 정확해진다.
 
-    이름만으로는 한계가 있다 — 판정에서 잡힌 실패 사례:
-      'WT2' vs 'War Trigger 3'          (같은 시리즈인데 이름이 완전히 다름)
-      'MadOut' vs 'MadOut Ice Storm'    (앞 2단어가 'madout' vs 'madout ice')
-    퍼블리셔를 붙이면 같은 회사의 유사 이름 작품이 한 그룹으로 묶인다.
+    실데이터 검증 결과(2026-08, 전체 코퍼스):
+      'MadOut' vs 'MadOut Ice Storm'    이름기반 놓침 → 퍼블리셔로 **잡음**
+      'War Trigger 3' vs 'WT2'          퍼블리셔가 같아도 **여전히 놓침**
+                                        (`rocketeer|war` vs `rocketeer|wt2`)
+      'Skyrim' vs 'Elder Scrolls Online' 둘 다 잡지만 **잡으면 안 된다**
+                                        (ESO 는 MMO — 판정에서 2점을 준 정당한 추천)
+
+    즉 이 함수는 놓치기도 하고 과하게 잡기도 한다. 이름 첫 단어를 붙이는 설계가 양방향
+    실패의 원인인데, 빼면 대형 퍼블리셔의 무관한 작품까지 한 시리즈로 묶인다.
+    그래서 이 함수는 '확실한 동일 시리즈'만 담당하고, 나머지는 `cap_publisher` 가 맡는다.
+
     구 데이터처럼 퍼블리셔가 없으면 이름 기반으로 자동 폴백한다.
     """
     key = series_key(name)
     pub = str(publisher or "").strip().lower()
     if not pub:
         return key
-    # 퍼블리셔 + 이름 첫 단어 — 같은 회사의 다작을 전부 묶어버리지 않도록 이름도 남긴다
     head = key.split()[0] if key.split() else key
     return f"{pub}|{head}"
+
+
+def cap_publisher(df: pd.DataFrame, dataset: pd.DataFrame, publisher_max: int = 2) -> pd.DataFrame:
+    """한 퍼블리셔가 목록을 점유하는 것을 막는다. 시리즈 상한이 못 잡는 것을 덮는다.
+
+    왜 시리즈 상한만으로 부족한가 — 실측 사례:
+      · 'War Trigger 3' / 'WT2' 는 이름이 달라 시리즈 판정이 못 잡지만 퍼블리셔가 같다.
+      · P06(CS2/PUBG/Stardew) Top-10 에 Valve 게임이 4개 들어왔다
+        (CS:Source 1점, Day of Defeat 3점, Half-Life 2점, Alien Swarm 2점).
+
+    왜 상한 1 이 아니라 2 인가 — 리뷰 있는 21,892개의 퍼블리셔가 9,378곳이고 71% 가
+    1개만 냈다. 상한 1 은 대형 퍼블리셔의 **다른 시리즈**까지 잘라낸다
+    (Skyrim 과 Elder Scrolls Online 은 같은 Bethesda 지만 다른 경험이다).
+    """
+    if df.empty or publisher_max <= 0:
+        return df.reset_index(drop=True)
+    meta = dataset.set_index("steam_appid") if "steam_appid" in dataset.columns else dataset
+    if "publisher" not in meta.columns:
+        return df.reset_index(drop=True)
+
+    seen: dict[str, int] = {}
+    keep = []
+    for a in df["steam_appid"]:
+        pub = str(meta["publisher"].get(a, "") or "").strip().lower()
+        if not pub:  # 퍼블리셔 미상은 제한하지 않는다
+            keep.append(True)
+            continue
+        seen[pub] = seen.get(pub, 0) + 1
+        keep.append(seen[pub] <= publisher_max)
+    return df[pd.Series(keep, index=df.index)].reset_index(drop=True)
 
 
 def cap_series(df: pd.DataFrame, dataset: pd.DataFrame, series_max: int = 1) -> pd.DataFrame:
@@ -190,15 +230,18 @@ def postprocess(
     top_n: int = 100,
     seed_interleave: bool = True,
     series_max: int = 1,
+    publisher_max: int = 2,
     hard_filters: bool = True,
     require_known_reviews: bool = False,
 ) -> pd.DataFrame:
-    """스펙 §5.4 순서: hard filter → 시리즈 상한 → 다양성 → Top-N."""
+    """스펙 §5.4 순서: hard filter → 시리즈/퍼블리셔 상한 → 다양성 → Top-N."""
     df = ranked
     if hard_filters:
         df = apply_hard_filters(df, dataset, require_known_reviews=require_known_reviews)
     if series_max:
         df = cap_series(df, dataset, series_max)
+    if publisher_max:
+        df = cap_publisher(df, dataset, publisher_max)
     if seed_interleave:
         df = interleave_by_seed(df, top_n)
     else:
