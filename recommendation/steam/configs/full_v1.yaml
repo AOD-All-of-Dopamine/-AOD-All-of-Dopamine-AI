@@ -32,7 +32,8 @@ embedding:
 runtime:
   prefer_device: "cuda"
   gpu_batch_size: 8
-  # cgroup 4GiB 한도 때문에 4 를 넘기면 OOM. 자세한 근거는 s1_v2.yaml 주석 참고.
+  # cgroup 한도 6.44GB 로 상향된 뒤 fp32 가 안정적으로 돈다(cgroup 3.8~4.1GB, 여유 2.3GB).
+  # 4GiB 시절에는 이 값이 4 여도 OOM 이 났다 — 근거는 커밋 1606189 참고.
   cpu_batch_size: 4
   max_seq_length: 512
   benchmark_items: 500
