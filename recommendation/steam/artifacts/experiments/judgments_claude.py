@@ -272,5 +272,105 @@ BOOST_SWEEP = {
     ("mix_vehicle_fps", 1239690): (1, "GENRE_ONLY"),         # Retrowave — 신스웨이브 아케이드
 }
 
+# --- val split 8개 프로필 × Top-10 = 80쌍 (전부 신규) ---
+# dev 12개만 판정된 채로 min_reviews·인터리빙·rec_boost 를 전부 골랐다. 홀드아웃 최초 측정이다.
+VAL_V1 = {
+    # coh_grand_strategy: Hearts of Iron IV / Europa Universalis IV / Civilization VI
+    ("coh_grand_strategy", 25890):   (1, "FRANCHISE_OR_VARIANT"),  # Hearts of Iron III — 전작
+    ("coh_grand_strategy", 203770):  (3, ""),                 # Crusader Kings II — Paradox 대전략 직결
+    ("coh_grand_strategy", 758990):  (1, "GENRE_ONLY"),       # Ancient Warfare 3 — 샌드박스 전투 시뮬
+    ("coh_grand_strategy", 1840800): (2, ""),                 # Headquarters: WWII — 턴제 WW2
+    ("coh_grand_strategy", 1183470): (2, ""),                 # Imperiums: Greek Wars — 턴제 4X
+    ("coh_grand_strategy", 508600):  (0, "IRRELEVANT"),       # ROD: Revolt Of Defense — 우주 기지 방어
+    ("coh_grand_strategy", 312450):  (2, ""),                 # Order of Battle: WWII — 워게임
+    ("coh_grand_strategy", 2340500): (2, ""),                 # 창조 삼국지 — 역사 시뮬 + RTS
+    ("coh_grand_strategy", 98200):   (1, "GENRE_ONLY"),       # Frozen Synapse — 소대 전술 퍼즐
+    ("coh_grand_strategy", 593030):  (2, ""),                 # Strategic Command WWII — 턴제 대전략
+
+    # coh_openworld_survival: Subnautica / The Long Dark / No Man's Sky
+    ("coh_openworld_survival", 890720):  (3, ""),             # In Other Waters — 외계 해양 탐사
+    ("coh_openworld_survival", 2336440): (2, ""),             # 침묵의 땅 — 종말 세계 탐험 생존
+    ("coh_openworld_survival", 214730):  (2, ""),             # Space Rangers HD — 우주 오픈월드
+    ("coh_openworld_survival", 1031460): (2, ""),             # Sail Forth — 항해 탐험
+    ("coh_openworld_survival", 219740):  (3, ""),             # Don't Starve — 생존 대표작
+    ("coh_openworld_survival", 392110):  (1, "KEYWORD_MATCH"),# ENDLESS Space 2 — '우주'만 겹치는 4X
+    ("coh_openworld_survival", 664830):  (0, "IRRELEVANT"),   # Zombotron — 액션 플랫포머
+    ("coh_openworld_survival", 257050):  (2, ""),             # Darkout — 외계 절차생성 생존 크래프팅
+    ("coh_openworld_survival", 1933840): (1, "GENRE_ONLY"),   # Moon Mystery — 우주 FPS
+    ("coh_openworld_survival", 609320):  (2, ""),             # FAR: Lone Sails — 종말 여정
+
+    # coh_survival_craft: Project Zomboid / Don't Starve / The Forest
+    ("coh_survival_craft", 2796180): (2, ""),                 # SILENT BREATH — 호러 생존
+    ("coh_survival_craft", 897730):  (3, ""),                 # Among Trees — 자연 샌드박스 크래프팅
+    ("coh_survival_craft", 273500):  (1, "GENRE_ONLY"),       # Over 9000 Zombies! — 탑다운 아케이드
+    ("coh_survival_craft", 440730):  (1, "GENRE_ONLY"),       # Survival Zombies — 좀비 FPS
+    ("coh_survival_craft", 2408920): (2, ""),                 # 森林之子 — 야생 생존 채집
+    ("coh_survival_craft", 495420):  (3, ""),                 # State of Decay 2 — Zomboid 축 직결
+    ("coh_survival_craft", 313120):  (3, ""),                 # Stranded Deep — 무인도 생존
+    ("coh_survival_craft", 347940):  (2, ""),                 # Forsaken Isle — 무인도 제작/건설
+    ("coh_survival_craft", 685340):  (2, ""),                 # Delivery from the Pain — 좀비 생존 RPG
+    ("coh_survival_craft", 877010):  (2, ""),                 # Beyond Contact — SF 생존
+
+    # coh_vehicle_sim: Euro Truck Simulator 2 / BeamNG.drive / Assetto Corsa
+    ("coh_vehicle_sim", 1066130): (2, ""),                    # Truck Life
+    ("coh_vehicle_sim", 491280):  (2, ""),                    # Drift Horizon Online
+    ("coh_vehicle_sim", 3917090): (3, ""),                    # 아세토 코르사 랠리 — 공식 신작
+    ("coh_vehicle_sim", 270880):  (3, ""),                    # American Truck Simulator — ETS2 자매작
+    ("coh_vehicle_sim", 1764530): (2, ""),                    # Sailwind — 사실적 항해 시뮬
+    ("coh_vehicle_sim", 356430):  (1, "GENRE_ONLY"),          # Chris Sawyer's Locomotion — 운송 경영
+    ("coh_vehicle_sim", 415600):  (2, ""),                    # Kart Racing Pro
+    ("coh_vehicle_sim", 1032700): (2, ""),                    # Bus Driving Sim 22
+    ("coh_vehicle_sim", 488550):  (2, ""),                    # Dream Car Builder
+    ("coh_vehicle_sim", 849100):  (3, ""),                    # Alaskan Road Truckers
+
+    # mix_grand_casual: Civilization VI / Europa Universalis IV / Human Fall Flat
+    ("mix_grand_casual", 203770):  (3, ""),                   # Crusader Kings II
+    ("mix_grand_casual", 758990):  (1, "GENRE_ONLY"),         # Ancient Warfare 3
+    ("mix_grand_casual", 1608700): (1, "GENRE_ONLY"),         # Soundfall — 리듬 루트슈터
+    ("mix_grand_casual", 1183470): (2, ""),                   # Imperiums: Greek Wars
+    ("mix_grand_casual", 508600):  (0, "IRRELEVANT"),         # ROD: Revolt Of Defense
+    ("mix_grand_casual", 4082750): (2, ""),                   # Log Riders — 2인 협동 물리 플랫폼
+    ("mix_grand_casual", 2340500): (2, ""),                   # 창조 삼국지
+    ("mix_grand_casual", 98200):   (1, "GENRE_ONLY"),         # Frozen Synapse
+    ("mix_grand_casual", 2567870): (3, ""),                   # Chained Together — Human Fall Flat 축 직결
+    ("mix_grand_casual", 1768280): (2, ""),                   # Ozymandias — 간소화 4X
+
+    # mix_indie_multi: Hollow Knight / Dead Cells / Garry's Mod
+    ("mix_indie_multi", 590830):  (3, ""),                    # s&box — GMod 정신적 후속작
+    ("mix_indie_multi", 1911610): (3, ""),                    # Windblown
+    ("mix_indie_multi", 1030300): (3, ""),                    # Hollow Knight: Silksong
+    ("mix_indie_multi", 696370):  (2, ""),                    # BROKE PROTOCOL
+    ("mix_indie_multi", 2803280): (2, ""),                    # Dragon Is Dead
+    ("mix_indie_multi", 1634860): (2, ""),                    # Minishoot' Adventures
+    ("mix_indie_multi", 2027330): (3, ""),                    # GoreBox
+    ("mix_indie_multi", 2071280): (3, ""),                    # Ravenswatch
+    ("mix_indie_multi", 1589570): (2, ""),                    # Dunjungle
+    ("mix_indie_multi", 1284210): (0, "IRRELEVANT"),          # Guild Wars 2 — MMORPG
+
+    # mix_multi_indie: Team Fortress 2 / Left 4 Dead 2 / Terraria
+    ("mix_multi_indie", 655780):  (2, ""),                    # Project 5: Sightseer — 오픈월드 샌드박스
+    ("mix_multi_indie", 1250):    (3, ""),                    # Killing Floor — 협동 FPS
+    ("mix_multi_indie", 70):      (2, ""),                    # Half-Life
+    ("mix_multi_indie", 587520):  (1, "GENRE_ONLY"),          # Dungeons of Sundaria — 던전 크롤
+    ("mix_multi_indie", 500):     (1, "FRANCHISE_OR_VARIANT"),# Left 4 Dead — 전작
+    ("mix_multi_indie", 1238820): (2, ""),                    # Battlefield 3
+    ("mix_multi_indie", 538100):  (2, ""),                    # Feel The Snow — Terraria류 2D 샌드박스
+    ("mix_multi_indie", 281920):  (1, "GENRE_ONLY"),          # Splatter — 탑다운 슈터
+    ("mix_multi_indie", 17710):   (2, ""),                    # Nuclear Dawn — FPS/RTS 멀티
+    ("mix_multi_indie", 257850):  (2, ""),                    # Hyper Light Drifter
+
+    # mix_survival_strategy: The Forest / 7 Days to Die / Civilization VI
+    ("mix_survival_strategy", 2796180): (2, ""),              # SILENT BREATH
+    ("mix_survival_strategy", 1494140): (0, "KEYWORD_MATCH"), # 세븐데이즈 오리진 — '7일'만 겹침
+    ("mix_survival_strategy", 2772750): (3, ""),              # Age of History 3 — 대전략
+    ("mix_survival_strategy", 440730):  (1, "GENRE_ONLY"),    # Survival Zombies
+    ("mix_survival_strategy", 3946810): (0, "KEYWORD_MATCH"), # 我与你共度的七日 — '7일'만 겹침
+    ("mix_survival_strategy", 1295660): (3, ""),              # 문명 VII — 시드의 후속작
+    ("mix_survival_strategy", 313120):  (3, ""),              # Stranded Deep
+    ("mix_survival_strategy", 1377380): (3, ""),              # Night of the Dead — 7DtD 축 직결
+    ("mix_survival_strategy", 877010):  (2, ""),              # Beyond Contact
+    ("mix_survival_strategy", 454350):  (0, "IRRELEVANT"),    # Days of War — WW2 멀티 FPS
+}
+
 ALL = {**REP_V2, **POSTPROCESS, **DEPTH_V1, **FULL_V1, **REP_V2_TOPUP, **MIN_REV_300,
-       **RANKER_DIAG, **BOOST_SWEEP}
+       **RANKER_DIAG, **BOOST_SWEEP, **VAL_V1}
