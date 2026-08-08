@@ -82,15 +82,29 @@ def build_release_date_map() -> dict[int, object]:
 def build_full_features(
     as_of_date: str = "2026-07-23",
     min_cohort_size: int = 50,
+    dataset_path: Path | None = None,
 ) -> pd.DataFrame:
+    """나이 코호트 보정 인기도. 절대 인기도가 아니라 **또래 대비 초과분**을 잰다.
+
+    `dataset_path` 의 dataset 이 `release_date`/`coming_soon` 컬럼을 들고 있으면 그것을 쓴다.
+    없으면 원본 jsonl 을 훑는다(`build_release_date_map`). 전체 코퍼스(173,691)를 다루면서
+    dataset 이 직접 들고 있게 됐으므로, 이제 원본 jsonl 없이도 돈다 —
+    구 구현은 jsonl 을 강제로 읽어서 이 환경에서 실행 자체가 안 됐다.
+    """
     as_of = datetime.fromisoformat(as_of_date)
 
-    dataset = pd.read_parquet(DATASET)
-    date_map = build_release_date_map()
+    dataset = pd.read_parquet(dataset_path or DATASET)
 
     df = dataset[["steam_appid", "name", "has_recommendations", "recommendations_total"]].copy()
 
-    raw = df["steam_appid"].map(date_map)
+    if "release_date" in dataset.columns and "coming_soon" in dataset.columns:
+        raw = pd.Series(
+            [{"coming_soon": bool(c), "date": d or ""}
+             for c, d in zip(dataset["coming_soon"], dataset["release_date"])],
+            index=dataset.index,
+        )
+    else:
+        raw = df["steam_appid"].map(build_release_date_map())
     df["parsed_date"] = raw.apply(parse_release_date)
     # dict 는 parquet 에 그대로 못 넣는다 — 표시용 문자열과 플래그로 분리해 저장한다
     df["coming_soon"] = raw.apply(lambda v: bool(v.get("coming_soon")) if isinstance(v, dict) else
@@ -259,17 +273,32 @@ def print_signal_distribution(df: pd.DataFrame):
 
 
 def main():
-    as_of_date = "2026-07-23"
-    min_cohort_size = 50
+    import argparse
 
-    full = build_full_features(as_of_date=as_of_date, min_cohort_size=min_cohort_size)
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--dataset", default="artifacts/full_v1/dataset.parquet")
+    ap.add_argument("--out", default="artifacts/trend_v1")
+    ap.add_argument("--as-of", default="2026-08-10")
+    args = ap.parse_args()
+
+    as_of_date = args.as_of
+    min_cohort_size = 50
+    ds_path = Path(args.dataset)
+    if not ds_path.is_absolute():
+        ds_path = PROJECT_ROOT / ds_path
+
+    full = build_full_features(as_of_date=as_of_date, min_cohort_size=min_cohort_size,
+                               dataset_path=ds_path)
     out = build_output_features(full)
 
     print_coverage_audit(full)
     print_signal_distribution(full)
 
-    TREND_DIR.mkdir(parents=True, exist_ok=True)
-    out_path = TREND_DIR / "trend_features.parquet"
+    trend_dir = Path(args.out)
+    if not trend_dir.is_absolute():
+        trend_dir = PROJECT_ROOT / trend_dir
+    trend_dir.mkdir(parents=True, exist_ok=True)
+    out_path = trend_dir / "trend_features.parquet"
     out.to_parquet(out_path, index=False)
     print(f"  Saved: {out_path}")
 
@@ -278,10 +307,11 @@ def main():
         "min_cohort_size": min_cohort_size,
         "feature_version": "v1",
         "freshness_weights": FRESHNESS_WEIGHTS,
+        "dataset": str(ds_path.relative_to(PROJECT_ROOT)),
         "total_games": len(full),
         "games_with_trend_signal_gt_0": int((full["trend_signal"] > 0).sum()),
     }
-    config_path = TREND_DIR / "trend_config.json"
+    config_path = trend_dir / "trend_config.json"
     with open(config_path, "w", encoding="utf-8") as f:
         json.dump(config, f, ensure_ascii=False, indent=2)
     print(f"  Saved: {config_path}")

@@ -53,17 +53,37 @@ def clean_categories(categories) -> list[str]:
     return out
 
 
+MAX_TAGS = 15
+
+
 def build_semantic_text(
     short_description: str,
     genres: list[str],
     categories: list[str] | None = None,
+    tags: list[str] | None = None,
 ) -> str:
     """임베딩에 넣을 의미 텍스트.
 
     판매 순위(`steam_rank`)는 일부러 넣지 않는다. 인기도는 의미 신호가 아니라 랭킹
     신호이고, R1 이 이미 `recommendations_percentile` 로 랭킹 단계에서 다룬다.
+
+    **`Tags` 가 왜 Description 바로 뒤인가** — 판정 580쌍 중 실패 235건의 77%가 표현
+    실패였다(GENRE_ONLY 38% · IRRELEVANT 30% · KEYWORD_MATCH 9%). 원인은 `genres` 의
+    변별력이 없다는 것이다 — '액션'은 코퍼스의 42%, '인디'는 72%가 가진 값이다.
+
+        Salt and Sanctuary  genres → 액션, 인디, RPG
+                            tags   → Souls-like, Metroidvania, Dark Fantasy, 2D, Difficult
+        Hollow Knight       tags   → Metroidvania, Platformer, Souls-like, Difficult
+
+    태그로는 두 게임이 3개를 공유하고 장르로는 '액션·인디'뿐이다.
+
+    `tags` 는 **투표 수 내림차순**으로 들어와야 한다. 상위 15개만 쓰는데, 꼬리로 갈수록
+    'Singleplayer'·'Indie' 같은 일반 태그라 신호보다 희석이 크다. 실측 토큰 길이 p99 가
+    277 이고 태그 15개가 ~45 토큰이라 `max_seq_length=512` 안에 들어간다.
     """
     text = f"Description: {short_description}"
+    if tags:
+        text += f"\nTags: {', '.join(tags[:MAX_TAGS])}"
     if len(genres):
         text += f"\nGenres: {', '.join(genres)}"
     modes = clean_categories(categories)
@@ -75,12 +95,14 @@ def build_semantic_text(
 def add_semantic_text(df: pd.DataFrame) -> pd.DataFrame:
     df = df.copy()
     has_cat = "categories" in df.columns
+    has_tags = "tags" in df.columns
     df["semantic_text"] = [
-        build_semantic_text(d, g, categories=c if has_cat else None)
-        for d, g, c in zip(
+        build_semantic_text(d, g, categories=c, tags=t)
+        for d, g, c, t in zip(
             df["short_description"],
             df["genres"],
             df["categories"] if has_cat else [None] * len(df),
+            df["tags"] if has_tags else [None] * len(df),
         )
     ]
     return df
