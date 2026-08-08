@@ -492,6 +492,37 @@ BLIND_TAGS = {
 }
 
 
+# --- 라운드4 블라인드: 태그 코퍼스에서 리뷰 하한 스윕 ---
+# 코퍼스를 21,883(리뷰 101+)으로 넓히고 하한 0/300/1000 을 비교. 합집합 미판정이 24쌍뿐이었다 —
+# 태그가 붙으니 하한을 풀어도 Top-10 이 거의 안 바뀐다는 뜻이다.
+BLIND_FLOOR = {
+    ("coh_cozy", 674140): (3, ""),  # Bugsnax
+    ("coh_grand_strategy", 209670): (1, "GENRE_ONLY"),  # Cortex Command
+    ("coh_grand_strategy", 2050680): (1, "GENRE_ONLY"),  # Warbox Sandbox
+    ("coh_indie_platformer", 2474430): (3, ""),  # TetherGeist
+    ("coh_openworld_survival", 244770): (2, ""),  # StarMade
+    ("coh_openworld_survival", 450860): (1, "TOO_NICHE"),  # Andarilho
+    ("coh_strategy", 2021880): (3, ""),  # Ara History Untold: Anniversary Edition
+    ("coh_survival_craft", 420930): (2, ""),  # CHKN
+    ("coh_vehicle_sim", 1089830): (2, ""),  # Monster Energy Supercross - The Official
+    ("coh_vehicle_sim", 1114150): (3, ""),  # CarX Street
+    ("coh_vehicle_sim", 1364690): (1, "GENRE_ONLY"),  # First Racer
+    ("mix_grand_casual", 209670): (1, "GENRE_ONLY"),  # Cortex Command
+    ("mix_grand_casual", 2050680): (1, "GENRE_ONLY"),  # Warbox Sandbox
+    ("mix_indie_multi", 916730): (3, ""),  # Gato Roboto
+    ("mix_openworld_cozy", 314790): (0, "IRRELEVANT"),  # Silence
+    ("mix_rpg_racing", 321800): (2, ""),  # Icewind Dale: Enhanced Edition
+    ("mix_rpg_racing", 1114150): (3, ""),  # CarX Street
+    ("niche_puzzle_solo", 1260520): (3, ""),  # Patrick's Parabox
+    ("niche_puzzle_solo", 1577620): (3, ""),  # The Signal State
+    ("niche_soulslike_solo", 252030): (3, ""),  # Valdis Story: Abyssal City
+    ("niche_soulslike_solo", 1264880): (3, ""),  # Watcher Chronicles
+    ("niche_soulslike_solo", 1456650): (3, ""),  # 파스칼 웨이저: 완전판
+    ("niche_tactics", 355680): (2, ""),  # Overland
+    ("niche_tactics", 981430): (3, ""),  # Gordian Quest
+}
+
+
 ALL = {**REP_V2, **POSTPROCESS}
 
 # --- 품질 하한(require_known_reviews) + rec_boost 0.15 의 rank 1~30 에서 새로 진입한 후보 ---
@@ -1375,6 +1406,37 @@ BLIND_TAGS = {
 }
 
 
+# --- 라운드4 블라인드: 태그 코퍼스에서 리뷰 하한 스윕 ---
+# 코퍼스를 21,883(리뷰 101+)으로 넓히고 하한 0/300/1000 을 비교. 합집합 미판정이 24쌍뿐이었다 —
+# 태그가 붙으니 하한을 풀어도 Top-10 이 거의 안 바뀐다는 뜻이다.
+BLIND_FLOOR = {
+    ("coh_cozy", 674140): (3, ""),  # Bugsnax
+    ("coh_grand_strategy", 209670): (1, "GENRE_ONLY"),  # Cortex Command
+    ("coh_grand_strategy", 2050680): (1, "GENRE_ONLY"),  # Warbox Sandbox
+    ("coh_indie_platformer", 2474430): (3, ""),  # TetherGeist
+    ("coh_openworld_survival", 244770): (2, ""),  # StarMade
+    ("coh_openworld_survival", 450860): (1, "TOO_NICHE"),  # Andarilho
+    ("coh_strategy", 2021880): (3, ""),  # Ara History Untold: Anniversary Edition
+    ("coh_survival_craft", 420930): (2, ""),  # CHKN
+    ("coh_vehicle_sim", 1089830): (2, ""),  # Monster Energy Supercross - The Official
+    ("coh_vehicle_sim", 1114150): (3, ""),  # CarX Street
+    ("coh_vehicle_sim", 1364690): (1, "GENRE_ONLY"),  # First Racer
+    ("mix_grand_casual", 209670): (1, "GENRE_ONLY"),  # Cortex Command
+    ("mix_grand_casual", 2050680): (1, "GENRE_ONLY"),  # Warbox Sandbox
+    ("mix_indie_multi", 916730): (3, ""),  # Gato Roboto
+    ("mix_openworld_cozy", 314790): (0, "IRRELEVANT"),  # Silence
+    ("mix_rpg_racing", 321800): (2, ""),  # Icewind Dale: Enhanced Edition
+    ("mix_rpg_racing", 1114150): (3, ""),  # CarX Street
+    ("niche_puzzle_solo", 1260520): (3, ""),  # Patrick's Parabox
+    ("niche_puzzle_solo", 1577620): (3, ""),  # The Signal State
+    ("niche_soulslike_solo", 252030): (3, ""),  # Valdis Story: Abyssal City
+    ("niche_soulslike_solo", 1264880): (3, ""),  # Watcher Chronicles
+    ("niche_soulslike_solo", 1456650): (3, ""),  # 파스칼 웨이저: 완전판
+    ("niche_tactics", 355680): (2, ""),  # Overland
+    ("niche_tactics", 981430): (3, ""),  # Gordian Quest
+}
+
+
 ALL = {**REP_V2, **POSTPROCESS, **DEPTH_V1, **FULL_V1, **REP_V2_TOPUP, **MIN_REV_300,
        **RANKER_DIAG, **BOOST_SWEEP, **VAL_V1, **DEV_TOPUP_V1, **NICHE_V1,
-       **BLIND_ROUND1, **BLIND_TAGS}
+       **BLIND_ROUND1, **BLIND_TAGS, **BLIND_FLOOR}
