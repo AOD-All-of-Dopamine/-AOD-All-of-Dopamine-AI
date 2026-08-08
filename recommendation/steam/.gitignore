@@ -16,3 +16,14 @@ artifacts/rep_*/anchor_embeddings.npy
 
 # 크롤링 원본 (17만 건, 수 GB) — 재수집 가능하므로 커밋하지 않는다
 data/steam_games_full.jsonl
+
+# 임베딩 중간 산출물 (raw shard / 텍스트 / 인덱스) — 재시작용이지 결과물이 아니다.
+# 실수로 커밋되어 히스토리에 51MB 짜리 부분 shard 가 남았다(ee0542a).
+artifacts/*/_embeddings.raw
+artifacts/*/_texts.parquet
+artifacts/*/_index.parquet
+artifacts/*/_targets.sha256
+
+# 전체 코퍼스 임베딩 679MB — 재생성 가능하므로 커밋하지 않는다
+artifacts/full_*/corpus_embeddings.npy
+artifacts/full_*/anchor_embeddings.npy
