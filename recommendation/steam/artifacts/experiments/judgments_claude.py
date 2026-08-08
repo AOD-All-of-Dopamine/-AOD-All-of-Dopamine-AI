@@ -251,5 +251,26 @@ RANKER_DIAG = {
     ("mix_rpg_racing", 1295510): (2, ""),                    # 드래곤 퀘스트 XI S — 대작 RPG, 다만 턴제 JRPG
 }
 
+# --- 백분위 수정 + 인기도 부스트 상향 시 진입하는 후보 ---
+BOOST_SWEEP = {
+    ("coh_classic_multi", 444090): (3, ""),                  # Paladins — 5v5 팀 히어로 슈터, TF2 직결
+    ("coh_cozy", 782330):  (0, "IRRELEVANT"),                # DOOM Eternal — 코지 프로필에 하드코어 FPS
+    ("coh_cozy", 2515020): (0, "IRRELEVANT"),                # FINAL FANTASY XVI
+    ("coh_indie_platformer", 2218750): (1, "GENRE_ONLY"),    # Halls of Torment — 탑다운 서바이버류
+    ("mix_cozy_fps", 222880): (3, ""),                       # Insurgency — 하드코어 멀티 FPS, CS2 축
+    ("mix_cozy_fps", 826630): (0, "IRRELEVANT"),             # Iron Harvest — RTS
+    ("mix_fps_cozy", 826630): (0, "IRRELEVANT"),             # Iron Harvest
+    ("mix_openworld_cozy", 8500):    (1, "MODE_MISMATCH"),   # 이브 온라인 — 우주지만 하드코어 MMO
+    ("mix_openworld_cozy", 1456650): (0, "IRRELEVANT"),      # 파스칼 웨이저 — 소울라이크
+    ("mix_openworld_cozy", 3489700): (0, "IRRELEVANT"),      # 스텔라 블레이드
+    ("mix_rpg_racing", 973760):  (2, ""),                    # Thronebreaker — 위쳐 공식작, 다만 카드 전투
+    ("mix_rpg_racing", 1369670): (2, ""),                    # Motor Town — 오픈월드 드라이빙 시뮬
+    ("mix_rpg_racing", 2531310): (2, ""),                    # The Last of Us Part II — 서사 대작, RPG 아님
+    ("mix_vehicle_fps", 495420):  (2, ""),                   # State of Decay 2 — 좀비 생존, 협동슈터 아님
+    ("mix_vehicle_fps", 805550):  (3, ""),                   # 아세토 코르사 컴페티치오네 — 시드의 공식 후속작
+    ("mix_vehicle_fps", 1070580): (1, "GENRE_ONLY"),         # Drift86 — 아케이드 드리프트
+    ("mix_vehicle_fps", 1239690): (1, "GENRE_ONLY"),         # Retrowave — 신스웨이브 아케이드
+}
+
 ALL = {**REP_V2, **POSTPROCESS, **DEPTH_V1, **FULL_V1, **REP_V2_TOPUP, **MIN_REV_300,
-       **RANKER_DIAG}
+       **RANKER_DIAG, **BOOST_SWEEP}
