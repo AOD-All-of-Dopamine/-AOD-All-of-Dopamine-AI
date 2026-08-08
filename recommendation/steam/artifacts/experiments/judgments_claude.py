@@ -259,6 +259,239 @@ BLIND_ROUND1 = {
 }
 
 
+# --- 라운드3 블라인드: 태그 임베딩 (src/blind_judge.py) ---
+# 비교 4설정(태그없음 / 태그있음 / 태그+트렌드0.05 / 태그+트렌드0.15)의 Top-10 합집합 224쌍.
+# 같은 12,844개 게임 위에서 태그 유무만 바꾼다 — 코퍼스 크기 변화가 섞이지 않게.
+# 판정자는 태그를 못 본다(시트에 genres 와 설명만 있다). 태그를 보여주면 "태그가 겹치니 좋다"는
+# 순환이 생긴다.
+BLIND_TAGS = {
+    ("coh_arpg", 22330): (1, "FRANCHISE_OR_VARIANT"),  # The Elder Scrolls IV: Oblivion® Game of 
+    ("coh_arpg", 335300): (1, "FRANCHISE_OR_VARIANT"),  # DARK SOULS™ II: Scholar of the First Sin
+    ("coh_arpg", 750130): (2, ""),  # The Sinking City Remastered
+    ("coh_arpg", 973760): (2, ""),  # Thronebreaker: The Witcher Tales
+    ("coh_arpg", 1620730): (2, ""),  # Hell is Us
+    ("coh_arpg", 1771300): (3, ""),  # Kingdom Come: Deliverance II
+    ("coh_arpg", 1920490): (3, ""),  # The Outer Worlds: Spacer's Choice Editio
+    ("coh_arpg", 3282300): (2, ""),  # Mistfall Hunter
+    ("coh_arpg", 3321460): (3, ""),  # 붉은사막
+    ("coh_classic_multi", 333930): (3, ""),  # Dirty Bomb®
+    ("coh_classic_multi", 383150): (2, ""),  # Dead Island Definitive Edition
+    ("coh_classic_multi", 1451480): (3, ""),  # The Greatest Penguin Heist of All Time
+    ("coh_classic_multi", 1492070): (3, ""),  # Sker Ritual
+    ("coh_classic_multi", 2827230): (2, ""),  # Wild Assault / 兽猎突袭
+    ("coh_cozy", 214730): (0, "IRRELEVANT"),  # Space Rangers HD: A War Apart
+    ("coh_cozy", 580200): (3, ""),  # Yonder: The Cloud Catcher Chronicles
+    ("coh_cozy", 1092590): (0, "IRRELEVANT"),  # 沙雕之路
+    ("coh_cozy", 1263240): (0, "IRRELEVANT"),  # Skate Story
+    ("coh_cozy", 1963370): (2, ""),  # No One Survived
+    ("coh_cozy", 2252680): (3, ""),  # Farlands
+    ("coh_cozy", 2340520): (3, ""),  # 세이큐 이야기
+    ("coh_cozy", 2418520): (3, ""),  # Farm Together 2
+    ("coh_cozy", 2661300): (3, ""),  # Grounded 2
+    ("coh_cozy", 3321460): (0, "IRRELEVANT"),  # 붉은사막
+    ("coh_fps", 222880): (3, ""),  # Insurgency
+    ("coh_fps", 282440): (2, ""),  # Quake Live
+    ("coh_fps", 433850): (3, ""),  # Z1 Battle Royale
+    ("coh_fps", 729040): (2, ""),  # Borderlands Game of the Year Enhanced
+    ("coh_fps", 1962663): (3, ""),  # 콜 오브 듀티®: 워존
+    ("coh_fps", 2000950): (3, ""),  # Call of Duty®: Modern Warfare®
+    ("coh_grand_strategy", 21970): (3, ""),  # R.U.S.E.™
+    ("coh_grand_strategy", 70600): (1, "GENRE_ONLY"),  # Worms Ultimate Mayhem
+    ("coh_grand_strategy", 235380): (3, ""),  # Blitzkrieg 3
+    ("coh_grand_strategy", 597180): (3, ""),  # Old World 올드 월드
+    ("coh_grand_strategy", 603850): (3, ""),  # Age of History II
+    ("coh_grand_strategy", 743640): (0, "IRRELEVANT"),  # Achievement Clicker
+    ("coh_grand_strategy", 1468720): (1, "GENRE_ONLY"),  # Ultimate Epic Battle Simulator 2
+    ("coh_grand_strategy", 1560250): (1, "GENRE_ONLY"),  # Rising Front
+    ("coh_grand_strategy", 2168680): (1, "GENRE_ONLY"),  # Nuclear Option
+    ("coh_grand_strategy", 3105960): (1, "GENRE_ONLY"),  # Astrobuilder
+    ("coh_grand_strategy", 3381680): (3, ""),  # Age of History 2: Definitive Edition
+    ("coh_indie_platformer", 40800): (3, ""),  # Super Meat Boy
+    ("coh_indie_platformer", 236090): (3, ""),  # Dust: An Elysian Tail
+    ("coh_indie_platformer", 916730): (3, ""),  # Gato Roboto
+    ("coh_indie_platformer", 2273430): (2, ""),  # BlazBlue Entropy Effect
+    ("coh_indie_platformer", 2317640): (2, ""),  # JUMP KING QUEST
+    ("coh_indie_platformer", 2665680): (2, ""),  # 바벨탑: 혼돈의 생존자들
+    ("coh_openworld_survival", 8500): (1, "MODE_MISMATCH"),  # 이브 온라인
+    ("coh_openworld_survival", 211820): (3, ""),  # Starbound
+    ("coh_openworld_survival", 274520): (2, ""),  # Darkwood 다크우드
+    ("coh_openworld_survival", 313120): (3, ""),  # Stranded Deep
+    ("coh_openworld_survival", 359320): (2, ""),  # Elite Dangerous
+    ("coh_openworld_survival", 361420): (3, ""),  # ASTRONEER
+    ("coh_openworld_survival", 738520): (3, ""),  # Breathedge
+    ("coh_openworld_survival", 848450): (3, ""),  # 서브노티카: 빌로우 제로
+    ("coh_openworld_survival", 914620): (2, ""),  # Mist Survival
+    ("coh_openworld_survival", 1931180): (3, ""),  # Lost Skies
+    ("coh_openworld_survival", 3276050): (2, ""),  # SpaceCraft
+    ("coh_openworld_survival", 3280350): (2, ""),  # DEATH STRANDING 2: ON THE BEACH
+    ("coh_strategy", 1124300): (3, ""),  # 휴먼카인드
+    ("coh_strategy", 1295660): (3, ""),  # 시드 마이어의 문명 VII
+    ("coh_survival_craft", 322330): (2, ""),  # Don't Starve Together
+    ("coh_survival_craft", 346110): (3, ""),  # ARK: Survival Evolved
+    ("coh_survival_craft", 360170): (3, ""),  # How to Survive 2
+    ("coh_survival_craft", 391730): (3, ""),  # Crashlands
+    ("coh_survival_craft", 541300): (3, ""),  # Survive the Nights
+    ("coh_survival_craft", 914620): (3, ""),  # Mist Survival
+    ("coh_survival_craft", 1766060): (3, ""),  # HumanitZ
+    ("coh_survival_craft", 1783560): (2, ""),  # The Last Caretaker
+    ("coh_survival_craft", 1963370): (3, ""),  # No One Survived
+    ("coh_vehicle_sim", 266410): (3, ""),  # iRacing
+    ("coh_vehicle_sim", 287310): (1, "GENRE_ONLY"),  # 리볼트
+    ("coh_vehicle_sim", 539720): (1, "GENRE_ONLY"),  # Razortron 2000
+    ("coh_vehicle_sim", 635260): (2, ""),  # CarX Drift Racing Online
+    ("coh_vehicle_sim", 1351240): (3, ""),  # Taxi Life: A City Driving Simulator
+    ("coh_vehicle_sim", 1520370): (3, ""),  # Mon Bazou
+    ("coh_vehicle_sim", 1578390): (3, ""),  # My Garage
+    ("coh_vehicle_sim", 1849250): (3, ""),  # EA SPORTS™ WRC
+    ("coh_vehicle_sim", 3616550): (2, ""),  # Car Dealership Simulator 2
+    ("coh_vehicle_sim", 3800340): (0, "KEYWORD_MATCH"),  # ScootX
+    ("mix_arpg_survival", 70): (1, "GENRE_ONLY"),  # Half-Life
+    ("mix_arpg_survival", 22370): (1, "FRANCHISE_OR_VARIANT"),  # Fallout 3: Game of the Year Edition
+    ("mix_arpg_survival", 335300): (1, "FRANCHISE_OR_VARIANT"),  # DARK SOULS™ II: Scholar of the First Sin
+    ("mix_arpg_survival", 529180): (2, ""),  # Dark and Light
+    ("mix_arpg_survival", 637650): (2, ""),  # FINAL FANTASY XV WINDOWS EDITION
+    ("mix_arpg_survival", 914620): (2, ""),  # Mist Survival
+    ("mix_arpg_survival", 1245620): (3, ""),  # ELDEN RING
+    ("mix_arpg_survival", 1783560): (2, ""),  # The Last Caretaker
+    ("mix_arpg_survival", 2186680): (2, ""),  # Warhammer 40,000: Rogue Trader
+    ("mix_arpg_survival", 3282300): (2, ""),  # Mistfall Hunter
+    ("mix_cozy_fps", 666140): (3, ""),  # My Time at Portia
+    ("mix_cozy_fps", 768200): (3, ""),  # Smalland: Survive the Wilds
+    ("mix_cozy_fps", 1938090): (2, ""),  # 콜 오브 듀티®
+    ("mix_cozy_fps", 1963370): (2, ""),  # No One Survived
+    ("mix_cozy_fps", 2252680): (3, ""),  # Farlands
+    ("mix_cozy_fps", 2340520): (3, ""),  # 세이큐 이야기
+    ("mix_cozy_fps", 2418520): (3, ""),  # Farm Together 2
+    ("mix_cozy_fps", 2661300): (3, ""),  # Grounded 2
+    ("mix_fps_cozy", 42680): (2, ""),  # Call of Duty®: Modern Warfare® 3 (2011)
+    ("mix_fps_cozy", 1962663): (3, ""),  # 콜 오브 듀티®: 워존
+    ("mix_fps_cozy", 2252680): (3, ""),  # Farlands
+    ("mix_fps_cozy", 2340520): (3, ""),  # 세이큐 이야기
+    ("mix_fps_cozy", 2418520): (3, ""),  # Farm Together 2
+    ("mix_grand_casual", 70600): (1, "GENRE_ONLY"),  # Worms Ultimate Mayhem
+    ("mix_grand_casual", 394360): (3, ""),  # Hearts of Iron IV
+    ("mix_grand_casual", 597180): (3, ""),  # Old World 올드 월드
+    ("mix_grand_casual", 743640): (0, "IRRELEVANT"),  # Achievement Clicker
+    ("mix_grand_casual", 1071870): (2, ""),  # Biped
+    ("mix_grand_casual", 1468720): (1, "GENRE_ONLY"),  # Ultimate Epic Battle Simulator 2
+    ("mix_grand_casual", 1560250): (1, "GENRE_ONLY"),  # Rising Front
+    ("mix_grand_casual", 2168680): (1, "GENRE_ONLY"),  # Nuclear Option
+    ("mix_grand_casual", 2560240): (2, ""),  # Biped 2
+    ("mix_grand_casual", 3105960): (1, "GENRE_ONLY"),  # Astrobuilder
+    ("mix_grand_casual", 3263320): (3, ""),  # Carry The Glass
+    ("mix_grand_casual", 3381680): (3, ""),  # Age of History 2: Definitive Edition
+    ("mix_grand_casual", 3450310): (3, ""),  # Europa Universalis V
+    ("mix_indie_multi", 236090): (3, ""),  # Dust: An Elysian Tail
+    ("mix_indie_multi", 347800): (3, ""),  # Ghost Song
+    ("mix_indie_multi", 552100): (3, ""),  # Brick Rigs
+    ("mix_indie_multi", 1451480): (3, ""),  # The Greatest Penguin Heist of All Time
+    ("mix_indie_multi", 2218750): (1, "GENRE_ONLY"),  # Halls of Torment
+    ("mix_indie_multi", 2273430): (2, ""),  # BlazBlue Entropy Effect
+    ("mix_indie_multi", 2665680): (2, ""),  # 바벨탑: 혼돈의 생존자들
+    ("mix_multi_indie", 211820): (3, ""),  # Starbound
+    ("mix_multi_indie", 333930): (3, ""),  # Dirty Bomb®
+    ("mix_multi_indie", 383150): (2, ""),  # Dead Island Definitive Edition
+    ("mix_multi_indie", 444090): (3, ""),  # Paladins®
+    ("mix_multi_indie", 1169040): (3, ""),  # Necesse: 네세스
+    ("mix_multi_indie", 1492070): (3, ""),  # Sker Ritual
+    ("mix_multi_indie", 1504570): (2, ""),  # 太荒初境
+    ("mix_multi_indie", 2827230): (2, ""),  # Wild Assault / 兽猎突袭
+    ("mix_openworld_cozy", 211820): (3, ""),  # Starbound
+    ("mix_openworld_cozy", 313120): (2, ""),  # Stranded Deep
+    ("mix_openworld_cozy", 359320): (2, ""),  # Elite Dangerous
+    ("mix_openworld_cozy", 580200): (3, ""),  # Yonder: The Cloud Catcher Chronicles
+    ("mix_openworld_cozy", 674140): (3, ""),  # Bugsnax
+    ("mix_openworld_cozy", 738520): (3, ""),  # Breathedge
+    ("mix_openworld_cozy", 848450): (3, ""),  # 서브노티카: 빌로우 제로
+    ("mix_openworld_cozy", 1092590): (0, "IRRELEVANT"),  # 沙雕之路
+    ("mix_openworld_cozy", 1263240): (0, "IRRELEVANT"),  # Skate Story
+    ("mix_openworld_cozy", 1931180): (3, ""),  # Lost Skies
+    ("mix_openworld_cozy", 3276050): (2, ""),  # SpaceCraft
+    ("mix_rpg_racing", 22330): (1, "FRANCHISE_OR_VARIANT"),  # The Elder Scrolls IV: Oblivion® Game of 
+    ("mix_rpg_racing", 228280): (2, ""),  # Baldur's Gate: Enhanced Edition
+    ("mix_rpg_racing", 635260): (2, ""),  # CarX Drift Racing Online
+    ("mix_rpg_racing", 750130): (2, ""),  # The Sinking City Remastered
+    ("mix_rpg_racing", 1578390): (3, ""),  # My Garage
+    ("mix_rpg_racing", 1620730): (2, ""),  # Hell is Us
+    ("mix_rpg_racing", 1771300): (3, ""),  # Kingdom Come: Deliverance II
+    ("mix_rpg_racing", 3321460): (3, ""),  # 붉은사막
+    ("mix_rpg_racing", 3616550): (2, ""),  # Car Dealership Simulator 2
+    ("mix_survival_strategy", 221100): (3, ""),  # DayZ
+    ("mix_survival_strategy", 239140): (3, ""),  # Dying Light
+    ("mix_survival_strategy", 914620): (3, ""),  # Mist Survival
+    ("mix_survival_strategy", 1124300): (3, ""),  # 휴먼카인드
+    ("mix_survival_strategy", 1183470): (2, ""),  # Imperiums: Greek Wars
+    ("mix_survival_strategy", 1783560): (2, ""),  # The Last Caretaker
+    ("mix_survival_strategy", 3407390): (3, ""),  # ENDLESS Legend™ 2 엔들리스 레전드 2
+    ("mix_vehicle_fps", 383150): (2, ""),  # Dead Island Definitive Edition
+    ("mix_vehicle_fps", 1066890): (3, ""),  # Automobilista 2
+    ("mix_vehicle_fps", 1369670): (3, ""),  # Motor Town: Behind The Wheel
+    ("mix_vehicle_fps", 1492070): (2, ""),  # Sker Ritual
+    ("mix_vehicle_fps", 1849250): (3, ""),  # EA SPORTS™ WRC
+    ("niche_cozy_casual", 331870): (3, ""),  # AER Memories of Old
+    ("niche_cozy_casual", 355630): (2, ""),  # Leo’s Fortune - HD Edition
+    ("niche_cozy_casual", 375820): (2, ""),  # Human Resource Machine
+    ("niche_cozy_casual", 493200): (3, ""),  # RiME
+    ("niche_cozy_casual", 787810): (1, "GENRE_ONLY"),  # Rogue Heroes: Ruins of Tasos
+    ("niche_cozy_casual", 1084020): (2, ""),  # TheoTown
+    ("niche_cozy_casual", 1148650): (2, ""),  # The Legend of Bum-Bo
+    ("niche_cozy_casual", 1730250): (3, ""),  # Pan'orama
+    ("niche_cozy_casual", 1740300): (3, ""),  # Smushi Come Home
+    ("niche_cozy_casual", 2019810): (3, ""),  # Boxes: Lost Fragments
+    ("niche_cozy_casual", 2121980): (2, ""),  # Void Stranger
+    ("niche_cozy_casual", 2368930): (3, ""),  # 아일랜더스: 새로운 해안
+    ("niche_cozy_casual", 4160210): (3, ""),  # The Artisan of Glimmith
+    ("niche_puzzle_solo", 304410): (2, ""),  # Hexcells Infinite
+    ("niche_puzzle_solo", 370360): (3, ""),  # TIS-100
+    ("niche_puzzle_solo", 574720): (2, ""),  # Little Big Workshop
+    ("niche_puzzle_solo", 617670): (1, "GENRE_ONLY"),  # Zup! S
+    ("niche_puzzle_solo", 792100): (3, ""),  # 7 Billion Humans
+    ("niche_puzzle_solo", 1062160): (3, ""),  # Poly Bridge 2
+    ("niche_puzzle_solo", 1444480): (3, ""),  # Turing Complete
+    ("niche_puzzle_solo", 1910680): (2, ""),  # Orb of Creation
+    ("niche_puzzle_solo", 2162800): (3, ""),  # shapez 2 - Factory
+    ("niche_puzzle_solo", 3700980): (1, "GENRE_ONLY"),  # How to Make an Atomic Bomb in Your Garde
+    ("niche_puzzle_solo", 3846120): (3, ""),  # MineMogul
+    ("niche_roguelite", 753420): (3, ""),  # Dungreed
+    ("niche_roguelite", 958520): (3, ""),  # 33 Immortals
+    ("niche_roguelite", 1315180): (2, ""),  # Spark in the Dark
+    ("niche_roguelite", 1721110): (3, ""),  # Abyssus
+    ("niche_roguelite", 1887840): (3, ""),  # Another Crab's Treasure
+    ("niche_roguelite", 2071280): (3, ""),  # Ravenswatch
+    ("niche_roguelite", 2334730): (3, ""),  # Death Must Die
+    ("niche_roguelite", 2351560): (3, ""),  # 아포칼립스 파티
+    ("niche_roguelite", 2665680): (2, ""),  # 바벨탑: 혼돈의 생존자들
+    ("niche_roguelite", 3228590): (3, ""),  # Deadzone: Rogue
+    ("niche_roguelite", 3489700): (1, "GENRE_ONLY"),  # 스텔라 블레이드™
+    ("niche_sim", 350640): (3, ""),  # Sherlock Holmes: The Devil's Daughter
+    ("niche_sim", 383120): (2, ""),  # Empyrion - Galactic Survival
+    ("niche_sim", 574720): (2, ""),  # Little Big Workshop
+    ("niche_sim", 1366540): (3, ""),  # Dyson Sphere Program
+    ("niche_sim", 1369700): (1, "GENRE_ONLY"),  # Solar Expanse - Space Exploration Manage
+    ("niche_sim", 1614550): (3, ""),  # Astro Colony
+    ("niche_sim", 1754840): (3, ""),  # Hacker Simulator
+    ("niche_sim", 2779120): (3, ""),  # Modulus: Factory Automation
+    ("niche_sim", 2797960): (3, ""),  # 은폐된 살인의 진실들 - 하드코어 본격 추리 탐정 게임
+    ("niche_sim", 2879840): (3, ""),  # 방 탈출 시뮬레이터2
+    ("niche_soulslike_solo", 236090): (3, ""),  # Dust: An Elysian Tail
+    ("niche_soulslike_solo", 236430): (3, ""),  # DARK SOULS™ II
+    ("niche_soulslike_solo", 385380): (1, "GENRE_ONLY"),  # Planet Centauri
+    ("niche_soulslike_solo", 747200): (1, "GENRE_ONLY"),  # Keplerth
+    ("niche_soulslike_solo", 1369630): (3, ""),  # ENDER LILIES: Quietus of the Knights
+    ("niche_soulslike_solo", 1863430): (2, ""),  # Dragonkin: The Banished
+    ("niche_soulslike_solo", 2317640): (1, "GENRE_ONLY"),  # JUMP KING QUEST
+    ("niche_soulslike_solo", 3216340): (3, ""),  # Tearscape
+    ("niche_soulslike_solo", 3418990): (2, ""),  # 신역 추락
+    ("niche_tactics", 496620): (3, ""),  # Monster Slayers
+    ("niche_tactics", 637090): (3, ""),  # BATTLETECH
+    ("niche_tactics", 673880): (3, ""),  # Warhammer 40,000: Mechanicus
+    ("niche_tactics", 861540): (3, ""),  # Dicey Dungeons
+    ("niche_tactics", 2432860): (3, ""),  # MENACE 메너스
+    ("niche_tactics", 3481020): (3, ""),  # 恶魔牌
+    ("niche_tactics", 3709430): (2, ""),  # 마녀: 종말의 여행
+}
+
+
 ALL = {**REP_V2, **POSTPROCESS}
 
 # --- 품질 하한(require_known_reviews) + rec_boost 0.15 의 rank 1~30 에서 새로 진입한 후보 ---
@@ -909,6 +1142,239 @@ BLIND_ROUND1 = {
 }
 
 
+# --- 라운드3 블라인드: 태그 임베딩 (src/blind_judge.py) ---
+# 비교 4설정(태그없음 / 태그있음 / 태그+트렌드0.05 / 태그+트렌드0.15)의 Top-10 합집합 224쌍.
+# 같은 12,844개 게임 위에서 태그 유무만 바꾼다 — 코퍼스 크기 변화가 섞이지 않게.
+# 판정자는 태그를 못 본다(시트에 genres 와 설명만 있다). 태그를 보여주면 "태그가 겹치니 좋다"는
+# 순환이 생긴다.
+BLIND_TAGS = {
+    ("coh_arpg", 22330): (1, "FRANCHISE_OR_VARIANT"),  # The Elder Scrolls IV: Oblivion® Game of 
+    ("coh_arpg", 335300): (1, "FRANCHISE_OR_VARIANT"),  # DARK SOULS™ II: Scholar of the First Sin
+    ("coh_arpg", 750130): (2, ""),  # The Sinking City Remastered
+    ("coh_arpg", 973760): (2, ""),  # Thronebreaker: The Witcher Tales
+    ("coh_arpg", 1620730): (2, ""),  # Hell is Us
+    ("coh_arpg", 1771300): (3, ""),  # Kingdom Come: Deliverance II
+    ("coh_arpg", 1920490): (3, ""),  # The Outer Worlds: Spacer's Choice Editio
+    ("coh_arpg", 3282300): (2, ""),  # Mistfall Hunter
+    ("coh_arpg", 3321460): (3, ""),  # 붉은사막
+    ("coh_classic_multi", 333930): (3, ""),  # Dirty Bomb®
+    ("coh_classic_multi", 383150): (2, ""),  # Dead Island Definitive Edition
+    ("coh_classic_multi", 1451480): (3, ""),  # The Greatest Penguin Heist of All Time
+    ("coh_classic_multi", 1492070): (3, ""),  # Sker Ritual
+    ("coh_classic_multi", 2827230): (2, ""),  # Wild Assault / 兽猎突袭
+    ("coh_cozy", 214730): (0, "IRRELEVANT"),  # Space Rangers HD: A War Apart
+    ("coh_cozy", 580200): (3, ""),  # Yonder: The Cloud Catcher Chronicles
+    ("coh_cozy", 1092590): (0, "IRRELEVANT"),  # 沙雕之路
+    ("coh_cozy", 1263240): (0, "IRRELEVANT"),  # Skate Story
+    ("coh_cozy", 1963370): (2, ""),  # No One Survived
+    ("coh_cozy", 2252680): (3, ""),  # Farlands
+    ("coh_cozy", 2340520): (3, ""),  # 세이큐 이야기
+    ("coh_cozy", 2418520): (3, ""),  # Farm Together 2
+    ("coh_cozy", 2661300): (3, ""),  # Grounded 2
+    ("coh_cozy", 3321460): (0, "IRRELEVANT"),  # 붉은사막
+    ("coh_fps", 222880): (3, ""),  # Insurgency
+    ("coh_fps", 282440): (2, ""),  # Quake Live
+    ("coh_fps", 433850): (3, ""),  # Z1 Battle Royale
+    ("coh_fps", 729040): (2, ""),  # Borderlands Game of the Year Enhanced
+    ("coh_fps", 1962663): (3, ""),  # 콜 오브 듀티®: 워존
+    ("coh_fps", 2000950): (3, ""),  # Call of Duty®: Modern Warfare®
+    ("coh_grand_strategy", 21970): (3, ""),  # R.U.S.E.™
+    ("coh_grand_strategy", 70600): (1, "GENRE_ONLY"),  # Worms Ultimate Mayhem
+    ("coh_grand_strategy", 235380): (3, ""),  # Blitzkrieg 3
+    ("coh_grand_strategy", 597180): (3, ""),  # Old World 올드 월드
+    ("coh_grand_strategy", 603850): (3, ""),  # Age of History II
+    ("coh_grand_strategy", 743640): (0, "IRRELEVANT"),  # Achievement Clicker
+    ("coh_grand_strategy", 1468720): (1, "GENRE_ONLY"),  # Ultimate Epic Battle Simulator 2
+    ("coh_grand_strategy", 1560250): (1, "GENRE_ONLY"),  # Rising Front
+    ("coh_grand_strategy", 2168680): (1, "GENRE_ONLY"),  # Nuclear Option
+    ("coh_grand_strategy", 3105960): (1, "GENRE_ONLY"),  # Astrobuilder
+    ("coh_grand_strategy", 3381680): (3, ""),  # Age of History 2: Definitive Edition
+    ("coh_indie_platformer", 40800): (3, ""),  # Super Meat Boy
+    ("coh_indie_platformer", 236090): (3, ""),  # Dust: An Elysian Tail
+    ("coh_indie_platformer", 916730): (3, ""),  # Gato Roboto
+    ("coh_indie_platformer", 2273430): (2, ""),  # BlazBlue Entropy Effect
+    ("coh_indie_platformer", 2317640): (2, ""),  # JUMP KING QUEST
+    ("coh_indie_platformer", 2665680): (2, ""),  # 바벨탑: 혼돈의 생존자들
+    ("coh_openworld_survival", 8500): (1, "MODE_MISMATCH"),  # 이브 온라인
+    ("coh_openworld_survival", 211820): (3, ""),  # Starbound
+    ("coh_openworld_survival", 274520): (2, ""),  # Darkwood 다크우드
+    ("coh_openworld_survival", 313120): (3, ""),  # Stranded Deep
+    ("coh_openworld_survival", 359320): (2, ""),  # Elite Dangerous
+    ("coh_openworld_survival", 361420): (3, ""),  # ASTRONEER
+    ("coh_openworld_survival", 738520): (3, ""),  # Breathedge
+    ("coh_openworld_survival", 848450): (3, ""),  # 서브노티카: 빌로우 제로
+    ("coh_openworld_survival", 914620): (2, ""),  # Mist Survival
+    ("coh_openworld_survival", 1931180): (3, ""),  # Lost Skies
+    ("coh_openworld_survival", 3276050): (2, ""),  # SpaceCraft
+    ("coh_openworld_survival", 3280350): (2, ""),  # DEATH STRANDING 2: ON THE BEACH
+    ("coh_strategy", 1124300): (3, ""),  # 휴먼카인드
+    ("coh_strategy", 1295660): (3, ""),  # 시드 마이어의 문명 VII
+    ("coh_survival_craft", 322330): (2, ""),  # Don't Starve Together
+    ("coh_survival_craft", 346110): (3, ""),  # ARK: Survival Evolved
+    ("coh_survival_craft", 360170): (3, ""),  # How to Survive 2
+    ("coh_survival_craft", 391730): (3, ""),  # Crashlands
+    ("coh_survival_craft", 541300): (3, ""),  # Survive the Nights
+    ("coh_survival_craft", 914620): (3, ""),  # Mist Survival
+    ("coh_survival_craft", 1766060): (3, ""),  # HumanitZ
+    ("coh_survival_craft", 1783560): (2, ""),  # The Last Caretaker
+    ("coh_survival_craft", 1963370): (3, ""),  # No One Survived
+    ("coh_vehicle_sim", 266410): (3, ""),  # iRacing
+    ("coh_vehicle_sim", 287310): (1, "GENRE_ONLY"),  # 리볼트
+    ("coh_vehicle_sim", 539720): (1, "GENRE_ONLY"),  # Razortron 2000
+    ("coh_vehicle_sim", 635260): (2, ""),  # CarX Drift Racing Online
+    ("coh_vehicle_sim", 1351240): (3, ""),  # Taxi Life: A City Driving Simulator
+    ("coh_vehicle_sim", 1520370): (3, ""),  # Mon Bazou
+    ("coh_vehicle_sim", 1578390): (3, ""),  # My Garage
+    ("coh_vehicle_sim", 1849250): (3, ""),  # EA SPORTS™ WRC
+    ("coh_vehicle_sim", 3616550): (2, ""),  # Car Dealership Simulator 2
+    ("coh_vehicle_sim", 3800340): (0, "KEYWORD_MATCH"),  # ScootX
+    ("mix_arpg_survival", 70): (1, "GENRE_ONLY"),  # Half-Life
+    ("mix_arpg_survival", 22370): (1, "FRANCHISE_OR_VARIANT"),  # Fallout 3: Game of the Year Edition
+    ("mix_arpg_survival", 335300): (1, "FRANCHISE_OR_VARIANT"),  # DARK SOULS™ II: Scholar of the First Sin
+    ("mix_arpg_survival", 529180): (2, ""),  # Dark and Light
+    ("mix_arpg_survival", 637650): (2, ""),  # FINAL FANTASY XV WINDOWS EDITION
+    ("mix_arpg_survival", 914620): (2, ""),  # Mist Survival
+    ("mix_arpg_survival", 1245620): (3, ""),  # ELDEN RING
+    ("mix_arpg_survival", 1783560): (2, ""),  # The Last Caretaker
+    ("mix_arpg_survival", 2186680): (2, ""),  # Warhammer 40,000: Rogue Trader
+    ("mix_arpg_survival", 3282300): (2, ""),  # Mistfall Hunter
+    ("mix_cozy_fps", 666140): (3, ""),  # My Time at Portia
+    ("mix_cozy_fps", 768200): (3, ""),  # Smalland: Survive the Wilds
+    ("mix_cozy_fps", 1938090): (2, ""),  # 콜 오브 듀티®
+    ("mix_cozy_fps", 1963370): (2, ""),  # No One Survived
+    ("mix_cozy_fps", 2252680): (3, ""),  # Farlands
+    ("mix_cozy_fps", 2340520): (3, ""),  # 세이큐 이야기
+    ("mix_cozy_fps", 2418520): (3, ""),  # Farm Together 2
+    ("mix_cozy_fps", 2661300): (3, ""),  # Grounded 2
+    ("mix_fps_cozy", 42680): (2, ""),  # Call of Duty®: Modern Warfare® 3 (2011)
+    ("mix_fps_cozy", 1962663): (3, ""),  # 콜 오브 듀티®: 워존
+    ("mix_fps_cozy", 2252680): (3, ""),  # Farlands
+    ("mix_fps_cozy", 2340520): (3, ""),  # 세이큐 이야기
+    ("mix_fps_cozy", 2418520): (3, ""),  # Farm Together 2
+    ("mix_grand_casual", 70600): (1, "GENRE_ONLY"),  # Worms Ultimate Mayhem
+    ("mix_grand_casual", 394360): (3, ""),  # Hearts of Iron IV
+    ("mix_grand_casual", 597180): (3, ""),  # Old World 올드 월드
+    ("mix_grand_casual", 743640): (0, "IRRELEVANT"),  # Achievement Clicker
+    ("mix_grand_casual", 1071870): (2, ""),  # Biped
+    ("mix_grand_casual", 1468720): (1, "GENRE_ONLY"),  # Ultimate Epic Battle Simulator 2
+    ("mix_grand_casual", 1560250): (1, "GENRE_ONLY"),  # Rising Front
+    ("mix_grand_casual", 2168680): (1, "GENRE_ONLY"),  # Nuclear Option
+    ("mix_grand_casual", 2560240): (2, ""),  # Biped 2
+    ("mix_grand_casual", 3105960): (1, "GENRE_ONLY"),  # Astrobuilder
+    ("mix_grand_casual", 3263320): (3, ""),  # Carry The Glass
+    ("mix_grand_casual", 3381680): (3, ""),  # Age of History 2: Definitive Edition
+    ("mix_grand_casual", 3450310): (3, ""),  # Europa Universalis V
+    ("mix_indie_multi", 236090): (3, ""),  # Dust: An Elysian Tail
+    ("mix_indie_multi", 347800): (3, ""),  # Ghost Song
+    ("mix_indie_multi", 552100): (3, ""),  # Brick Rigs
+    ("mix_indie_multi", 1451480): (3, ""),  # The Greatest Penguin Heist of All Time
+    ("mix_indie_multi", 2218750): (1, "GENRE_ONLY"),  # Halls of Torment
+    ("mix_indie_multi", 2273430): (2, ""),  # BlazBlue Entropy Effect
+    ("mix_indie_multi", 2665680): (2, ""),  # 바벨탑: 혼돈의 생존자들
+    ("mix_multi_indie", 211820): (3, ""),  # Starbound
+    ("mix_multi_indie", 333930): (3, ""),  # Dirty Bomb®
+    ("mix_multi_indie", 383150): (2, ""),  # Dead Island Definitive Edition
+    ("mix_multi_indie", 444090): (3, ""),  # Paladins®
+    ("mix_multi_indie", 1169040): (3, ""),  # Necesse: 네세스
+    ("mix_multi_indie", 1492070): (3, ""),  # Sker Ritual
+    ("mix_multi_indie", 1504570): (2, ""),  # 太荒初境
+    ("mix_multi_indie", 2827230): (2, ""),  # Wild Assault / 兽猎突袭
+    ("mix_openworld_cozy", 211820): (3, ""),  # Starbound
+    ("mix_openworld_cozy", 313120): (2, ""),  # Stranded Deep
+    ("mix_openworld_cozy", 359320): (2, ""),  # Elite Dangerous
+    ("mix_openworld_cozy", 580200): (3, ""),  # Yonder: The Cloud Catcher Chronicles
+    ("mix_openworld_cozy", 674140): (3, ""),  # Bugsnax
+    ("mix_openworld_cozy", 738520): (3, ""),  # Breathedge
+    ("mix_openworld_cozy", 848450): (3, ""),  # 서브노티카: 빌로우 제로
+    ("mix_openworld_cozy", 1092590): (0, "IRRELEVANT"),  # 沙雕之路
+    ("mix_openworld_cozy", 1263240): (0, "IRRELEVANT"),  # Skate Story
+    ("mix_openworld_cozy", 1931180): (3, ""),  # Lost Skies
+    ("mix_openworld_cozy", 3276050): (2, ""),  # SpaceCraft
+    ("mix_rpg_racing", 22330): (1, "FRANCHISE_OR_VARIANT"),  # The Elder Scrolls IV: Oblivion® Game of 
+    ("mix_rpg_racing", 228280): (2, ""),  # Baldur's Gate: Enhanced Edition
+    ("mix_rpg_racing", 635260): (2, ""),  # CarX Drift Racing Online
+    ("mix_rpg_racing", 750130): (2, ""),  # The Sinking City Remastered
+    ("mix_rpg_racing", 1578390): (3, ""),  # My Garage
+    ("mix_rpg_racing", 1620730): (2, ""),  # Hell is Us
+    ("mix_rpg_racing", 1771300): (3, ""),  # Kingdom Come: Deliverance II
+    ("mix_rpg_racing", 3321460): (3, ""),  # 붉은사막
+    ("mix_rpg_racing", 3616550): (2, ""),  # Car Dealership Simulator 2
+    ("mix_survival_strategy", 221100): (3, ""),  # DayZ
+    ("mix_survival_strategy", 239140): (3, ""),  # Dying Light
+    ("mix_survival_strategy", 914620): (3, ""),  # Mist Survival
+    ("mix_survival_strategy", 1124300): (3, ""),  # 휴먼카인드
+    ("mix_survival_strategy", 1183470): (2, ""),  # Imperiums: Greek Wars
+    ("mix_survival_strategy", 1783560): (2, ""),  # The Last Caretaker
+    ("mix_survival_strategy", 3407390): (3, ""),  # ENDLESS Legend™ 2 엔들리스 레전드 2
+    ("mix_vehicle_fps", 383150): (2, ""),  # Dead Island Definitive Edition
+    ("mix_vehicle_fps", 1066890): (3, ""),  # Automobilista 2
+    ("mix_vehicle_fps", 1369670): (3, ""),  # Motor Town: Behind The Wheel
+    ("mix_vehicle_fps", 1492070): (2, ""),  # Sker Ritual
+    ("mix_vehicle_fps", 1849250): (3, ""),  # EA SPORTS™ WRC
+    ("niche_cozy_casual", 331870): (3, ""),  # AER Memories of Old
+    ("niche_cozy_casual", 355630): (2, ""),  # Leo’s Fortune - HD Edition
+    ("niche_cozy_casual", 375820): (2, ""),  # Human Resource Machine
+    ("niche_cozy_casual", 493200): (3, ""),  # RiME
+    ("niche_cozy_casual", 787810): (1, "GENRE_ONLY"),  # Rogue Heroes: Ruins of Tasos
+    ("niche_cozy_casual", 1084020): (2, ""),  # TheoTown
+    ("niche_cozy_casual", 1148650): (2, ""),  # The Legend of Bum-Bo
+    ("niche_cozy_casual", 1730250): (3, ""),  # Pan'orama
+    ("niche_cozy_casual", 1740300): (3, ""),  # Smushi Come Home
+    ("niche_cozy_casual", 2019810): (3, ""),  # Boxes: Lost Fragments
+    ("niche_cozy_casual", 2121980): (2, ""),  # Void Stranger
+    ("niche_cozy_casual", 2368930): (3, ""),  # 아일랜더스: 새로운 해안
+    ("niche_cozy_casual", 4160210): (3, ""),  # The Artisan of Glimmith
+    ("niche_puzzle_solo", 304410): (2, ""),  # Hexcells Infinite
+    ("niche_puzzle_solo", 370360): (3, ""),  # TIS-100
+    ("niche_puzzle_solo", 574720): (2, ""),  # Little Big Workshop
+    ("niche_puzzle_solo", 617670): (1, "GENRE_ONLY"),  # Zup! S
+    ("niche_puzzle_solo", 792100): (3, ""),  # 7 Billion Humans
+    ("niche_puzzle_solo", 1062160): (3, ""),  # Poly Bridge 2
+    ("niche_puzzle_solo", 1444480): (3, ""),  # Turing Complete
+    ("niche_puzzle_solo", 1910680): (2, ""),  # Orb of Creation
+    ("niche_puzzle_solo", 2162800): (3, ""),  # shapez 2 - Factory
+    ("niche_puzzle_solo", 3700980): (1, "GENRE_ONLY"),  # How to Make an Atomic Bomb in Your Garde
+    ("niche_puzzle_solo", 3846120): (3, ""),  # MineMogul
+    ("niche_roguelite", 753420): (3, ""),  # Dungreed
+    ("niche_roguelite", 958520): (3, ""),  # 33 Immortals
+    ("niche_roguelite", 1315180): (2, ""),  # Spark in the Dark
+    ("niche_roguelite", 1721110): (3, ""),  # Abyssus
+    ("niche_roguelite", 1887840): (3, ""),  # Another Crab's Treasure
+    ("niche_roguelite", 2071280): (3, ""),  # Ravenswatch
+    ("niche_roguelite", 2334730): (3, ""),  # Death Must Die
+    ("niche_roguelite", 2351560): (3, ""),  # 아포칼립스 파티
+    ("niche_roguelite", 2665680): (2, ""),  # 바벨탑: 혼돈의 생존자들
+    ("niche_roguelite", 3228590): (3, ""),  # Deadzone: Rogue
+    ("niche_roguelite", 3489700): (1, "GENRE_ONLY"),  # 스텔라 블레이드™
+    ("niche_sim", 350640): (3, ""),  # Sherlock Holmes: The Devil's Daughter
+    ("niche_sim", 383120): (2, ""),  # Empyrion - Galactic Survival
+    ("niche_sim", 574720): (2, ""),  # Little Big Workshop
+    ("niche_sim", 1366540): (3, ""),  # Dyson Sphere Program
+    ("niche_sim", 1369700): (1, "GENRE_ONLY"),  # Solar Expanse - Space Exploration Manage
+    ("niche_sim", 1614550): (3, ""),  # Astro Colony
+    ("niche_sim", 1754840): (3, ""),  # Hacker Simulator
+    ("niche_sim", 2779120): (3, ""),  # Modulus: Factory Automation
+    ("niche_sim", 2797960): (3, ""),  # 은폐된 살인의 진실들 - 하드코어 본격 추리 탐정 게임
+    ("niche_sim", 2879840): (3, ""),  # 방 탈출 시뮬레이터2
+    ("niche_soulslike_solo", 236090): (3, ""),  # Dust: An Elysian Tail
+    ("niche_soulslike_solo", 236430): (3, ""),  # DARK SOULS™ II
+    ("niche_soulslike_solo", 385380): (1, "GENRE_ONLY"),  # Planet Centauri
+    ("niche_soulslike_solo", 747200): (1, "GENRE_ONLY"),  # Keplerth
+    ("niche_soulslike_solo", 1369630): (3, ""),  # ENDER LILIES: Quietus of the Knights
+    ("niche_soulslike_solo", 1863430): (2, ""),  # Dragonkin: The Banished
+    ("niche_soulslike_solo", 2317640): (1, "GENRE_ONLY"),  # JUMP KING QUEST
+    ("niche_soulslike_solo", 3216340): (3, ""),  # Tearscape
+    ("niche_soulslike_solo", 3418990): (2, ""),  # 신역 추락
+    ("niche_tactics", 496620): (3, ""),  # Monster Slayers
+    ("niche_tactics", 637090): (3, ""),  # BATTLETECH
+    ("niche_tactics", 673880): (3, ""),  # Warhammer 40,000: Mechanicus
+    ("niche_tactics", 861540): (3, ""),  # Dicey Dungeons
+    ("niche_tactics", 2432860): (3, ""),  # MENACE 메너스
+    ("niche_tactics", 3481020): (3, ""),  # 恶魔牌
+    ("niche_tactics", 3709430): (2, ""),  # 마녀: 종말의 여행
+}
+
+
 ALL = {**REP_V2, **POSTPROCESS, **DEPTH_V1, **FULL_V1, **REP_V2_TOPUP, **MIN_REV_300,
        **RANKER_DIAG, **BOOST_SWEEP, **VAL_V1, **DEV_TOPUP_V1, **NICHE_V1,
-       **BLIND_ROUND1}
+       **BLIND_ROUND1, **BLIND_TAGS}
