@@ -64,6 +64,7 @@ def apply_hard_filters(
     drop_adult: bool = True,
     drop_vr_only: bool = True,
     require_known_reviews: bool = False,
+    min_reviews: int = 0,
 ) -> pd.DataFrame:
     """추천으로 내보내면 안 되는 것을 제거한다.
 
@@ -77,6 +78,19 @@ def apply_hard_filters(
     깊은 페이지가 무너지는 원인이 이것이다 — 유사도는 거의 안 변하는데(1페이지 0.75 →
     5페이지 0.71) 리뷰 수 중앙값이 2,831 → 434 로 붕괴한다. 관련성이 떨어지는 게 아니라
     아무도 안 해본 게임으로 채워진다.
+
+    `min_reviews` — 이진 신호로는 부족하다는 것이 전체 코퍼스에서 드러났다. 코퍼스를
+    19,476 → 173,691 로 키우자 `has_recommendations` 를 통과하는 게임이 7,558 → 21,892 로
+    늘면서 Top-10 리뷰 중앙값이 7,742 → 2,210 으로 무너졌다. 판정 258쌍으로 잰 리뷰 수 대
+    적합률은 단조 증가한다:
+
+        리뷰 <500   적합 29%   무관 26%
+        리뷰 500-2k  적합 57%
+        리뷰 2k-10k  적합 57%
+        리뷰 10k+    적합 78%   무관  5%
+
+    하한 300 을 걸면 P@10 0.562 → 0.713 (구 코퍼스 0.625 도 상회). 하한을 10,000 까지
+    올리면 다시 떨어진다 — 유명작만 남아 발견의 가치가 사라지기 때문이다.
     """
     df = ranked.copy()
     meta = dataset.set_index("steam_appid") if "steam_appid" in dataset.columns else dataset
@@ -92,6 +106,11 @@ def apply_hard_filters(
 
     if require_known_reviews and "has_recommendations" in meta.columns:
         keep &= df["steam_appid"].map(lambda a: bool(meta["has_recommendations"].get(a, False)))
+
+    if min_reviews > 0 and "recommendations_total" in meta.columns:
+        # Int64 결측을 0 으로 눕혀야 한다 — pd.NA 는 비교에서 불리언이 되지 않는다.
+        totals = meta["recommendations_total"].astype("float").fillna(0.0)
+        keep &= df["steam_appid"].map(lambda a: totals.get(a, 0.0) >= min_reviews)
 
     if drop_unreleased and "coming_soon" in meta.columns:
         # dataset 이 직접 들고 있으면 그것을 쓴다 — 전체 코퍼스에 적용된다
@@ -233,11 +252,13 @@ def postprocess(
     publisher_max: int = 2,
     hard_filters: bool = True,
     require_known_reviews: bool = False,
+    min_reviews: int = 0,
 ) -> pd.DataFrame:
     """스펙 §5.4 순서: hard filter → 시리즈/퍼블리셔 상한 → 다양성 → Top-N."""
     df = ranked
     if hard_filters:
-        df = apply_hard_filters(df, dataset, require_known_reviews=require_known_reviews)
+        df = apply_hard_filters(df, dataset, require_known_reviews=require_known_reviews,
+                                min_reviews=min_reviews)
     if series_max:
         df = cap_series(df, dataset, series_max)
     if publisher_max:

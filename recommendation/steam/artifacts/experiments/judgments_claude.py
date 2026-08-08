@@ -129,4 +129,114 @@ DEPTH_V1 = {
     ("coh_indie_platformer", 220440): (1, "GENRE_ONLY"),   # DmC — 3D 스타일리시 액션
 }
 
-ALL = {**REP_V2, **POSTPROCESS, **DEPTH_V1}
+# --- full_v1 (코퍼스 19,476 → 173,691) 에서 새로 진입한 후보 ---
+# 8개 프로필 × Top-10 = 80칸 중 35칸은 구 코퍼스 판정을 재사용하고, 나머지 45칸이 신규다.
+FULL_V1 = {
+    # P01 mix_vehicle_fps: Euro Truck Simulator 2 / Assetto Corsa / Left 4 Dead 2
+    ("mix_vehicle_fps", 1066130): (2, ""),                   # Truck Life — 트럭 심, 장르 정확하나 저가 양산품
+    ("mix_vehicle_fps", 3917090): (3, ""),                   # Assetto Corsa Rally — 시드의 공식 신작 랠리 심
+    ("mix_vehicle_fps", 2268560): (1, "GENRE_ONLY"),         # Zombie Survival Game Online — 좀비지만 오픈월드 루터슈터
+    ("mix_vehicle_fps", 1763830): (1, "TOO_NICHE"),          # My Truck Game — rev 239, 사실상 기술 데모
+
+    # P02 coh_classic_multi: Garry's Mod / Team Fortress 2 / Left 4 Dead 2
+    ("coh_classic_multi", 2176320): (0, "IRRELEVANT"),       # Magical Drop VI — 낙하 퍼즐
+    ("coh_classic_multi", 414120):  (2, "TOO_NICHE"),        # Modbox — GMod 대응 샌드박스지만 VR 중심 rev 198
+    ("coh_classic_multi", 2268560): (1, "GENRE_ONLY"),       # Zombie Survival Game Online
+    ("coh_classic_multi", 2027330): (3, ""),                 # GoreBox — 물리 샌드박스, GMod 직결 rev 22k
+
+    # P03 mix_openworld_cozy: No Man's Sky / Subnautica / Slime Rancher
+    ("mix_openworld_cozy", 1657630): (3, ""),                # Slime Rancher 2 — 공식 후속작
+    ("mix_openworld_cozy", 890720):  (3, ""),                # In Other Waters — 외계 해양 탐사, Subnautica 정서 직결
+    ("mix_openworld_cozy", 1552500): (1, "KEYWORD_MATCH"),   # Slimekeep — '슬라임'만 겹치는 로그라이크
+    ("mix_openworld_cozy", 1031460): (2, ""),                # Sail Forth — 아늑한 항해 탐험
+    ("mix_openworld_cozy", 2800450): (2, ""),                # Planetaries — SF 오픈월드 서바이벌(+TD)
+    ("mix_openworld_cozy", 2642840): (0, "IRRELEVANT"),      # Humans are not that against Lizardwomen 2
+    ("mix_openworld_cozy", 358920):  (2, ""),                # Star Control I and II — NMS 의 정신적 선조
+
+    # P04 coh_cozy: Stardew Valley / Slime Rancher / Raft
+    ("coh_cozy", 1657630): (3, ""),                          # Slime Rancher 2
+    ("coh_cozy", 1955340): (1, "KEYWORD_MATCH"),             # Super Raft Boat Together — 이름만 Raft, 로그라이트 슈터
+    ("coh_cozy", 1552500): (1, "KEYWORD_MATCH"),             # Slimekeep
+    ("coh_cozy", 2659960): (0, "LOW_QUALITY"),               # Let's Go! My Harem Farm — 농사 어휘를 쓴 하렘물
+    ("coh_cozy", 1999170): (0, "IRRELEVANT"),                # 虫潮 — 벌레 떼 슈터, 코지의 정반대
+    ("coh_cozy", 1203180): (2, ""),                          # Breakwaters — 해양 서바이벌 크래프팅, Raft 대응
+    ("coh_cozy", 406870):  (1, "GENRE_ONLY"),                # Eventide: Slavic Fable — 히든오브젝트
+
+    # P05 mix_rpg_racing: The Witcher 3 / Skyrim / BeamNG.drive
+    ("mix_rpg_racing", 1763830): (1, "TOO_NICHE"),           # My Truck Game
+    ("mix_rpg_racing", 2437570): (1, "TOO_NICHE"),           # Golden Chambers — 서부 오픈월드 RPG, rev 188
+    ("mix_rpg_racing", 3933710): (1, "TOO_NICHE"),           # My Car My Life — 드래그 레이싱, rev 153
+    ("mix_rpg_racing", 1321230): (0, "IRRELEVANT"),          # Angels of Death Episode.Eddie — 애니 단편
+    ("mix_rpg_racing", 1565890): (2, ""),                    # RaceLeague — soft-body damage, BeamNG 특징 일치
+    ("mix_rpg_racing", 2067920): (1, "GENRE_ONLY"),          # Rogue : Genesia — 뱀서라이크
+    ("mix_rpg_racing", 1214520): (0, "KEYWORD_MATCH"),       # Pro Gymnast Simulator — '물리 시뮬' 어휘만
+
+    # P06 mix_fps_cozy: Counter-Strike 2 / PUBG / Stardew Valley
+    ("mix_fps_cozy", 805940):  (1, "LOW_QUALITY"),           # RUSSIA BATTLEGROUNDS — 장르는 맞고 품질이 없다
+    ("mix_fps_cozy", 2659960): (0, "LOW_QUALITY"),           # Let's Go! My Harem Farm
+    ("mix_fps_cozy", 3028330): (3, ""),                      # Battlefield REDSEC — 무료 배틀로얄, PUBG 직결
+    ("mix_fps_cozy", 1245560): (3, ""),                      # Roots of Pacha — Stardew 계열 최상급 대응
+
+    # P07 coh_indie_platformer: Hollow Knight / Dead Cells / Celeste
+    ("coh_indie_platformer", 1911610): (3, ""),              # Windblown — Dead Cells 제작사 신작
+    ("coh_indie_platformer", 1030300): (3, ""),              # Hollow Knight: Silksong — 공식 후속작 rev 381k
+    ("coh_indie_platformer", 2803280): (2, ""),              # Dragon Is Dead — 액션 플랫포머 로그라이트
+    ("coh_indie_platformer", 1634860): (2, ""),              # Minishoot' Adventures — 개방형 탐험, 전투는 트윈스틱
+    ("coh_indie_platformer", 2157210): (1, "TOO_NICHE"),     # Dead of Darkness — 2D 서바이벌 호러, rev 198
+    ("coh_indie_platformer", 1589570): (2, ""),              # Dunjungle — 2D 액션 로그라이트
+    ("coh_indie_platformer", 2071280): (3, ""),              # Ravenswatch — 로그라이크 액션 rev 16.6k
+
+    # P08 mix_cozy_fps: Raft / Stardew Valley / Counter-Strike 2
+    ("mix_cozy_fps", 1955340): (1, "KEYWORD_MATCH"),         # Super Raft Boat Together
+    ("mix_cozy_fps", 2659960): (0, "LOW_QUALITY"),           # Let's Go! My Harem Farm
+    ("mix_cozy_fps", 1203180): (2, ""),                      # Breakwaters
+    ("mix_cozy_fps", 351230):  (1, "KEYWORD_MATCH"),         # Counter Spell — 'Counter' 만 겹침
+    ("mix_cozy_fps", 1245560): (3, ""),                      # Roots of Pacha
+}
+
+# --- 구 코퍼스(rep_v2) 보충 판정 ---
+# 퍼블리셔 상한이 DEPTH_V1 판정 이후에 들어가면서 구 코퍼스 Top-10 에도 새 항목이 14칸 생겼다.
+# 이걸 비워두면 구/신 비교에서 구 쪽만 판정된 항목으로 평균을 내게 되어 비교가 성립하지 않는다.
+REP_V2_TOPUP = {
+    ("mix_vehicle_fps", 759740): (2, ""),                    # RIDE 3 — 오토바이 레이싱 심, Assetto 축
+    ("mix_vehicle_fps", 618140): (1, "GENRE_ONLY"),          # Barro — 캐주얼 미니 레이싱, 시뮬 정반대
+    ("mix_vehicle_fps", 561600): (2, ""),                    # MXGP3 — 공식 모토크로스 심
+    ("coh_classic_multi", 758990): (2, ""),                  # Ancient Warfare 3 — 샌드박스 + 다중 모드
+    ("mix_openworld_cozy", 207490): (0, "IRRELEVANT"),       # Rayman Origins — 2D 플랫포머
+    ("mix_openworld_cozy", 392110): (1, "KEYWORD_MATCH"),    # Endless Space 2 — '우주'만 겹치는 4X
+    ("mix_openworld_cozy", 432940): (0, "IRRELEVANT"),       # Breakneck — 스피더 회피 액션
+    ("mix_openworld_cozy", 280790): (2, ""),                 # Creativerse — 샌드박스 크래프팅
+    ("mix_openworld_cozy", 584400): (0, "IRRELEVANT"),       # 소닉 매니아
+    ("coh_cozy", 271260): (0, "IRRELEVANT"),                 # Star Control: Origins — 우주 어드벤처
+    ("coh_cozy", 207490): (0, "IRRELEVANT"),                 # Rayman Origins
+    ("mix_rpg_racing", 637650): (3, ""),                     # FINAL FANTASY XV — 대형 오픈월드 액션 RPG
+    ("mix_rpg_racing", 234650): (2, ""),                     # Shadowrun Returns — 턴제 전술 RPG
+    ("mix_cozy_fps", 70): (2, ""),                           # Half-Life — CS 의 직계 조상 (P02 판정과 동일)
+}
+
+# --- full_v1 + 리뷰 수 하한 300 에서 새로 올라온 후보 ---
+MIN_REV_300 = {
+    ("coh_classic_multi", 1238820): (2, ""),                 # Battlefield 3 — 팀 기반 멀티 FPS, TF2 축
+    ("coh_cozy", 1245560): (3, ""),                          # Roots of Pacha — Stardew 계열 최상급
+    ("coh_cozy", 876650):  (2, ""),                          # Aground — 무인도 표류 크래프팅, Raft 대응
+    ("coh_cozy", 2642840): (0, "IRRELEVANT"),                # Humans are not that against Lizardwomen 2
+    ("coh_indie_platformer", 1662480): (2, ""),              # Nuclear Blaze — Dead Cells 제작자의 2D 플랫포머
+    ("mix_cozy_fps", 1250):    (3, ""),                      # Killing Floor — 협동 FPS, CS2 축
+    ("mix_cozy_fps", 876650):  (2, ""),                      # Aground
+    ("mix_cozy_fps", 1248130): (2, ""),                      # Farming Simulator 22 — 농사지만 톤이 다름
+    ("mix_fps_cozy", 895400):  (3, ""),                      # Deadside — 오픈월드 생존 슈터, PUBG 대응
+    ("mix_fps_cozy", 1248130): (2, ""),                      # Farming Simulator 22
+    ("mix_openworld_cozy", 2354000): (0, "IRRELEVANT"),      # Slackers — 쇼핑카트 파티 레이싱
+    ("mix_openworld_cozy", 1933840): (1, "GENRE_ONLY"),      # Moon Mystery — 우주 FPS 어드벤처
+    ("mix_rpg_racing", 1764530): (2, ""),                    # Sailwind — 사실적 항해 시뮬 + 오픈월드
+    ("mix_rpg_racing", 1020470): (1, "GENRE_ONLY"),          # Evoland — RPG 어휘만
+    ("mix_rpg_racing", 2393160): (1, "GENRE_ONLY"),          # Nice Day for Fishing — 낚시 RPG
+    ("mix_vehicle_fps", 2051120): (1, "GENRE_ONLY"),         # HOT WHEELS UNLEASHED 2 — 아케이드, 시뮬 정반대
+    ("mix_vehicle_fps", 1032700): (2, ""),                   # Bus Driving Sim 22 — ETS2 대응
+    # next_page 는 후보 풀이 1,500(=top_n×5)이라 3,000 으로 잰 표와 3칸이 다르게 채워진다
+    ("coh_cozy", 1248130):     (2, ""),                      # Farming Simulator 22
+    ("mix_vehicle_fps", 55040):  (1, "GENRE_ONLY"),          # Atom Zombie Smasher — 탑다운 좀비 전략
+    ("mix_vehicle_fps", 849100): (3, ""),                    # Alaskan Road Truckers — ETS2 직결
+}
+
+ALL = {**REP_V2, **POSTPROCESS, **DEPTH_V1, **FULL_V1, **REP_V2_TOPUP, **MIN_REV_300}

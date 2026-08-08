@@ -113,6 +113,46 @@ def test_hard_filters_keep_gore():
     assert len(apply_hard_filters(ranked, ds, drop_unreleased=False)) == 1
 
 
+def test_min_reviews_cuts_the_long_tail():
+    """전체 코퍼스에서는 이진 신호(has_recommendations)로 부족하다.
+
+    리뷰 수백 개짜리가 21,892개나 통과해 유명작을 밀어낸다 — 실측 P@10 0.625 → 0.562.
+    """
+    ranked = _ranked([1, 2, 3], [10, 10, 10])
+    ds = _dataset([
+        {"steam_appid": 1, "name": "유명작", "genres": [], "categories": [],
+         "has_recommendations": True, "recommendations_total": 12000},
+        {"steam_appid": 2, "name": "롱테일", "genres": [], "categories": [],
+         "has_recommendations": True, "recommendations_total": 120},
+        {"steam_appid": 3, "name": "경계값", "genres": [], "categories": [],
+         "has_recommendations": True, "recommendations_total": 300},
+    ])
+    out = apply_hard_filters(ranked, ds, drop_unreleased=False, min_reviews=300)
+    assert out["steam_appid"].tolist() == [1, 3]   # 하한은 포함(>=)
+
+
+def test_min_reviews_treats_missing_as_zero():
+    """Int64 결측을 그대로 비교하면 `boolean value of NA is ambiguous` 로 터진다."""
+    ranked = _ranked([1, 2], [10, 10])
+    ds = _dataset([
+        {"steam_appid": 1, "name": "결측", "genres": [], "categories": [],
+         "has_recommendations": False, "recommendations_total": pd.NA},
+        {"steam_appid": 2, "name": "정상", "genres": [], "categories": [],
+         "has_recommendations": True, "recommendations_total": 5000},
+    ])
+    ds["recommendations_total"] = ds["recommendations_total"].astype("Int64")
+    out = apply_hard_filters(ranked, ds, drop_unreleased=False, min_reviews=300)
+    assert out["steam_appid"].tolist() == [2]
+
+
+def test_min_reviews_zero_is_a_noop():
+    """구 실험 재현성 — 기본값 0 에서는 아무것도 걸러지지 않아야 한다."""
+    ranked = _ranked([1], [10])
+    ds = _dataset([{"steam_appid": 1, "name": "무명", "genres": [], "categories": [],
+                    "has_recommendations": False, "recommendations_total": pd.NA}])
+    assert len(apply_hard_filters(ranked, ds, drop_unreleased=False)) == 1
+
+
 # ---------------------------------------------------------------- 통합
 
 def test_postprocess_applies_filter_then_cap_then_interleave():

@@ -16,7 +16,12 @@ import pandas as pd
 
 from src.config import PROJECT_ROOT, artifact_dir
 from src.experiment import file_fingerprint
-from src.personalized_retrieve import REFRESH_REC_BOOST, build_components, next_page
+from src.personalized_retrieve import (
+    REFRESH_MIN_REVIEWS,
+    REFRESH_REC_BOOST,
+    build_components,
+    next_page,
+)
 
 SCORE_LABEL = {3: "★★★", 2: "★★", 1: "★", 0: "✗"}
 LEGEND = "★★★ 매우 타당 · ★★ 타당 · ★ 약함 · ✗ 부적절 · – 미채점"
@@ -71,15 +76,14 @@ def build_doc(artifacts: str, page_size: int = 10) -> str:
         "| 표현 | `Description` + `Genres` + `Modes`(게임플레이 모드만, 플랫폼 문구 제거) |",
         "| 집계 | MAX (시드별 최대 유사도) |",
         f"| 인기도 부스트 | {REFRESH_REC_BOOST:.0%} |",
-        "| 후처리 | 시드 라운드로빈 인터리빙 · 시리즈 상한 1 · hard filter(성인/VR전용/미출시) |",
-        "| 품질 하한 | 리뷰 수가 보고되는 게임만 (`has_recommendations`) |",
+        "| 후처리 | 시드 라운드로빈 인터리빙 · 시리즈 상한 1 · 퍼블리셔 상한 2 · hard filter(성인/VR전용/미출시) |",
+        f"| 품질 하한 | 리뷰 {REFRESH_MIN_REVIEWS:,}개 이상 (전체 코퍼스에서 롱테일이 유명작을 밀어냄) |",
         "| 판정자 | Claude (Opus 5) — 사람 판정 아님 |",
         f"| 판정 범위 | 20개 프로필 중 {len(judged_pids)}개 |",
         "",
         f"평가 표기: {LEGEND}",
         "",
-        "> 이 코퍼스는 Steam 전체(176,609개)의 11%다. 전체 크롤링이 진행 중이며, 완료 후 같은",
-        "> 스크립트로 다시 뽑아 비교한다.",
+        f"> Steam 전체 게임은 176,609개다(2026-08 기준). 이 코퍼스는 그중 {len(ds) / 176609 * 100:.0f}%.",
         "",
         "---",
         "",

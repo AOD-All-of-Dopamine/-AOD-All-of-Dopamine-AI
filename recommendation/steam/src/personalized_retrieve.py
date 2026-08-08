@@ -83,6 +83,9 @@ def run_multi(
 # 새로고침 3페이지까지 품질이 유지되도록 맞춘 값. 근거는 next_page docstring 참고.
 REFRESH_REC_BOOST = 0.15
 
+# 전체 코퍼스(173,691)로 넓히면서 필요해진 품질 하한. 근거는 apply_hard_filters docstring.
+REFRESH_MIN_REVIEWS = 300
+
 
 def next_page(
     liked_appids: list[int],
@@ -93,6 +96,7 @@ def next_page(
     components: tuple | None = None,
     postprocess: bool = True,
     require_known_reviews: bool = True,
+    min_reviews: int = REFRESH_MIN_REVIEWS,
 ):
     """새로고침 한 번 = 이 함수 한 번. 서빙이 쓸 계약을 코드로 고정한다.
 
@@ -118,6 +122,17 @@ def next_page(
     현재 설정은 3페이지에서 41% 무너지지만(1.79→1.06) 개선 설정은 12% 하락에 그치고
     2→3페이지에서는 오히려 오른다. `run_multi` 기본값은 기존 실험 재현성 때문에 건드리지
     않는다 — 제품 경로인 이 함수에서만 바꾼다.
+
+    `min_reviews=300` 은 코퍼스를 19,476 → 173,691 로 넓히면서 추가됐다. **코퍼스만 키우면
+    오히려 나빠진다**는 것이 8개 프로필 × Top-10 전수 판정(미판정 0칸)으로 확인됐다:
+
+      설정                    P@10    NDCG@10   0점/프로필   리뷰중앙값
+      구 코퍼스 19,476        0.625    0.544      1.12        7,742
+      신 코퍼스 173,691       0.562    0.566      1.25        2,210   ← 하락
+      신 코퍼스 + 하한 300    0.713    0.631      0.88        6,572
+
+    코퍼스가 9배가 되면 이웃도 9배가 되지만 늘어난 것의 대부분은 리뷰 수백 개짜리다.
+    유사도가 평평한 구간에서 그것들이 유명작을 밀어낸다. 하한은 그 구간만 잘라낸다.
     """
     seen = set(seen_appids or ())
     # 후처리가 상위를 걸러내므로 넉넉히 뽑는다
@@ -128,7 +143,8 @@ def next_page(
         rec_boost=rec_boost,
         components=components,
         postprocess=postprocess,
-        postprocess_kwargs={"require_known_reviews": require_known_reviews},
+        postprocess_kwargs={"require_known_reviews": require_known_reviews,
+                            "min_reviews": min_reviews},
         exclude_appids=seen,
     )[strategy]
     return ranked.head(page_size).reset_index(drop=True)
