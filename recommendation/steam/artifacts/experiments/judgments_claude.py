@@ -239,4 +239,17 @@ MIN_REV_300 = {
     ("mix_vehicle_fps", 849100): (3, ""),                    # Alaskan Road Truckers — ETS2 직결
 }
 
-ALL = {**REP_V2, **POSTPROCESS, **DEPTH_V1, **FULL_V1, **REP_V2_TOPUP, **MIN_REV_300}
+# --- P05 악화 원인 진단 중 후보로 올라온 것들 ---
+# 백분위 계산을 '리뷰 있는 게임' 안에서만 하도록 바꾸거나 퍼블리셔 상한을 4로 올렸을 때 진입한다.
+RANKER_DIAG = {
+    ("mix_vehicle_fps", 699130):   (3, ""),                  # World War Z — 4인 협동 좀비 슈터, L4D2 직결
+    ("coh_classic_multi", 699130): (3, ""),                  # World War Z
+    ("mix_openworld_cozy", 1104280): (0, "IRRELEVANT"),      # The Slormancer — 핵앤슬래시 ARPG
+    ("mix_openworld_cozy", 2410170): (0, "IRRELEVANT"),      # 더 네임리스 — 게임북 턴제 RPG
+    ("mix_openworld_cozy", 2515020): (0, "IRRELEVANT"),      # FINAL FANTASY XVI — 탐험/생존과 무관
+    ("coh_cozy", 2354000):     (0, "IRRELEVANT"),            # Slackers — 쇼핑카트 파티 레이싱
+    ("mix_rpg_racing", 1295510): (2, ""),                    # 드래곤 퀘스트 XI S — 대작 RPG, 다만 턴제 JRPG
+}
+
+ALL = {**REP_V2, **POSTPROCESS, **DEPTH_V1, **FULL_V1, **REP_V2_TOPUP, **MIN_REV_300,
+       **RANKER_DIAG}
