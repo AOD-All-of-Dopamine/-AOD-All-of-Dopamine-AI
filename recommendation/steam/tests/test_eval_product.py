@@ -96,6 +96,36 @@ def test_precision_rejects_unknown_denominator():
         precision_at_k([3], k=10, denominator="whatever")
 
 
+# -------------------------------------- NDCG 는 판정량에 의존하면 안 된다
+
+def test_page_ndcg_is_independent_of_how_much_was_judged(profiles):
+    """실측: pool 기반 NDCG 는 pool_size 와 상관 -0.71 이었다. 페이지 기준은 무관해야 한다."""
+    ranked = pd.DataFrame({"steam_appid": [1, 2, 3]})
+    small = {("pa", 1): 3, ("pa", 2): 2, ("pa", 3): 0}
+    large = {**small, **{("pa", 100 + i): 3 for i in range(40)}}
+    a = evaluate_config(lambda pid, l: ranked, ["pa"], small)
+    b = evaluate_config(lambda pid, l: ranked, ["pa"], large)
+    assert a.iloc[0]["ndcg_page"] == pytest.approx(b.iloc[0]["ndcg_page"])
+    assert a.iloc[0]["pool_size"] != b.iloc[0]["pool_size"]
+
+
+def test_page_ndcg_penalises_bad_order(profiles):
+    """좋은 것을 아래에 두면 떨어져야 한다 — 이것이 페이지 NDCG 가 재는 유일한 것이다."""
+    j = {("pa", 1): 3, ("pa", 2): 0}
+    good = evaluate_config(lambda pid, l: pd.DataFrame({"steam_appid": [1, 2]}), ["pa"], j)
+    bad = evaluate_config(lambda pid, l: pd.DataFrame({"steam_appid": [2, 1]}), ["pa"], j)
+    assert good.iloc[0]["ndcg_page"] == pytest.approx(1.0)
+    assert bad.iloc[0]["ndcg_page"] < 1.0
+    assert good.iloc[0]["p_at_k"] == bad.iloc[0]["p_at_k"]   # P@10 은 순서를 못 본다
+
+
+def test_pool_ndcg_warns_on_uneven_pools(profiles):
+    j = {("pa", 1): 3, ("pa", 2): 2, ("pb", 4): 3, **{("pa", 50 + i): 1 for i in range(20)}}
+    with pytest.warns(UserWarning, match="판정량"):
+        evaluate_config(lambda pid, l: pd.DataFrame({"steam_appid": {"pa": [1], "pb": [4]}[pid]}),
+                        ["pa", "pb"], j, ndcg_pool=True)
+
+
 # ----------------------------------------------------------- evaluate_config
 
 @pytest.fixture
@@ -119,7 +149,7 @@ def test_evaluate_config_computes_per_profile(profiles, judgments):
                           ["pa", "pb"], judgments)
     assert per["unjudged"].sum() == 0
     assert per.set_index("profile_id").loc["pa", "p_at_k"] == pytest.approx(0.2)  # 2/10
-    assert (per["ndcg_at_k"] <= 1.0).all()
+    assert (per["ndcg_page"] <= 1.0).all()
 
 
 def test_evaluate_config_refuses_unjudged_by_default(profiles, judgments):
@@ -139,7 +169,8 @@ def test_summarize_reports_pool_size(profiles, judgments):
     per = evaluate_config(lambda pid, liked: pd.DataFrame({"steam_appid": [1, 2]}),
                           ["pa"], judgments)
     s = summarize(per)
-    assert s["profiles"] == 1 and s["unjudged"] == 0 and s["pool_size_total"] == 3
+    assert s["profiles"] == 1 and s["unjudged"] == 0
+    assert s["pool_size_min"] == s["pool_size_max"] == 3
 
 
 # ------------------------------------------------------------------ compare

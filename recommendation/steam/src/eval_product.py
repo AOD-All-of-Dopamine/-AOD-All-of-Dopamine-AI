@@ -9,10 +9,17 @@
 실측으로 P07 1.160 / P02 1.021 이 나왔다. `assert_pool_coverage` 라는 가드가
 `src/metrics.py` 에 이미 있었지만 S1 트랙에서만 부르고 개인화 경로에서는 한 번도 안 불렀다.
 
-**2. 판정을 늘리면 과거 숫자가 움직인다.**
-같은 추천 목록인데 판정 풀이 127쌍 → 334쌍으로 늘자 평균 NDCG 가 0.887 → 0.630 으로
-0.257 움직였다. 측정하려던 효과(0.013~0.138)의 2~20배다. 그래서 NDCG 를 registry 에
-남길 때는 반드시 `pool_id` 와 `pool_size` 를 같이 박고, 다른 pool 의 값과 나란히 놓지 않는다.
+**2. NDCG 가 랭킹이 아니라 판정량을 재고 있었다.**
+`ideal_pool` 에 "그 프로필에서 판정된 것 전부"를 넘기면 프로필마다 분모가 달라진다.
+실측(26개 프로필): `pool_size ↔ NDCG` 상관 **-0.71**, P@10 이 똑같이 0.600 인 프로필끼리
+pool<=10 은 NDCG 0.806 / pool>=30 은 0.524 다. 같은 정확도인데 많이 채점한 쪽이 벌을 받는다.
+판정을 127 → 334쌍으로 늘렸을 때 같은 목록의 평균 NDCG 가 0.887 → 0.630 으로 움직인 것도
+같은 원인이다.
+
+→ 기본 지표를 **`ndcg_page`** 로 바꿨다. IDCG 를 페이지 자신에서 뽑으므로
+"보여준 10개를 올바른 순서로 놓았는가"만 재고 판정량과 무관하다. 프로필 간 평균이 성립한다.
+pool 기반 값이 필요하면 `ndcg_pool=True` 로 켤 수 있으나, **모든 프로필의 판정량이 균일할
+때만** 유효하고 그렇지 않으면 경고가 뜬다.
 
 **3. 8프로필 × 10칸 = 1칸이 0.0125 다.**
 `compare()` 는 짝지은 부트스트랩 신뢰구간을 항상 함께 낸다. 유의하지 않은 차이를
@@ -81,6 +88,7 @@ def evaluate_config(
     mode: str = DEFAULT_GAIN,
     label: str = "config",
     strict: bool = True,
+    ndcg_pool: bool = False,
 ) -> pd.DataFrame:
     """`ranker(profile_id, liked_appids) -> DataFrame[steam_appid]` 를 받아 프로필별 지표를 낸다.
 
@@ -104,37 +112,62 @@ def evaluate_config(
             )
         rels = [judgments[(pid, a)] for a in appids if (pid, a) in judgments]
         pool = [v for (q, _), v in judgments.items() if q == pid]
-        idcg = dcg(sorted(pool, reverse=True)[:k], mode)
         actual = dcg(rels, mode)
-        if actual > idcg + 1e-9:
-            raise ValueError(
-                f"{label}/{pid}: NDCG > 1 — 판정 풀이 랭킹을 못 덮습니다 "
-                f"(pool {len(pool)}, top-{k} {len(rels)})."
-            )
-        rows.append({
+
+        # 페이지 자기 기준 — 판정량과 무관하다. 이것이 기본이다.
+        page_idcg = dcg(sorted(rels, reverse=True), mode)
+        ndcg_page = actual / page_idcg if page_idcg else 0.0
+
+        row = {
             "profile_id": pid,
             "unjudged": len(missing),
             # 분모는 판정 개수가 아니라 칸 수 k — 미판정 칸은 실패로 센다.
             # (strict=False 로 열어둔 경우에도 정밀도가 부풀려지지 않게 한다)
             "p_at_k": precision_at_k(rels, k, POSITIVE_THRESHOLD, denominator=SLOT_DENOM),
-            "ndcg_at_k": actual / idcg if idcg else 0.0,
+            "ndcg_page": ndcg_page,
             "mean_relevance": sum(rels) / len(rels) if rels else 0.0,
             "zeros": sum(1 for r in rels if r == 0),
             "pool_size": len(pool),
-        })
-    return pd.DataFrame(rows)
+        }
+        if ndcg_pool:
+            pool_idcg = dcg(sorted(pool, reverse=True)[:k], mode)
+            if actual > pool_idcg + 1e-9:
+                raise ValueError(
+                    f"{label}/{pid}: NDCG > 1 — 판정 풀이 랭킹을 못 덮습니다 "
+                    f"(pool {len(pool)}, top-{k} {len(rels)})."
+                )
+            row["ndcg_pool"] = actual / pool_idcg if pool_idcg else 0.0
+        rows.append(row)
+
+    df = pd.DataFrame(rows)
+    if ndcg_pool and df["pool_size"].nunique() > 1:
+        import warnings
+
+        warnings.warn(
+            f"{label}: 프로필별 판정량이 {df['pool_size'].min()}~{df['pool_size'].max()} 로 "
+            "다릅니다. ndcg_pool 은 랭킹 품질이 아니라 판정량을 반영합니다 "
+            "(실측 상관 -0.71). 프로필 간 평균을 내지 마세요.",
+            stacklevel=2,
+        )
+    return df
 
 
 def summarize(per_profile: pd.DataFrame) -> dict:
-    return {
+    out = {
         "profiles": int(len(per_profile)),
         "unjudged": int(per_profile["unjudged"].sum()),
         "P@10": round(float(per_profile["p_at_k"].mean()), 4),
-        "NDCG@10": round(float(per_profile["ndcg_at_k"].mean()), 4),
+        "NDCG_page@10": round(float(per_profile["ndcg_page"].mean()), 4),
         "mean_relevance": round(float(per_profile["mean_relevance"].mean()), 4),
         "zeros_per_profile": round(float(per_profile["zeros"].mean()), 4),
-        "pool_size_total": int(per_profile["pool_size"].sum()),
+        "pool_size_min": int(per_profile["pool_size"].min()),
+        "pool_size_max": int(per_profile["pool_size"].max()),
     }
+    if "ndcg_pool" in per_profile.columns:
+        # 평균을 내지 말라고 한 값이므로 범위만 남긴다.
+        out["NDCG_pool_range"] = [round(float(per_profile["ndcg_pool"].min()), 4),
+                                  round(float(per_profile["ndcg_pool"].max()), 4)]
+    return out
 
 
 # ------------------------------------------------------------------ 비교
@@ -160,7 +193,7 @@ def compare(
     rows = []
     for lab in labels:
         s = summarize(results[lab])
-        row = {"설정": lab, **{kk: s[kk] for kk in ("P@10", "NDCG@10", "unjudged")}}
+        row = {"설정": lab, **{kk: s[kk] for kk in ("P@10", "NDCG_page@10", "unjudged")}}
         if lab == baseline:
             row |= {"Δ": 0.0, "95%CI": "(기준선)", "유의": ""}
         else:

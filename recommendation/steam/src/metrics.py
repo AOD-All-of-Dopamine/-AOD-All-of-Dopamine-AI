@@ -40,9 +40,23 @@ def ndcg_at_k(
 ) -> float:
     """상위 k개의 NDCG.
 
-    `ideal_pool`은 IDCG를 계산할 판정 모집단이다. pooled 평가에서는 **해당 앵커/프로필의
-    판정 풀 전체**를 넘겨야 한다 — 그래야 여러 변형을 같은 분모로 비교할 수 있다.
-    None이면 `rels` 자신을 모집단으로 쓴다(단일 랭킹의 자기 기준 NDCG).
+    `ideal_pool`은 IDCG를 계산할 판정 모집단이다. None이면 `rels` 자신을 쓴다.
+
+    **`ideal_pool` 을 "그 프로필에서 판정된 것 전부"로 넘기면 안 된다.** 프로필마다
+    판정량이 다르면 분모가 달라져 NDCG 가 랭킹 품질이 아니라 판정량을 재게 된다.
+    실측(26개 프로필, 판정 514쌍):
+
+        pool_size ↔ NDCG 상관  피어슨 -0.671 / 스피어만 -0.713
+        P@10 이 똑같이 0.600 인 프로필끼리:  pool<=10 → NDCG 0.806
+                                            pool>=30 → NDCG 0.524
+
+    같은 정확도인데 많이 채점한 프로필이 1.5배 벌을 받는다. 그래서 프로필 간 평균을 내면
+    무의미한 숫자가 나온다(실측 '전체 NDCG 0.766' 은 pool 10짜리 18개와 30+ 짜리 8개를
+    섞은 값이었다).
+
+    비교 대상 전 변형의 Top-k union 을 **모든 프로필에 대해 균일하게** 판정했을 때만
+    pool 을 넘겨도 된다. 그 조건이 아니면 `ideal_pool=None`(= 페이지 자기 기준)을 쓴다 —
+    그때 NDCG 는 "보여준 k개를 올바른 순서로 놓았는가"를 재고, 판정량과 무관해진다.
     """
     rels = [float(r) for r in rels[:k]]
     pool = rels if ideal_pool is None else [float(r) for r in ideal_pool]
