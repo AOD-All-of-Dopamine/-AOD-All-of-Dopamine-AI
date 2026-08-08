@@ -54,6 +54,211 @@ POSTPROCESS = {
     ("mix_cozy_fps", 300): (3, ""),                          # Day of Defeat: Source — CS2 결
 }
 
+# --- 라운드1 블라인드 판정 (src/blind_judge.py) ---
+# 비교할 5개 설정(하한 0/300/1000 · 인터리빙 on/off · rec_boost 0.15/0.03)의 Top-10 **합집합** 193쌍.
+# 한 설정만 판정하면 그 설정이 자동으로 이긴다 — 실측으로 기준선 미판정 3칸 vs 대안 55~115칸이었고
+# 미판정을 성공으로 세면 순위가 뒤집혔다. 합집합을 채워야 비교가 성립한다.
+#
+# **판정 근거가 이전과 다르다.** 이 라운드는 설정/순위/전략/프로필 실제 id 와 함께
+# **리뷰 수도 가린 채** 채점했다. 리뷰 수는 min_reviews 실험의 조작 변수라 보이면 어느 설정에서
+# 왔는지 추론된다. 그래서 TOO_NICHE/LOW_QUALITY 태그는 설명과 이름에서 읽히는 범위로만 붙었다.
+BLIND_ROUND1 = {
+    ("coh_arpg", 270550): (0, "IRRELEVANT"),  # Yet Another Zombie Defense
+    ("coh_arpg", 440540): (1, "GENRE_ONLY"),  # Ara Fell: Enhanced Edition
+    ("coh_arpg", 570940): (1, "FRANCHISE_OR_VARIANT"),  # DARK SOULS™: REMASTERED
+    ("coh_arpg", 1245620): (3, ""),  # ELDEN RING
+    ("coh_arpg", 2437570): (1, "TOO_NICHE"),  # Golden Chambers
+    ("coh_classic_multi", 55040): (1, "GENRE_ONLY"),  # Atom Zombie Smasher
+    ("coh_classic_multi", 1801520): (1, "GENRE_ONLY"),  # Zombieville USA 3D
+    ("coh_cozy", 1274490): (2, ""),  # Green Project
+    ("coh_cozy", 2075580): (2, ""),  # Under A New Sun
+    ("coh_cozy", 2846060): (2, ""),  # Subterror
+    ("coh_cozy", 3856280): (3, ""),  # holoVillage: Our Cozy Days
+    ("coh_fps", 308600): (1, "GENRE_ONLY"),  # Skillshot City
+    ("coh_fps", 351230): (1, "KEYWORD_MATCH"),  # Counter Spell
+    ("coh_fps", 390560): (0, "MODE_MISMATCH"),  # Fantasy Strike
+    ("coh_fps", 1121710): (2, ""),  # Total Lockdown
+    ("coh_fps", 1284210): (0, "IRRELEVANT"),  # Guild Wars 2®
+    ("coh_grand_strategy", 214730): (2, ""),  # Space Rangers HD: A War Apart
+    ("coh_grand_strategy", 314980): (3, ""),  # Supreme Ruler Ultimate
+    ("coh_grand_strategy", 462940): (3, ""),  # Making History: The Second World War
+    ("coh_grand_strategy", 589290): (1, "MODE_MISMATCH"),  # Holdfast: Nations At War
+    ("coh_grand_strategy", 965320): (2, ""),  # The Settlers® 7 : History Edition
+    ("coh_grand_strategy", 1201700): (3, ""),  # Warnament
+    ("coh_grand_strategy", 1611600): (3, ""),  # WARNO
+    ("coh_grand_strategy", 1768280): (2, ""),  # Ozymandias: Bronze Age Empire Sim
+    ("coh_grand_strategy", 1844380): (2, ""),  # Warhammer Age of Sigmar: Realms of Ruin
+    ("coh_grand_strategy", 2154730): (0, "IRRELEVANT"),  # Building Destruction
+    ("coh_grand_strategy", 3407390): (3, ""),  # ENDLESS Legend™ 2 엔들리스 레전드 2
+    ("coh_indie_platformer", 1046400): (3, ""),  # Astalon: 지구의 눈물
+    ("coh_indie_platformer", 1200770): (0, "IRRELEVANT"),  # Deathground
+    ("coh_indie_platformer", 1375900): (2, ""),  # 혈색 광맥
+    ("coh_openworld_survival", 280790): (2, ""),  # Creativerse
+    ("coh_openworld_survival", 331870): (2, ""),  # AER Memories of Old
+    ("coh_openworld_survival", 358920): (2, ""),  # Star Control I and II
+    ("coh_openworld_survival", 366870): (3, ""),  # Narcosis
+    ("coh_openworld_survival", 401360): (3, ""),  # The Aquatic Adventure of the Last Human
+    ("coh_openworld_survival", 655780): (2, ""),  # Project 5: Sightseer
+    ("coh_openworld_survival", 1645630): (1, "GENRE_ONLY"),  # FEROCIOUS
+    ("coh_openworld_survival", 2060790): (2, ""),  # 하운티
+    ("coh_openworld_survival", 2567870): (0, "IRRELEVANT"),  # Chained Together
+    ("coh_openworld_survival", 2658470): (0, "IRRELEVANT"),  # Is this Game Trying to Kill Me?
+    ("coh_openworld_survival", 2800450): (2, ""),  # Planetaries
+    ("coh_openworld_survival", 2941710): (1, "TOO_NICHE"),  # Project Silverfish
+    ("coh_openworld_survival", 3151400): (1, "GENRE_ONLY"),  # Liminal Universe
+    ("coh_strategy", 226860): (3, ""),  # Galactic Civilizations III
+    ("coh_strategy", 280720): (3, ""),  # Imagine Earth
+    ("coh_strategy", 282210): (3, ""),  # Sid Meier's Starships
+    ("coh_strategy", 366910): (2, ""),  # The Long Journey Home
+    ("coh_strategy", 418910): (1, "GENRE_ONLY"),  # Idle Civilization
+    ("coh_strategy", 736820): (3, ""),  # Knights of Honor II: Sovereign
+    ("coh_strategy", 835570): (1, "GENRE_ONLY"),  # 컨커러스 블레이드
+    ("coh_strategy", 2134770): (2, ""),  # SteamWorld Build
+    ("coh_survival_craft", 55040): (1, "GENRE_ONLY"),  # Atom Zombie Smasher
+    ("coh_survival_craft", 263920): (1, "LOW_QUALITY"),  # Zombie Grinder
+    ("coh_survival_craft", 376210): (2, ""),  # The Isle
+    ("coh_survival_craft", 408960): (1, "GENRE_ONLY"),  # Zombasite
+    ("coh_survival_craft", 876650): (2, ""),  # Aground
+    ("coh_survival_craft", 1137490): (2, ""),  # Invasion 2037
+    ("coh_survival_craft", 1274490): (2, ""),  # Green Project
+    ("coh_survival_craft", 1326470): (3, ""),  # Sons Of The Forest
+    ("coh_survival_craft", 1668310): (1, "GENRE_ONLY"),  # 24 Killers
+    ("coh_survival_craft", 2268560): (2, ""),  # Zombie Survival Game Online
+    ("coh_vehicle_sim", 41740): (2, ""),  # Cargo! The Quest for Gravity
+    ("coh_vehicle_sim", 46370): (2, ""),  # Rig n Roll
+    ("coh_vehicle_sim", 232010): (1, "FRANCHISE_OR_VARIANT"),  # Euro Truck Simulator
+    ("coh_vehicle_sim", 302060): (2, ""),  # Trucks & Trailers
+    ("coh_vehicle_sim", 446020): (3, ""),  # Jalopy
+    ("coh_vehicle_sim", 493490): (2, ""),  # City Car Driving
+    ("coh_vehicle_sim", 768180): (3, ""),  # Truck Driver
+    ("coh_vehicle_sim", 1214520): (0, "KEYWORD_MATCH"),  # Pro Gymnast Simulator
+    ("coh_vehicle_sim", 1369670): (3, ""),  # Motor Town: Behind The Wheel
+    ("coh_vehicle_sim", 1565890): (2, ""),  # RaceLeague
+    ("coh_vehicle_sim", 1763830): (1, "TOO_NICHE"),  # My Truck Game
+    ("coh_vehicle_sim", 2303180): (1, "GENRE_ONLY"),  # Resoraki: 레이싱
+    ("coh_vehicle_sim", 3933710): (1, "TOO_NICHE"),  # My Car My Life
+    ("mix_arpg_survival", 382310): (1, "GENRE_ONLY"),  # Eco
+    ("mix_arpg_survival", 924140): (1, "LOW_QUALITY"),  # Hand Simulator: Survival
+    ("mix_arpg_survival", 1326470): (3, ""),  # Sons Of The Forest
+    ("mix_arpg_survival", 1755080): (2, ""),  # Away From Life
+    ("mix_arpg_survival", 3712080): (1, "GENRE_ONLY"),  # Funnel Runners
+    ("mix_cozy_fps", 2075580): (2, ""),  # Under A New Sun
+    ("mix_cozy_fps", 2846060): (2, ""),  # Subterror
+    ("mix_cozy_fps", 3856280): (3, ""),  # holoVillage: Our Cozy Days
+    ("mix_fps_cozy", 1274490): (1, "GENRE_ONLY"),  # Green Project
+    ("mix_fps_cozy", 1284210): (0, "IRRELEVANT"),  # Guild Wars 2®
+    ("mix_fps_cozy", 1726130): (3, ""),  # Pathless Woods
+    ("mix_fps_cozy", 3856280): (3, ""),  # holoVillage: Our Cozy Days
+    ("mix_grand_casual", 42810): (3, ""),  # For The Glory: A Europa Universalis Game
+    ("mix_grand_casual", 214730): (2, ""),  # Space Rangers HD: A War Apart
+    ("mix_grand_casual", 231330): (0, "IRRELEVANT"),  # Deadfall Adventures
+    ("mix_grand_casual", 314980): (2, ""),  # Supreme Ruler Ultimate
+    ("mix_grand_casual", 965320): (2, ""),  # The Settlers® 7 : History Edition
+    ("mix_grand_casual", 1201700): (3, ""),  # Warnament
+    ("mix_grand_casual", 1882580): (1, "GENRE_ONLY"),  # FALL GIRLS
+    ("mix_grand_casual", 2154730): (0, "IRRELEVANT"),  # Building Destruction
+    ("mix_grand_casual", 2179380): (0, "IRRELEVANT"),  # Sand:box
+    ("mix_grand_casual", 3035500): (1, "GENRE_ONLY"),  # Fantasy Map Simulator
+    ("mix_grand_casual", 3407390): (3, ""),  # ENDLESS Legend™ 2 엔들리스 레전드 2
+    ("mix_grand_casual", 4373040): (2, ""),  # But Why?
+    ("mix_indie_multi", 94400): (1, "MODE_MISMATCH"),  # Nidhogg
+    ("mix_indie_multi", 414120): (2, ""),  # Modbox
+    ("mix_indie_multi", 758990): (2, ""),  # Ancient Warfare 3
+    ("mix_indie_multi", 1200770): (1, "GENRE_ONLY"),  # Deathground
+    ("mix_indie_multi", 1375900): (2, ""),  # 혈색 광맥
+    ("mix_indie_multi", 2157210): (1, "TOO_NICHE"),  # Dead of Darkness
+    ("mix_multi_indie", 104900): (2, ""),  # ORION: Prelude
+    ("mix_multi_indie", 230230): (0, "IRRELEVANT"),  # Divinity: Original Sin (Classic)
+    ("mix_multi_indie", 263920): (1, "LOW_QUALITY"),  # Zombie Grinder
+    ("mix_multi_indie", 280790): (2, ""),  # Creativerse
+    ("mix_multi_indie", 298240): (1, "LOW_QUALITY"),  # War Trigger 3
+    ("mix_multi_indie", 610960): (1, "TOO_NICHE"),  # 红石遗迹 - Red Obsidian Remnant
+    ("mix_multi_indie", 770100): (0, "IRRELEVANT"),  # One Deck Dungeon
+    ("mix_multi_indie", 1815530): (2, ""),  # Dungeon Defenders: Going Rogue
+    ("mix_multi_indie", 2176320): (0, "IRRELEVANT"),  # Magical Drop VI
+    ("mix_multi_indie", 2268560): (1, "GENRE_ONLY"),  # Zombie Survival Game Online
+    ("mix_openworld_cozy", 244770): (2, ""),  # StarMade
+    ("mix_openworld_cozy", 655780): (2, ""),  # Project 5: Sightseer
+    ("mix_openworld_cozy", 1645630): (1, "GENRE_ONLY"),  # FEROCIOUS
+    ("mix_openworld_cozy", 2060790): (2, ""),  # 하운티
+    ("mix_rpg_racing", 1020800): (2, ""),  # CAR TUNE: Project
+    ("mix_rpg_racing", 3216340): (1, "TOO_NICHE"),  # Tearscape
+    ("mix_rpg_racing", 3800340): (0, "KEYWORD_MATCH"),  # ScootX
+    ("mix_survival_strategy", 214730): (1, "GENRE_ONLY"),  # Space Rangers HD: A War Apart
+    ("mix_survival_strategy", 382310): (2, ""),  # Eco
+    ("mix_survival_strategy", 541300): (3, ""),  # Survive the Nights
+    ("mix_survival_strategy", 876650): (2, ""),  # Aground
+    ("mix_survival_strategy", 924140): (1, "LOW_QUALITY"),  # Hand Simulator: Survival
+    ("mix_survival_strategy", 1326470): (3, ""),  # Sons Of The Forest
+    ("mix_survival_strategy", 1755080): (2, ""),  # Away From Life
+    ("mix_survival_strategy", 3712080): (1, "GENRE_ONLY"),  # Funnel Runners
+    ("mix_survival_strategy", 4474950): (2, ""),  # LIFE EFFECT Survival
+    ("niche_cozy_casual", 347940): (1, "GENRE_ONLY"),  # Forsaken Isle
+    ("niche_cozy_casual", 356250): (3, ""),  # Gathering Sky
+    ("niche_cozy_casual", 513720): (0, "IRRELEVANT"),  # Archipelago
+    ("niche_cozy_casual", 617670): (1, "GENRE_ONLY"),  # Zup! S
+    ("niche_cozy_casual", 688130): (1, "MODE_MISMATCH"),  # Pogostuck: Rage With Your Friends
+    ("niche_cozy_casual", 710610): (1, "GENRE_ONLY"),  # Don't Sink
+    ("niche_cozy_casual", 931270): (3, ""),  # MicroTown
+    ("niche_cozy_casual", 1348920): (2, ""),  # Wind Peaks
+    ("niche_cozy_casual", 1722520): (2, ""),  # FIND ALL 2: Middle Ages
+    ("niche_cozy_casual", 2093900): (2, ""),  # Island Cities - Jigsaw Puzzle
+    ("niche_cozy_casual", 2236070): (2, ""),  # Peaks of Yore
+    ("niche_cozy_casual", 2239150): (3, ""),  # Thronefall
+    ("niche_cozy_casual", 2880750): (2, ""),  # Leaf's Odyssey
+    ("niche_cozy_casual", 3580340): (2, ""),  # Ash & Adam's Existential Treads
+    ("niche_puzzle_solo", 230290): (1, "GENRE_ONLY"),  # Universe Sandbox
+    ("niche_puzzle_solo", 233450): (2, ""),  # Prison Architect
+    ("niche_puzzle_solo", 375820): (3, ""),  # Human Resource Machine
+    ("niche_puzzle_solo", 973250): (2, ""),  # Altered
+    ("niche_puzzle_solo", 1293540): (2, ""),  # Outerverse
+    ("niche_puzzle_solo", 1318690): (3, ""),  # shapez
+    ("niche_puzzle_solo", 1388770): (0, "IRRELEVANT"),  # Cruelty Squad
+    ("niche_puzzle_solo", 1451720): (1, "GENRE_ONLY"),  # Minesweeper Classy
+    ("niche_puzzle_solo", 1536570): (3, ""),  # The Last Alchemist
+    ("niche_puzzle_solo", 1596310): (1, "GENRE_ONLY"),  # Crypto Mining Simulator
+    ("niche_puzzle_solo", 1876000): (2, ""),  # IFO
+    ("niche_puzzle_solo", 2685900): (2, ""),  # Mind Over Magnet
+    ("niche_roguelite", 250680): (2, ""),  # BELOW
+    ("niche_roguelite", 308600): (1, "GENRE_ONLY"),  # Skillshot City
+    ("niche_roguelite", 588650): (3, ""),  # Dead Cells
+    ("niche_roguelite", 727510): (1, "TOO_NICHE"),  # Void Memory
+    ("niche_roguelite", 787810): (3, ""),  # Rogue Heroes: Ruins of Tasos
+    ("niche_roguelite", 994220): (1, "GENRE_ONLY"),  # NEOVERSE
+    ("niche_roguelite", 1078420): (0, "IRRELEVANT"),  # Critters for Sale
+    ("niche_roguelite", 1343810): (0, "IRRELEVANT"),  # Fallen Hero: Retribution
+    ("niche_roguelite", 1356280): (1, "GENRE_ONLY"),  # 냥자의모험
+    ("niche_roguelite", 1494810): (3, ""),  # Mortal Sin
+    ("niche_roguelite", 2181930): (0, "IRRELEVANT"),  # DR LIVESEY ROM AND DEATH EDITION
+    ("niche_roguelite", 2273430): (3, ""),  # BlazBlue Entropy Effect
+    ("niche_roguelite", 2687400): (3, ""),  # GODBREAKERS
+    ("niche_sim", 244910): (2, ""),  # Homesick
+    ("niche_sim", 272600): (3, ""),  # Detective Grimoire
+    ("niche_sim", 499910): (2, ""),  # SHINRAI - Broken Beyond Despair
+    ("niche_sim", 593200): (2, ""),  # The Adventures of Fei Duanmu 端木斐异闻录
+    ("niche_sim", 605230): (3, ""),  # Grey Hack
+    ("niche_sim", 641990): (3, ""),  # The Escapists 2
+    ("niche_sim", 799600): (3, ""),  # Cosmoteer: Starship Architect & Commande
+    ("niche_sim", 965810): (2, ""),  # Kara no Shojo
+    ("niche_sim", 1112790): (3, ""),  # Automation Empire
+    ("niche_sim", 1546920): (3, ""),  # Overboard!
+    ("niche_sim", 1603410): (3, ""),  # Lost Nova
+    ("niche_sim", 2277090): (3, ""),  # DAEMON MASQUERADE
+    ("niche_sim", 2414110): (3, ""),  # Builderment
+    ("niche_sim", 3184990): (3, ""),  # 诡秘推理
+    ("niche_sim", 4730180): (3, ""),  # Hacker's Journey
+    ("niche_soulslike_solo", 280520): (1, "GENRE_ONLY"),  # Crea
+    ("niche_tactics", 949230): (2, ""),  # Cities: Skylines II
+    ("niche_tactics", 1176470): (2, ""),  # Terra Invicta 테라 인빅타
+    ("niche_tactics", 1465550): (0, "IRRELEVANT"),  # One Lonely Outpost
+    ("niche_tactics", 1842690): (2, ""),  # 기차역 스토리 (Station Manager)
+    ("niche_tactics", 2272400): (3, ""),  # Station to Station
+    ("niche_tactics", 2449450): (2, ""),  # 우주 식민 회사
+    ("niche_tactics", 2853590): (2, ""),  # Void War
+    ("niche_tactics", 3680900): (2, ""),  # Future War Tactics: SOF vs Alien Invasio
+}
+
+
 ALL = {**REP_V2, **POSTPROCESS}
 
 # --- 품질 하한(require_known_reviews) + rec_boost 0.15 의 rank 1~30 에서 새로 진입한 후보 ---
@@ -499,5 +704,211 @@ NICHE_V1 = {
     ("niche_roguelite", 2569760): (2, ""),                   # The Mound — 협동 탐험 액션
 }
 
+# --- 라운드1 블라인드 판정 (src/blind_judge.py) ---
+# 비교할 5개 설정(하한 0/300/1000 · 인터리빙 on/off · rec_boost 0.15/0.03)의 Top-10 **합집합** 193쌍.
+# 한 설정만 판정하면 그 설정이 자동으로 이긴다 — 실측으로 기준선 미판정 3칸 vs 대안 55~115칸이었고
+# 미판정을 성공으로 세면 순위가 뒤집혔다. 합집합을 채워야 비교가 성립한다.
+#
+# **판정 근거가 이전과 다르다.** 이 라운드는 설정/순위/전략/프로필 실제 id 와 함께
+# **리뷰 수도 가린 채** 채점했다. 리뷰 수는 min_reviews 실험의 조작 변수라 보이면 어느 설정에서
+# 왔는지 추론된다. 그래서 TOO_NICHE/LOW_QUALITY 태그는 설명과 이름에서 읽히는 범위로만 붙었다.
+BLIND_ROUND1 = {
+    ("coh_arpg", 270550): (0, "IRRELEVANT"),  # Yet Another Zombie Defense
+    ("coh_arpg", 440540): (1, "GENRE_ONLY"),  # Ara Fell: Enhanced Edition
+    ("coh_arpg", 570940): (1, "FRANCHISE_OR_VARIANT"),  # DARK SOULS™: REMASTERED
+    ("coh_arpg", 1245620): (3, ""),  # ELDEN RING
+    ("coh_arpg", 2437570): (1, "TOO_NICHE"),  # Golden Chambers
+    ("coh_classic_multi", 55040): (1, "GENRE_ONLY"),  # Atom Zombie Smasher
+    ("coh_classic_multi", 1801520): (1, "GENRE_ONLY"),  # Zombieville USA 3D
+    ("coh_cozy", 1274490): (2, ""),  # Green Project
+    ("coh_cozy", 2075580): (2, ""),  # Under A New Sun
+    ("coh_cozy", 2846060): (2, ""),  # Subterror
+    ("coh_cozy", 3856280): (3, ""),  # holoVillage: Our Cozy Days
+    ("coh_fps", 308600): (1, "GENRE_ONLY"),  # Skillshot City
+    ("coh_fps", 351230): (1, "KEYWORD_MATCH"),  # Counter Spell
+    ("coh_fps", 390560): (0, "MODE_MISMATCH"),  # Fantasy Strike
+    ("coh_fps", 1121710): (2, ""),  # Total Lockdown
+    ("coh_fps", 1284210): (0, "IRRELEVANT"),  # Guild Wars 2®
+    ("coh_grand_strategy", 214730): (2, ""),  # Space Rangers HD: A War Apart
+    ("coh_grand_strategy", 314980): (3, ""),  # Supreme Ruler Ultimate
+    ("coh_grand_strategy", 462940): (3, ""),  # Making History: The Second World War
+    ("coh_grand_strategy", 589290): (1, "MODE_MISMATCH"),  # Holdfast: Nations At War
+    ("coh_grand_strategy", 965320): (2, ""),  # The Settlers® 7 : History Edition
+    ("coh_grand_strategy", 1201700): (3, ""),  # Warnament
+    ("coh_grand_strategy", 1611600): (3, ""),  # WARNO
+    ("coh_grand_strategy", 1768280): (2, ""),  # Ozymandias: Bronze Age Empire Sim
+    ("coh_grand_strategy", 1844380): (2, ""),  # Warhammer Age of Sigmar: Realms of Ruin
+    ("coh_grand_strategy", 2154730): (0, "IRRELEVANT"),  # Building Destruction
+    ("coh_grand_strategy", 3407390): (3, ""),  # ENDLESS Legend™ 2 엔들리스 레전드 2
+    ("coh_indie_platformer", 1046400): (3, ""),  # Astalon: 지구의 눈물
+    ("coh_indie_platformer", 1200770): (0, "IRRELEVANT"),  # Deathground
+    ("coh_indie_platformer", 1375900): (2, ""),  # 혈색 광맥
+    ("coh_openworld_survival", 280790): (2, ""),  # Creativerse
+    ("coh_openworld_survival", 331870): (2, ""),  # AER Memories of Old
+    ("coh_openworld_survival", 358920): (2, ""),  # Star Control I and II
+    ("coh_openworld_survival", 366870): (3, ""),  # Narcosis
+    ("coh_openworld_survival", 401360): (3, ""),  # The Aquatic Adventure of the Last Human
+    ("coh_openworld_survival", 655780): (2, ""),  # Project 5: Sightseer
+    ("coh_openworld_survival", 1645630): (1, "GENRE_ONLY"),  # FEROCIOUS
+    ("coh_openworld_survival", 2060790): (2, ""),  # 하운티
+    ("coh_openworld_survival", 2567870): (0, "IRRELEVANT"),  # Chained Together
+    ("coh_openworld_survival", 2658470): (0, "IRRELEVANT"),  # Is this Game Trying to Kill Me?
+    ("coh_openworld_survival", 2800450): (2, ""),  # Planetaries
+    ("coh_openworld_survival", 2941710): (1, "TOO_NICHE"),  # Project Silverfish
+    ("coh_openworld_survival", 3151400): (1, "GENRE_ONLY"),  # Liminal Universe
+    ("coh_strategy", 226860): (3, ""),  # Galactic Civilizations III
+    ("coh_strategy", 280720): (3, ""),  # Imagine Earth
+    ("coh_strategy", 282210): (3, ""),  # Sid Meier's Starships
+    ("coh_strategy", 366910): (2, ""),  # The Long Journey Home
+    ("coh_strategy", 418910): (1, "GENRE_ONLY"),  # Idle Civilization
+    ("coh_strategy", 736820): (3, ""),  # Knights of Honor II: Sovereign
+    ("coh_strategy", 835570): (1, "GENRE_ONLY"),  # 컨커러스 블레이드
+    ("coh_strategy", 2134770): (2, ""),  # SteamWorld Build
+    ("coh_survival_craft", 55040): (1, "GENRE_ONLY"),  # Atom Zombie Smasher
+    ("coh_survival_craft", 263920): (1, "LOW_QUALITY"),  # Zombie Grinder
+    ("coh_survival_craft", 376210): (2, ""),  # The Isle
+    ("coh_survival_craft", 408960): (1, "GENRE_ONLY"),  # Zombasite
+    ("coh_survival_craft", 876650): (2, ""),  # Aground
+    ("coh_survival_craft", 1137490): (2, ""),  # Invasion 2037
+    ("coh_survival_craft", 1274490): (2, ""),  # Green Project
+    ("coh_survival_craft", 1326470): (3, ""),  # Sons Of The Forest
+    ("coh_survival_craft", 1668310): (1, "GENRE_ONLY"),  # 24 Killers
+    ("coh_survival_craft", 2268560): (2, ""),  # Zombie Survival Game Online
+    ("coh_vehicle_sim", 41740): (2, ""),  # Cargo! The Quest for Gravity
+    ("coh_vehicle_sim", 46370): (2, ""),  # Rig n Roll
+    ("coh_vehicle_sim", 232010): (1, "FRANCHISE_OR_VARIANT"),  # Euro Truck Simulator
+    ("coh_vehicle_sim", 302060): (2, ""),  # Trucks & Trailers
+    ("coh_vehicle_sim", 446020): (3, ""),  # Jalopy
+    ("coh_vehicle_sim", 493490): (2, ""),  # City Car Driving
+    ("coh_vehicle_sim", 768180): (3, ""),  # Truck Driver
+    ("coh_vehicle_sim", 1214520): (0, "KEYWORD_MATCH"),  # Pro Gymnast Simulator
+    ("coh_vehicle_sim", 1369670): (3, ""),  # Motor Town: Behind The Wheel
+    ("coh_vehicle_sim", 1565890): (2, ""),  # RaceLeague
+    ("coh_vehicle_sim", 1763830): (1, "TOO_NICHE"),  # My Truck Game
+    ("coh_vehicle_sim", 2303180): (1, "GENRE_ONLY"),  # Resoraki: 레이싱
+    ("coh_vehicle_sim", 3933710): (1, "TOO_NICHE"),  # My Car My Life
+    ("mix_arpg_survival", 382310): (1, "GENRE_ONLY"),  # Eco
+    ("mix_arpg_survival", 924140): (1, "LOW_QUALITY"),  # Hand Simulator: Survival
+    ("mix_arpg_survival", 1326470): (3, ""),  # Sons Of The Forest
+    ("mix_arpg_survival", 1755080): (2, ""),  # Away From Life
+    ("mix_arpg_survival", 3712080): (1, "GENRE_ONLY"),  # Funnel Runners
+    ("mix_cozy_fps", 2075580): (2, ""),  # Under A New Sun
+    ("mix_cozy_fps", 2846060): (2, ""),  # Subterror
+    ("mix_cozy_fps", 3856280): (3, ""),  # holoVillage: Our Cozy Days
+    ("mix_fps_cozy", 1274490): (1, "GENRE_ONLY"),  # Green Project
+    ("mix_fps_cozy", 1284210): (0, "IRRELEVANT"),  # Guild Wars 2®
+    ("mix_fps_cozy", 1726130): (3, ""),  # Pathless Woods
+    ("mix_fps_cozy", 3856280): (3, ""),  # holoVillage: Our Cozy Days
+    ("mix_grand_casual", 42810): (3, ""),  # For The Glory: A Europa Universalis Game
+    ("mix_grand_casual", 214730): (2, ""),  # Space Rangers HD: A War Apart
+    ("mix_grand_casual", 231330): (0, "IRRELEVANT"),  # Deadfall Adventures
+    ("mix_grand_casual", 314980): (2, ""),  # Supreme Ruler Ultimate
+    ("mix_grand_casual", 965320): (2, ""),  # The Settlers® 7 : History Edition
+    ("mix_grand_casual", 1201700): (3, ""),  # Warnament
+    ("mix_grand_casual", 1882580): (1, "GENRE_ONLY"),  # FALL GIRLS
+    ("mix_grand_casual", 2154730): (0, "IRRELEVANT"),  # Building Destruction
+    ("mix_grand_casual", 2179380): (0, "IRRELEVANT"),  # Sand:box
+    ("mix_grand_casual", 3035500): (1, "GENRE_ONLY"),  # Fantasy Map Simulator
+    ("mix_grand_casual", 3407390): (3, ""),  # ENDLESS Legend™ 2 엔들리스 레전드 2
+    ("mix_grand_casual", 4373040): (2, ""),  # But Why?
+    ("mix_indie_multi", 94400): (1, "MODE_MISMATCH"),  # Nidhogg
+    ("mix_indie_multi", 414120): (2, ""),  # Modbox
+    ("mix_indie_multi", 758990): (2, ""),  # Ancient Warfare 3
+    ("mix_indie_multi", 1200770): (1, "GENRE_ONLY"),  # Deathground
+    ("mix_indie_multi", 1375900): (2, ""),  # 혈색 광맥
+    ("mix_indie_multi", 2157210): (1, "TOO_NICHE"),  # Dead of Darkness
+    ("mix_multi_indie", 104900): (2, ""),  # ORION: Prelude
+    ("mix_multi_indie", 230230): (0, "IRRELEVANT"),  # Divinity: Original Sin (Classic)
+    ("mix_multi_indie", 263920): (1, "LOW_QUALITY"),  # Zombie Grinder
+    ("mix_multi_indie", 280790): (2, ""),  # Creativerse
+    ("mix_multi_indie", 298240): (1, "LOW_QUALITY"),  # War Trigger 3
+    ("mix_multi_indie", 610960): (1, "TOO_NICHE"),  # 红石遗迹 - Red Obsidian Remnant
+    ("mix_multi_indie", 770100): (0, "IRRELEVANT"),  # One Deck Dungeon
+    ("mix_multi_indie", 1815530): (2, ""),  # Dungeon Defenders: Going Rogue
+    ("mix_multi_indie", 2176320): (0, "IRRELEVANT"),  # Magical Drop VI
+    ("mix_multi_indie", 2268560): (1, "GENRE_ONLY"),  # Zombie Survival Game Online
+    ("mix_openworld_cozy", 244770): (2, ""),  # StarMade
+    ("mix_openworld_cozy", 655780): (2, ""),  # Project 5: Sightseer
+    ("mix_openworld_cozy", 1645630): (1, "GENRE_ONLY"),  # FEROCIOUS
+    ("mix_openworld_cozy", 2060790): (2, ""),  # 하운티
+    ("mix_rpg_racing", 1020800): (2, ""),  # CAR TUNE: Project
+    ("mix_rpg_racing", 3216340): (1, "TOO_NICHE"),  # Tearscape
+    ("mix_rpg_racing", 3800340): (0, "KEYWORD_MATCH"),  # ScootX
+    ("mix_survival_strategy", 214730): (1, "GENRE_ONLY"),  # Space Rangers HD: A War Apart
+    ("mix_survival_strategy", 382310): (2, ""),  # Eco
+    ("mix_survival_strategy", 541300): (3, ""),  # Survive the Nights
+    ("mix_survival_strategy", 876650): (2, ""),  # Aground
+    ("mix_survival_strategy", 924140): (1, "LOW_QUALITY"),  # Hand Simulator: Survival
+    ("mix_survival_strategy", 1326470): (3, ""),  # Sons Of The Forest
+    ("mix_survival_strategy", 1755080): (2, ""),  # Away From Life
+    ("mix_survival_strategy", 3712080): (1, "GENRE_ONLY"),  # Funnel Runners
+    ("mix_survival_strategy", 4474950): (2, ""),  # LIFE EFFECT Survival
+    ("niche_cozy_casual", 347940): (1, "GENRE_ONLY"),  # Forsaken Isle
+    ("niche_cozy_casual", 356250): (3, ""),  # Gathering Sky
+    ("niche_cozy_casual", 513720): (0, "IRRELEVANT"),  # Archipelago
+    ("niche_cozy_casual", 617670): (1, "GENRE_ONLY"),  # Zup! S
+    ("niche_cozy_casual", 688130): (1, "MODE_MISMATCH"),  # Pogostuck: Rage With Your Friends
+    ("niche_cozy_casual", 710610): (1, "GENRE_ONLY"),  # Don't Sink
+    ("niche_cozy_casual", 931270): (3, ""),  # MicroTown
+    ("niche_cozy_casual", 1348920): (2, ""),  # Wind Peaks
+    ("niche_cozy_casual", 1722520): (2, ""),  # FIND ALL 2: Middle Ages
+    ("niche_cozy_casual", 2093900): (2, ""),  # Island Cities - Jigsaw Puzzle
+    ("niche_cozy_casual", 2236070): (2, ""),  # Peaks of Yore
+    ("niche_cozy_casual", 2239150): (3, ""),  # Thronefall
+    ("niche_cozy_casual", 2880750): (2, ""),  # Leaf's Odyssey
+    ("niche_cozy_casual", 3580340): (2, ""),  # Ash & Adam's Existential Treads
+    ("niche_puzzle_solo", 230290): (1, "GENRE_ONLY"),  # Universe Sandbox
+    ("niche_puzzle_solo", 233450): (2, ""),  # Prison Architect
+    ("niche_puzzle_solo", 375820): (3, ""),  # Human Resource Machine
+    ("niche_puzzle_solo", 973250): (2, ""),  # Altered
+    ("niche_puzzle_solo", 1293540): (2, ""),  # Outerverse
+    ("niche_puzzle_solo", 1318690): (3, ""),  # shapez
+    ("niche_puzzle_solo", 1388770): (0, "IRRELEVANT"),  # Cruelty Squad
+    ("niche_puzzle_solo", 1451720): (1, "GENRE_ONLY"),  # Minesweeper Classy
+    ("niche_puzzle_solo", 1536570): (3, ""),  # The Last Alchemist
+    ("niche_puzzle_solo", 1596310): (1, "GENRE_ONLY"),  # Crypto Mining Simulator
+    ("niche_puzzle_solo", 1876000): (2, ""),  # IFO
+    ("niche_puzzle_solo", 2685900): (2, ""),  # Mind Over Magnet
+    ("niche_roguelite", 250680): (2, ""),  # BELOW
+    ("niche_roguelite", 308600): (1, "GENRE_ONLY"),  # Skillshot City
+    ("niche_roguelite", 588650): (3, ""),  # Dead Cells
+    ("niche_roguelite", 727510): (1, "TOO_NICHE"),  # Void Memory
+    ("niche_roguelite", 787810): (3, ""),  # Rogue Heroes: Ruins of Tasos
+    ("niche_roguelite", 994220): (1, "GENRE_ONLY"),  # NEOVERSE
+    ("niche_roguelite", 1078420): (0, "IRRELEVANT"),  # Critters for Sale
+    ("niche_roguelite", 1343810): (0, "IRRELEVANT"),  # Fallen Hero: Retribution
+    ("niche_roguelite", 1356280): (1, "GENRE_ONLY"),  # 냥자의모험
+    ("niche_roguelite", 1494810): (3, ""),  # Mortal Sin
+    ("niche_roguelite", 2181930): (0, "IRRELEVANT"),  # DR LIVESEY ROM AND DEATH EDITION
+    ("niche_roguelite", 2273430): (3, ""),  # BlazBlue Entropy Effect
+    ("niche_roguelite", 2687400): (3, ""),  # GODBREAKERS
+    ("niche_sim", 244910): (2, ""),  # Homesick
+    ("niche_sim", 272600): (3, ""),  # Detective Grimoire
+    ("niche_sim", 499910): (2, ""),  # SHINRAI - Broken Beyond Despair
+    ("niche_sim", 593200): (2, ""),  # The Adventures of Fei Duanmu 端木斐异闻录
+    ("niche_sim", 605230): (3, ""),  # Grey Hack
+    ("niche_sim", 641990): (3, ""),  # The Escapists 2
+    ("niche_sim", 799600): (3, ""),  # Cosmoteer: Starship Architect & Commande
+    ("niche_sim", 965810): (2, ""),  # Kara no Shojo
+    ("niche_sim", 1112790): (3, ""),  # Automation Empire
+    ("niche_sim", 1546920): (3, ""),  # Overboard!
+    ("niche_sim", 1603410): (3, ""),  # Lost Nova
+    ("niche_sim", 2277090): (3, ""),  # DAEMON MASQUERADE
+    ("niche_sim", 2414110): (3, ""),  # Builderment
+    ("niche_sim", 3184990): (3, ""),  # 诡秘推理
+    ("niche_sim", 4730180): (3, ""),  # Hacker's Journey
+    ("niche_soulslike_solo", 280520): (1, "GENRE_ONLY"),  # Crea
+    ("niche_tactics", 949230): (2, ""),  # Cities: Skylines II
+    ("niche_tactics", 1176470): (2, ""),  # Terra Invicta 테라 인빅타
+    ("niche_tactics", 1465550): (0, "IRRELEVANT"),  # One Lonely Outpost
+    ("niche_tactics", 1842690): (2, ""),  # 기차역 스토리 (Station Manager)
+    ("niche_tactics", 2272400): (3, ""),  # Station to Station
+    ("niche_tactics", 2449450): (2, ""),  # 우주 식민 회사
+    ("niche_tactics", 2853590): (2, ""),  # Void War
+    ("niche_tactics", 3680900): (2, ""),  # Future War Tactics: SOF vs Alien Invasio
+}
+
+
 ALL = {**REP_V2, **POSTPROCESS, **DEPTH_V1, **FULL_V1, **REP_V2_TOPUP, **MIN_REV_300,
-       **RANKER_DIAG, **BOOST_SWEEP, **VAL_V1, **DEV_TOPUP_V1, **NICHE_V1}
+       **RANKER_DIAG, **BOOST_SWEEP, **VAL_V1, **DEV_TOPUP_V1, **NICHE_V1,
+       **BLIND_ROUND1}
