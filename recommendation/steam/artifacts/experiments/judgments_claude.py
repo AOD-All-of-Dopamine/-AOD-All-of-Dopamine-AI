@@ -372,5 +372,132 @@ VAL_V1 = {
     ("mix_survival_strategy", 454350):  (0, "IRRELEVANT"),    # Days of War — WW2 멀티 FPS
 }
 
+# --- dev 미판정 4개 (전략·ARPG·FPS 축 확보) ---
+# dev 12개 중 8개만 판정된 채로 min_reviews·인터리빙·rec_boost 를 골랐다. 표본을 늘린다.
+DEV_TOPUP_V1 = {
+    # coh_fps: Counter-Strike 2 / PUBG / 레인보우식스 시즈
+    ("coh_fps", 240):     (1, "FRANCHISE_OR_VARIANT"),       # Counter-Strike: Source — 전작
+    ("coh_fps", 805940):  (1, "LOW_QUALITY"),                # RUSSIA BATTLEGROUNDS
+    ("coh_fps", 2379390): (3, ""),                           # R6 Extraction — 시즈의 공식 협동 스핀오프
+    ("coh_fps", 300):     (3, ""),                           # Day of Defeat: Source
+    ("coh_fps", 3028330): (3, ""),                           # Battlefield REDSEC
+    ("coh_fps", 1649240): (1, "GENRE_ONLY"),                 # Returnal — 3인칭 로그라이크 슈터
+    ("coh_fps", 1250):    (3, ""),                           # Killing Floor
+    ("coh_fps", 895400):  (3, ""),                           # Deadside — 오픈월드 생존 슈터
+    ("coh_fps", 826630):  (0, "IRRELEVANT"),                 # Iron Harvest — RTS
+    ("coh_fps", 17710):   (2, ""),                           # Nuclear Dawn — FPS/RTS 하이브리드
+
+    # coh_strategy: Civilization VI / XCOM 2 / Stellaris
+    ("coh_strategy", 3276050): (1, "GENRE_ONLY"),            # SpaceCraft — 우주 샌드박스 크래프팅
+    ("coh_strategy", 882100):  (3, ""),                      # XCOM: Chimera Squad — 공식 스핀오프
+    ("coh_strategy", 2772750): (3, ""),                      # Age of History 3 — 대전략
+    ("coh_strategy", 1614550): (1, "GENRE_ONLY"),            # Astro Colony — 자동화 팩토리
+    ("coh_strategy", 760060):  (3, ""),                      # Mutant Year Zero — XCOM식 턴제 전술
+    ("coh_strategy", 359320):  (1, "GENRE_ONLY"),            # Elite Dangerous — 우주 비행 시뮬
+    ("coh_strategy", 223830):  (3, ""),                      # Xenonauts — XCOM 계열
+    ("coh_strategy", 392160):  (2, ""),                      # X4: Foundations — 우주 제국 경영
+    ("coh_strategy", 612570):  (2, ""),                      # Fort Triumph — 턴제 + 탐험
+    ("coh_strategy", 1369700): (1, "TOO_NICHE"),             # Solar Expanse — rev 1,140
+
+    # coh_arpg: DARK SOULS III / Witcher 3 / Skyrim
+    ("coh_arpg", 20900):   (1, "FRANCHISE_OR_VARIANT"),      # The Witcher: Enhanced Edition — 전작
+    ("coh_arpg", 814380):  (3, ""),                          # Sekiro — FromSoftware 직결
+    ("coh_arpg", 306130):  (2, ""),                          # The Elder Scrolls Online
+    ("coh_arpg", 644830):  (2, ""),                          # The Surge 2
+    ("coh_arpg", 939850):  (0, "IRRELEVANT"),                # Man of Medan — 시네마틱 호러
+    ("coh_arpg", 1321230): (0, "IRRELEVANT"),                # Angels of Death Episode.Eddie
+    ("coh_arpg", 2067920): (1, "GENRE_ONLY"),                # Rogue : Genesia
+    ("coh_arpg", 274520):  (1, "GENRE_ONLY"),                # Darkwood — 탑다운 서바이벌 호러
+    ("coh_arpg", 1020470): (1, "GENRE_ONLY"),                # Evoland
+    ("coh_arpg", 2393160): (1, "GENRE_ONLY"),                # Nice Day for Fishing
+
+    # mix_arpg_survival: DARK SOULS III / Fallout 4 / The Forest
+    ("mix_arpg_survival", 1716740): (3, ""),                 # Starfield — Bethesda 오픈월드 RPG
+    ("mix_arpg_survival", 2796180): (2, ""),                 # SILENT BREATH
+    ("mix_arpg_survival", 814380):  (3, ""),                 # Sekiro
+    ("mix_arpg_survival", 440730):  (1, "GENRE_ONLY"),       # Survival Zombies
+    ("mix_arpg_survival", 939850):  (1, "GENRE_ONLY"),       # Man of Medan — 호러지만 생존 아님
+    ("mix_arpg_survival", 313120):  (3, ""),                 # Stranded Deep
+    ("mix_arpg_survival", 274520):  (3, ""),                 # Darkwood — 가혹함 + 생존, 이 프로필엔 정확
+    ("mix_arpg_survival", 877010):  (2, ""),                 # Beyond Contact
+    ("mix_arpg_survival", 570940):  (1, "FRANCHISE_OR_VARIANT"),  # DARK SOULS: REMASTERED — 전작
+    ("mix_arpg_survival", 876650):  (2, ""),                 # Aground
+}
+
+# --- 니치 시드 프로필 6개 (리뷰 1천~2만 구간 시드, 시드 개수 1·3·5·10) ---
+NICHE_V1 = {
+    # niche_puzzle_solo (1시드): Opus Magnum — Zachtronics 엔지니어링 퍼즐
+    ("niche_puzzle_solo", 92800):   (3, ""),                 # SpaceChem — 같은 제작사 같은 장르
+    ("niche_puzzle_solo", 300570):  (3, ""),                 # Infinifactory — 같은 제작사
+    ("niche_puzzle_solo", 2738230): (2, ""),                 # The House of Tesla — 기계 퍼즐
+    ("niche_puzzle_solo", 2331280): (1, "KEYWORD_MATCH"),    # 최고의 대장장이 — '제작'만 겹침
+    ("niche_puzzle_solo", 508600):  (0, "IRRELEVANT"),       # ROD: Revolt Of Defense
+    ("niche_puzzle_solo", 262410):  (1, "GENRE_ONLY"),       # World of Guns — 분해 시뮬, 설계 아님
+    ("niche_puzzle_solo", 4194800): (2, ""),                 # 스타베스터 — 인크리멘탈 최적화
+    ("niche_puzzle_solo", 983870):  (2, ""),                 # FOUNDRY — 공장 자동화 최적화
+    ("niche_puzzle_solo", 418040):  (1, "GENRE_ONLY"),       # hocus — 착시 퍼즐, 종류가 다름
+    ("niche_puzzle_solo", 591380):  (2, ""),                 # Bomb Squad Academy — 논리 퍼즐
+
+    # niche_soulslike_solo (1시드): Salt and Sanctuary — 2D 소울라이크
+    ("niche_soulslike_solo", 327860):  (0, "KEYWORD_MATCH"), # Salt — 이름만 겹치는 항해 게임
+    ("niche_soulslike_solo", 328760):  (0, "KEYWORD_MATCH"), # SanctuaryRPG — 이름만 겹침
+    ("niche_soulslike_solo", 1162130): (0, "IRRELEVANT"),    # Windbound — 난파 생존
+    ("niche_soulslike_solo", 2140510): (0, "KEYWORD_MATCH"), # Town of Salem 2 — 'Salem' 유사
+    ("niche_soulslike_solo", 1245620): (3, ""),              # ELDEN RING — 소울라이크 정점
+    ("niche_soulslike_solo", 1063730): (1, "GENRE_ONLY"),    # New World — MMORPG
+    ("niche_soulslike_solo", 1230530): (1, "GENRE_ONLY"),    # Atlas Fallen — 액션 RPG
+    ("niche_soulslike_solo", 1072420): (0, "IRRELEVANT"),    # 드래곤 퀘스트 빌더즈 2
+    ("niche_soulslike_solo", 250680):  (2, ""),              # BELOW — 가혹한 고독 탐험
+    ("niche_soulslike_solo", 2757820): (0, "LOW_QUALITY"),   # Sensual Adventures — 성인물, 필터가 놓침
+
+    # niche_tactics (3시드): Into the Breach / Monster Train / Mini Metro
+    ("niche_tactics", 1127500): (3, ""),                     # Mini Motorways — Mini Metro 제작사 후속작
+    ("niche_tactics", 2742830): (3, ""),                     # Monster Train 2 — 공식 후속작
+    ("niche_tactics", 538030):  (2, ""),                     # Xenonauts 2 — 턴제 전술
+    ("niche_tactics", 1124180): (2, ""),                     # 철도관제 시뮬레이터
+    ("niche_tactics", 1062810): (3, ""),                     # Inkbound — Monster Train 제작진
+    ("niche_tactics", 2097570): (3, ""),                     # StarVaders — 덱빌딩 + 그리드 전술
+    ("niche_tactics", 1122120): (2, ""),                     # STATIONflow — 역 동선 관리
+    ("niche_tactics", 2870340): (2, ""),                     # Decktamer — 덱빌딩 로그라이크
+    ("niche_tactics", 701870):  (1, "GENRE_ONLY"),           # Swarm Queen — 실시간 전략
+    ("niche_tactics", 3331320): (0, "KEYWORD_MATCH"),        # Back in Service — 'Metro' 만 겹침
+
+    # niche_cozy_casual (3시드): A Short Hike / ISLANDERS / Gorogoa
+    ("niche_cozy_casual", 1957990): (3, ""),                 # Tile Cities — ISLANDERS 직결
+    ("niche_cozy_casual", 3047750): (3, ""),                 # Herdling — A Short Hike 정서
+    ("niche_cozy_casual", 596590):  (2, ""),                 # Linked — 미니멀 퍼즐
+    ("niche_cozy_casual", 3527290): (1, "GENRE_ONLY"),       # PEAK — 등반이지만 하드코어 협동 생존
+    ("niche_cozy_casual", 2533960): (3, ""),                 # SUMMERHOUSE — 규칙 없는 아기자기 건축
+    ("niche_cozy_casual", 1385100): (1, "GENRE_ONLY"),       # Insurmountable — 등산 로그라이트
+    ("niche_cozy_casual", 1004270): (2, ""),                 # My Island — 편안한 섬 생활
+    ("niche_cozy_casual", 400740):  (1, "GENRE_ONLY"),       # VERGE — 액션 어드벤처
+    ("niche_cozy_casual", 569480):  (2, ""),                 # Kingdoms and Castles — 가벼운 도시건설
+    ("niche_cozy_casual", 115800):  (2, ""),                 # Owlboy — 따뜻한 픽셀 탐험
+
+    # niche_sim (5시드): Shipbreaker / Hacknet / Golden Idol / 방탈출 / shapez 2
+    ("niche_sim", 3184110): (2, ""),                         # Widget Inc. — 공장 빌더
+    ("niche_sim", 1170570): (1, "GENRE_ONLY"),               # The Drifter — 추리 퍼즐 아님
+    ("niche_sim", 850450):  (3, ""),                         # Escape First — 방탈출 직결
+    ("niche_sim", 1022980): (3, ""),                         # Ostranauts — Shipbreaker 정확 대응
+    ("niche_sim", 526740):  (3, ""),                         # hack_me — Hacknet 직결
+    ("niche_sim", 427520):  (3, ""),                         # Factorio — shapez 계열 원형
+    ("niche_sim", 3036350): (3, ""),                         # A Case of Fraud — Golden Idol 정확 대응
+    ("niche_sim", 1812090): (3, ""),                         # Escape Academy
+    ("niche_sim", 747910):  (2, ""),                         # Disassembly 3D — 해체 물리
+    ("niche_sim", 2980270): (2, ""),                         # HackHub — 해커 시뮬
+
+    # niche_roguelite (10시드): Death's Door / Children of Morta / Roboquest / ... 10개
+    ("niche_roguelite", 239350):  (1, "FRANCHISE_OR_VARIANT"),  # Spelunky — Spelunky 2 의 전작
+    ("niche_roguelite", 2060790): (1, "TOO_NICHE"),          # 하운티 — rev 358, 로그라이트 아님
+    ("niche_roguelite", 3159570): (2, ""),                   # Lynked — 로봇 액션 협동
+    ("niche_roguelite", 2847740): (1, "TOO_NICHE"),          # Super Drift Blade — rev 341
+    ("niche_roguelite", 655780):  (0, "IRRELEVANT"),         # Project 5: Sightseer — 샌드박스
+    ("niche_roguelite", 1078200): (2, ""),                   # Spirits Abyss — 로그라이트 플랫포머
+    ("niche_roguelite", 241600):  (1, "FRANCHISE_OR_VARIANT"),  # Rogue Legacy — 전작
+    ("niche_roguelite", 1331210): (0, "IRRELEVANT"),         # Wolfstride — 턴제 메카 RPG
+    ("niche_roguelite", 257850):  (2, ""),                   # Hyper Light Drifter
+    ("niche_roguelite", 2569760): (2, ""),                   # The Mound — 협동 탐험 액션
+}
+
 ALL = {**REP_V2, **POSTPROCESS, **DEPTH_V1, **FULL_V1, **REP_V2_TOPUP, **MIN_REV_300,
-       **RANKER_DIAG, **BOOST_SWEEP, **VAL_V1}
+       **RANKER_DIAG, **BOOST_SWEEP, **VAL_V1, **DEV_TOPUP_V1, **NICHE_V1}

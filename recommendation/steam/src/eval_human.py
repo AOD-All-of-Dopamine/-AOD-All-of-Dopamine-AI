@@ -187,10 +187,13 @@ def report_worst_profiles(scored: pd.DataFrame):
     print(per.to_string(index=False))
     coh = per[per["profile_type"] == "coherent"]["평균"].mean()
     mix = per[per["profile_type"] == "mixed"]["평균"].mean()
+    single = per[per["profile_type"] == "single"]["평균"]
     print(f"\n  coherent 평균 {coh:.2f}  vs  mixed 평균 {mix:.2f}")
-    if abs(coh - mix) > 0.3:
-        worse = "취향이 섞인" if mix < coh else "취향이 일관된"
-        print(f"  → {worse} 프로필에서 눈에 띄게 약합니다. 집계 전략(C4)을 다시 볼 근거입니다.")
+    if len(single):
+        print(f"  single(시드 1개) 평균 {single.mean():.2f}  n={len(single)}")
+    # 이 갈래를 근거로 쓰지 않는 이유는 아래 주석 참고. 출력은 남기되 결론을 붙이지 않는다.
+    print("  ※ 26개 프로필 실측에서 응집도와 P@10 의 상관은 0.09(피어슨)/0.02(스피어만)로")
+    print("     사실상 무관하다. 이 갈래는 참고용이지 전략 선택의 근거가 아니다.")
     print()
 
 

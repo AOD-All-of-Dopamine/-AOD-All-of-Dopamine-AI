@@ -208,7 +208,8 @@ def cap_series(df: pd.DataFrame, dataset: pd.DataFrame, series_max: int = 1) -> 
     return df[pd.Series(keep, index=df.index)].reset_index(drop=True)
 
 
-def interleave_by_seed(ranked: pd.DataFrame, top_n: int = 100) -> pd.DataFrame:
+def interleave_by_seed(ranked: pd.DataFrame, top_n: int = 100,
+                       bucket_offset: int = 0) -> pd.DataFrame:
     """dominant_seed 버킷을 라운드로빈으로 배치한다.
 
     **전역 상한이 아니라 라운드로빈이어야 한다.** 상한만 걸면 "1~50위는 농장, 51~100위는
@@ -216,6 +217,24 @@ def interleave_by_seed(ranked: pd.DataFrame, top_n: int = 100) -> pd.DataFrame:
 
     버킷 순서는 각 버킷 1등의 final_score 내림차순 — 가장 강한 시드가 1위 자리를 갖는다.
     빈 버킷은 자동으로 건너뛰므로, 코퍼스에 이웃이 없는 시드가 있어도 목록이 짧아지지 않는다.
+
+    **시드 개수에 따른 동작** (실측, page_size=10 기준):
+
+        시드  1개 → 한 시드가 10/10. 인터리빙은 아무 일도 하지 않는다(정상)
+        시드  3개 → 최다 점유 4/10
+        시드 10개 → 각 시드 1칸씩
+        시드 15개 → 한 페이지에 10개만 담긴다 → `bucket_offset` 으로 돌려가며 태운다
+
+    `bucket_offset` — **시드가 page_size 보다 많을 때 약한 시드가 굶어 죽는 것을 막는다.**
+    이게 없으면 매 페이지마다 버킷 정렬이 처음부터 다시 시작해 항상 같은 상위 10개 버킷이
+    이긴다. 실측(시드 15개, 버킷당 후보 30개):
+
+        offset 없음 → 시드별 첫 등장 페이지 {0~9: 1, 10: 11, 11~14: 20페이지 내 없음}
+        offset 있음 → {0~9: 1, 10: 2, 11: 3, 12: 4, 13: 5, 14: 6}   (회전 폭 1)
+        offset = 본 개수 → 2페이지 안에 15개 전부                      (회전 폭 page_size)
+
+    `next_page` 는 `len(seen_appids)` 를 그대로 넘긴다. 페이지마다 page_size 씩 늘어나므로
+    회전 폭이 page_size 가 되고, 시드 N개가 `ceil(N / page_size)` 페이지 안에 전부 등장한다.
     """
     if ranked.empty or "dominant_seed" not in ranked.columns or ranked["dominant_seed"].isna().all():
         out = ranked.head(top_n).reset_index(drop=True)
@@ -228,6 +247,9 @@ def interleave_by_seed(ranked: pd.DataFrame, top_n: int = 100) -> pd.DataFrame:
         for _, g in ranked.groupby("dominant_seed", sort=False)
     ]
     buckets.sort(key=lambda b: -b["final_score"].iloc[0])
+    if bucket_offset and len(buckets) > 1:
+        k = bucket_offset % len(buckets)
+        buckets = buckets[k:] + buckets[:k]
 
     picked, depth = [], 0
     while len(picked) < top_n and any(depth < len(b) for b in buckets):
@@ -253,8 +275,13 @@ def postprocess(
     hard_filters: bool = True,
     require_known_reviews: bool = False,
     min_reviews: int = 0,
+    bucket_offset: int = 0,
 ) -> pd.DataFrame:
-    """스펙 §5.4 순서: hard filter → 시리즈/퍼블리셔 상한 → 다양성 → Top-N."""
+    """스펙 §5.4 순서: hard filter → 시리즈/퍼블리셔 상한 → 다양성 → Top-N.
+
+    `bucket_offset` 은 인터리빙에 그대로 넘어간다 — 시드가 page_size 보다 많을 때
+    페이지마다 버킷 순서를 회전시켜 약한 시드가 굶지 않게 한다.
+    """
     df = ranked
     if hard_filters:
         df = apply_hard_filters(df, dataset, require_known_reviews=require_known_reviews,
@@ -264,7 +291,7 @@ def postprocess(
     if publisher_max:
         df = cap_publisher(df, dataset, publisher_max)
     if seed_interleave:
-        df = interleave_by_seed(df, top_n)
+        df = interleave_by_seed(df, top_n, bucket_offset=bucket_offset)
     else:
         df = df.head(top_n).reset_index(drop=True)
         df["rank"] = range(1, len(df) + 1)

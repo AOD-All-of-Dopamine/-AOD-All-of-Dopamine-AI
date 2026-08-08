@@ -144,7 +144,12 @@ def next_page(
         components=components,
         postprocess=postprocess,
         postprocess_kwargs={"require_known_reviews": require_known_reviews,
-                            "min_reviews": min_reviews},
+                            "min_reviews": min_reviews,
+                            # 이미 본 개수 = 페이지 번호 x page_size. 버킷을 그만큼 회전시켜
+                            # 시드가 page_size 보다 많아도 ceil(N/page_size) 페이지 안에
+                            # 모든 시드가 한 번은 나오게 한다. 회전이 없으면 약한 시드는
+                            # 영영 안 나온다(실측: 시드 15개 중 11~15번째가 20페이지 내 0회).
+                            "bucket_offset": len(seen)},
         exclude_appids=seen,
     )[strategy]
     return ranked.head(page_size).reset_index(drop=True)

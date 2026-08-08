@@ -279,3 +279,101 @@ def test_cap_publisher_noop_without_column():
     ranked = _ranked([1, 2], [10, 10])
     ds = _dataset([{"steam_appid": 1, "name": "a"}, {"steam_appid": 2, "name": "b"}])
     assert len(cap_publisher(ranked, ds, publisher_max=1)) == 2
+
+
+# ------------------------------------------------- 시드 개수 계약 (Step 5)
+
+def _multi_seed(n_seeds, per_seed=4):
+    """시드 n개 × per_seed개 후보. 시드 번호가 작을수록 강하다."""
+    rows = []
+    for s in range(n_seeds):
+        for j in range(per_seed):
+            rows.append({"steam_appid": s * 100 + j, "dominant_seed": s,
+                         "final_score": 1.0 - s * 0.01 - j * 0.001})
+    df = pd.DataFrame(rows).sort_values("final_score", ascending=False).reset_index(drop=True)
+    df["rank"] = range(1, len(df) + 1)
+    return df
+
+
+def test_single_seed_takes_the_whole_page():
+    """시드가 하나면 인터리빙이 할 일이 없다 — 10/10 독점이 정상이다."""
+    out = interleave_by_seed(_multi_seed(1, per_seed=20), top_n=10)
+    assert len(out) == 10
+    assert set(out["dominant_seed"]) == {0}
+
+
+def test_ten_seeds_get_one_slot_each():
+    out = interleave_by_seed(_multi_seed(10), top_n=10)
+    assert len(out) == 10
+    assert sorted(out["dominant_seed"]) == list(range(10))
+
+
+def test_fifteen_seeds_drop_the_five_weakest_from_page_one():
+    """10칸에 15개 취향은 안 들어간다. 약한 5개가 1페이지에서 빠지는 것이 계약이다."""
+    out = interleave_by_seed(_multi_seed(15), top_n=10)
+    assert len(out) == 10
+    assert sorted(out["dominant_seed"]) == list(range(10))   # 강한 순으로 10개
+    assert set(range(10, 15)).isdisjoint(set(out["dominant_seed"]))
+
+
+def test_weak_seeds_starve_without_bucket_offset():
+    """회전이 없으면 매 페이지가 처음부터 정렬돼 같은 상위 10개 버킷이 계속 이긴다.
+
+    실측: 버킷당 후보가 30개만 넘으면 11~15번째 시드는 30페이지 안에 한 번도 안 나온다.
+    후보 4개짜리 인공 데이터에서는 5페이지에 나와서 처음엔 문제가 안 보였다.
+    """
+    ranked = _multi_seed(15, per_seed=30)
+    seen, appeared = set(), set()
+    for _ in range(20):
+        rest = ranked[~ranked["steam_appid"].isin(seen)]
+        page = interleave_by_seed(rest, top_n=10)          # bucket_offset 없음
+        seen |= set(page["steam_appid"])
+        appeared |= {int(s) for s in page["dominant_seed"]}
+    assert appeared.isdisjoint({11, 12, 13, 14})           # 20페이지 동안 한 번도 안 나온다
+
+
+def test_bucket_offset_gives_every_seed_a_turn():
+    """시드 N개면 ceil(N/page_size) 페이지 안에 전부 한 번은 등장해야 한다."""
+    ranked = _multi_seed(15, per_seed=30)
+    seen, appeared = set(), set()
+    for _ in range(2):                                      # ceil(15/10) = 2
+        rest = ranked[~ranked["steam_appid"].isin(seen)]
+        # next_page 와 같은 방식: 이미 본 개수를 그대로 넘긴다 → 회전 폭이 page_size
+        pg = interleave_by_seed(rest, top_n=10, bucket_offset=len(seen))
+        seen |= set(pg["steam_appid"])
+        appeared |= {int(s) for s in pg["dominant_seed"]}
+    assert appeared == set(range(15))
+
+
+def test_bucket_offset_keeps_all_seeds_present_when_they_fit():
+    """시드가 page_size 이하면 회전해도 세 시드가 모두 남아야 한다.
+
+    칸이 나누어떨어지지 않을 때 여분 칸의 주인이 바뀔 뿐이다(4/3/3 → 3/4/3).
+    """
+    ranked = _multi_seed(3, per_seed=20)
+    for off in range(4):
+        counts = interleave_by_seed(ranked, top_n=10, bucket_offset=off)["dominant_seed"].value_counts()
+        assert len(counts) == 3
+        assert sorted(counts.tolist()) == [3, 3, 4]
+
+
+def test_bucket_offset_wraps_around():
+    ranked = _multi_seed(3, per_seed=20)
+    assert (interleave_by_seed(ranked, 10, bucket_offset=0)["steam_appid"].tolist()
+            == interleave_by_seed(ranked, 10, bucket_offset=3)["steam_appid"].tolist())
+
+
+def test_page_always_fills_when_candidates_remain():
+    for n in (1, 2, 3, 5, 10, 15, 20):
+        out = interleave_by_seed(_multi_seed(n, per_seed=20), top_n=10)
+        assert len(out) == 10, n
+        assert out["rank"].tolist() == list(range(1, 11)), n
+
+
+def test_uneven_buckets_do_not_shorten_the_page():
+    """이웃이 1개뿐인 시드가 있어도 10칸을 채워야 한다."""
+    ranked = pd.concat([_multi_seed(1, per_seed=1),
+                        _multi_seed(2, per_seed=20).assign(dominant_seed=lambda d: d.dominant_seed + 1)])
+    ranked = ranked.sort_values("final_score", ascending=False).reset_index(drop=True)
+    ranked["rank"] = range(1, len(ranked) + 1)
+    assert len(interleave_by_seed(ranked, top_n=10)) == 10
