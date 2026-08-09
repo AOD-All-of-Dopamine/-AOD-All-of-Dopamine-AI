@@ -78,6 +78,20 @@ def _load_release_dates() -> pd.Series:
     return t.set_index("steam_appid")["parsed_date"]
 
 
+def _has_adult_descriptor(ids) -> bool:
+    """content_descriptorids 에 성인 등급이 있는가.
+
+    parquet 왕복 후에는 list 가 아니라 numpy 배열로 돌아오고, 결측은 None 이다.
+    `set(x or ())` 로 쓰면 배열에서 ValueError 가 난다.
+    """
+    if ids is None:
+        return False
+    try:
+        return bool(ADULT_DESCRIPTOR_IDS & {int(i) for i in ids})
+    except TypeError:
+        return False
+
+
 def apply_hard_filters(
     ranked: pd.DataFrame,
     dataset: pd.DataFrame,
@@ -121,9 +135,11 @@ def apply_hard_filters(
         genres = df["steam_appid"].map(lambda a: set(meta["genres"].get(a, [])))
         keep &= ~genres.map(lambda g: bool(g & ADULT_GENRES))
         if "content_descriptorids" in meta.columns:
+            # parquet 는 리스트를 numpy 배열로 돌려준다 — `x or ()` 는 배열에서
+            # "truth value is ambiguous" 로 터진다. None 검사를 명시적으로 한다.
             cd = meta["content_descriptorids"]
             keep &= ~df["steam_appid"].map(
-                lambda a: bool(set(cd.get(a) or ()) & ADULT_DESCRIPTOR_IDS))
+                lambda a: _has_adult_descriptor(cd.get(a)))
 
     if drop_vr_only and "categories" in meta.columns:
         cats = df["steam_appid"].map(lambda a: set(meta["categories"].get(a, [])))

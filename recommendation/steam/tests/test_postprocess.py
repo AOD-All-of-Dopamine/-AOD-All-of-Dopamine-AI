@@ -436,3 +436,20 @@ def test_drop_adult_false_disables_descriptor_check():
     ds = _with_cd([{"steam_appid": 1, "name": "성인", "genres": [], "categories": [],
                     "content_descriptorids": [3, 4]}])
     assert len(apply_hard_filters(ranked, ds, drop_unreleased=False, drop_adult=False)) == 1
+
+
+def test_descriptor_check_survives_parquet_roundtrip(tmp_path):
+    """parquet 는 리스트를 numpy 배열로 돌려준다 — `x or ()` 로 쓰면 거기서 터진다."""
+    ds = pd.DataFrame([
+        {"steam_appid": 1, "name": "일반", "genres": ["액션"], "categories": [],
+         "content_descriptorids": [1, 2, 5]},
+        {"steam_appid": 2, "name": "성인", "genres": ["액션"], "categories": [],
+         "content_descriptorids": [3, 4]},
+        {"steam_appid": 3, "name": "미지정", "genres": ["액션"], "categories": [],
+         "content_descriptorids": []},
+    ])
+    path = tmp_path / "ds.parquet"
+    ds.to_parquet(path, index=False)
+    out = apply_hard_filters(_ranked([1, 2, 3], [10, 10, 10]),
+                             pd.read_parquet(path), drop_unreleased=False)
+    assert out["steam_appid"].tolist() == [1, 3]
