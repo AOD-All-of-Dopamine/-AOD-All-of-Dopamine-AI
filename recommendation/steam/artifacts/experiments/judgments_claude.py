@@ -523,6 +523,64 @@ BLIND_FLOOR = {
 }
 
 
+# --- 라운드5 블라인드: 저리뷰 축 5개 프로필 (리뷰 850~1,973 시드) ---
+# 코퍼스의 70% 를 차지하는데 시드가 하나도 없던 구간. 무명 시드라 시트에 **시드 설명**을
+# 함께 넣었다 — 이름만으로는 어떤 게임인지 알 수 없고, 모르는 채로 채점하면
+# "설명끼리 닮았나"만 보게 되어 임베딩과 순환한다.
+BLIND_LOWREV = {
+    ("lowrev_cozy_narrative", 232430): (3, ""),  # Gone Home
+    ("lowrev_cozy_narrative", 331870): (2, ""),  # AER Memories of Old
+    ("lowrev_cozy_narrative", 520720): (3, ""),  # Dear Esther: Landmark Edition
+    ("lowrev_cozy_narrative", 638230): (3, ""),  # Journey
+    ("lowrev_cozy_narrative", 695330): (3, ""),  # SEASON: A letter to the future
+    ("lowrev_cozy_narrative", 858940): (3, ""),  # Flowers -Le volume sur ete-
+    ("lowrev_cozy_narrative", 1281270): (2, ""),  # Fatum Betula
+    ("lowrev_cozy_narrative", 1506980): (2, ""),  # 葬花·暗黑桃花源
+    ("lowrev_cozy_narrative", 3069120): (2, ""),  # 러브커스: 사랑이 아니면 죽음뿐
+    ("lowrev_cozy_narrative", 3528450): (2, ""),  # 종이집
+    ("lowrev_deckbuilder", 646570): (3, ""),  # Slay the Spire
+    ("lowrev_deckbuilder", 981430): (3, ""),  # Gordian Quest
+    ("lowrev_deckbuilder", 1076200): (3, ""),  # Roguebook
+    ("lowrev_deckbuilder", 1638390): (3, ""),  # Indies' Lies
+    ("lowrev_deckbuilder", 1755830): (3, ""),  # Astrea: Six-Sided Oracles
+    ("lowrev_deckbuilder", 1815570): (3, ""),  # Aces & Adventures
+    ("lowrev_deckbuilder", 2026820): (3, ""),  # Die in the Dungeon
+    ("lowrev_deckbuilder", 2693930): (3, ""),  # 주사위와 마왕의 성
+    ("lowrev_deckbuilder", 2842800): (2, ""),  # 尸姬之梦
+    ("lowrev_deckbuilder", 2870340): (2, ""),  # Decktamer
+    ("lowrev_detective", 284770): (2, ""),  # Enigmatis 2: The Mists of Ravenwood
+    ("lowrev_detective", 350640): (3, ""),  # Sherlock Holmes: The Devil's Daughter
+    ("lowrev_detective", 368370): (3, ""),  # Her Story
+    ("lowrev_detective", 373390): (3, ""),  # Contradiction: Spot The Liar
+    ("lowrev_detective", 615770): (3, ""),  # Nancy Drew®: Message in a Haunted Mansio
+    ("lowrev_detective", 712730): (2, ""),  # SIMULACRA
+    ("lowrev_detective", 1271300): (3, ""),  # Methods: The Detective Competition
+    ("lowrev_detective", 1466390): (3, ""),  # Kathy Rain 2: Soothsayer
+    ("lowrev_detective", 2450840): (0, "IRRELEVANT"),  # Detective Dotson
+    ("lowrev_detective", 2514960): (1, "GENRE_ONLY"),  # Refind Self: 성격 진단 게임
+    ("lowrev_metroidvania", 332200): (3, ""),  # Axiom Verge
+    ("lowrev_metroidvania", 345820): (3, ""),  # Shantae and the Pirate's Curse
+    ("lowrev_metroidvania", 598700): (1, "GENRE_ONLY"),  # The Vagrant
+    ("lowrev_metroidvania", 813230): (3, ""),  # ANIMAL WELL
+    ("lowrev_metroidvania", 1379870): (1, "GENRE_ONLY"),  # Tribal Hunter
+    ("lowrev_metroidvania", 1419160): (3, ""),  # Souldiers
+    ("lowrev_metroidvania", 1517970): (3, ""),  # Aeterna Noctis
+    ("lowrev_metroidvania", 1522870): (1, "FRANCHISE_OR_VARIANT"),  # Supraland Six Inches Under
+    ("lowrev_metroidvania", 1748620): (1, "LOW_QUALITY"),  # FlipWitch - Forbidden Sex Hex
+    ("lowrev_metroidvania", 2971610): (3, ""),  # HOLE
+    ("lowrev_towerdefense", 23530): (1, "GENRE_ONLY"),  # Earth Defense Force: Insect Armageddon
+    ("lowrev_towerdefense", 408410): (3, ""),  # X-Morph: Defense
+    ("lowrev_towerdefense", 422900): (3, ""),  # Particle Fleet: Emergence
+    ("lowrev_towerdefense", 458710): (3, ""),  # Kingdom Rush Frontiers - Tower Defense
+    ("lowrev_towerdefense", 603320): (3, ""),  # Age of Defense
+    ("lowrev_towerdefense", 701870): (2, ""),  # Swarm Queen
+    ("lowrev_towerdefense", 848480): (2, ""),  # Creeper World 4
+    ("lowrev_towerdefense", 1522820): (3, ""),  # Orcs Must Die! 3
+    ("lowrev_towerdefense", 1566690): (2, ""),  # Outpost: Infinity Siege
+    ("lowrev_towerdefense", 2607060): (3, ""),  # From Glory To Goo
+}
+
+
 ALL = {**REP_V2, **POSTPROCESS}
 
 # --- 품질 하한(require_known_reviews) + rec_boost 0.15 의 rank 1~30 에서 새로 진입한 후보 ---
@@ -1437,6 +1495,64 @@ BLIND_FLOOR = {
 }
 
 
+# --- 라운드5 블라인드: 저리뷰 축 5개 프로필 (리뷰 850~1,973 시드) ---
+# 코퍼스의 70% 를 차지하는데 시드가 하나도 없던 구간. 무명 시드라 시트에 **시드 설명**을
+# 함께 넣었다 — 이름만으로는 어떤 게임인지 알 수 없고, 모르는 채로 채점하면
+# "설명끼리 닮았나"만 보게 되어 임베딩과 순환한다.
+BLIND_LOWREV = {
+    ("lowrev_cozy_narrative", 232430): (3, ""),  # Gone Home
+    ("lowrev_cozy_narrative", 331870): (2, ""),  # AER Memories of Old
+    ("lowrev_cozy_narrative", 520720): (3, ""),  # Dear Esther: Landmark Edition
+    ("lowrev_cozy_narrative", 638230): (3, ""),  # Journey
+    ("lowrev_cozy_narrative", 695330): (3, ""),  # SEASON: A letter to the future
+    ("lowrev_cozy_narrative", 858940): (3, ""),  # Flowers -Le volume sur ete-
+    ("lowrev_cozy_narrative", 1281270): (2, ""),  # Fatum Betula
+    ("lowrev_cozy_narrative", 1506980): (2, ""),  # 葬花·暗黑桃花源
+    ("lowrev_cozy_narrative", 3069120): (2, ""),  # 러브커스: 사랑이 아니면 죽음뿐
+    ("lowrev_cozy_narrative", 3528450): (2, ""),  # 종이집
+    ("lowrev_deckbuilder", 646570): (3, ""),  # Slay the Spire
+    ("lowrev_deckbuilder", 981430): (3, ""),  # Gordian Quest
+    ("lowrev_deckbuilder", 1076200): (3, ""),  # Roguebook
+    ("lowrev_deckbuilder", 1638390): (3, ""),  # Indies' Lies
+    ("lowrev_deckbuilder", 1755830): (3, ""),  # Astrea: Six-Sided Oracles
+    ("lowrev_deckbuilder", 1815570): (3, ""),  # Aces & Adventures
+    ("lowrev_deckbuilder", 2026820): (3, ""),  # Die in the Dungeon
+    ("lowrev_deckbuilder", 2693930): (3, ""),  # 주사위와 마왕의 성
+    ("lowrev_deckbuilder", 2842800): (2, ""),  # 尸姬之梦
+    ("lowrev_deckbuilder", 2870340): (2, ""),  # Decktamer
+    ("lowrev_detective", 284770): (2, ""),  # Enigmatis 2: The Mists of Ravenwood
+    ("lowrev_detective", 350640): (3, ""),  # Sherlock Holmes: The Devil's Daughter
+    ("lowrev_detective", 368370): (3, ""),  # Her Story
+    ("lowrev_detective", 373390): (3, ""),  # Contradiction: Spot The Liar
+    ("lowrev_detective", 615770): (3, ""),  # Nancy Drew®: Message in a Haunted Mansio
+    ("lowrev_detective", 712730): (2, ""),  # SIMULACRA
+    ("lowrev_detective", 1271300): (3, ""),  # Methods: The Detective Competition
+    ("lowrev_detective", 1466390): (3, ""),  # Kathy Rain 2: Soothsayer
+    ("lowrev_detective", 2450840): (0, "IRRELEVANT"),  # Detective Dotson
+    ("lowrev_detective", 2514960): (1, "GENRE_ONLY"),  # Refind Self: 성격 진단 게임
+    ("lowrev_metroidvania", 332200): (3, ""),  # Axiom Verge
+    ("lowrev_metroidvania", 345820): (3, ""),  # Shantae and the Pirate's Curse
+    ("lowrev_metroidvania", 598700): (1, "GENRE_ONLY"),  # The Vagrant
+    ("lowrev_metroidvania", 813230): (3, ""),  # ANIMAL WELL
+    ("lowrev_metroidvania", 1379870): (1, "GENRE_ONLY"),  # Tribal Hunter
+    ("lowrev_metroidvania", 1419160): (3, ""),  # Souldiers
+    ("lowrev_metroidvania", 1517970): (3, ""),  # Aeterna Noctis
+    ("lowrev_metroidvania", 1522870): (1, "FRANCHISE_OR_VARIANT"),  # Supraland Six Inches Under
+    ("lowrev_metroidvania", 1748620): (1, "LOW_QUALITY"),  # FlipWitch - Forbidden Sex Hex
+    ("lowrev_metroidvania", 2971610): (3, ""),  # HOLE
+    ("lowrev_towerdefense", 23530): (1, "GENRE_ONLY"),  # Earth Defense Force: Insect Armageddon
+    ("lowrev_towerdefense", 408410): (3, ""),  # X-Morph: Defense
+    ("lowrev_towerdefense", 422900): (3, ""),  # Particle Fleet: Emergence
+    ("lowrev_towerdefense", 458710): (3, ""),  # Kingdom Rush Frontiers - Tower Defense
+    ("lowrev_towerdefense", 603320): (3, ""),  # Age of Defense
+    ("lowrev_towerdefense", 701870): (2, ""),  # Swarm Queen
+    ("lowrev_towerdefense", 848480): (2, ""),  # Creeper World 4
+    ("lowrev_towerdefense", 1522820): (3, ""),  # Orcs Must Die! 3
+    ("lowrev_towerdefense", 1566690): (2, ""),  # Outpost: Infinity Siege
+    ("lowrev_towerdefense", 2607060): (3, ""),  # From Glory To Goo
+}
+
+
 ALL = {**REP_V2, **POSTPROCESS, **DEPTH_V1, **FULL_V1, **REP_V2_TOPUP, **MIN_REV_300,
        **RANKER_DIAG, **BOOST_SWEEP, **VAL_V1, **DEV_TOPUP_V1, **NICHE_V1,
-       **BLIND_ROUND1, **BLIND_TAGS, **BLIND_FLOOR}
+       **BLIND_ROUND1, **BLIND_TAGS, **BLIND_FLOOR, **BLIND_LOWREV}

@@ -10,7 +10,7 @@
 
     가림:  어느 설정/변형에서 나왔는가 · 몇 위인가 · 어느 집계 전략인가
            프로필의 실제 id · 프로필 순서 · 후보 등장 순서
-    보임:  시드 게임(이름 · 장르) · 후보 게임(이름 · 장르 · 설명)
+    보임:  시드 게임(이름 · 장르 · 설명은 옵션) · 후보 게임(이름 · 장르 · 설명)
 
 `show_reviews=False` 가 기본이다. 리뷰 수는 게임 메타데이터이기도 하지만 동시에
 `min_reviews` 실험의 조작 변수라, 보이면 "리뷰 150개니까 하한 없는 설정에서 왔겠군"을
@@ -68,6 +68,7 @@ def build_sheet(
     dataset: pd.DataFrame,
     seed: int = 42,
     show_reviews: bool = False,
+    show_seed_desc: bool = False,
 ) -> tuple[pd.DataFrame, pd.DataFrame]:
     """(프로필, 후보) 쌍 목록 → (블라인드 시트, 복원 매핑).
 
@@ -94,6 +95,9 @@ def build_sheet(
             "프로필": anon[pid],
             "좋아하는_게임": " / ".join(info.get(a, {}).get("name", str(a)) for a in liked),
             "좋아하는_게임_장르": " / ".join(info.get(a, {}).get("genres", "") for a in liked),
+            **({"좋아하는_게임_설명": " ‖ ".join(
+                f"[{info.get(a, {}).get('name', a)}] {info.get(a, {}).get('desc', '')[:180]}"
+                for a in liked)} if show_seed_desc else {}),
             "추천_게임": g["name"],
             "추천_게임_장르": g["genres"],
             "추천_게임_설명": g["desc"],
@@ -192,6 +196,8 @@ def main():
     ap.add_argument("--name", default="BLIND")
     ap.add_argument("--seed", type=int, default=42)
     ap.add_argument("--show-reviews", action="store_true")
+    ap.add_argument("--show-seed-desc", action="store_true",
+                    help="무명 시드에는 필수 — 이름만으로는 어떤 게임인지 알 수 없다")
     args = ap.parse_args()
 
     out = Path(args.dir)
@@ -202,7 +208,8 @@ def main():
         pairs = [(p, int(a)) for p, a in json.loads(Path(args.pairs).read_text())]
         profiles = pd.read_parquet(PROJECT_ROOT / "artifacts" / "p1" / "profiles.parquet")
         dataset = pd.read_parquet(artifact_dir(args.artifacts) / "dataset.parquet")
-        sheet, mapping = build_sheet(pairs, profiles, dataset, args.seed, args.show_reviews)
+        sheet, mapping = build_sheet(pairs, profiles, dataset, args.seed,
+                                    args.show_reviews, args.show_seed_desc)
         write(out, sheet, mapping)
         print(f"블라인드 시트 {len(sheet)}행 → {out / SHEET}")
         print(f"매핑(채점 전 열지 말 것)   → {out / MAPPING}")
