@@ -20,6 +20,27 @@ from src.config import PROJECT_ROOT, artifact_dir
 # 장르 태그로 걸러낼 성인/고어 콘텐츠. anchor_builder.NON_CORE_GENRE_LABELS 의 부분집합이다
 # (그쪽은 '인디'·'앞서 해보기'처럼 장르가 아닌 것도 포함하므로 그대로 쓰면 안 된다).
 ADULT_GENRES = frozenset({"신체 노출", "선정적 콘텐츠"})
+
+# Steam 이 개발사에게 받는 **공식** 성인 콘텐츠 등급. 3 = 노골적 성적 묘사, 4 = 성인 전용.
+#
+# 왜 사용자 태그가 아니라 이것인가 — 태그로 성인물을 판정하려고 규칙을 다섯 번 만들었고
+# 다섯 번 다 양방향으로 틀렸다:
+#
+#     태그 존재      Witcher 3 · Cyberpunk 2077 · Baldur's Gate 3 차단
+#     성인태그 상위3  Cyberpunk 2077 차단
+#     성인태그 상위2  GTA V · Fear & Hunger 차단, Tricolour Lovestory 통과
+#     Hentai 만      PAYDAY 3 · Age of History II 차단, House Party 통과
+#
+# 원인은 태그가 **사용자 투표**라는 것이다. 밈으로도 붙고(PAYDAY 3 에 Hentai), 표 수가
+# 인기도와 교란된다. descriptor 는 지정값이라 그 오염이 없다. 실측:
+#
+#     3/4 있음  FlipWitch · Carnal Instinct · Acting Lessons · Subverse · HuniePop
+#     3/4 없음  PAYDAY 3 · Age of History II · Hatred · BG3 · Rust · RDR2 · GTA V ·
+#               Bayonetta · 스텔라 블레이드 · Doki Doki Literature Club
+#
+# **완벽하지는 않다** — House Party · NEKOPARA · Summer Memories 는 개발사가 지정을 안 해
+# 통과한다. 놓치는 쪽(false negative)이지 정상 게임을 잃는 쪽은 아니라서 이 방향을 택했다.
+ADULT_DESCRIPTOR_IDS = frozenset({3, 4})
 GORE_GENRES = frozenset({"고어", "폭력적"})
 VR_ONLY_CATEGORY = "VR 전용"
 
@@ -99,6 +120,10 @@ def apply_hard_filters(
     if drop_adult:
         genres = df["steam_appid"].map(lambda a: set(meta["genres"].get(a, [])))
         keep &= ~genres.map(lambda g: bool(g & ADULT_GENRES))
+        if "content_descriptorids" in meta.columns:
+            cd = meta["content_descriptorids"]
+            keep &= ~df["steam_appid"].map(
+                lambda a: bool(set(cd.get(a) or ()) & ADULT_DESCRIPTOR_IDS))
 
     if drop_vr_only and "categories" in meta.columns:
         cats = df["steam_appid"].map(lambda a: set(meta["categories"].get(a, [])))

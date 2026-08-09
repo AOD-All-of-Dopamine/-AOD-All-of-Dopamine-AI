@@ -377,3 +377,62 @@ def test_uneven_buckets_do_not_shorten_the_page():
     ranked = ranked.sort_values("final_score", ascending=False).reset_index(drop=True)
     ranked["rank"] = range(1, len(ranked) + 1)
     assert len(interleave_by_seed(ranked, top_n=10)) == 10
+
+
+# --------------------------------- 성인 콘텐츠는 공식 descriptor 로 거른다
+
+def _with_cd(rows):
+    df = pd.DataFrame(rows)
+    return df
+
+
+def test_official_descriptor_blocks_explicit_games():
+    """3(노골적 성적 묘사) / 4(성인 전용)가 있으면 거른다."""
+    ranked = _ranked([1, 2], [10, 10])
+    ds = _with_cd([
+        {"steam_appid": 1, "name": "일반", "genres": ["액션"], "categories": [],
+         "content_descriptorids": [1, 2, 5]},
+        {"steam_appid": 2, "name": "성인", "genres": ["액션"], "categories": [],
+         "content_descriptorids": [1, 3, 4, 5]},
+    ])
+    out = apply_hard_filters(ranked, ds, drop_unreleased=False)
+    assert out["steam_appid"].tolist() == [1]
+
+
+def test_mainstream_games_with_mature_content_pass():
+    """Cyberpunk[1,2,5] · Witcher3[1,5] · GTA V[1,2,5] 는 통과해야 한다.
+
+    사용자 태그로 거르면 이것들이 전부 차단됐다 — 그래서 descriptor 를 쓴다.
+    """
+    ranked = _ranked([1, 2, 3], [10, 10, 10])
+    ds = _with_cd([
+        {"steam_appid": 1, "name": "Cyberpunk", "genres": ["RPG"], "categories": [],
+         "content_descriptorids": [1, 2, 5]},
+        {"steam_appid": 2, "name": "Witcher3", "genres": ["RPG"], "categories": [],
+         "content_descriptorids": [1, 5]},
+        {"steam_appid": 3, "name": "PAYDAY 3", "genres": ["액션"], "categories": [],
+         "content_descriptorids": [2, 5]},
+    ])
+    assert len(apply_hard_filters(ranked, ds, drop_unreleased=False)) == 3
+
+
+def test_missing_descriptor_column_is_not_fatal():
+    """구 dataset 에는 컬럼이 없다 — 장르 기준만으로 돌아야 한다."""
+    ranked = _ranked([1], [10])
+    ds = _dataset([{"steam_appid": 1, "name": "g", "genres": ["액션"], "categories": []}])
+    assert len(apply_hard_filters(ranked, ds, drop_unreleased=False)) == 1
+
+
+def test_empty_descriptor_list_passes():
+    """개발사가 지정을 안 한 경우 — 놓치더라도 정상 게임을 잃지는 않는다."""
+    ranked = _ranked([1], [10])
+    ds = _with_cd([{"steam_appid": 1, "name": "미지정", "genres": ["액션"], "categories": [],
+                    "content_descriptorids": []}])
+    assert len(apply_hard_filters(ranked, ds, drop_unreleased=False)) == 1
+
+
+def test_drop_adult_false_disables_descriptor_check():
+    ranked = _ranked([1], [10])
+    ds = _with_cd([{"steam_appid": 1, "name": "성인", "genres": [], "categories": [],
+                    "content_descriptorids": [3, 4]}])
+    assert len(apply_hard_filters(ranked, ds, drop_unreleased=False, drop_adult=False)) == 1

@@ -30,6 +30,16 @@
 weight 가 있어야 "이 게임은 Souls-like 표가 1,756 인데 Co-op 표는 176" 을 구분할 수 있다.
 전부 같은 무게로 넣으면 꼬리 태그가 노이즈가 된다.
 
+**태그로 성인물을 판정하면 안 된다.** 규칙을 다섯 번 만들어 다섯 번 다 양방향 오류가 났다:
+
+    태그 존재     → Witcher 3 / Cyberpunk / BG3 차단
+    상위 2위      → GTA V / Fear & Hunger 차단, Tricolour Lovestory 통과
+    Hentai 만     → PAYDAY 3 / Age of History II 차단, House Party 통과
+
+원인은 태그가 **사용자 투표**라는 데 있다. 밈으로도 붙고(PAYDAY 3 에 Hentai), 표 수가
+인기도와 교란된다. 그래서 같은 응답의 `content_descriptorids` 를 함께 받는다 —
+이건 개발사/Steam 이 지정하는 값이고, id 3(노골적 성적 묘사) / 4 가 성인물을 가른다.
+
     python -m src.crawl_tags --out data/steam_tags.jsonl
 """
 from __future__ import annotations
@@ -154,6 +164,9 @@ def crawl(appids: list[int], key: str, out: Path, tag_names: dict[int, str],
                     "name": it.get("name", ""),
                     "tags": [{"name": tag_names.get(int(t["tagid"]), str(t["tagid"])),
                               "weight": int(t.get("weight", 0))} for t in tags],
+                    # 개발사/Steam 이 지정하는 **공식** 성인 콘텐츠 등급. 태그와 성격이 다르다 —
+                    # 태그는 사용자 투표라 밈이 섞이지만(PAYDAY 3 에 Hentai) 이건 지정값이다.
+                    "content_descriptorids": it.get("content_descriptorids") or [],
                 }
                 f.write(json.dumps(row, ensure_ascii=False) + "\n")
                 stats["written"] += 1
@@ -163,7 +176,8 @@ def crawl(appids: list[int], key: str, out: Path, tag_names: dict[int, str],
             # 응답에 안 온 appid 도 기록해야 이어받기가 무한 재시도하지 않는다
             for a in chunk:
                 if a not in got:
-                    f.write(json.dumps({"appid": int(a), "name": "", "tags": []}) + "\n")
+                    f.write(json.dumps({"appid": int(a), "name": "", "tags": [],
+                                        "content_descriptorids": []}) + "\n")
                     stats["written"] += 1
             f.flush()
             if (i // batch) % 50 == 0:
