@@ -581,6 +581,50 @@ BLIND_LOWREV = {
 }
 
 
+# --- 라운드6 블라인드: 태그 **없는** 전체 코퍼스(full_v1, 173,691)의 31프로필 Top-10 ---
+# 저리뷰 5개 프로필에서 태그 유무가 후보를 크게 갈라 37칸이 새로 생겼다.
+# 태그 임베딩이 끝나면 같은 코퍼스 크기·같은 프로필로 태그 유무만 비교하기 위한 기준선이다.
+BLIND_NOTAGS31 = {
+    ("lowrev_cozy_narrative", 857690): (1, "GENRE_ONLY"),  # Lagoon Lounge : The Poisonous Fountain
+    ("lowrev_cozy_narrative", 1372320): (2, ""),  # Cloud Gardens
+    ("lowrev_cozy_narrative", 1497360): (3, ""),  # Open Roads
+    ("lowrev_cozy_narrative", 1629830): (3, ""),  # Research Story
+    ("lowrev_cozy_narrative", 1817940): (1, "GENRE_ONLY"),  # 러브 딜리버리
+    ("lowrev_cozy_narrative", 1883090): (2, ""),  # The Symbiant
+    ("lowrev_cozy_narrative", 3558600): (2, ""),  # Leafy Corner
+    ("lowrev_cozy_narrative", 3910610): (1, "GENRE_ONLY"),  # Growing Things Up - Season 1
+    ("lowrev_cozy_narrative", 3924170): (3, ""),  # Eternal Afternoon
+    ("lowrev_deckbuilder", 493080): (3, ""),  # Card Quest
+    ("lowrev_deckbuilder", 691690): (2, ""),  # Ash of Gods: Redemption
+    ("lowrev_deckbuilder", 770100): (2, ""),  # One Deck Dungeon
+    ("lowrev_deckbuilder", 804010): (3, ""),  # SteamWorld Quest: Hand of Gilgamech
+    ("lowrev_deckbuilder", 1552080): (3, ""),  # Deepest Chamber: Resurrection
+    ("lowrev_deckbuilder", 2727210): (3, ""),  # Deathless. The Hero Quest
+    ("lowrev_detective", 42210): (3, ""),  # Nancy Drew®: Secrets Can Kill REMASTERED
+    ("lowrev_detective", 604450): (0, "IRRELEVANT"),  # Another Adventure
+    ("lowrev_detective", 963000): (3, ""),  # Frog Detective 1: The Haunted Island
+    ("lowrev_detective", 1241510): (0, "IRRELEVANT"),  # The Test
+    ("lowrev_detective", 1677770): (3, ""),  # The Case of the Golden Idol
+    ("lowrev_detective", 1723260): (3, ""),  # CaseCracker
+    ("lowrev_detective", 1835840): (1, "GENRE_ONLY"),  # Quarantineer
+    ("lowrev_detective", 2507620): (0, "IRRELEVANT"),  # The Quintessential Quintuplets - Five Me
+    ("lowrev_detective", 2861150): (0, "IRRELEVANT"),  # Working Sakuya
+    ("lowrev_metroidvania", 371550): (1, "GENRE_ONLY"),  # A Bastard's Tale
+    ("lowrev_metroidvania", 489140): (1, "GENRE_ONLY"),  # Mr. Shifty
+    ("lowrev_metroidvania", 1068360): (3, ""),  # Fearmonium
+    ("lowrev_metroidvania", 1733250): (3, ""),  # Turbo Kid
+    ("lowrev_metroidvania", 2023360): (3, ""),  # The Last Case of Benedict Fox Definitive
+    ("lowrev_metroidvania", 3280350): (1, "GENRE_ONLY"),  # DEATH STRANDING 2: ON THE BEACH
+    ("lowrev_towerdefense", 4920): (1, "GENRE_ONLY"),  # Natural Selection 2
+    ("lowrev_towerdefense", 6810): (1, "GENRE_ONLY"),  # Commandos: Beyond the Call of Duty
+    ("lowrev_towerdefense", 48190): (0, "IRRELEVANT"),  # Assassin’s Creed® Brotherhood
+    ("lowrev_towerdefense", 332200): (0, "IRRELEVANT"),  # Axiom Verge
+    ("lowrev_towerdefense", 1692240): (0, "IRRELEVANT"),  # Fortune's Run
+    ("lowrev_towerdefense", 2392280): (3, ""),  # TDS - Tower Defense Strategy
+    ("lowrev_towerdefense", 3226530): (3, ""),  # Tower Dominion
+}
+
+
 ALL = {**REP_V2, **POSTPROCESS}
 
 # --- 품질 하한(require_known_reviews) + rec_boost 0.15 의 rank 1~30 에서 새로 진입한 후보 ---
@@ -1553,6 +1597,51 @@ BLIND_LOWREV = {
 }
 
 
+# --- 라운드6 블라인드: 태그 **없는** 전체 코퍼스(full_v1, 173,691)의 31프로필 Top-10 ---
+# 저리뷰 5개 프로필에서 태그 유무가 후보를 크게 갈라 37칸이 새로 생겼다.
+# 태그 임베딩이 끝나면 같은 코퍼스 크기·같은 프로필로 태그 유무만 비교하기 위한 기준선이다.
+BLIND_NOTAGS31 = {
+    ("lowrev_cozy_narrative", 857690): (1, "GENRE_ONLY"),  # Lagoon Lounge : The Poisonous Fountain
+    ("lowrev_cozy_narrative", 1372320): (2, ""),  # Cloud Gardens
+    ("lowrev_cozy_narrative", 1497360): (3, ""),  # Open Roads
+    ("lowrev_cozy_narrative", 1629830): (3, ""),  # Research Story
+    ("lowrev_cozy_narrative", 1817940): (1, "GENRE_ONLY"),  # 러브 딜리버리
+    ("lowrev_cozy_narrative", 1883090): (2, ""),  # The Symbiant
+    ("lowrev_cozy_narrative", 3558600): (2, ""),  # Leafy Corner
+    ("lowrev_cozy_narrative", 3910610): (1, "GENRE_ONLY"),  # Growing Things Up - Season 1
+    ("lowrev_cozy_narrative", 3924170): (3, ""),  # Eternal Afternoon
+    ("lowrev_deckbuilder", 493080): (3, ""),  # Card Quest
+    ("lowrev_deckbuilder", 691690): (2, ""),  # Ash of Gods: Redemption
+    ("lowrev_deckbuilder", 770100): (2, ""),  # One Deck Dungeon
+    ("lowrev_deckbuilder", 804010): (3, ""),  # SteamWorld Quest: Hand of Gilgamech
+    ("lowrev_deckbuilder", 1552080): (3, ""),  # Deepest Chamber: Resurrection
+    ("lowrev_deckbuilder", 2727210): (3, ""),  # Deathless. The Hero Quest
+    ("lowrev_detective", 42210): (3, ""),  # Nancy Drew®: Secrets Can Kill REMASTERED
+    ("lowrev_detective", 604450): (0, "IRRELEVANT"),  # Another Adventure
+    ("lowrev_detective", 963000): (3, ""),  # Frog Detective 1: The Haunted Island
+    ("lowrev_detective", 1241510): (0, "IRRELEVANT"),  # The Test
+    ("lowrev_detective", 1677770): (3, ""),  # The Case of the Golden Idol
+    ("lowrev_detective", 1723260): (3, ""),  # CaseCracker
+    ("lowrev_detective", 1835840): (1, "GENRE_ONLY"),  # Quarantineer
+    ("lowrev_detective", 2507620): (0, "IRRELEVANT"),  # The Quintessential Quintuplets - Five Me
+    ("lowrev_detective", 2861150): (0, "IRRELEVANT"),  # Working Sakuya
+    ("lowrev_metroidvania", 371550): (1, "GENRE_ONLY"),  # A Bastard's Tale
+    ("lowrev_metroidvania", 489140): (1, "GENRE_ONLY"),  # Mr. Shifty
+    ("lowrev_metroidvania", 1068360): (3, ""),  # Fearmonium
+    ("lowrev_metroidvania", 1733250): (3, ""),  # Turbo Kid
+    ("lowrev_metroidvania", 2023360): (3, ""),  # The Last Case of Benedict Fox Definitive
+    ("lowrev_metroidvania", 3280350): (1, "GENRE_ONLY"),  # DEATH STRANDING 2: ON THE BEACH
+    ("lowrev_towerdefense", 4920): (1, "GENRE_ONLY"),  # Natural Selection 2
+    ("lowrev_towerdefense", 6810): (1, "GENRE_ONLY"),  # Commandos: Beyond the Call of Duty
+    ("lowrev_towerdefense", 48190): (0, "IRRELEVANT"),  # Assassin’s Creed® Brotherhood
+    ("lowrev_towerdefense", 332200): (0, "IRRELEVANT"),  # Axiom Verge
+    ("lowrev_towerdefense", 1692240): (0, "IRRELEVANT"),  # Fortune's Run
+    ("lowrev_towerdefense", 2392280): (3, ""),  # TDS - Tower Defense Strategy
+    ("lowrev_towerdefense", 3226530): (3, ""),  # Tower Dominion
+}
+
+
 ALL = {**REP_V2, **POSTPROCESS, **DEPTH_V1, **FULL_V1, **REP_V2_TOPUP, **MIN_REV_300,
        **RANKER_DIAG, **BOOST_SWEEP, **VAL_V1, **DEV_TOPUP_V1, **NICHE_V1,
-       **BLIND_ROUND1, **BLIND_TAGS, **BLIND_FLOOR, **BLIND_LOWREV}
+       **BLIND_ROUND1, **BLIND_TAGS, **BLIND_FLOOR, **BLIND_LOWREV,
+       **BLIND_NOTAGS31}
