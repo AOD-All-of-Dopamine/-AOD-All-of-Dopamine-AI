@@ -12,6 +12,8 @@ from src.build_p1_profiles import (
     ALL_PROFILES,
     DEV,
     LEGACY_PROFILES,
+    LOWREV_PROFILES,
+    LOWREV_REVIEW_BAND,
     NICHE_PROFILES,
     NICHE_REVIEW_BAND,
     VAL,
@@ -71,7 +73,7 @@ def test_real_definition_has_no_leak():
 
 def test_legacy_seeds_are_frozen():
     """판정이 붙은 프로필의 시드는 바꿀 수 없다. 지문이 바뀌면 판정을 다시 해야 한다."""
-    assert seeds_fingerprint(ALL_PROFILES) == "cdb4a1c22941"
+    assert seeds_fingerprint(ALL_PROFILES) == "eeaf06d349a3"
 
 
 def test_fingerprint_detects_a_changed_seed():
@@ -121,6 +123,29 @@ def test_niche_profiles_do_not_share_seeds_with_each_other():
     for p in NICHE_PROFILES:
         assert not (seen & set(p["liked"])), p["profile_id"]
         seen |= set(p["liked"])
+
+
+def test_lowrev_seeds_stay_in_their_band():
+    """저리뷰 축이 또 상위권으로 채워지는 것을 막는다 — niche 밴드가 구 코퍼스 기준이라
+    전체 코퍼스에서는 그것도 상위 4% 였다."""
+    lo, hi = LOWREV_REVIEW_BAND
+    ds = pd.DataFrame({"steam_appid": [1], "recommendations_total": [hi + 1]})
+    with pytest.raises(ValueError, match="저리뷰 구간"):
+        validate_niche([_p("lowrev_x", [1], DEV)], ds)
+
+
+def test_lowrev_profiles_do_not_overlap_anything():
+    other = {a for p in LEGACY_PROFILES + NICHE_PROFILES for a in p["liked"]}
+    seen = set()
+    for p in LOWREV_PROFILES:
+        assert not (other & set(p["liked"])), p["profile_id"]
+        assert not (seen & set(p["liked"])), p["profile_id"]
+        seen |= set(p["liked"])
+
+
+def test_seed_popularity_now_spans_a_real_range():
+    """시드 57개가 전부 코퍼스 상위 0.22% 라서 인기도 관련 실험이 원천 불가였다."""
+    assert len(LOWREV_PROFILES) >= 5
 
 
 def test_niche_profiles_do_not_reuse_legacy_seeds():
@@ -177,8 +202,19 @@ def test_single_seed_rows_have_nan_cohesion(built):
 
 
 def test_declared_label_disagrees_with_measurement(built):
-    """손으로 붙인 라벨이 얼마나 틀렸는지를 산출물이 계속 들고 있어야 한다."""
+    """손으로 붙인 라벨이 얼마나 틀렸는지를 산출물이 계속 들고 있어야 한다.
+
+    응집도의 **절대값**은 단언하지 않는다 — 임베딩을 바꾸면 값이 통째로 달라지고,
+    그때마다 테스트를 고치는 것은 아무것도 지켜주지 않는다(태그 도입 때 실제로 깨졌다).
+    지켜야 할 것은 "선언 라벨이 실측과 다르다는 사실이 산출물에 남아 있는가"다.
+    """
     paired = built[built["n_seeds"] > 1]
     flipped = (paired["profile_type"] != paired["profile_type_declared"]).sum()
     assert flipped > 0
-    assert np.isclose(built["seed_cohesion"].max(), 0.683, atol=0.01)
+    assert paired["seed_cohesion"].between(0, 1).all()
+    assert paired["seed_cohesion"].std() > 0.01, "응집도가 전부 같으면 라벨이 무의미하다"
+
+
+def test_seed_review_range_is_no_longer_degenerate(built):
+    """시드 57개가 전부 코퍼스 상위 0.22% 이던 상태를 되돌리지 않는다."""
+    assert built["profile_id"].str.startswith("lowrev_").sum() >= 5

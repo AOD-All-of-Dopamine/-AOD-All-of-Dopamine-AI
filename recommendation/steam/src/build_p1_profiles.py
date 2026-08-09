@@ -82,9 +82,38 @@ NICHE_PROFILES = [
                512900, 788100, 1123770, 1253920, 1740720]},                 # 10개
 ]
 
-ALL_PROFILES = LEGACY_PROFILES + NICHE_PROFILES
+# 저리뷰 축 — 코퍼스의 70% 를 차지하는데 시드가 하나도 없던 구간.
+#
+# `niche_*` 를 만들 때 잡은 밴드(1,000~20,000)는 **구 코퍼스 기준**이었다. 전체 코퍼스로
+# 넓히고 나서 다시 재보니 그것도 상위권이다:
+#
+#     리뷰 구간      코퍼스(21,883)  시드
+#     101~299          41.3%          0     ← 완전 공백
+#     300~2만          55.0%         23
+#     2만+              3.7%         34     ← 코퍼스의 4% 에 시드의 60%
+#
+# 발견 제품의 대상 사용자는 "리뷰 200개짜리 인디를 좋아하는 사람"인데 그 취향을 한 번도
+# 재본 적이 없다. 전체 코퍼스(173,691) 임베딩이 여는 구간이 정확히 여기다.
+#
+# 시드는 **태그로 축이 뚜렷한 것**만 골랐다. 무명 게임은 내가 사전 지식이 없으므로,
+# 축이 모호하면 판정이 "설명끼리 닮았나"로 퇴화해 임베딩과 순환한다.
+LOWREV_PROFILES = [
+    {"profile_id": "lowrev_metroidvania", "split": DEV, "declared": "coherent",
+     "liked": [1549750, 2316580, 253840]},      # Vomitoreum 897 / Tales of Kenzera 892 / Shantae 1,973
+    {"profile_id": "lowrev_deckbuilder", "split": DEV, "declared": "coherent",
+     "liked": [1016730, 1996430, 3332600]},     # Deck of Ashes 868 / Dicefolk 862 / Cubic Cosmos 892
+    {"profile_id": "lowrev_towerdefense", "split": VAL, "declared": "coherent",
+     "liked": [115120, 345090, 2257010]},       # Iron Brigade 899 / Ancient Planet 865 / Creeper World IXE 850
+    {"profile_id": "lowrev_detective", "split": VAL, "declared": "coherent",
+     "liked": [46480, 319870, 762830]},         # Still Life 886 / Jenny LeClue 1,238 / Telling Lies 1,239
+    {"profile_id": "lowrev_cozy_narrative", "split": VAL, "declared": "mixed",
+     "liked": [1272840, 1688580, 1425350]},     # Dordogne 891 / A YEAR OF SPRINGS 896 / Botany Manor 999
+]
+
+ALL_PROFILES = LEGACY_PROFILES + NICHE_PROFILES + LOWREV_PROFILES
 
 NICHE_REVIEW_BAND = (1000, 20000)
+LOWREV_REVIEW_BAND = (100, 2000)
 
 
 # ------------------------------------------------------------------ 검증
@@ -155,6 +184,18 @@ def validate_niche(profiles: list[dict], dataset: pd.DataFrame) -> dict:
                 bad.append(f"{p['profile_id']}/{a} 리뷰 {r}")
     if bad:
         raise ValueError(f"니치 구간({lo:,}~{hi:,}) 밖의 시드:\n  " + "\n  ".join(bad))
+
+    lo2, hi2 = LOWREV_REVIEW_BAND
+    bad2 = []
+    for p in profiles:
+        if not p["profile_id"].startswith("lowrev_"):
+            continue
+        for a in p["liked"]:
+            r = rec.get(a)
+            if pd.isna(r) or not (lo2 <= r <= hi2):
+                bad2.append(f"{p['profile_id']}/{a} 리뷰 {r}")
+    if bad2:
+        raise ValueError(f"저리뷰 구간({lo2:,}~{hi2:,}) 밖의 시드:\n  " + "\n  ".join(bad2))
 
     all_seeds = [a for p in profiles for a in p["liked"]]
     revs = rec.reindex(all_seeds).fillna(0)
