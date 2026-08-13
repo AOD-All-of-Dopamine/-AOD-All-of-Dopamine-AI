@@ -229,3 +229,11 @@ def test_empty_seeds_fail_loudly():
     서빙 로그에서 원인을 알 수 없었다. 콜드스타트 폴백은 호출자의 책임이다."""
     with pytest.raises(ValueError, match="콜드스타트"):
         next_page([])
+
+
+def test_series_session_cap_default():
+    """세션 상한 기본값 5 를 고정한다 — 3 은 coh_fps 품질 기준(0.8)을 깨고,
+    없으면 Nancy Drew 가 100칸에 10개 들어온다. 곡선은 상수 주석 참고."""
+    from src.personalized_retrieve import REFRESH_SERIES_SESSION_MAX
+
+    assert REFRESH_SERIES_SESSION_MAX == 5

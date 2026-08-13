@@ -7205,7 +7205,23 @@ BLIND_DYN = {
     ("dyn_stable_cozy", 2142790): (3, ""),
 }
 
+
+
+# 시리즈 세션 상한(3) 적용 후 새로 노출된 10쌍.
+BLIND_SCAP = {
+    ("coh_fps", 1506830): (0, "IRRELEVANT"),     # FIFA 22 — 경쟁 FPS 취향에 축구
+    ("coh_fps", 1090630): (1, "GENRE_ONLY"),     # 대전 격투 — 경쟁 PvP 인접일 뿐
+    ("coh_strategy", 1679290): (2, ""),           # 빅토리아 시대 턴제 전략
+    ("coh_cozy", 678900): (2, ""),                # 농장 생활 RPG
+    ("coh_cozy", 2142790): (3, ""),               # Fields of Mistria — 정중앙
+    ("coh_cozy", 943260): (3, ""),                # 난파 후 농사+탐험 — Raft+Stardew 가교
+    ("coh_vehicle_sim", 1618290): (2, ""),        # 철도 운전 시뮬
+    ("coh_classic_multi", 579840): (2, ""),       # 4인 협동 플랫포머
+    ("niche_cozy_casual", 530320): (3, ""),       # Wandersong — 감성 모험, 축 정중앙
+    ("longtail_detective", 286360): (3, ""),      # 포인트앤클릭 미스터리
+}
+
 ALL = {**REP_V2, **POSTPROCESS, **DEPTH_V1, **FULL_V1, **REP_V2_TOPUP, **MIN_REV_300,
        **RANKER_DIAG, **BOOST_SWEEP, **VAL_V1, **DEV_TOPUP_V1, **NICHE_V1,
        **BLIND_ROUND1, **BLIND_TAGS, **BLIND_FLOOR, **BLIND_LOWREV,
-       **BLIND_NOTAGS31, **BLIND_TAGSFULL, **BLIND_K30_P1, **BLIND_K30_P2, **BLIND_K30_P3, **BLIND_K50_P4, **BLIND_K50_P5, **BLIND_K50_FILL, **BLIND_STRATEGY_S1, **BLIND_STRATEGY_S2, **BLIND_STRATEGY_S4, **BLIND_STRATEGY_S5, **BLIND_FINAL_F30, **BLIND_FINAL_F50, **BLIND_ADAPT, **BLIND_CONSENSUS, **BLIND_K75, **BLIND_CF300, **BLIND_CBOOST, **BLIND_DDM, **BLIND_HUB05, **BLIND_HUB25, **BLIND_HUBFINE, **BLIND_K100, **BLIND_K100_PVP, **BLIND_SSF, **BLIND_PS10, **BLIND_HOLDOUT, **BLIND_DYN, **CORRECTIONS_V1}
+       **BLIND_NOTAGS31, **BLIND_TAGSFULL, **BLIND_K30_P1, **BLIND_K30_P2, **BLIND_K30_P3, **BLIND_K50_P4, **BLIND_K50_P5, **BLIND_K50_FILL, **BLIND_STRATEGY_S1, **BLIND_STRATEGY_S2, **BLIND_STRATEGY_S4, **BLIND_STRATEGY_S5, **BLIND_FINAL_F30, **BLIND_FINAL_F50, **BLIND_ADAPT, **BLIND_CONSENSUS, **BLIND_K75, **BLIND_CF300, **BLIND_CBOOST, **BLIND_DDM, **BLIND_HUB05, **BLIND_HUB25, **BLIND_HUBFINE, **BLIND_K100, **BLIND_K100_PVP, **BLIND_SSF, **BLIND_PS10, **BLIND_HOLDOUT, **BLIND_DYN, **BLIND_SCAP, **CORRECTIONS_V1}

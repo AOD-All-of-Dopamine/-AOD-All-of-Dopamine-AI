@@ -130,6 +130,24 @@ REFRESH_CONSENSUS_BOOST = 0.0
 # 남았다. 값을 옮기려면 두 값을 다시 재야 한다.
 REFRESH_SEED_SCALED_FLOOR = 0.001
 
+#: 한 시리즈가 세션 전체(모든 페이지 누계)에서 차지할 수 있는 최대 칸 수.
+#
+# 페이지 내 상한(series_max=1)은 호출 단위라 페이지 간 기억이 없다 — 홀드아웃
+# ho_sports 에서 Axis Football 이 100칸에 7개(페이지당 정확히 1개), 개발 셋에서도
+# Nancy Drew 가 100칸에 10개 들어온 것으로 발견됐다.
+#
+# 값 곡선 (개발 35프로필 · 미판정 0 · k=100):
+#   상한   P@100    0.8미만        시리즈 최대반복 평균 (3초과 프로필)
+#   없음   0.9226   0             3.51 (14)   ← Nancy Drew ×10, CoD ×8
+#   5      0.9217   0             3.03 (14)   ← 최악 중복 절반
+#   3      0.9206   1 (coh_fps 0.77)  2.37 (0)
+#
+# 3 이 다양성은 최선이지만 coh_fps 의 깊은 꼬리는 실제로 CoD·배틀필드 연작이 좋은
+# 추천이라(각 2~3점), 자르면 FIFA(0점) 같은 대체재가 유입돼 품질 기준이 깨진다.
+# 5 는 기준 유지 + 최악 사례 절반. 1 로 두면 Trails 처럼 전 편이 명작인 시리즈
+# (ho_jrpg 에서 5편 전부 3점)를 죽인다.
+REFRESH_SERIES_SESSION_MAX = 5
+
 #: 멀티 전용 + 플레이어 기반 미측정 후보 제거. 근거는 postprocess.drop_dead_multiplayer.
 #
 # 35프로필 · 미판정 0 · 페어드 부트스트랩:
@@ -275,6 +293,8 @@ def next_page(
                             "consensus_tags": cons_tags,
                             "consensus_boost": consensus_boost,
                             "drop_dead_mp": drop_dead_mp,
+                            "seen_appids": seen,
+                            "series_session_max": REFRESH_SERIES_SESSION_MAX,
                             # 이미 본 개수 = 페이지 번호 x page_size. 버킷을 그만큼 회전시켜
                             # 시드가 page_size 보다 많아도 ceil(N/page_size) 페이지 안에
                             # 모든 시드가 한 번은 나오게 한다. 회전이 없으면 약한 시드는

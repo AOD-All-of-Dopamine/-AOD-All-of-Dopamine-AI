@@ -631,3 +631,37 @@ def test_online_coop_with_no_reviews_survives():
     })
     df = pd.DataFrame({"steam_appid": [1], "final_score": [0.9]})
     assert len(drop_dead_multiplayer(df, ds)) == 1
+
+
+def test_series_cap_remembers_across_pages():
+    """시리즈 상한은 세션 누계로 걸려야 한다 — 페이지 내 상한만으로는 '페이지마다 1개'가
+    규칙적으로 반복된다(홀드아웃 ho_sports: Axis Football 7/100, 페이지당 정확히 1개)."""
+    import pandas as pd
+
+    from src.postprocess import cap_series, series_counts
+
+    ds = pd.DataFrame({
+        "steam_appid": [1, 2, 3, 4, 5],
+        "name": [f"Axis Football 20{17+i}" for i in range(5)],
+    })
+    df = pd.DataFrame({"steam_appid": [4, 5], "final_score": [0.9, 0.8]})
+    # 이미 3개를 보여줬다면(세션 상한 3) 이 페이지에는 하나도 못 들어온다
+    prior = series_counts([1, 2, 3], ds)
+    out = cap_series(df, ds, series_max=1, prior_counts=prior, session_max=3)
+    assert len(out) == 0
+    # 2개까지만 보여줬다면 1개(페이지 내 상한)는 더 들어올 수 있다
+    prior = series_counts([1, 2], ds)
+    out = cap_series(df, ds, series_max=1, prior_counts=prior, session_max=3)
+    assert out["steam_appid"].tolist() == [4]
+
+
+def test_series_cap_without_session_state_is_unchanged():
+    """세션 인자가 없으면 기존 동작 그대로 — 평가 스크립트 재현성을 지킨다."""
+    import pandas as pd
+
+    from src.postprocess import cap_series
+
+    # series_key 는 앞 2단어 근사 → 같은 키가 되도록 이름을 잡는다
+    ds = pd.DataFrame({"steam_appid": [1, 2], "name": ["Trails of Cold Steel", "Trails of Zero"]})
+    df = pd.DataFrame({"steam_appid": [1, 2], "final_score": [0.9, 0.8]})
+    assert cap_series(df, ds, series_max=1)["steam_appid"].tolist() == [1]

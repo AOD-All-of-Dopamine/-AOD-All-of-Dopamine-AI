@@ -224,12 +224,39 @@ def cap_publisher(df: pd.DataFrame, dataset: pd.DataFrame, publisher_max: int = 
     return df[pd.Series(keep, index=df.index)].reset_index(drop=True)
 
 
-def cap_series(df: pd.DataFrame, dataset: pd.DataFrame, series_max: int = 1) -> pd.DataFrame:
-    """같은 시리즈를 최대 series_max 개만 남긴다.
+def series_counts(appids, dataset: pd.DataFrame) -> dict[str, int]:
+    """appid 목록의 시리즈 키별 등장 횟수. cap_series 의 세션 사전값으로 쓴다."""
+    meta = dataset.set_index("steam_appid") if "steam_appid" in dataset.columns else dataset
+    has_pub = "publisher" in meta.columns
+    out: dict[str, int] = {}
+    for a in appids:
+        a = int(a)
+        k = series_group(
+            meta["name"].get(a, ""),
+            meta["publisher"].get(a, "") if has_pub else "",
+        )
+        out[k] = out.get(k, 0) + 1
+    return out
+
+
+def cap_series(df: pd.DataFrame, dataset: pd.DataFrame, series_max: int = 1,
+               prior_counts: dict[str, int] | None = None,
+               session_max: int | None = None) -> pd.DataFrame:
+    """같은 시리즈를 페이지당 최대 series_max 개, **세션 전체로 session_max 개**만 남긴다.
 
     인터리빙은 각 시드의 최근접을 끌어올리는데, 시드의 최근접은 종종 자기 프랜차이즈다
     (Skyrim → Skyrim VR, Witcher 3 → Witcher Adventure Game). 그래서 인터리빙과
     **함께** 걸어야 한다.
+
+    **왜 세션 상한이 따로 필요한가 (2026-08-13 홀드아웃에서 발견).** 페이지 내 상한은
+    호출 한 번 안에서만 작동한다. 새로고침은 페이지마다 별도 호출이므로, 프랜차이즈가
+    밀집한 축에서는 "페이지마다 정확히 1개"가 규칙적으로 반복됐다 — ho_sports 100칸에
+    Axis Football 이 7개(순위 19·25·34·46·78·83·91, 페이지당 1개씩). `prior_counts` 에
+    이미 보여준 칸들의 시리즈 수를 넘기면 세션 누계로 자른다.
+
+    session_max 를 1로 두면 안 된다: Trails 시리즈처럼 각 편이 전부 명작인 경우
+    (ho_jrpg 에서 5편 모두 판정 3) 반복이 오히려 옳다. 기본값 근거는
+    REFRESH_SERIES_SESSION_MAX 주석 참고.
     """
     if df.empty:
         return df.reset_index(drop=True)
@@ -241,11 +268,16 @@ def cap_series(df: pd.DataFrame, dataset: pd.DataFrame, series_max: int = 1) -> 
             meta["publisher"].get(a, "") if has_pub else "",
         )
     )
+    prior = dict(prior_counts or {})
     seen: dict[str, int] = {}
     keep = []
     for k in keys:
-        seen[k] = seen.get(k, 0) + 1
-        keep.append(seen[k] <= series_max)
+        page_n = seen.get(k, 0) + 1
+        total_n = prior.get(k, 0) + page_n
+        ok = page_n <= series_max and (session_max is None or total_n <= session_max)
+        if ok:
+            seen[k] = page_n
+        keep.append(ok)
     return df[pd.Series(keep, index=df.index)].reset_index(drop=True)
 
 
@@ -504,6 +536,8 @@ def postprocess(
     consensus_tags: set[str] | None = None,
     consensus_boost: float = 0.0,
     drop_dead_mp: bool = False,
+    seen_appids=None,
+    series_session_max: int | None = None,
 ) -> pd.DataFrame:
     """스펙 §5.4 순서: hard filter → 시리즈/퍼블리셔 상한 → 다양성 → Top-N.
 
@@ -560,7 +594,9 @@ def postprocess(
         df = apply_hard_filters(df, dataset, require_known_reviews=require_known_reviews,
                                 min_reviews=min_reviews)
     if series_max:
-        df = cap_series(df, dataset, series_max)
+        prior = series_counts(seen_appids, dataset) if (seen_appids and series_session_max) else None
+        df = cap_series(df, dataset, series_max,
+                        prior_counts=prior, session_max=series_session_max)
     if publisher_max:
         df = cap_publisher(df, dataset, publisher_max)
     if seed_interleave:
