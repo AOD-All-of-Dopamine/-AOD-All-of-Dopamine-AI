@@ -67,6 +67,13 @@ LEGACY_PROFILES = [
 
 # 니치 축 — 시드는 전부 리뷰 1,000~20,000. 시드 개수도 1·3·5·10 으로 섞는다.
 NICHE_PROFILES = [
+    # **공급 제약 프로필 (2026-08-12 정정)** — 처음엔 "코퍼스에 38개뿐이라 구조적으로 불가능"
+    # 이라고 적었는데 **그건 리뷰 하한 안에서의 이야기였다.** 리뷰 300+ 풀(12,852개)에서는
+    # Programming+Automation 후보가 38개지만, 전체 코퍼스(173,691)를 열면 P@50 이
+    # 0.70 → 0.88 로 오른다. 한계를 만든 것은 카탈로그가 아니라 우리가 건 하한이었다.
+    #
+    # 좁게 진단한 것을 남겨 둔다 — "공급이 없다"고 결론짓기 전에 **어느 풀에서 없는지**를
+    # 먼저 물어야 한다는 사례다. 프로필 자체는 손대지 않았다.
     {"profile_id": "niche_puzzle_solo", "split": VAL, "declared": "single",
      "liked": [558990]},                                                    # Opus Magnum 5,856
     {"profile_id": "niche_soulslike_solo", "split": VAL, "declared": "single",
@@ -110,10 +117,82 @@ LOWREV_PROFILES = [
      "liked": [1272840, 1688580, 1425350]},     # Dordogne 891 / A YEAR OF SPRINGS 896 / Botany Manor 999
 ]
 
-ALL_PROFILES = LEGACY_PROFILES + NICHE_PROFILES + LOWREV_PROFILES
+# 은퇴 — 정의는 남기되 평가에서 뺀다.
+#
+# `mix_*` 10개는 전부 `coh_*` 의 시드 3개 중 1개만 바꿔 만들어졌다. 그래서 측정이 겹친다.
+# 상위 30칸 실측(2026-08-11, 태그 전체 코퍼스):
+#
+#     coh_fps ~ mix_fps_cozy              20/30 겹침
+#     coh_cozy ~ mix_cozy_fps             20/30
+#     coh_indie_platformer ~ mix_indie_multi  20/30
+#     mix_fps_cozy ~ mix_cozy_fps         18/30   ← 둘 다 CS2+Stardew, 같은 프로필 두 번
+#     ...
+#     30칸이 8개 이상 겹치는 쌍 20개 — **20개 전부가 mix_* 를 끼고 있다.**
+#     coh_/niche_/lowrev_ 21개끼리는 8개 이상 겹치는 쌍이 하나도 없다.
+#
+# 결과적으로 프로필 31개가 독립 측정 22개였고, 페어드 부트스트랩 CI 가 21% 좁게 나왔다
+# (태그 효과 [+0.100,+0.206] → 덩어리 보정 [+0.113,+0.241]).
+#
+# **지우지 않고 은퇴시킨다.** liked 를 고치면 판정의 의미가 조용히 바뀌고, 정의를 지우면
+# 과거 결과를 재현할 수 없다. 판정은 풀에 그대로 남아 있다 — 다시 쓰려면 여기서 빼면 된다.
+RETIRED = {
+    "mix_fps_cozy", "mix_survival_strategy", "mix_rpg_racing", "mix_indie_multi",
+    "mix_openworld_cozy", "mix_vehicle_fps", "mix_arpg_survival", "mix_grand_casual",
+    "mix_multi_indie", "mix_cozy_fps",
+}
+
+# 혼합 취향 v2 — 기존 시드 72개와 **한 개도 겹치지 않는** 게임으로 새로 짰다.
+# 혼합 축 자체는 버릴 수 없다(대부분의 사람은 취향이 하나가 아니다). 버린 것은
+# "coh_ 를 한 칸 흔든다"는 만드는 방식이고, 대신 실재할 법한 인물로 세웠다.
+MIX_V2_PROFILES = [
+    {"profile_id": "mix2_soulslike_narrative", "split": DEV, "declared": "mixed",
+     "liked": [1245620, 632470, 753640]},        # ELDEN RING / Disco Elysium / Outer Wilds
+    {"profile_id": "mix2_coop_horror", "split": DEV, "declared": "mixed",
+     "liked": [1966720, 739630, 548430]},        # Lethal Company / Phasmophobia / Deep Rock Galactic
+    {"profile_id": "mix2_colony_cozy", "split": VAL, "declared": "mixed",
+     "liked": [294100, 457140, 1135690]},        # RimWorld / Oxygen Not Included / Unpacking
+    {"profile_id": "mix2_arcade_action", "split": DEV, "declared": "mixed",
+     "liked": [1551360, 1817230, 1364780]},      # Forza Horizon 5 / Hi-Fi RUSH / Street Fighter 6
+    {"profile_id": "mix2_modern_roguelite", "split": DEV, "declared": "mixed",
+     "liked": [2379780, 1145360, 1794680]},      # Balatro / Hades / Vampire Survivors
+    {"profile_id": "mix2_builder_sim", "split": VAL, "declared": "mixed",
+     "liked": [255710, 427520, 1248130]},        # Cities: Skylines / Factorio / Farming Simulator 22
+    {"profile_id": "mix2_crpg_sandbox", "split": DEV, "declared": "mixed",
+     "liked": [1086940, 261550, 233860]},        # Baldur's Gate 3 / Mount & Blade II / Kenshi
+    {"profile_id": "mix2_survival_farm", "split": VAL, "declared": "mixed",
+     "liked": [892970, 962130, 666140]},         # Valheim / Grounded / My Time at Portia
+    {"profile_id": "mix2_party_narrative", "split": DEV, "declared": "mixed",
+     "liked": [1426210, 728880, 501300]},        # It Takes Two / Overcooked! 2 / Edith Finch
+    {"profile_id": "mix2_puzzle_survival", "split": DEV, "declared": "mixed",
+     "liked": [257510, 252490, 1092790]},        # The Talos Principle / Rust / Inscryption
+]
+
+# 진짜 롱테일 — 시드 리뷰 100~300.
+#
+# `lowrev_*` 는 이름과 달리 롱테일이 아니었다(시드 850~1,973 = Steam 기준 중견 히트).
+# 코퍼스 173,691 중 리뷰가 알려진 것은 21,892개뿐이고 그 중 9,040개가 100~300 구간인데,
+# 이 구간을 시드로 가진 프로필이 하나도 없었다. **품질 하한을 열지 말지는 결국 이 구간의
+# 추천이 쓸 만한지에 달려 있는데, 물어볼 대상 자체가 없었다.**
+#
+# `lowrev_*` 와 축을 일부러 맞췄다 — 같은 취향을 인기도 밴드만 바꿔 세 단계로 볼 수 있다
+# (예: 메트로배니아 = coh_indie_platformer 13만~50만 · lowrev 850~1,973 · longtail 289~295).
+LONGTAIL_PROFILES = [
+    {"profile_id": "longtail_metroidvania", "split": DEV, "declared": "coherent",
+     "liked": [922050, 1522930, 1550760]},       # DOOMBLADE 289 / Transiruby 291 / Blast Brigade 295
+    {"profile_id": "longtail_deckbuilder", "split": VAL, "declared": "coherent",
+     "liked": [2071430, 1716940, 2427450]},      # Roots of Yggdrasil 298 / Ancient Gods 275 / Flick Shot Rogues 288
+    {"profile_id": "longtail_detective", "split": VAL, "declared": "coherent",
+     "liked": [736810, 513890, 1201550]},        # The Raven 295 / The Frostrune 296 / Mad Experiments 298
+    {"profile_id": "longtail_puzzle_platformer", "split": DEV, "declared": "coherent",
+     "liked": [218740, 408650, 1803140]},        # Pid 296 / ChromaGun 294 / Deer & Boy 297
+]
+
+ALL_PROFILES = [p for p in LEGACY_PROFILES if p["profile_id"] not in RETIRED] \
+    + NICHE_PROFILES + LOWREV_PROFILES + MIX_V2_PROFILES + LONGTAIL_PROFILES
 
 NICHE_REVIEW_BAND = (1000, 20000)
 LOWREV_REVIEW_BAND = (100, 2000)
+LONGTAIL_REVIEW_BAND = (100, 300)
 
 
 # ------------------------------------------------------------------ 검증
@@ -167,6 +246,30 @@ def validate_split(profiles: list[dict], max_shared: int = 1) -> dict:
     }
 
 
+def validate_independence(profiles: list[dict], max_shared: int = 1) -> dict:
+    """**어떤 두 프로필도** 시드를 `max_shared` 개 넘게 공유하지 않는지 본다.
+
+    `validate_split` 은 dev–val 만 봤다. 그래서 dev 안에서 서로 2개씩 공유하는 쌍이
+    통과했고, 그게 `mix_*` 10개였다 — 페어드 부트스트랩은 프로필을 독립 표본으로 다루는데
+    실제로는 31개가 22개였다. CI 가 21% 좁게 나온 원인이다.
+
+    시드를 공유하지 않아도 출력이 겹칠 수는 있으므로 이것은 필요조건일 뿐이다.
+    실측으로는 시드 공유 0~1개인 쌍들의 상위 30칸 겹침이 전부 8개 미만이었다.
+    """
+    dup = []
+    for i, a in enumerate(profiles):
+        for b in profiles[i + 1:]:
+            shared = len(set(a["liked"]) & set(b["liked"]))
+            if shared > max_shared:
+                dup.append(f"{a['profile_id']} ~ {b['profile_id']} ({shared}개 공유)")
+    if dup:
+        raise ValueError(
+            f"시드를 {max_shared}개 넘게 공유하는 프로필 쌍 {len(dup)}건 — 독립 측정이 아닙니다:\n  "
+            + "\n  ".join(dup)
+        )
+    return {"profiles": len(profiles), "max_shared_any_pair": max_shared}
+
+
 def validate_niche(profiles: list[dict], dataset: pd.DataFrame) -> dict:
     """니치 프로필의 시드가 정말 니치 구간인지 확인한다.
 
@@ -185,17 +288,18 @@ def validate_niche(profiles: list[dict], dataset: pd.DataFrame) -> dict:
     if bad:
         raise ValueError(f"니치 구간({lo:,}~{hi:,}) 밖의 시드:\n  " + "\n  ".join(bad))
 
-    lo2, hi2 = LOWREV_REVIEW_BAND
-    bad2 = []
-    for p in profiles:
-        if not p["profile_id"].startswith("lowrev_"):
-            continue
-        for a in p["liked"]:
-            r = rec.get(a)
-            if pd.isna(r) or not (lo2 <= r <= hi2):
-                bad2.append(f"{p['profile_id']}/{a} 리뷰 {r}")
-    if bad2:
-        raise ValueError(f"저리뷰 구간({lo2:,}~{hi2:,}) 밖의 시드:\n  " + "\n  ".join(bad2))
+    for prefix, (lo2, hi2) in (("lowrev_", LOWREV_REVIEW_BAND),
+                               ("longtail_", LONGTAIL_REVIEW_BAND)):
+        bad2 = []
+        for p in profiles:
+            if not p["profile_id"].startswith(prefix):
+                continue
+            for a in p["liked"]:
+                r = rec.get(a)
+                if pd.isna(r) or not (lo2 <= r <= hi2):
+                    bad2.append(f"{p['profile_id']}/{a} 리뷰 {r}")
+        if bad2:
+            raise ValueError(f"{prefix} 구간({lo2:,}~{hi2:,}) 밖의 시드:\n  " + "\n  ".join(bad2))
 
     all_seeds = [a for p in profiles for a in p["liked"]]
     revs = rec.reindex(all_seeds).fillna(0)
@@ -247,6 +351,7 @@ def build_profiles_df(artifacts: str | None = None, dataset: pd.DataFrame | None
                       profiles: list[dict] | None = None) -> pd.DataFrame:
     profiles = profiles or ALL_PROFILES
     stats = validate_split(profiles)
+    stats |= validate_independence(profiles)
     if dataset is not None:
         stats |= validate_niche(profiles, dataset)
 
@@ -305,3 +410,92 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
+#: 코퍼스에 적합 후보가 목표 커버리지보다 적어, 시스템 개선으로는 0.8 을 넘길 수 없는 프로필.
+#: 평가에서 빼지 않는다 — 계속 측정하되 "모든 프로필 0.8 이상" 판정에서만 제외한다.
+#: 2026-08-12 하한 개방으로 해소됨 — niche_puzzle_solo 는 P@50 0.70 → 0.88 이 됐다.
+#: 비워 두되 개념은 남긴다: 앞으로 어떤 프로필이 여기 들어오려면 **전체 코퍼스 기준**으로
+#: 공급이 모자란다는 것을 보여야 한다. 하한 안에서 모자란 것은 하한 문제지 공급 문제가 아니다.
+SUPPLY_LIMITED: set[str] = set()
+
+#: 홀드아웃 프로필 — **1회성 일반화 검증 전용.** ALL_PROFILES(개발 셋)에 절대 넣지 않는다.
+#:
+#: 존재 이유: 35프로필 위에서 레버 7개를 채택하고 하이퍼파라미터(λ=0.35, 계수 0.001)까지
+#: 같은 데이터로 골랐다. "전 프로필 ≥0.8"이 최적화 목표 자체였으므로, 그 수치는 낙관
+#: 편향을 포함할 수 있다. 이 프로필들은 어떤 레버 결정에도 쓰인 적이 없는 상태에서
+#: **딱 한 번** 평가해 정직한 일반화 추정치를 얻는다.
+#:
+#: 규율: 결과가 나빠도 여기에 맞춰 튜닝하지 않는다. 튜닝에 쓰는 순간 개발 셋이 되므로,
+#: 그때는 새 홀드아웃을 만들어야 한다. 축은 개발 셋의 공백을 채운다:
+#: JRPG · 솔로 호러 · MMO · 스포츠 · 리듬 · 모순 취향 · 대형 라이브러리(시드 12개).
+#:
+#: ho_contradictory 판정 기준: 시드 간 합의가 정의상 없으므로, 최소 한 시드의 취향에
+#: 강하게 부합하면 타당으로 본다(다른 프로필은 라이브러리 전체 취향 기준).
+HOLDOUT_PROFILES = [
+    {"profile_id": "ho_jrpg",          "liked": [1113000, 1295510, 740130], "declared": "coherent", "split": "holdout"},  # P4G / DQ XI S / Tales of Arise
+    {"profile_id": "ho_horror_solo",   "liked": [238320, 214490, 594330],   "declared": "coherent", "split": "holdout"},  # Outlast / Alien: Isolation / Visage
+    {"profile_id": "ho_mmo",           "liked": [306130, 1063730, 1343370], "declared": "coherent", "split": "holdout"},  # ESO / New World / OSRS
+    {"profile_id": "ho_sports",        "liked": [2669320, 2878980, 3551340],"declared": "coherent", "split": "holdout"},  # EA FC 25 / NBA 2K25 / FM26
+    {"profile_id": "ho_rhythm",        "liked": [774171, 960170, 774181],   "declared": "coherent", "split": "holdout"},  # Muse Dash / DJMAX / Rhythm Doctor
+    {"profile_id": "ho_contradictory", "liked": [570, 613100, 782330, 1222670], "declared": "mixed", "split": "holdout"}, # Dota 2 / House Flipper / DOOM Eternal / Sims 4
+    {"profile_id": "ho_biglib",        "liked": [620, 220, 205100, 480490, 870780, 337000, 8870, 282140, 383870, 1237970, 412020, 268910], "declared": "mixed", "split": "holdout"},
+    # ho_biglib: Portal 2 / HL2 / Dishonored / Prey / Control / Deus Ex MD / BioShock Inf /
+    # SOMA / Firewatch / Titanfall 2 / Metro Exodus / Cuphead — 현실 라이브러리답게
+    # 이질적인 것(Cuphead) 하나를 일부러 남겼다.
+]
+
+#: 동적 시나리오 — **좋아요가 늘어날 때** 추천이 어떻게 바뀌는지 재는 전이 평가.
+#:
+#: 정적 평가(고정 시드 × k=100)가 못 보는 세 가지를 잰다:
+#:   성장(grow):   시드 1 → 2 → 3. 특히 1→2 는 코드 경로 경계다 — 단일시드 희귀태그
+#:                 필터가 꺼지고 top2_mean 이 max 에서 실질 mean 으로 바뀐다. 절벽 검출.
+#:   전환(pivot):  기존 취향 3개로 2페이지 소비한 뒤 다른 축 시드를 추가. 다음 2페이지에
+#:                 새 취향이 (좋은 품질로) 나타나는지. 인터리빙의 존재 이유를 검증한다.
+#:   안정(stable): 기존 취향과 일치하는 4번째 시드 추가. top-20 이 불필요하게 요동치는지.
+#:
+#: 판정 문맥: 각 단계의 시드 집합이 그 시점의 취향이다. pivot 판정은 "기존 취향 또는
+#: 새 시드 취향에 부합하면 타당" — 사람이 실제로 두 취향을 다 가진 상태이므로.
+#:
+#: 2026-08-13 실측 (미판정 0, 판정은 BLIND_DYN + 개발셋 재사용):
+#:   성장  cozy 0.95 → 0.80 → 0.95 · det 1.00 → 0.90 → 0.95 (P@20)
+#:         **2시드가 저점이다.** 단일시드 희귀태그 필터는 꺼지는데 top2_mean 은 아직
+#:         "2개 전부의 평균"이라 두 시드의 퍼지한 중간 지점을 찾는다(Stardew+SlimeRancher
+#:         → Space Rangers·Bum Simulator 같은 '기묘한 샌드박스'가 샘). 3점 비중은
+#:         단계마다 오른다(50→55→60%, 50→50→75%) — 시드가 늘수록 강한 추천이 늘어난다.
+#:   전환  새 시드가 즉시 다음 2페이지의 5~6/20칸을 받고(인터리빙 검증), 그 칸들의 품질이
+#:         전부 2점 이상. 전체 페이지 품질 0.90~1.00 (대조군 1.00).
+#:   안정  일치하는 4번째 시드 추가 시 top-20 의 9~13/20 유지, 품질 무손실
+#:         (0.90→0.85 · 0.95→1.00). 교체분도 고품질이라 churn 은 손실이 아니다.
+#:
+#: 미평가로 남은 전이: 장기 드리프트(수십 개 좋아요 누적), DISLIKE 반영, 좋아요 취소,
+#: 연속 전환(pivot 여러 번).
+DYN_SCENARIOS = {
+    # 성장: 개발 셋 프로필의 시드를 순서대로 늘린다 (3단계 = 원 프로필과 동일 → 판정 재사용)
+    "dyn_grow_cozy":     {"base": [413150, 433340, 648800], "kind": "grow", "map_to": "coh_cozy"},
+    "dyn_grow_det":      {"base": [46480, 319870, 762830],  "kind": "grow", "map_to": "lowrev_detective"},
+    # 전환: base 로 2페이지(20칸) 소비 후 add 를 좋아요 → 다음 2페이지 평가
+    "dyn_pivot_cozy":    {"base": [413150, 433340, 648800], "add": 1245620, "kind": "pivot"},  # 코지 + ELDEN RING
+    "dyn_pivot_tactics": {"base": [590380, 1102190, 287980], "add": 739630, "kind": "pivot"},  # 전술 + Phasmophobia
+    # 안정: 일치하는 4번째 시드 추가 → 처음부터 top-20 재생성, 전후 비교
+    "dyn_stable_arpg":   {"base": [374320, 292030, 489830], "add": 1627720, "kind": "stable", "map_to": "coh_arpg"},   # + P의 거짓
+    "dyn_stable_cozy":   {"base": [413150, 433340, 648800], "add": 666140,  "kind": "stable", "map_to": "coh_cozy"},   # + My Time at Portia
+}
+#: 랭킹 레버로는 못 올리는 프로필 — 원인이 **표현(임베딩)** 에 있다.
+#:
+#: coh_arpg (DARK SOULS III / The Witcher 3 / Skyrim), P@50 0.76:
+#:   Action RPG + Open World 를 모두 가진 리뷰 300+ 후보가 231개인데 상위 50에 13개뿐이다.
+#:   명작들의 유사도가 상위 50 구간(0.705~0.621) 아래에 깔려 있다:
+#:
+#:     Fallout: New Vegas    194위  0.5964   Monster Hunter World  223위  0.5944
+#:     Fallout 4             441위  0.5814   God of War            653위  0.5739
+#:     Horizon Zero Dawn     699위  0.5726   호그와트 레거시        1,566위  0.5564
+#:
+#:   대신 Weird RPG 2(776리뷰, 0.66) 같은 무명작이 위에 온다. 즉 임베딩이 "Skyrim ≈ Fallout 4"
+#:   를 못 잡는다. 시험하고 기각한 것:
+#:     · rec_boost 0.15 → 0.60 / 1.50   유사도 격차(0.02~0.07)를 못 뒤집는다. 0.76 → 0.74
+#:     · 합의 태그 필터                  이들은 전부 통과한다(Action RPG 보유). 필터 문제 아님
+#:     · 설명 길이 편향 의심             ρ 0.028 (p 1.6e-06). 상관 없음 — 재임베딩 근거 없음
+#:
+#: 고치려면 표현을 바꿔야 한다(설명·태그 외 신호). 랭킹 레벨에서는 여기가 상한이다.
+REPRESENTATION_LIMITED = {"coh_arpg"}

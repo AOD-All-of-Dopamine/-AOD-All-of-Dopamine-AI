@@ -72,8 +72,17 @@ def test_real_definition_has_no_leak():
 # ------------------------------------------------- 기존 프로필 시드 불변식
 
 def test_legacy_seeds_are_frozen():
-    """판정이 붙은 프로필의 시드는 바꿀 수 없다. 지문이 바뀌면 판정을 다시 해야 한다."""
-    assert seeds_fingerprint(ALL_PROFILES) == "eeaf06d349a3"
+    """판정이 붙은 프로필의 시드는 바꿀 수 없다. 지문이 바뀌면 판정을 다시 해야 한다.
+
+    2026-08-11 에 mix_* 10개를 은퇴시키고 mix2_/longtail_ 14개를 추가했다 — 프로필
+    **집합**은 바뀌었지만, 판정이 붙어 있던 31개의 (profile_id, liked) 는 그대로여야 한다.
+    """
+    from src.build_p1_profiles import LOWREV_PROFILES, NICHE_PROFILES
+
+    judged31 = LEGACY_PROFILES + NICHE_PROFILES + LOWREV_PROFILES
+    assert seeds_fingerprint(judged31) == "eeaf06d349a3"
+    # 현재 평가 집합(35개)의 지문. 바뀌면 프로필이 편집된 것이다 — 의도한 변경인지 확인할 것.
+    assert seeds_fingerprint(ALL_PROFILES) == "cebf076832c9"
 
 
 def test_fingerprint_detects_a_changed_seed():
@@ -130,8 +139,16 @@ def test_lowrev_seeds_stay_in_their_band():
     전체 코퍼스에서는 그것도 상위 4% 였다."""
     lo, hi = LOWREV_REVIEW_BAND
     ds = pd.DataFrame({"steam_appid": [1], "recommendations_total": [hi + 1]})
-    with pytest.raises(ValueError, match="저리뷰 구간"):
+    with pytest.raises(ValueError, match="lowrev_ 구간"):
         validate_niche([_p("lowrev_x", [1], DEV)], ds)
+
+
+def test_longtail_seeds_stay_in_their_band():
+    """롱테일 축(100~300)도 같은 방식으로 지킨다 — lowrev 가 이름과 달리 중견 히트로
+    채워졌던 실수를 반복하지 않는다."""
+    ds = pd.DataFrame({"steam_appid": [1], "recommendations_total": [301]})
+    with pytest.raises(ValueError, match="longtail_ 구간"):
+        validate_niche([_p("longtail_x", [1], DEV)], ds)
 
 
 def test_lowrev_profiles_do_not_overlap_anything():
@@ -218,3 +235,56 @@ def test_declared_label_disagrees_with_measurement(built):
 def test_seed_review_range_is_no_longer_degenerate(built):
     """시드 57개가 전부 코퍼스 상위 0.22% 이던 상태를 되돌리지 않는다."""
     assert built["profile_id"].str.startswith("lowrev_").sum() >= 5
+
+
+def test_supply_limited_profiles_are_still_evaluated():
+    """공급 제약으로 표시하더라도 평가 집합에는 남는다 — 빼면 한계가 안 보인다.
+
+    2026-08-12 현재 비어 있다. niche_puzzle_solo 를 넣었다가 뺐는데, 공급이 모자란 것이
+    아니라 리뷰 하한이 후보를 가리고 있었다(하한 개방 시 P@50 0.70 → 0.88).
+    """
+    from src.build_p1_profiles import SUPPLY_LIMITED
+
+    ids = {p["profile_id"] for p in ALL_PROFILES}
+    assert SUPPLY_LIMITED <= ids, SUPPLY_LIMITED - ids
+
+
+def test_representation_limited_profiles_stay_in_the_set():
+    """표현 한계 프로필도 평가에 남긴다 — 빼면 한계가 안 보이고, 표현을 고치면 여기서 먼저 드러난다."""
+    from src.build_p1_profiles import REPRESENTATION_LIMITED
+
+    ids = {p["profile_id"] for p in ALL_PROFILES}
+    assert REPRESENTATION_LIMITED <= ids, REPRESENTATION_LIMITED - ids
+
+
+def test_holdout_profiles_are_independent_of_the_dev_set():
+    """홀드아웃 시드가 개발 셋과 겹치면 '한 번도 안 쓴 데이터' 라는 전제가 무너진다."""
+    from src.build_p1_profiles import HOLDOUT_PROFILES
+
+    dev_seeds = {a for p in ALL_PROFILES for a in p["liked"]}
+    for p in HOLDOUT_PROFILES:
+        assert not (dev_seeds & set(p["liked"])), p["profile_id"]
+
+
+def test_holdout_profiles_never_enter_the_dev_set():
+    """홀드아웃이 ALL_PROFILES 에 들어가는 순간 홀드아웃이 아니게 된다."""
+    from src.build_p1_profiles import HOLDOUT_PROFILES
+
+    dev_ids = {p["profile_id"] for p in ALL_PROFILES}
+    assert not ({p["profile_id"] for p in HOLDOUT_PROFILES} & dev_ids)
+
+
+def test_holdout_seeds_are_frozen():
+    """판정이 붙은 뒤 시드가 바뀌면 판정이 조용히 무효가 된다 — 개발 셋과 같은 규칙."""
+    from src.build_p1_profiles import HOLDOUT_PROFILES, seeds_fingerprint
+
+    assert seeds_fingerprint(HOLDOUT_PROFILES) == "a80b30c8ffec"
+
+
+def test_dyn_scenarios_are_frozen():
+    """전이 평가의 판정도 (시나리오, 게임) 키로 동결된다 — 시드가 바뀌면 판정이 무효다."""
+    from src.build_p1_profiles import DYN_SCENARIOS, seeds_fingerprint
+
+    profiles = [{"profile_id": k, "liked": v["base"] + ([v["add"]] if "add" in v else [])}
+                for k, v in sorted(DYN_SCENARIOS.items())]
+    assert seeds_fingerprint(profiles) == "1c3e4e5afcf8"
