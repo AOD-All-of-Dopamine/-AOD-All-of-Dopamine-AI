@@ -350,6 +350,62 @@ def next_page(
     return ranked.head(page_size).reset_index(drop=True)
 
 
+def cold_start_page(
+    seen_appids: set[int] | list[int] | None = None,
+    page_size: int = 10,
+    components: tuple | None = None,
+):
+    """시드 0개 사용자를 위한 인기 기반 폴백. `next_page` 와 같은 페이지네이션 계약.
+
+    개인화가 아니라 **보편 인기 + 다양성**이다: 리뷰 수 순위에 시리즈/퍼블리셔 상한과
+    hard filter(성인 등급 등)를 그대로 건다. 사용자가 첫 좋아요를 누르는 순간부터
+    `recommend_page` 가 `next_page` 로 전환한다.
+    """
+    from src.postprocess import postprocess as apply_postprocess
+
+    _, retriever, _, ranker = components or build_components(REFRESH_REC_BOOST)
+    seen = set(int(a) for a in (seen_appids or ()))
+    ds = ranker.dataset.reset_index()
+    pool = ds[["steam_appid", "name"]].copy()
+    rv = ds["recommendations_total"].astype("float").fillna(0.0)
+    pool["seed_similarity"] = 0.0
+    pool["dominant_seed"] = None
+    pool["final_score"] = rv.rank(pct=True).values
+    pool = pool[~pool["steam_appid"].astype(int).isin(seen)]
+    pool = pool.sort_values("final_score", ascending=False).head(page_size * 30)
+    out = apply_postprocess(
+        pool.reset_index(drop=True), ds, top_n=page_size,
+        seed_interleave=False,
+        seen_appids=seen, series_session_max=REFRESH_SERIES_SESSION_MAX,
+        drop_dead_mp=REFRESH_DROP_DEAD_MP,
+    )
+    return out.head(page_size)
+
+
+def recommend_page(
+    liked_appids: list[int] | None,
+    seen_appids: set[int] | list[int] | None = None,
+    page_size: int = 10,
+    disliked_appids: list[int] | None = None,
+    components: tuple | None = None,
+):
+    """서빙 진입점 — AOD 서비스가 부르는 계약은 이 함수 하나다.
+
+      · 좋아요 0개  → 인기 폴백 (cold_start_page)
+      · 좋아요 1개+ → 개인화 (next_page, DISLIKE 반영)
+
+    호출자의 책임: 반환된 steam_appid 를 `aod_ai.rec_impression` 에 적재하고
+    다음 호출의 seen_appids 로 넘길 것. 사용자가 이미 보유/플레이한 게임도
+    seen_appids 에 포함할 것(신규성은 여기서 결정된다).
+    """
+    if not liked_appids:
+        return cold_start_page(seen_appids, page_size, components)
+    return next_page(
+        list(liked_appids), seen_appids=seen_appids, page_size=page_size,
+        disliked_appids=disliked_appids, components=components,
+    )
+
+
 def main():
     parser = argparse.ArgumentParser(description="P1 Multi-Seed Personalized Retrieval (Full Corpus)")
     parser.add_argument("--config", type=str, default=None)

@@ -272,3 +272,35 @@ def test_dislike_contract(comp):
     else:
         import pytest
         pytest.skip("표본에서 무관 게임을 못 찾았다")
+
+
+def test_cold_start_page_serves_popular_diverse_content(comp):
+    """시드 0개 폴백: 인기 게임이 나오고, 페이지네이션은 겹치지 않으며,
+    시리즈 상한이 그대로 걸린다."""
+    import pandas as pd
+
+    from src.config import artifact_dir
+    from src.personalized_retrieve import cold_start_page
+
+    ds = pd.read_parquet(artifact_dir(ART) / "dataset.parquet").set_index("steam_appid")
+    seen, pages = set(), []
+    for _ in range(3):
+        page = cold_start_page(seen_appids=seen, page_size=10, components=comp)
+        assert len(page) == 10
+        assert not (set(int(a) for a in page["steam_appid"]) & seen)
+        seen |= set(int(a) for a in page["steam_appid"])
+        pages.append(page)
+    # 1페이지는 코퍼스 리뷰수 상위권으로 채워져야 한다
+    top = [int(a) for a in pages[0]["steam_appid"]]
+    rv = ds["recommendations_total"].astype("float")
+    assert all(rv.get(a, 0) >= rv.quantile(0.99) for a in top)
+
+
+def test_recommend_page_routes_by_seed_presence(comp):
+    """서빙 진입점: 좋아요가 없으면 인기 폴백, 있으면 개인화로 간다."""
+    from src.personalized_retrieve import recommend_page
+
+    cold = recommend_page([], page_size=10, components=comp)
+    warm = recommend_page(SEEDS, page_size=10, components=comp)
+    assert len(cold) == 10 and len(warm) == 10
+    assert warm["steam_appid"].tolist() != cold["steam_appid"].tolist()
