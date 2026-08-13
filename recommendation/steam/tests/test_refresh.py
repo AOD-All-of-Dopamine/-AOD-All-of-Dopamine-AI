@@ -237,3 +237,38 @@ def test_series_session_cap_default():
     from src.personalized_retrieve import REFRESH_SERIES_SESSION_MAX
 
     assert REFRESH_SERIES_SESSION_MAX == 5
+
+
+def test_dislike_contract(comp):
+    """DISLIKE 의 세 가지 계약: 싫어요는 결과에서 제외되고, 빈 목록은 무변화이며,
+    무관한 싫어요(임계 미만)는 페이지를 흔들지 않는다."""
+    import numpy as np
+
+    base = next_page(SEEDS, page_size=10, components=comp)
+    # 빈 목록/None 은 완전 동일
+    same = next_page(SEEDS, page_size=10, components=comp, disliked_appids=[])
+    assert base["steam_appid"].tolist() == same["steam_appid"].tolist()
+    # 싫어요한 게임은 절대 나오지 않는다
+    victim = int(base["steam_appid"].iloc[0])
+    page = next_page(SEEDS, page_size=10, components=comp,
+                     disliked_appids=[victim], dislike_weight=2.0)
+    assert victim not in set(int(a) for a in page["steam_appid"])
+    # 무관한 싫어요(기준 페이지와의 유사도가 전부 임계 미만인 게임)는 무변화
+    from src.personalized_retrieve import DISLIKE_SIM_FLOOR
+
+    loader, retriever = comp[0], comp[1]
+    pos = {int(a): i for i, a in enumerate(retriever.index["steam_appid"])}
+    base_ids = [int(a) for a in base["steam_appid"]]
+    for cand in retriever.index["steam_appid"].sample(50, random_state=0):
+        cand = int(cand)
+        if cand in base_ids or cand in SEEDS:
+            continue
+        d = retriever.compute_similarity_matrix(loader.load([cand]))[0]
+        if max(d[pos[a]] for a in base_ids) < DISLIKE_SIM_FLOOR - 0.02:
+            page = next_page(SEEDS, page_size=10, components=comp,
+                             disliked_appids=[cand], dislike_weight=2.0)
+            assert base_ids == [int(a) for a in page["steam_appid"]], "무관한 싫어요가 페이지를 바꿨다"
+            break
+    else:
+        import pytest
+        pytest.skip("표본에서 무관 게임을 못 찾았다")

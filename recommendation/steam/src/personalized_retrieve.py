@@ -34,6 +34,8 @@ def run_multi(
     postprocess: bool = False,
     postprocess_kwargs: dict | None = None,
     exclude_appids: set[int] | list[int] | None = None,
+    disliked_appids: list[int] | None = None,
+    dislike_weight: float = 0.0,
 ) -> dict[str, dict]:
     """`postprocess=True` 면 랭킹 뒤에 다양성 후처리(시드 인터리빙·시리즈 상한·hard filter)를 건다.
 
@@ -55,7 +57,29 @@ def run_multi(
     corpus_df = retriever.full_corpus_frame()
     aggregated = aggregator.aggregate_all(sim_matrix, seed_embs, corpus_df, strategies=strategies)
 
-    excluded = set(liked_appids) | set(exclude_appids or ())
+    # DISLIKE: 싫어요 게임들과의 최대 유사도를 감점한다. 좋아요와 같은 파이프라인
+    # (허브니스 보정 포함)으로 계산하므로 스케일이 동일하다. 근거는 next_page docstring.
+    dislike_penalty = None
+    if disliked_appids and dislike_weight:
+        dis_embs = loader.load(list(disliked_appids))
+        if dis_embs:
+            dsim = retriever.compute_similarity_matrix(dis_embs)
+            # **임계값 이상만 감점한다.** 원시 유사도를 그대로 빼면 무관한 싫어요
+            # (코지 시드 + FIFA 싫어요)도 배경 유사도의 분산 때문에 top-30 의 절반을
+            # 뒤흔든다(실측 17/30 유지 → 임계 후 30/30). 임계값은 "정말 그 게임을
+            # 닮은 것"의 하한이다 — 근거 곡선은 REFRESH_DISLIKE_* 주석.
+            # max 가 아니라 **합산**: 비슷한 것을 여러 번 싫어요 하면 그 방향이
+            # 누적으로 강하게 밀려난다(반복 싫어요 = 장르 거부의 자연스러운 표현).
+            # max 로 했더니 서바이버류 2개를 싫어요 해도 1개와 똑같았다.
+            import numpy as _np
+            dislike_penalty = dislike_weight * _np.clip(
+                dsim - DISLIKE_SIM_FLOOR, 0.0, None).sum(axis=0)
+    if dislike_penalty is not None:
+        for strategy in strategies:
+            fr = aggregated[strategy]
+            fr["seed_similarity"] = fr["seed_similarity"] - dislike_penalty
+
+    excluded = set(liked_appids) | set(exclude_appids or ()) | set(disliked_appids or ())
     rank_n = top_n * 5 if postprocess else top_n
     results = {}
     for strategy in strategies:
@@ -130,6 +154,23 @@ REFRESH_CONSENSUS_BOOST = 0.0
 # 남았다. 값을 옮기려면 두 값을 다시 재야 한다.
 REFRESH_SEED_SCALED_FLOOR = 0.001
 
+#: DISLIKE 감점: score' = score − w × Σ_i max(0, sim(후보, 싫어요_i) − 임계).
+#
+# 설계 근거 (시나리오 실측, tags_full · 제품 설정):
+# · **임계 0.45**: 무관한 싫어요(코지 시드 + FIFA)의 유사도 분포 최대가 0.415,
+#   표적(State of Decay ↔ 오픈월드 생존)은 0.46~0.59 — 그 사이를 자른다.
+#   임계 없이 원시 유사도를 빼면 무관 대조군 top-30 의 절반이 뒤바뀌고(17/30 유지),
+#   임계 후에는 완전 보존된다(30/30).
+# · **합산(Σ)**: max 로 하면 비슷한 것을 여러 번 싫어요 해도 1번과 같다.
+#   합산이면 반복 싫어요가 그 방향을 누적으로 밀어낸다.
+# · **w=2.0**: 표적 시나리오에서 싫어요 유사(≥0.45) 칸 22→7 (w=1 은 22→10),
+#   무관 대조군은 w 와 무관하게 30/30. 품질은 P@30 0.93→0.87 — 대체된 좀비
+#   추천은 "좋아요만 있는 문맥"의 판정이라 실제 손실은 이보다 작다.
+# · 좋아요 신호가 강한 축(시드 10개 로그라이트)에서는 싫어요 1~2개가 장르를
+#   못 밀어낸다 — 의도된 균형이다. 싫어요 자체는 항상 결과에서 제외된다.
+REFRESH_DISLIKE_WEIGHT = 2.0
+DISLIKE_SIM_FLOOR = 0.45
+
 #: 한 시리즈가 세션 전체(모든 페이지 누계)에서 차지할 수 있는 최대 칸 수.
 #
 # 페이지 내 상한(series_max=1)은 호출 단위라 페이지 간 기억이 없다 — 홀드아웃
@@ -174,6 +215,8 @@ def next_page(
     consensus_boost: float = REFRESH_CONSENSUS_BOOST,
     drop_dead_mp: bool = REFRESH_DROP_DEAD_MP,
     seed_scaled_floor: float = REFRESH_SEED_SCALED_FLOOR,
+    disliked_appids: list[int] | None = None,
+    dislike_weight: float | None = None,
 ):
     """새로고침 한 번 = 이 함수 한 번. 서빙이 쓸 계약을 코드로 고정한다.
 
@@ -286,6 +329,8 @@ def next_page(
         top_n=page_size * 30,
         rec_boost=rec_boost,
         components=components,
+        disliked_appids=disliked_appids,
+        dislike_weight=(REFRESH_DISLIKE_WEIGHT if dislike_weight is None else dislike_weight),
         postprocess=postprocess,
         postprocess_kwargs={"require_known_reviews": require_known_reviews,
                             "min_reviews": min_reviews,
