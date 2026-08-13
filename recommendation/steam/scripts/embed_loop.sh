@@ -12,12 +12,15 @@
 #
 # 모델 로드는 약 30초. 5,000건(약 1시간)마다 재시작하면 오버헤드는 1% 미만이다.
 #
-#   scripts/embed_loop.sh artifacts/full_v1 [MAX_ITEMS]
+#   scripts/embed_loop.sh artifacts/full_v1 [MAX_ITEMS] [추가 인자...]
+#   scripts/embed_loop.sh artifacts/tags_v1 5000 --append
 set -uo pipefail
 cd "$(dirname "$0")/.."
 
 ART="${1:-artifacts/full_v1}"
 STEP="${2:-5000}"
+shift 2 2>/dev/null || shift $# 
+EXTRA=("$@")          # --append 등을 그대로 넘긴다
 PY=".venv/bin/python"
 export AOD_CONFIG="${AOD_CONFIG:-configs/full_v1.yaml}"
 
@@ -27,7 +30,7 @@ echo "임베딩 루프 시작: $ART (프로세스당 ${STEP}건)"
 stuck=0
 prev=$(rows)
 for attempt in $(seq 1 500); do
-    $PY -u -m src.embed_qwen --in "$ART" --out "$ART" --max-items "$STEP"
+    $PY -u -m src.embed_qwen --in "$ART" --out "$ART" --max-items "$STEP" "${EXTRA[@]}"
     rc=$?
     if [ -f "$ART/corpus_embeddings.npy" ] && [ ! -f "$ART/_embeddings.raw" ]; then
         echo "완료 (프로세스 ${attempt}회)"

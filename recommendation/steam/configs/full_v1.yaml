@@ -11,7 +11,9 @@ data:
   ranking_path: "data/steam_ranking.parquet"
 
 representation:
-  type: "description_genres_modes"
+  # 2026-08-09 태그 추가. artifacts/full_v1 은 태그 이전에 만들어졌으므로 그쪽
+  # qwen_run_config.json 에는 옛 라벨이 그대로 박혀 있다 — 그게 맞다(산출물은 스냅샷).
+  type: "description_tags_genres_modes"
 
 anchor:
   candidate_count: 80

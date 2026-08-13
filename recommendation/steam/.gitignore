@@ -27,3 +27,15 @@ artifacts/*/_targets.sha256
 # 전체 코퍼스 임베딩 679MB — 재생성 가능하므로 커밋하지 않는다
 artifacts/full_*/corpus_embeddings.npy
 artifacts/full_*/anchor_embeddings.npy
+
+# 태그 코퍼스 임베딩(tags_v1 86MB · tags_full 711MB) — dataset/semantic_text 에서 재생성 가능
+artifacts/tags_*/corpus_embeddings.npy
+
+# 파괴 사고 격리물(.broken)과 스냅샷 백업 — 로컬 전용 (경위는 src/artifact_ops.py)
+artifacts/*.bak-*/
+artifacts/*.pre-split/
+artifacts/*/*.broken
+artifacts/embed_redo.log
+
+# 태그 크롤 원본(110MB) — scripts 로 재수집 가능
+data/steam_tags_v1.jsonl
