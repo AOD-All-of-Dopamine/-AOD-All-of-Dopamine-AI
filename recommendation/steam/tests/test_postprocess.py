@@ -7,6 +7,8 @@ from src.postprocess import (
     cap_series,
     interleave_by_seed,
     postprocess,
+    consensus_seed_tags,
+    rare_seed_tags,
     series_key,
 )
 
@@ -453,3 +455,179 @@ def test_descriptor_check_survives_parquet_roundtrip(tmp_path):
     out = apply_hard_filters(_ranked([1, 2, 3], [10, 10, 10]),
                              pd.read_parquet(path), drop_unreleased=False)
     assert out["steam_appid"].tolist() == [1, 3]
+
+
+# ---------------------------------------- 단일 시드 조건부 희귀 태그 필터
+
+def _ds_with_tags():
+    """흔한 태그(Indie, 20/20) 와 드문 태그(Souls-like, 2/20) 가 섞인 작은 코퍼스."""
+    rows = []
+    for i in range(20):
+        tags = [{"name": "Indie"}, {"name": "Action"}]
+        if i < 2:
+            tags = [{"name": "Souls-like"}, {"name": "Metroidvania"}] + tags
+        rows.append({"steam_appid": 100 + i, "name": f"g{i}", "tags": tags,
+                     "genres": [], "publishers": [], "recommendations_total": 1000,
+                     "has_recommendations": True})
+    return pd.DataFrame(rows)
+
+
+def test_rare_seed_tags_keeps_only_defining_tags():
+    ds = _ds_with_tags()
+    out = rare_seed_tags([100], ds, max_df=0.5)
+    assert out == {"Souls-like", "Metroidvania"}, out   # Indie/Action 은 20/20 이라 탈락
+
+
+def test_solo_seed_tags_filters_generic_candidates():
+    """정의적 태그가 없는 후보는 걸러야 한다 — 이게 niche_soulslike_solo 를 0.55→0.90 으로 올렸다."""
+    ds = _ds_with_tags()
+    ranked = pd.DataFrame({"steam_appid": [105, 101, 106], "seed_similarity": [0.9, 0.8, 0.7],
+                           "dominant_seed": [100, 100, 100]})
+    out = postprocess(ranked, ds, top_n=10, hard_filters=False, series_max=0, publisher_max=0,
+                      seed_interleave=False, solo_seed_tags={"Souls-like", "Metroidvania"})
+    assert list(out["steam_appid"]) == [101]           # 105/106 은 Indie/Action 뿐
+
+
+def test_solo_seed_tags_is_a_noop_when_not_given():
+    """다시드 경로는 한 칸도 안 바뀌어야 한다 — 무조건 적용이 lowrev_cozy_narrative 를 깎았다."""
+    ds = _ds_with_tags()
+    ranked = pd.DataFrame({"steam_appid": [105, 101, 106], "seed_similarity": [0.9, 0.8, 0.7],
+                           "dominant_seed": [100, 100, 100]})
+    kw = dict(top_n=10, hard_filters=False, series_max=0, publisher_max=0, seed_interleave=False)
+    assert list(postprocess(ranked, ds, **kw)["steam_appid"]) == [105, 101, 106]
+    assert list(postprocess(ranked, ds, solo_seed_tags=None, **kw)["steam_appid"]) == [105, 101, 106]
+
+
+def test_solo_filter_never_empties_the_page():
+    """필터가 전부 걸러내면 원본을 돌려준다 — 빈 페이지보다는 약한 추천이 낫다."""
+    ds = _ds_with_tags()
+    ranked = pd.DataFrame({"steam_appid": [105, 106], "seed_similarity": [0.9, 0.8],
+                           "dominant_seed": [100, 100]})
+    out = postprocess(ranked, ds, top_n=10, hard_filters=False, series_max=0, publisher_max=0,
+                      seed_interleave=False, solo_seed_tags={"Nonexistent"})
+    assert len(out) == 2
+
+
+# ------------------------------------------- 인기 시드 조건부 합의 태그 필터
+
+def test_consensus_requires_two_seeds_to_share_a_tag():
+    """합집합이 아니라 **합의**여야 한다 — 합집합은 한 시드의 특이점까지 통과시킨다."""
+    ds = _ds_with_tags()
+    # 100,101 은 Souls-like/Metroidvania 를 둘 다 가짐, 105 는 Indie/Action 뿐
+    out = consensus_seed_tags([100, 101, 105], ds, min_seeds=2, max_df=0.5)
+    assert out == {"Souls-like", "Metroidvania"}, out
+    # 한 시드만 가진 태그는 탈락한다
+    solo_only = consensus_seed_tags([100, 105], ds, min_seeds=2, max_df=0.5)
+    assert solo_only == set(), solo_only
+
+
+def test_consensus_tags_filter_candidates():
+    ds = _ds_with_tags()
+    ranked = pd.DataFrame({"steam_appid": [105, 101, 106], "seed_similarity": [0.9, 0.8, 0.7],
+                           "dominant_seed": [100, 100, 100]})
+    out = postprocess(ranked, ds, top_n=10, hard_filters=False, series_max=0, publisher_max=0,
+                      seed_interleave=False, consensus_tags={"Souls-like"})
+    assert list(out["steam_appid"]) == [101]
+
+
+def test_consensus_is_a_noop_when_not_given():
+    """니치·롱테일 프로필은 한 칸도 안 바뀌어야 한다 — 무조건 적용이 그쪽을 깎았다."""
+    ds = _ds_with_tags()
+    ranked = pd.DataFrame({"steam_appid": [105, 101, 106], "seed_similarity": [0.9, 0.8, 0.7],
+                           "dominant_seed": [100, 100, 100]})
+    kw = dict(top_n=10, hard_filters=False, series_max=0, publisher_max=0, seed_interleave=False)
+    assert list(postprocess(ranked, ds, **kw)["steam_appid"]) == [105, 101, 106]
+    assert list(postprocess(ranked, ds, consensus_tags=None, **kw)["steam_appid"]) == [105, 101, 106]
+
+
+def test_dead_multiplayer_is_dropped_but_solo_niche_survives():
+    """멀티 전용 + 리뷰 미보고만 자른다. 싱글이 되면 리뷰가 0이어도 남는다.
+
+    이 구분이 이 규칙의 전부다. 리뷰 하한은 "니치인가"와 "쓰레기인가"를 구분하지 못해
+    coh_grand_strategy 를 0.84 → 0.76 으로 무너뜨렸다. 여기서 그 경계를 고정한다.
+    """
+    import pandas as pd
+
+    from src.postprocess import drop_dead_multiplayer
+
+    ds = pd.DataFrame({
+        "steam_appid": [1, 2, 3, 4],
+        "has_recommendations": [False, False, True, False],
+        "categories": [
+            [{"description": "멀티플레이어"}, {"description": "PvP"}],          # 죽은 멀티 → 제거
+            [{"description": "싱글 플레이어"}, {"description": "멀티플레이어"}],  # 싱글 가능 → 유지
+            [{"description": "멀티플레이어"}],                                  # 리뷰 있음 → 유지
+            [{"description": "Single-player"}],                                 # 영문 표기도 인식
+        ],
+    })
+    df = pd.DataFrame({"steam_appid": [1, 2, 3, 4], "final_score": [0.9, 0.8, 0.7, 0.6]})
+    kept = set(drop_dead_multiplayer(df, ds)["steam_appid"])
+    assert kept == {2, 3, 4}
+
+
+def test_dead_multiplayer_never_empties_the_page():
+    import pandas as pd
+
+    from src.postprocess import drop_dead_multiplayer
+
+    ds = pd.DataFrame({
+        "steam_appid": [1, 2],
+        "has_recommendations": [False, False],
+        "categories": [[{"description": "멀티플레이어"}], [{"description": "멀티플레이어"}]],
+    })
+    df = pd.DataFrame({"steam_appid": [1, 2], "final_score": [0.9, 0.8]})
+    assert len(drop_dead_multiplayer(df, ds)) == 2
+
+
+def test_refresh_enables_dead_multiplayer_filter():
+    """제품 경로의 기본값을 고정한다 — 꺼지면 coh_classic_multi 가 0.84 → 0.79 로 돌아간다."""
+    import inspect
+
+    from src.personalized_retrieve import next_page
+
+    assert inspect.signature(next_page).parameters["drop_dead_mp"].default is True
+
+
+def test_online_pvp_without_players_is_dropped_even_with_solo_label():
+    """PvP 의존은 '싱글 플레이어' 표기가 있어도 자른다 — 그 싱글은 대개 봇이다.
+
+    k=100 에서 coh_fps 의 실패 8칸이 전부 이 경로로 빠져나갔다:
+    ['싱글 플레이어', '멀티플레이어', 'PvP', '온라인 PvP'] 를 선언한 리뷰 0 F2P 슈터들.
+    """
+    import pandas as pd
+
+    from src.postprocess import drop_dead_multiplayer
+
+    ds = pd.DataFrame({
+        "steam_appid": [1, 2, 3],
+        "has_recommendations": [False, False, True],
+        "categories": [
+            # 봇 싱글 + 온라인 PvP 전용 → 제거. k=100 실패 8칸이 정확히 이 모양이다.
+            [{"description": "싱글 플레이어"}, {"description": "온라인 PvP"}],
+            # 싱글 + PvP + 협동 → 유지. 친구와 협동으로 즐길 수 있다.
+            [{"description": "싱글 플레이어"}, {"description": "온라인 PvP"},
+             {"description": "온라인 협동"}],
+            # 리뷰가 보고되면 무조건 유지 (Wolfenstein: ET 101 · Task Force 304).
+            [{"description": "온라인 PvP"}],
+        ],
+    })
+    df = pd.DataFrame({"steam_appid": [1, 2, 3], "final_score": [0.9, 0.8, 0.7]})
+    assert set(drop_dead_multiplayer(df, ds)["steam_appid"]) == {2, 3}
+
+
+def test_online_coop_with_no_reviews_survives():
+    """협동은 친구를 데려오면 성립한다 — 자르면 mix2_coop_horror 의 3점 후보들이 날아간다.
+
+    실측: Fantasma · Gehinnom · Snipe Hunt 등 리뷰 미보고 협동 호러가 전부 판정 3이다.
+    """
+    import pandas as pd
+
+    from src.postprocess import drop_dead_multiplayer
+
+    ds = pd.DataFrame({
+        "steam_appid": [1],
+        "has_recommendations": [False],
+        "categories": [[{"description": "싱글 플레이어"}, {"description": "온라인 협동"}]],
+    })
+    df = pd.DataFrame({"steam_appid": [1], "final_score": [0.9]})
+    assert len(drop_dead_multiplayer(df, ds)) == 1

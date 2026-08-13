@@ -149,3 +149,55 @@ def test_top2_mean_different_from_max_with_3_seeds():
     assert not np.array_equal(max_scores, top2_scores), (
         "MAX and TOP2_MEAN should differ for mixed profiles"
     )
+
+
+# ------------------------------------------------- 제품 경로의 집계 전략
+
+def test_next_page_defaults_to_top2_mean():
+    """`max` 는 시드 하나만 닮은 후보를 상위에 올린다 — 제품 경로는 top2_mean 이어야 한다.
+
+    35프로필 미판정 0 비교에서 k=10 +0.057 [+0.020,+0.097], k=20 +0.077 [+0.050,+0.106]
+    로 유의했다. 이 기본값이 바뀌면 그 근거가 무너지므로 고정한다.
+    """
+    import inspect
+
+    from src.personalized_retrieve import next_page
+
+    assert inspect.signature(next_page).parameters["strategy"].default == "top2_mean"
+
+
+def test_top2_mean_equals_max_for_single_seed():
+    """시드가 1개면 두 전략은 수학적으로 같다 — 단일 시드 프로필은 이 레버로 못 고친다.
+
+    `niche_soulslike_solo`(Salt and Sanctuary 하나)와 `niche_puzzle_solo`(Opus Magnum 하나)가
+    top2_mean 으로 전혀 안 움직인 이유가 이것이다. 그 둘은 다른 레버가 필요하다.
+    """
+    import numpy as np
+
+    from src.personalization.score_aggregator import ScoreAggregator
+
+    agg = ScoreAggregator()
+    sim = np.array([[0.9, 0.4, 0.7]])                      # 시드 1 x 후보 3
+    corpus = pd.DataFrame({"steam_appid": [1, 2, 3], "name": ["a", "b", "c"]})
+    out = agg.aggregate_all(sim, {283640: None}, corpus, strategies=["max", "top2_mean"])
+    assert np.allclose(out["max"]["seed_similarity"].values,
+                       out["top2_mean"]["seed_similarity"].values)
+
+
+def test_every_strategy_carries_dominant_seed():
+    """집계 전략을 바꿔도 시드 인터리빙이 죽으면 안 된다.
+
+    예전에는 `dominant_seed` 가 max 에만 있어서, 제품 기본값을 top2_mean 으로 바꾸자
+    인터리빙이 조용히 무력화됐다(약한 시드가 굶는다). 점수와 소속 시드는 별개다.
+    """
+    import numpy as np
+
+    from src.personalization.score_aggregator import ScoreAggregator
+
+    sim = np.array([[0.9, 0.1], [0.2, 0.8]])          # 시드 2 x 후보 2
+    corpus = pd.DataFrame({"steam_appid": [10, 20], "name": ["a", "b"]})
+    out = ScoreAggregator().aggregate_all(
+        sim, {111: None, 222: None}, corpus, strategies=["max", "mean", "top2_mean"])
+    for strat, df in out.items():
+        assert df["dominant_seed"].notna().all(), strat
+        assert list(df["dominant_seed"]) == [111, 222], strat

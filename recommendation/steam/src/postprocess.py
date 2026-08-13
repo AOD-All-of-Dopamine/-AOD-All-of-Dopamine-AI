@@ -306,6 +306,189 @@ def interleave_by_seed(ranked: pd.DataFrame, top_n: int = 100,
     return out
 
 
+#: 이 비율보다 흔한 태그는 "정의적"이지 않다고 본다. Singleplayer(68%)·Indie(55%)·
+#: Casual(44%)·Action(43%) 처럼 절반 가까운 게임이 달고 있는 태그로는 취향이 안 좁혀진다.
+RARE_TAG_MAX_DF = 0.05
+SEED_TAG_TOPN = 15
+
+
+def rare_seed_tags(seed_appids, dataset: pd.DataFrame,
+                   max_df: float = RARE_TAG_MAX_DF, topn: int = SEED_TAG_TOPN) -> set[str]:
+    """시드의 상위 태그 중 코퍼스에서 드문 것들 — 그 취향을 정의하는 태그."""
+    tags = dataset.set_index("steam_appid")["tags"] if "tags" in dataset.columns else None
+    if tags is None:
+        return set()
+
+    def names(x):
+        if x is None or isinstance(x, float):
+            return []
+        return [t["name"] if isinstance(t, dict) else str(t) for t in x]
+
+    df_count: dict[str, int] = {}
+    for x in tags:
+        for t in set(names(x)):
+            df_count[t] = df_count.get(t, 0) + 1
+    n = len(tags)
+    out = set()
+    for a in seed_appids:
+        for t in names(tags.get(int(a))) [:topn]:
+            if df_count.get(t, 0) / n < max_df:
+                out.add(t)
+    return out
+
+
+#: 시드 리뷰 중앙값이 이 이상이면 "대작 취향" — 합의 태그 필터를 건다.
+POPULAR_SEED_REVIEWS = 100_000
+#: 합의 태그로 인정할 최대 문서빈도. 이보다 흔하면 취향을 안 좁힌다.
+CONSENSUS_TAG_MAX_DF = 0.15
+
+
+def consensus_seed_tags(seed_appids, dataset: pd.DataFrame, min_seeds: int = 2,
+                        max_df: float = CONSENSUS_TAG_MAX_DF, topn: int = SEED_TAG_TOPN) -> set[str]:
+    """시드 `min_seeds` 개 이상이 **함께** 가진 태그 중 흔하지 않은 것.
+
+    `rare_seed_tags` 와 다른 점: 저쪽은 합집합이라 "한 시드의 특이점"까지 통과시킨다.
+    다시드 프로필에 그걸 걸었더니 `lowrev_cozy_narrative` 가 0.90 → 0.75 로 무너졌다
+    (Visual Novel 이 정의적이라고 오인돼 일본식 연애 VN 이 대거 통과). 합의를 요구하면
+    시드들이 실제로 공유하는 축만 남는다:
+
+        coh_arpg  → Action RPG · Fantasy · Open World · Third Person
+        coh_cozy  → Building · Crafting · Sandbox · Open World
+    """
+    tags = dataset.set_index("steam_appid")["tags"] if "tags" in dataset.columns else None
+    if tags is None:
+        return set()
+
+    def names(x):
+        if x is None or isinstance(x, float):
+            return []
+        return [t["name"] if isinstance(t, dict) else str(t) for t in x]
+
+    df_count: dict[str, int] = {}
+    for x in tags:
+        for t in set(names(x)):
+            df_count[t] = df_count.get(t, 0) + 1
+    n = len(tags)
+
+    shared: dict[str, int] = {}
+    for a in seed_appids:
+        for t in set(names(tags.get(int(a)))[:topn]):
+            shared[t] = shared.get(t, 0) + 1
+    return {t for t, c in shared.items() if c >= min_seeds and df_count.get(t, 0) / n < max_df}
+
+
+def keep_sharing_tags(df: pd.DataFrame, dataset: pd.DataFrame, wanted: set[str],
+                      topn: int = SEED_TAG_TOPN) -> pd.DataFrame:
+    """후보의 상위 태그가 `wanted` 와 하나라도 겹치는 것만 남긴다."""
+    if not wanted:
+        return df
+    tags = dataset.set_index("steam_appid")["tags"]
+
+    def hit(a):
+        x = tags.get(int(a))
+        if x is None or isinstance(x, float):
+            return False
+        got = {t["name"] if isinstance(t, dict) else str(t) for t in x[:topn]}
+        return bool(wanted & got)
+
+    keep = df["steam_appid"].map(hit)
+    return df[keep] if keep.any() else df
+
+
+#: 싱글플레이 카테고리 표기(스팀이 로케일별로 다르게 준다).
+SINGLEPLAYER_MARKERS = ("Single-player", "싱글 플레이어", "シングルプレイヤー", "单人")
+#: 온라인 대전/협동 표기. 대전은 사람이 없으면 성립 자체가 안 되고, 협동은 친구를 데려오면 된다.
+ONLINE_PVP_MARKERS = ("Online PvP", "온라인 PvP", "オンラインPvP", "在线 PvP")
+ONLINE_COOP_MARKERS = ("Online Co-op", "온라인 협동", "オンライン協力プレイ", "在线合作")
+
+
+def drop_dead_multiplayer(df: pd.DataFrame, dataset: pd.DataFrame) -> pd.DataFrame:
+    """**멀티 전용인데 플레이어 기반이 측정조차 안 되는** 후보를 뺀다.
+
+    인기도 하한이 아니다. 멀티플레이 전용 게임은 사람이 없으면 실행이 안 되는 것과 같다 —
+    싱글 카테고리가 없고 Steam 이 리뷰 수를 보고하지도 않는다면(대략 100개 미만) 매칭이
+    잡히지 않는다. 추천으로서 성립하지 않는 것이지 무명이라 나쁜 것이 아니다.
+
+    왜 리뷰 하한과 다른가: 하한 300 을 인기 시드에만 걸어봤더니 `coh_grand_strategy` 가
+    0.84 → 0.76 으로 무너졌다. 무명이지만 잘 만든 니치 대전략이 잘려나가고 그 자리를
+    인기 있지만 장르가 다른 것(RimWorld·Steel Crew)이 채웠다. 리뷰 수는 "니치인가"와
+    "쓰레기인가"를 구분하지 못한다. 이 규칙은 그 구분을 하지 않는다 — 싱글플레이가 되는
+    게임은 리뷰가 0이어도 남는다. 저리뷰·롱테일·니치 축은 구조적으로 영향을 받지 않는다.
+
+    `coh_classic_multi` (Garry's Mod / TF2 / L4D2) 의 50~75 구간 실패 칸:
+      KUBOOM · Camp Wars · Guns N Stuff 2 · Project Teddy · Shards Online · BLOCKPOST
+      전부 멀티 전용 + 리뷰 미보고다. 태그는 시드와 완벽히 겹친다.
+
+    **2차 보강 (k=100 에서 드러남).** 위 규칙만으로는 `coh_fps` 의 실패 8칸이 다 빠져나갔다:
+      Multiplayer Shooter FPS · Battle Room · Polygon Bit Battle Royale · Pixel Strike 3D
+      · Anti Terrorist Shooting Game · Tactical Vengeance · Chapter Wars · The Last War
+    전부 `['싱글 플레이어', '멀티플레이어', 'PvP', '온라인 PvP']` 를 선언한다. PvP 슈터의
+    "싱글 플레이어"는 대개 봇이라 살려줄 근거가 못 된다. 그래서 **온라인 PvP 의존**은
+    싱글 표기와 무관하게 자른다. 협동은 자르지 않는다 — 친구 3명을 데려오면 성립하지만
+    5대5 랭크 로비는 혼자 만들 수 없다. Wolfenstein: Enemy Territory(101) · Task Force(304)
+    처럼 리뷰가 보고되는 PvP 게임은 이 규칙에 걸리지 않는다.
+    """
+    if "categories" not in dataset.columns:
+        return df
+    cats = dataset.set_index("steam_appid")["categories"]
+    known = dataset.set_index("steam_appid")["has_recommendations"]
+
+    def dead(a):
+        a = int(a)
+        if bool(known.get(a, False)):
+            return False
+        c = cats.get(a)
+        if c is None or isinstance(c, float) or len(c) == 0:
+            return False
+        names = [x.get("description", "") if isinstance(x, dict) else str(x) for x in c]
+        has_solo = any(any(m in n for m in SINGLEPLAYER_MARKERS) for n in names)
+        has_pvp = any(any(m in n for m in ONLINE_PVP_MARKERS) for n in names)
+        has_coop = any(any(m in n for m in ONLINE_COOP_MARKERS) for n in names)
+        # PvP 의존은 싱글 표기가 있어도 살려주지 않는다 — 5대5 로비는 혼자 못 만든다.
+        # 협동은 다르다: 친구를 데려오면 성립하므로 그쪽은 싱글 표기가 없어도 안 자른다.
+        if has_pvp and not has_coop:
+            return True
+        return not has_solo
+
+    keep = ~df["steam_appid"].map(dead)
+    return df[keep] if keep.any() else df
+
+
+def consensus_overlap_boost(df: pd.DataFrame, dataset: pd.DataFrame, wanted: set[str],
+                            weight: float, topn: int = SEED_TAG_TOPN) -> pd.DataFrame:
+    """합의 태그를 **몇 개** 맞혔는지로 재정렬한다. 거르지 않고 순서만 바꾼다.
+
+    `keep_sharing_tags` 는 "하나라도 겹치면 통과"라 임계값을 못 만든다. 실측(k=75):
+
+        coh_grand_strategy (합의태그 12개)
+          Europa Universalis V  7개    Supreme Ruler 1936  5개   ← 판정 3
+          RimWorld              2개    Steel Crew          2개   ← 판정 1
+        coh_classic_multi (합의태그 8개)
+          Killing Floor 2       7개                              ← 판정 3
+          NYZD                  2개    KUBOOM              3개   ← 판정 1
+
+    임계값을 2로 올려도 안 되는 이유: Witcher 2(coh_arpg 판정 3)도 2개다. 절대 개수가
+    아니라 **그 프로필에서 가능한 최대치 대비 비율**이 신호라서, 필터가 아니라 가중치로
+    쓴다. 리뷰 하한과 달리 무명 게임을 원천 배제하지 않으므로 저리뷰 축이 안 다친다.
+    """
+    if not wanted or weight <= 0:
+        return df
+    tags = dataset.set_index("steam_appid")["tags"]
+
+    def hits(a):
+        x = tags.get(int(a))
+        if x is None or isinstance(x, float):
+            return 0
+        got = {t["name"] if isinstance(t, dict) else str(t) for t in x[:topn]}
+        return len(wanted & got)
+
+    out = df.copy()
+    frac = out["steam_appid"].map(hits) / max(len(wanted), 1)
+    score_col = "final_score" if "final_score" in out.columns else out.columns[-1]
+    out[score_col] = out[score_col] * (1.0 + frac * weight)
+    return out.sort_values(score_col, ascending=False).reset_index(drop=True)
+
+
 def postprocess(
     ranked: pd.DataFrame,
     dataset: pd.DataFrame,
@@ -317,13 +500,62 @@ def postprocess(
     require_known_reviews: bool = False,
     min_reviews: int = 0,
     bucket_offset: int = 0,
+    solo_seed_tags: set[str] | None = None,
+    consensus_tags: set[str] | None = None,
+    consensus_boost: float = 0.0,
+    drop_dead_mp: bool = False,
 ) -> pd.DataFrame:
     """스펙 §5.4 순서: hard filter → 시리즈/퍼블리셔 상한 → 다양성 → Top-N.
 
     `bucket_offset` 은 인터리빙에 그대로 넘어간다 — 시드가 page_size 보다 많을 때
     페이지마다 버킷 순서를 회전시켜 약한 시드가 굶지 않게 한다.
+
+    `solo_seed_tags` — **시드가 1개일 때만** 넘어오는 희귀 태그 집합. 후보가 그중 하나라도
+    가져야 통과한다.
+
+    왜 단일 시드에만 거는가: 시드가 하나면 `top2_mean` 이 `max` 와 수학적으로 같아 집계
+    레버가 아예 안 듣는다. 실제로 Salt and Sanctuary 한 개로 랭킹하면 Souls-like +
+    Metroidvania 를 **모두** 가진 76개 후보의 순위 중앙값이 526위였다 — Hollow Knight 가
+    149위다. 임베딩이 정의적 태그를 못 쓰는 것이고, 태그 IDF 재순위로는 안 고쳐졌다
+    (태그가 이미 임베딩 안에 있어 상관이 높다). 하드 조건으로 걸어야 움직인다.
+
+    왜 다시드에는 안 거는가: 시드가 여럿이면 희귀 태그의 합집합이 "시드 간 공통점"이 아니라
+    "한 시드의 특이점"이 된다. 무조건 걸었더니 `lowrev_cozy_narrative` 가 0.90 → 0.75 로
+    떨어졌다 — Visual Novel 태그가 정의적이라고 오인돼 일본식 연애 VN 이 대거 통과했다.
+
+    35프로필 · 미판정 0 (top2_mean 기준):
+
+      깊이   미적용            단일시드 조건부      바뀐 프로필
+      k=10  0.9314 (미달 2)   0.9429 (미달 1)     1개  niche_soulslike_solo 0.50→0.90
+      k=20  0.9114 (미달 1)   0.9214 (미달 0)     1개  niche_soulslike_solo 0.55→0.90
+
+    평균 Δ 는 +0.01 로 유의하지 않다 — 35개 중 1개만 변하므로 구조적으로 그렇다. 채택 근거는
+    평균이 아니라 **단일 시드 구제 + 다시드 무영향**이다.
+
+    `consensus_tags` — **시드 리뷰 중앙값이 10만 이상인 다시드 프로필에만** 넘어온다.
+    시드들이 함께 가진 흔하지 않은 태그를 요구한다.
+
+    왜 인기 시드에만 거는가: 대작 취향의 실패는 저품질 무명작에 몰려 있는데(실패 칸 리뷰
+    중앙값 778 vs 성공 2,774) 리뷰 하한으로 자르면 좋은 저리뷰 추천까지 날아간다. 태그
+    합의로 자르면 "장르는 겹치는데 경험이 다른" 것만 걸린다.
+
+    무조건 걸면 안 된다 — 전체 적용 시 니치 -0.027 · 롱테일 -0.015 로 상쇄돼 Δ +0.001
+    (유의하지 않음)이 된다. 조건부로 좁히면 그 축들이 정의상 영향을 안 받는다:
+
+      k=50 축별 Δ:  니치 0.000 · 롱테일 0.000 · 저리뷰 0.000 · 혼합 +0.002 · 대작 +0.010
+      k=50 전체:    0.9194 (미달 2) → 0.9229 (미달 1)
+
+    평균 Δ 는 +0.003 으로 유의하지 않다(17/35 만 대상이고 그중에도 순위가 바뀌는 것은
+    소수다). 채택 근거는 **부작용 0 + 대상 축 개선 + 미달 감소**다.
     """
     df = ranked
+    if drop_dead_mp:
+        df = drop_dead_multiplayer(df, dataset)
+    if solo_seed_tags:
+        df = keep_sharing_tags(df, dataset, solo_seed_tags)
+    if consensus_tags:
+        df = keep_sharing_tags(df, dataset, consensus_tags)
+        df = consensus_overlap_boost(df, dataset, consensus_tags, consensus_boost)
     if hard_filters:
         df = apply_hard_filters(df, dataset, require_known_reviews=require_known_reviews,
                                 min_reviews=min_reviews)
