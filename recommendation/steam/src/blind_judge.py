@@ -46,8 +46,13 @@ RUBRIC = (
     "3 = 매우 타당 (이 사람에게 확실히 맞다) · 2 = 타당 (방향은 맞다) · "
     "1 = 약함 (장르만 겹치고 경험이 다르다) · 0 = 부적절 (나오면 안 된다)"
 )
+# 2026-08-11: FRANCHISE_OR_VARIANT 를 없앴다. "시리즈의 다른 게임"(Witcher 1 ← Witcher 3,
+# HOI3 ← HOI4)은 실패가 아니라 **좋은 추천**이다 — 이미 가진 게임을 빼는 건 판정이 아니라
+# `exclude_appids` 가 할 일이다. 이 태그 때문에 초기 라운드가 정상 추천을 1점으로 깎았고,
+# 뒤 라운드는 같은 상황을 3점으로 줘서 기준이 갈라졌다(교정: CORRECTIONS_V1).
+# 대신 남긴 것은 **같은 게임의 다른 SKU** — 리마스터 묶음처럼 새 게임이 아닌 경우다.
 TAGS = ("IRRELEVANT", "GENRE_ONLY", "KEYWORD_MATCH", "MODE_MISMATCH",
-        "FRANCHISE_OR_VARIANT", "TOO_NICHE", "LOW_QUALITY")
+        "SAME_GAME_DIFFERENT_SKU", "TOO_NICHE", "LOW_QUALITY")
 
 
 def _game_info(dataset: pd.DataFrame) -> dict[int, dict]:
