@@ -81,8 +81,10 @@ def test_legacy_seeds_are_frozen():
 
     judged31 = LEGACY_PROFILES + NICHE_PROFILES + LOWREV_PROFILES
     assert seeds_fingerprint(judged31) == "eeaf06d349a3"
-    # 현재 평가 집합(35개)의 지문. 바뀌면 프로필이 편집된 것이다 — 의도한 변경인지 확인할 것.
-    assert seeds_fingerprint(ALL_PROFILES) == "cebf076832c9"
+    # 현재 평가 집합(43개)의 지문. 바뀌면 프로필이 편집된 것이다 — 의도한 변경인지 확인할 것.
+    # 2026-08-14 감사 후 8개 추가(2시드×3 · MMO/스포츠/JRPG · 6시드 · 20시드)로
+    # cebf076832c9 → 888d9744061f. 기존 35개의 시드는 그대로다(위 judged31 지문이 증인).
+    assert seeds_fingerprint(ALL_PROFILES) == "888d9744061f"
 
 
 def test_fingerprint_detects_a_changed_seed():
@@ -288,3 +290,30 @@ def test_dyn_scenarios_are_frozen():
     profiles = [{"profile_id": k, "liked": v["base"] + ([v["add"]] if "add" in v else [])}
                 for k, v in sorted(DYN_SCENARIOS.items())]
     assert seeds_fingerprint(profiles) == "1c3e4e5afcf8"
+
+
+def test_seed_count_distribution_covers_the_user_journey():
+    """좋아요 개수 분포가 실사용자 여정을 덮어야 한다.
+
+    2026-08-14 감사: 35개 중 31개가 3시드라 상시 측정 지점이 사실상 하나뿐이었다.
+    특히 2시드는 전이 평가에서 확인된 **품질 저점**(0.80~0.90)이자 온보딩 사용자가
+    전원 거쳐가는 구간인데 정적 프로필이 0개였다. 다시 3시드로 쏠리면 여기서 잡는다.
+    """
+    counts = [len(p["liked"]) for p in ALL_PROFILES]
+    assert sum(1 for c in counts if c == 1) >= 2, "단일 시드(집계 레버가 안 듣는 구간)"
+    assert sum(1 for c in counts if c == 2) >= 3, "2시드 — 확인된 품질 저점"
+    assert sum(1 for c in counts if 4 <= c <= 9) >= 2, "활성 사용자 구간"
+    assert max(counts) >= 20, "파워 유저 — 인터리빙 버킷 > 페이지 크기"
+
+
+def test_gap_axes_do_not_reuse_holdout_seeds():
+    """공백 축(MMO·스포츠·JRPG)은 홀드아웃과 시드가 겹치면 안 된다.
+
+    홀드아웃은 1회 소진됐으므로, 같은 시드를 재사용하면 '한 번도 안 쓴 데이터'로
+    측정한 0.61(MMO)·0.72(스포츠)와 앞으로의 개발 셋 수치를 비교할 수 없게 된다.
+    """
+    from src.build_p1_profiles import GAP_AXIS_PROFILES, HOLDOUT_PROFILES
+
+    ho = {a for p in HOLDOUT_PROFILES for a in p["liked"]}
+    for p in GAP_AXIS_PROFILES:
+        assert not (ho & set(p["liked"])), p["profile_id"]

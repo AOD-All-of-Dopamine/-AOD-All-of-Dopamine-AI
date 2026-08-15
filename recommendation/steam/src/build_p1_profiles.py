@@ -187,8 +187,53 @@ LONGTAIL_PROFILES = [
      "liked": [218740, 408650, 1803140]},        # Pid 296 / ChromaGun 294 / Deer & Boy 297
 ]
 
+#: 2026-08-14 프로필 감사에서 드러난 공백을 메우는 8개.
+#:
+#: 감사 결과 커버리지·인기도·연식은 적절했으나 **좋아요 개수 분포가 현실을 못 덮었다**:
+#: 35개 중 31개가 3시드라, 실사용자 여정(1 → 2 → 3 → … → 수십)에서 상시 측정되는
+#: 지점이 사실상 하나뿐이었다. 축으로는 MMO·스포츠·JRPG 가 개발 셋에 아예 없었고
+#: (홀드아웃에만 있었는데 1회 소진돼 회귀 감시가 불가능했다).
+#:
+#: TWO_SEED_PROFILES — **확인된 품질 저점이자 전원 경유지.** 전이 평가에서 2시드 구간이
+#:   0.80~0.90 으로 저점이었다: 단일시드 희귀태그 필터는 꺼지는데 top2_mean 은 아직
+#:   "2개 전부의 평균"이라 선택의 여지가 없다. 인기도 3밴드로 나눠 비례 하한의
+#:   켜짐/꺼짐 분기도 함께 덮는다(대작 112k → 하한 112 · 중견 23k · 저리뷰 8.9k → 꺼짐).
+#: GAP_AXIS_PROFILES — 홀드아웃 시드와 **완전 무겹침**으로 재구성한다. MMO(0.61)·
+#:   스포츠(0.72)는 홀드아웃에서 실패한 축인데, 앞으로 고쳐도 잴 프로필이 없었다.
+#: BIGLIB_PROFILES — 6시드(활성)·20시드(파워). 20시드는 인터리빙의 구조적 한계를
+#:   직접 친다: 버킷 20개인데 페이지는 10칸이라 bucket_offset 회전이 실제로 도는지.
+TWO_SEED_PROFILES = [
+    # 대작 밴드(중앙 112k) — 시드 비례 하한이 켜지는 쪽
+    {"profile_id": "two_bigaction", "liked": [1593500, 1151640], "declared": "coherent", "split": DEV},
+    # 중견 밴드(중앙 23k) — 리듬 축도 함께 보강(개발 셋 시드 1개뿐이었다)
+    {"profile_id": "two_rhythm_arcade", "liked": [247080, 531510], "declared": "coherent", "split": VAL},
+    # 저리뷰 밴드(중앙 8.9k) — 하한이 꺼지는 쪽
+    {"profile_id": "two_cozy_puzzle", "liked": [1307580, 3035120], "declared": "coherent", "split": DEV},
+]
+
+GAP_AXIS_PROFILES = [
+    # 홀드아웃 ho_mmo(ESO/New World/OSRS) 와 무겹침
+    {"profile_id": "coh_mmo", "liked": [1284210, 2429640, 761890], "declared": "coherent", "split": VAL},
+    # 홀드아웃 ho_sports(EA FC25/NBA2K25/FM26) 와 무겹침
+    {"profile_id": "coh_sports", "liked": [1506830, 3230400, 2385530], "declared": "coherent", "split": DEV},
+    # 홀드아웃 ho_jrpg(P4G/DQXI/Tales of Arise) 와 무겹침
+    {"profile_id": "coh_jrpg", "liked": [2161700, 921570, 251150], "declared": "coherent", "split": VAL},
+]
+
+BIGLIB_PROFILES = [
+    # 활성 사용자 6시드 — 3인칭 액션 어드벤처 대작 취향
+    {"profile_id": "six_action_adv", "liked": [1174180, 1091500, 1817070, 203160, 1332010, 1259420],
+     "declared": "coherent", "split": DEV},
+    # 파워 유저 20시드 — 현실적인 라이브러리는 넓다. 인터리빙 버킷 20 vs 페이지 10 검증용.
+    {"profile_id": "twenty_broad",
+     "liked": [105600, 322330, 400, 391540, 40800, 387290, 632360, 250900, 646570, 49520,
+               22380, 582010, 381210, 286160, 200510, 570940, 346110, 594650, 1085660, 377160],
+     "declared": "mixed", "split": VAL},
+]
+
 ALL_PROFILES = [p for p in LEGACY_PROFILES if p["profile_id"] not in RETIRED] \
-    + NICHE_PROFILES + LOWREV_PROFILES + MIX_V2_PROFILES + LONGTAIL_PROFILES
+    + NICHE_PROFILES + LOWREV_PROFILES + MIX_V2_PROFILES + LONGTAIL_PROFILES \
+    + TWO_SEED_PROFILES + GAP_AXIS_PROFILES + BIGLIB_PROFILES
 
 NICHE_REVIEW_BAND = (1000, 20000)
 LOWREV_REVIEW_BAND = (100, 2000)
