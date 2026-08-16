@@ -231,9 +231,68 @@ BIGLIB_PROFILES = [
      "declared": "mixed", "split": VAL},
 ]
 
+#: SEEDCOUNT_PROFILES — 시드 개수 축. 기존 43개는 시드 3개에 34개가 몰려 있었다
+#:   (1개 2 · 2개 3 · 3개 34 · 5개 1 · 6개 1 · 10개 1 · 20개 1). 실제 사용자는
+#:   좋아요를 5~10개 누르는데 그 구간의 근거가 프로필 3개뿐이었다.
+#:
+#:   시드가 늘면 집계(`top2_mean`)의 의미가 달라진다 — 3개일 때는 "3개 중 2개와 맞아라"
+#:   지만 10개일 때는 "10개 중 2개와 맞아라"라서 훨씬 느슨하다. 그 완화가 어디서
+#:   무너지는지 보려면 개수별로 축이 있어야 한다.
+#:
+#:   기존 시드와 최대한 겹치지 않게 골랐다(겹치면 새 증거가 아니라 재측정이 된다).
+#:   split 은 절반씩 나눴다 — DEV 로만 채우면 43개에서 저지른 과적합을 반복한다.
+SEEDCOUNT_PROFILES = [
+    # ── 5시드 ────────────────────────────────────────────────────────────
+    # 대작 협동 슈터 (중앙 ~90k)
+    {"profile_id": "five_coop_shooter",
+     "liked": [218620, 232090, 552500, 1361210, 553850],
+     "declared": "coherent", "split": DEV},
+    # 내러티브 탐험 — 워킹 시뮬레이터 (중앙 ~40k)
+    {"profile_id": "five_walking_sim",
+     "liked": [383870, 232430, 388880, 481510, 221910],
+     "declared": "coherent", "split": VAL},
+    # 장르가 제각각인 명작 모음 — 실제 라이브러리에 흔한 형태 (중앙 ~195k)
+    {"profile_id": "five_mixed_acclaimed",
+     "liked": [620, 1145360, 268910, 504230, 753640],
+     "declared": "mixed", "split": VAL},
+
+    # ── 7시드 ────────────────────────────────────────────────────────────
+    # 자동화/공장 — 인기 4개 + 저리뷰 3개가 섞인 한 축
+    {"profile_id": "seven_automation",
+     "liked": [526870, 1366540, 1062090, 1594320, 1318690, 1127400, 1457320],
+     "declared": "coherent", "split": DEV},
+    # 협동 호러 — 리뷰 5천~9만의 중견 밴드에 몰려 있다
+    {"profile_id": "seven_horror_coop",
+     "liked": [1274570, 1304930, 2881650, 1929610, 1562420, 493520, 1944430],
+     "declared": "coherent", "split": VAL},
+    # 저리뷰~중견 인디 혼합 — 메트로배니아·퍼즐·탐험이 섞인 취향
+    {"profile_id": "seven_lowrev_indie",
+     "liked": [1669420, 1231880, 1931770, 553420, 813230, 1055540, 368340],
+     "declared": "mixed", "split": DEV},
+
+    # ── 10시드 ───────────────────────────────────────────────────────────
+    # JRPG 10개 — coh_jrpg(3시드, P@50 0.74)를 개수 축에서 다시 친다
+    {"profile_id": "ten_jrpg",
+     "liked": [1244090, 1229240, 3014320, 579180, 1658280, 2014380, 1079830, 854940,
+               1776380, 251290],
+     "declared": "coherent", "split": VAL},
+    # 코지 10개 — two_cozy_puzzle(2시드, P@50 0.58)의 개수 축 대응
+    {"profile_id": "ten_cozy",
+     "liked": [1135690, 1455840, 972660, 1458100, 1158160, 1896700, 1177980, 2198150,
+               2533960, 1970460],
+     "declared": "coherent", "split": DEV},
+    # 현실적인 잡탕 10개 — 20시드(twenty_broad)와 3시드 사이를 메운다
+    # Balatro·Vampire Survivors 는 mix2_modern_roguelite(dev)가 이미 쓴다 — 누수를 피해
+    # Slay the Spire 2·Deep Rock Galactic: Survivor 로 대체했다.
+    {"profile_id": "ten_mixed_library",
+     "liked": [2321470, 239030, 255710, 945360, 319630, 2868840, 1030300,
+               1145350, 924970, 1135690],
+     "declared": "mixed", "split": VAL},
+]
+
 ALL_PROFILES = [p for p in LEGACY_PROFILES if p["profile_id"] not in RETIRED] \
     + NICHE_PROFILES + LOWREV_PROFILES + MIX_V2_PROFILES + LONGTAIL_PROFILES \
-    + TWO_SEED_PROFILES + GAP_AXIS_PROFILES + BIGLIB_PROFILES
+    + TWO_SEED_PROFILES + GAP_AXIS_PROFILES + BIGLIB_PROFILES + SEEDCOUNT_PROFILES
 
 NICHE_REVIEW_BAND = (1000, 20000)
 LOWREV_REVIEW_BAND = (100, 2000)
