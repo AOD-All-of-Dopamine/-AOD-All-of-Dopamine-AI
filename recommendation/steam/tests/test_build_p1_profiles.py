@@ -81,10 +81,13 @@ def test_legacy_seeds_are_frozen():
 
     judged31 = LEGACY_PROFILES + NICHE_PROFILES + LOWREV_PROFILES
     assert seeds_fingerprint(judged31) == "eeaf06d349a3"
-    # 현재 평가 집합(43개)의 지문. 바뀌면 프로필이 편집된 것이다 — 의도한 변경인지 확인할 것.
+    # 현재 평가 집합(52개)의 지문. 바뀌면 프로필이 편집된 것이다 — 의도한 변경인지 확인할 것.
     # 2026-08-14 감사 후 8개 추가(2시드×3 · MMO/스포츠/JRPG · 6시드 · 20시드)로
     # cebf076832c9 → 888d9744061f. 기존 35개의 시드는 그대로다(위 judged31 지문이 증인).
-    assert seeds_fingerprint(ALL_PROFILES) == "888d9744061f"
+    # 2026-08-15 시드 개수 축 9개 추가(5·7·10시드)로 888d9744061f → c34836afffed.
+    # 신규 3개는 홀드아웃 ho_biglib 과 시드가 겹쳐(Portal 2 · Cuphead · Firewatch)
+    # 판정 전에 GRIS · Baba Is You · Ethan Carter 로 교체했다 — 홀드아웃 독립성이 우선이다.
+    assert seeds_fingerprint(ALL_PROFILES) == "c34836afffed"
 
 
 def test_fingerprint_detects_a_changed_seed():

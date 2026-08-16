@@ -247,13 +247,15 @@ SEEDCOUNT_PROFILES = [
     {"profile_id": "five_coop_shooter",
      "liked": [218620, 232090, 552500, 1361210, 553850],
      "declared": "coherent", "split": DEV},
-    # 내러티브 탐험 — 워킹 시뮬레이터 (중앙 ~40k)
+    # 내러티브 탐험 — 워킹 시뮬레이터
+    # Firewatch(383870)는 홀드아웃 ho_biglib 이 쓰므로 Ethan Carter 로 대체했다.
     {"profile_id": "five_walking_sim",
-     "liked": [383870, 232430, 388880, 481510, 221910],
+     "liked": [258520, 232430, 388880, 481510, 221910],
      "declared": "coherent", "split": VAL},
-    # 장르가 제각각인 명작 모음 — 실제 라이브러리에 흔한 형태 (중앙 ~195k)
+    # 장르가 제각각인 명작 모음 — 실제 라이브러리에 흔한 형태
+    # Portal 2(620)·Cuphead(268910)는 홀드아웃 ho_biglib 이 쓴다 — GRIS·Baba Is You 로 대체.
     {"profile_id": "five_mixed_acclaimed",
-     "liked": [620, 1145360, 268910, 504230, 753640],
+     "liked": [683320, 1145360, 736260, 504230, 753640],
      "declared": "mixed", "split": VAL},
 
     # ── 7시드 ────────────────────────────────────────────────────────────
