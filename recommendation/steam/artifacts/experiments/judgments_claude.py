@@ -1200,6 +1200,115 @@ BLIND_SEEDCOUNT_V2 = {
     ("five_walking_sim", 715380): (1, "GENRE_ONLY"),
 }
 
+
+#: 백분위 버그 수정 + rec_boost 0.08 설정에서 새로 올라온 87쌍(52프로필 k=50).
+BLIND_PCT08 = {
+    # five_coop_shooter
+    ("five_coop_shooter", 2221490): (2, ""),
+    ("five_coop_shooter", 301640): (3, ""),
+    ("five_coop_shooter", 3282300): (2, ""),
+    ("five_coop_shooter", 3124540): (2, ""),
+    ("five_coop_shooter", 2737070): (2, ""),
+
+    # five_mixed_acclaimed
+    ("five_mixed_acclaimed", 3791540): (1, "GENRE_ONLY"),
+    ("five_mixed_acclaimed", 1366070): (1, "GENRE_ONLY"),
+    ("five_mixed_acclaimed", 2851290): (1, "GENRE_ONLY"),
+    ("five_mixed_acclaimed", 96100): (2, ""),
+    ("five_mixed_acclaimed", 1055540): (3, ""),
+    ("five_mixed_acclaimed", 765520): (1, "GENRE_ONLY"),
+    ("five_mixed_acclaimed", 3219450): (1, "GENRE_ONLY"),
+    ("five_mixed_acclaimed", 656350): (3, ""),
+    ("five_mixed_acclaimed", 1345890): (2, ""),
+    ("five_mixed_acclaimed", 2404430): (1, "GENRE_ONLY"),
+    ("five_mixed_acclaimed", 70300): (3, ""),
+    ("five_mixed_acclaimed", 568320): (1, "GENRE_ONLY"),
+    ("five_mixed_acclaimed", 237930): (3, ""),
+
+    # five_walking_sim
+    ("five_walking_sim", 3059500): (1, "GENRE_ONLY"),
+    ("five_walking_sim", 383870): (3, ""),
+    ("five_walking_sim", 3337690): (1, "GENRE_ONLY"),
+    ("five_walking_sim", 2228890): (1, "GENRE_ONLY"),
+    ("five_walking_sim", 3798730): (1, "GENRE_ONLY"),
+    ("five_walking_sim", 4701370): (1, "GENRE_ONLY"),
+    ("five_walking_sim", 3389720): (1, "GENRE_ONLY"),
+    ("five_walking_sim", 239200): (2, ""),
+    ("five_walking_sim", 325120): (1, "GENRE_ONLY"),
+    ("five_walking_sim", 1589500): (1, "GENRE_ONLY"),
+    ("five_walking_sim", 1690880): (1, "GENRE_ONLY"),
+
+    # seven_automation
+    ("seven_automation", 1475310): (2, ""),
+    ("seven_automation", 949230): (1, "GENRE_ONLY"),
+    ("seven_automation", 403190): (2, ""),
+    ("seven_automation", 1484320): (1, "GENRE_ONLY"),
+    ("seven_automation", 1915250): (2, ""),
+    ("seven_automation", 3189820): (1, "GENRE_ONLY"),
+
+    # seven_horror_coop
+    ("seven_horror_coop", 1250): (2, ""),
+    ("seven_horror_coop", 1987080): (3, ""),
+    ("seven_horror_coop", 3722330): (3, ""),
+    ("seven_horror_coop", 3280430): (1, "GENRE_ONLY"),
+    ("seven_horror_coop", 1200770): (2, ""),
+    ("seven_horror_coop", 3362670): (1, "GENRE_ONLY"),
+    ("seven_horror_coop", 1943950): (3, ""),
+    ("seven_horror_coop", 3241660): (3, ""),
+    ("seven_horror_coop", 3396740): (1, "GENRE_ONLY"),
+    ("seven_horror_coop", 1326470): (2, ""),
+
+    # seven_lowrev_indie
+    ("seven_lowrev_indie", 931430): (1, "GENRE_ONLY"),
+    ("seven_lowrev_indie", 3824740): (2, ""),
+    ("seven_lowrev_indie", 210970): (3, ""),
+    ("seven_lowrev_indie", 1742800): (1, "GENRE_ONLY"),
+    ("seven_lowrev_indie", 1057090): (3, ""),
+    ("seven_lowrev_indie", 584400): (2, ""),
+    ("seven_lowrev_indie", 2079500): (2, ""),
+    ("seven_lowrev_indie", 359510): (3, ""),
+    ("seven_lowrev_indie", 2887240): (1, "GENRE_ONLY"),
+    ("seven_lowrev_indie", 2072970): (1, "GENRE_ONLY"),
+    ("seven_lowrev_indie", 638230): (3, ""),
+    ("seven_lowrev_indie", 332200): (3, ""),
+
+    # ten_cozy
+    ("ten_cozy", 2795860): (1, "GENRE_ONLY"),
+    ("ten_cozy", 2021960): (2, ""),
+    ("ten_cozy", 4676290): (1, "GENRE_ONLY"),
+    ("ten_cozy", 3482510): (2, ""),
+    ("ten_cozy", 1622350): (3, ""),
+    ("ten_cozy", 3282520): (2, ""),
+    ("ten_cozy", 2016460): (3, ""),
+    ("ten_cozy", 2658510): (2, ""),
+    ("ten_cozy", 2456260): (2, ""),
+    ("ten_cozy", 2418520): (3, ""),
+
+    # ten_jrpg
+    ("ten_jrpg", 321960): (1, "GENRE_ONLY"),
+    ("ten_jrpg", 297000): (1, "GENRE_ONLY"),
+    ("ten_jrpg", 231740): (2, ""),
+    ("ten_jrpg", 666080): (1, "GENRE_ONLY"),
+    ("ten_jrpg", 658050): (2, ""),
+    ("ten_jrpg", 294860): (3, ""),
+    ("ten_jrpg", 269990): (1, "GENRE_ONLY"),
+    ("ten_jrpg", 341510): (1, "GENRE_ONLY"),
+    ("ten_jrpg", 207350): (3, ""),
+    ("ten_jrpg", 3020510): (1, "GENRE_ONLY"),
+    ("ten_jrpg", 2128500): (1, "GENRE_ONLY"),
+    ("ten_jrpg", 200910): (1, "GENRE_ONLY"),
+
+    # ten_mixed_library
+    ("ten_mixed_library", 1265920): (3, ""),
+    ("ten_mixed_library", 434570): (2, ""),
+    ("ten_mixed_library", 3097560): (3, ""),
+    ("ten_mixed_library", 242920): (3, ""),
+    ("ten_mixed_library", 2285630): (2, ""),
+    ("ten_mixed_library", 1904480): (3, ""),
+    ("ten_mixed_library", 1201540): (3, ""),
+    ("ten_mixed_library", 619820): (3, ""),
+}
+
 ALL = {**REP_V2, **POSTPROCESS}
 
 # --- 품질 하한(require_known_reviews) + rec_boost 0.15 의 rank 1~30 에서 새로 진입한 후보 ---
@@ -9019,4 +9128,4 @@ BLIND_LEX30 = {
 ALL = {**REP_V2, **POSTPROCESS, **DEPTH_V1, **FULL_V1, **REP_V2_TOPUP, **MIN_REV_300,
        **RANKER_DIAG, **BOOST_SWEEP, **VAL_V1, **DEV_TOPUP_V1, **NICHE_V1,
        **BLIND_ROUND1, **BLIND_TAGS, **BLIND_FLOOR, **BLIND_LOWREV,
-       **BLIND_NOTAGS31, **BLIND_TAGSFULL, **BLIND_K30_P1, **BLIND_K30_P2, **BLIND_K30_P3, **BLIND_K50_P4, **BLIND_K50_P5, **BLIND_K50_FILL, **BLIND_STRATEGY_S1, **BLIND_STRATEGY_S2, **BLIND_STRATEGY_S4, **BLIND_STRATEGY_S5, **BLIND_FINAL_F30, **BLIND_FINAL_F50, **BLIND_ADAPT, **BLIND_CONSENSUS, **BLIND_K75, **BLIND_CF300, **BLIND_CBOOST, **BLIND_DDM, **BLIND_HUB05, **BLIND_HUB25, **BLIND_HUBFINE, **BLIND_K100, **BLIND_K100_PVP, **BLIND_SSF, **BLIND_PS10, **BLIND_HOLDOUT, **BLIND_DYN, **BLIND_SCAP, **BLIND_DISLIKE, **BLIND_NEW8, **BLIND_FILL43, **BLIND_TWOMAX, **BLIND_LEX30, **BLIND_PCT15, **BLIND_SEEDCOUNT, **BLIND_SEEDCOUNT_V2, **CORRECTIONS_V1}
+       **BLIND_NOTAGS31, **BLIND_TAGSFULL, **BLIND_K30_P1, **BLIND_K30_P2, **BLIND_K30_P3, **BLIND_K50_P4, **BLIND_K50_P5, **BLIND_K50_FILL, **BLIND_STRATEGY_S1, **BLIND_STRATEGY_S2, **BLIND_STRATEGY_S4, **BLIND_STRATEGY_S5, **BLIND_FINAL_F30, **BLIND_FINAL_F50, **BLIND_ADAPT, **BLIND_CONSENSUS, **BLIND_K75, **BLIND_CF300, **BLIND_CBOOST, **BLIND_DDM, **BLIND_HUB05, **BLIND_HUB25, **BLIND_HUBFINE, **BLIND_K100, **BLIND_K100_PVP, **BLIND_SSF, **BLIND_PS10, **BLIND_HOLDOUT, **BLIND_DYN, **BLIND_SCAP, **BLIND_DISLIKE, **BLIND_NEW8, **BLIND_FILL43, **BLIND_TWOMAX, **BLIND_LEX30, **BLIND_PCT15, **BLIND_SEEDCOUNT, **BLIND_SEEDCOUNT_V2, **BLIND_PCT08, **CORRECTIONS_V1}
