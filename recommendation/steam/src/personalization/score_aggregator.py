@@ -3,6 +3,37 @@ import pandas as pd
 
 
 class ScoreAggregator:
+    """시드별 유사도 행렬(시드 × 후보)을 후보 하나당 점수 하나로 접는다.
+
+    ────────────────────────────────────────────────────────────────────────
+    2026-08-15 — **"공통 축을 강제하는" 집계는 기각됐다. 다시 하지 말 것.**
+
+    동기: `two_rhythm_arcade`(NecroDancer + Just Shapes & Beats)의 Top-20 부적합
+    10개가 **전부** 1점(GENRE_ONLY)의 던전 크롤러·벨트스크롤이었다 —
+    Crawl · Charlie Murder · Legend of Dungeon · Castle Crashers · Gauntlet · Rotwood.
+    NecroDancer 의 태그 15개 중 리듬 계열은 3개뿐이고 나머지는 Roguelike ·
+    Dungeon Crawler · RPG · Roguelite · Procedural Generation 이다. 시드가 2개면
+    `top2_mean` 은 그냥 평균이라 한쪽만 닮아도 다른 쪽의 낮은 점수를 덮는다.
+
+    그래서 "1등 시드와 2등 시드의 격차"를 벌하는 집계를 넣어 봤다:
+
+        score = top2_mean − α · (top1 − top2)      (n=2 에서 α=0.5 는 정확히 min)
+
+    측정 (two_rhythm_arcade, Top-20 전수 판정):
+        α=0     (=top2_mean)   0.50
+        α=0.25                 0.30
+        α=0.5   (=min)         0.15   ← 0점(무관)까지 등장
+
+    **역효과다.** 밀려 올라온 것은 리듬 게임이 아니라 迷宮校舎(호러) · PAYDAY ·
+    Watcher Chronicles(소울라이크) · Gamble With Your Friends 였다.
+
+    이유: **두 시드 벡터의 교집합은 두 장르의 교집합이 아니다.** NecroDancer 와
+    JS&B 가 임베딩에서 실제로 공유하는 방향은 "리듬"이 아니라 "로컬 협동 2D 액션"
+    이다. 평균 풀링 밀집 벡터는 장르 축으로 분해되지 않으므로, min 을 취하면
+    두 게임의 **부수적** 공통점을 정확히 집어낸다. 원하는 것의 반대다.
+    ────────────────────────────────────────────────────────────────────────
+    """
+
     def aggregate_all(
         self,
         sim_matrix: np.ndarray,
