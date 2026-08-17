@@ -141,8 +141,19 @@ class TestInterleave:
         assert list(out["dominant_seed"])[:4] == [10, 20, 10, 20]
 
     def test_strongest_seed_takes_first_place(self):
-        ranked = make_ranked([1, 2], scores=[0.5, 0.9], seeds=[10, 20])
+        """정렬된 입력에서는 1등 점수 버킷이 첫 칸을 갖는다 — 서빙의 조건이다."""
+        ranked = make_ranked([2, 1], scores=[0.9, 0.5], seeds=[20, 10])
         assert interleave_by_seed(ranked, 2).iloc[0]["dominant_seed"] == 20
+
+    def test_caller_order_is_preserved(self):
+        """**재정렬하지 않는다.** 앞 단계가 세운 순서를 버리지 않는지 지킨다.
+
+        점수와 어긋난 순서를 일부러 넣는다. 점수로 재정렬하면 20번이 첫 칸을 갖지만,
+        입력 순서를 존중하면 10번이 갖는다. Steam 에서 이 재정렬 때문에 순서를 세우는
+        후처리 실험 세 개가 조용히 무효가 됐다.
+        """
+        ranked = make_ranked([1, 2], scores=[0.5, 0.9], seeds=[10, 20])
+        assert interleave_by_seed(ranked, 2).iloc[0]["dominant_seed"] == 10
 
     def test_uneven_buckets_do_not_shorten_list(self):
         ranked = make_ranked([1, 2, 3, 4], scores=[.9, .8, .7, .6], seeds=[10, 10, 10, 20])

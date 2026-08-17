@@ -145,7 +145,10 @@ def interleave_by_seed(ranked: pd.DataFrame, top_n: int = 100) -> pd.DataFrame:
     **전역 상한이 아니라 라운드로빈이어야 한다.** 상한만 걸면 "1~50위는 로판, 51~100위는
     무협"이 되어 1~5페이지가 전부 로판이다. 라운드로빈은 매 페이지에 시드가 섞이게 한다.
 
-    버킷 순서는 각 버킷 1등의 final_score 내림차순 — 가장 강한 시드가 1위 자리를 갖는다.
+    **입력 순서가 우선순위다 — 이 함수는 재정렬하지 않고 보존한다.** 호출자가 넘기는
+    `ranked` 가 원하는 순서로 정렬돼 있어야 한다. 서빙에서는 `ranker.rank()` 가
+    final_score 내림차순으로 정렬하고 그 뒤 후처리는 걸러내기만 하므로, 결과적으로
+    "가장 강한 시드가 1위 자리를 갖고 버킷 안도 점수순"이 성립한다.
     빈 버킷은 자동으로 건너뛰므로 코퍼스에 이웃이 없는 시드가 있어도 목록이 짧아지지 않는다.
     """
     if ranked.empty or "dominant_seed" not in ranked.columns or ranked["dominant_seed"].isna().all():
@@ -154,11 +157,11 @@ def interleave_by_seed(ranked: pd.DataFrame, top_n: int = 100) -> pd.DataFrame:
             out["rank"] = range(1, len(out) + 1)
         return out
 
-    buckets = [
-        g.sort_values("final_score", ascending=False)
-        for _, g in ranked.groupby("dominant_seed", sort=False)
-    ]
-    buckets.sort(key=lambda b: -b["final_score"].iloc[0])
+    # `sort=False` 가 이미 (a) 버킷을 첫 등장 순서로, (b) 버킷 안을 원래 순서로 유지한다.
+    # 입력이 final_score 내림차순이면 추가 정렬은 중복이고, 아니면 앞 단계가 세운 순서를
+    # 통째로 버린다. Steam 에서 이 지뢰가 실제로 터졌다 — 순서를 세우는 후처리 실험
+    # 세 개가 조용히 무효가 됐고, 측정값이 소수점까지 동일해서 겨우 발견했다.
+    buckets = [g for _, g in ranked.groupby("dominant_seed", sort=False)]
 
     picked, depth = [], 0
     while len(picked) < top_n and any(depth < len(b) for b in buckets):
