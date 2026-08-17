@@ -288,7 +288,10 @@ def interleave_by_seed(ranked: pd.DataFrame, top_n: int = 100,
     **전역 상한이 아니라 라운드로빈이어야 한다.** 상한만 걸면 "1~50위는 농장, 51~100위는
     FPS"가 되어 1~5페이지가 전부 농장이다. 라운드로빈은 매 페이지에 시드가 섞이게 한다.
 
-    버킷 순서는 각 버킷 1등의 final_score 내림차순 — 가장 강한 시드가 1위 자리를 갖는다.
+    **입력 순서가 우선순위다 — 이 함수는 재정렬하지 않고 보존한다.** 호출자가 넘기는
+    `ranked` 가 원하는 순서로 정렬돼 있어야 한다. 실서빙에서는 `ranker.rank()` 가
+    final_score 내림차순으로 정렬하고 그 뒤 후처리는 걸러내기만 하므로, 결과적으로
+    "가장 강한 시드가 1위 자리를 갖고 버킷 안도 점수순"이 성립한다.
     빈 버킷은 자동으로 건너뛰므로, 코퍼스에 이웃이 없는 시드가 있어도 목록이 짧아지지 않는다.
 
     **시드 개수에 따른 동작** (실측, page_size=10 기준):
@@ -315,11 +318,17 @@ def interleave_by_seed(ranked: pd.DataFrame, top_n: int = 100,
             out["rank"] = range(1, len(out) + 1)
         return out
 
-    buckets = [
-        g.sort_values("final_score", ascending=False)
-        for _, g in ranked.groupby("dominant_seed", sort=False)
-    ]
-    buckets.sort(key=lambda b: -b["final_score"].iloc[0])
+    # **들어온 순서를 그대로 존중한다.** `sort=False` 는 (a) 버킷을 첫 등장 순서로,
+    # (b) 버킷 안을 원래 순서로 유지한다. 입력이 final_score 내림차순이면 그 자체로
+    # "가장 강한 시드가 1위, 버킷 안은 점수순"이 성립하므로 추가 정렬이 필요 없다.
+    #
+    # 2026-08-15 — 예전에는 여기서 버킷마다 `sort_values("final_score")` 를 하고
+    # 버킷 순서도 1등 점수로 다시 매겼다. **입력이 이미 정렬돼 있으면 중복이고,
+    # 아니면 앞 단계가 세운 순서를 통째로 버린다.** 합의 태그 재정렬 실험 세 개가
+    # 이것 때문에 조용히 무효가 됐고(측정값이 소수점까지 동일해서 의심하게 됐다),
+    # 원인을 찾는 데 시간을 썼다. 순서를 세우는 후처리를 앞에 넣으려면 이 함수가
+    # 그것을 보존해야 한다.
+    buckets = [g for _, g in ranked.groupby("dominant_seed", sort=False)]
     if bucket_offset and len(buckets) > 1:
         k = bucket_offset % len(buckets)
         buckets = buckets[k:] + buckets[:k]

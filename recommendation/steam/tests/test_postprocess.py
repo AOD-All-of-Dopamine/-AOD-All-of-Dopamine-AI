@@ -55,9 +55,31 @@ def test_interleave_round_robins_across_seeds():
 
 
 def test_interleave_strongest_seed_gets_first_slot():
-    ranked = _ranked([1, 2, 3, 4], [20, 20, 10, 10], scores=[0.5, 0.4, 0.9, 0.8])
+    """정렬된 입력에서는 1등 점수 버킷이 첫 칸을 갖는다 — 실서빙의 조건이다.
+
+    `ranker.rank()` 가 final_score 내림차순으로 넘기고 그 뒤 후처리는 걸러내기만 하므로,
+    인터리빙이 보는 프레임은 항상 정렬돼 있다.
+    """
+    ranked = _ranked([3, 4, 1, 2], [10, 10, 20, 20], scores=[0.9, 0.8, 0.5, 0.4])
     out = interleave_by_seed(ranked, top_n=4)
-    assert out.iloc[0]["dominant_seed"] == 10  # 1등 점수가 더 높은 버킷이 먼저
+    assert out.iloc[0]["dominant_seed"] == 10
+
+
+def test_interleave_preserves_caller_order():
+    """**재정렬하지 않는다.** 앞 단계가 세운 순서를 버리지 않는지 지킨다.
+
+    예전 구현은 버킷마다 final_score 로 다시 정렬하고 버킷 순서도 1등 점수로 다시
+    매겼다. 그 때문에 순서를 세우는 후처리(합의 태그 재정렬 실험 3개)가 조용히
+    무효가 됐다 — 측정값이 소수점까지 동일해서 겨우 발견했다.
+
+    여기서는 일부러 점수와 어긋난 순서를 넣는다. 점수로 재정렬하면 20번 시드가
+    첫 칸을 갖지만, 입력 순서를 존중하면 10번이 갖는다.
+    """
+    ranked = _ranked([1, 2, 3, 4], [10, 10, 20, 20], scores=[0.5, 0.4, 0.9, 0.8])
+    out = interleave_by_seed(ranked, top_n=4)
+    assert out.iloc[0]["dominant_seed"] == 10
+    # 버킷 안에서도 들어온 순서가 유지된다
+    assert out[out["dominant_seed"] == 10]["steam_appid"].tolist() == [1, 2]
 
 
 def test_interleave_skips_exhausted_buckets():
