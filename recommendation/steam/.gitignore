@@ -37,5 +37,11 @@ artifacts/*.pre-split/
 artifacts/*/*.broken
 artifacts/embed_redo.log
 
-# 태그 크롤 원본(110MB) — scripts 로 재수집 가능
-data/steam_tags_v1.jsonl
+# 태그 크롤 원본(110~120MB) — scripts 로 재수집 가능.
+#
+# **패턴으로 막는다.** 예전에는 파일명을 하나씩 적었는데(`data/steam_tags_v1.jsonl`),
+# 태그를 다시 크롤해서 `data/steam_tags.jsonl` 이 생겼을 때 규칙이 없어 그대로 커밋됐다.
+# 120MB 라 GitHub 하드 리밋(100MB)을 넘어 브랜치 전체 푸시가 거부됐고, 히스토리에서
+# 걷어내야 했다(커밋 f7b518c · fe1be7f · 4eb2511). 크롤 원본은 예외 없이 재수집 가능하므로
+# 확장자로 막고, 커밋해야 하는 작은 파생물은 parquet 로 떨어뜨린다.
+data/*.jsonl
