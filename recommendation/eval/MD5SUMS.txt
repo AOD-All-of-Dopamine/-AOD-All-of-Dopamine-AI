@@ -165,6 +165,10 @@ f3f37dec2fb6925143a72c067f588770  h65_l3.py
 a9a3ecb4bbfab0a6d4ff198e9cead37e  h65_preregister.md
 37d04335f9853e60fcbdff788ed1b68e  h65_result.json
 319c94b6efd6e0b1e8c7ece8f15441c8  h65_verdict.md
+197584e4079dd942e08536de8b6cb8f3  h66_agg.py
+7efb6de80511470973089fce5f72385e  h66_oracle.py
+11b8323e6774398badf3bdd8c5c75ff9  h66_preregister.md
+ca7ccda4d43066818826377044ad8ea9  h66_verdict.md
 93647ad0286b758948716ea3b4737930  README.md
 ba5f2862463f90c1d4d16e55ed9e0770  used_seeds_h50.json
 10f3a7f5e67799fff6e78da6dd2bf342  used_seeds.json
