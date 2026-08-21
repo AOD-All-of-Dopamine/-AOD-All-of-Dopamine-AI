@@ -1,0 +1,41 @@
+"""TMDB 개인화 추천 — 조립.
+
+    시드 로드 → 유사도 행렬 → 집계 → 랭킹(인기도·평점 보정) → 후처리(시리즈·인터리빙)
+
+무거운 생성자(임베딩 233MB)는 `build_components()` 로 한 번만 만들고 재사용한다.
+52프로필 평가는 이걸 52번 호출하므로 재사용이 필수다.
+"""
+import numpy as np, pandas as pd
+from src.personalization.seed_loader import SeedLoader
+from src.personalization.candidate_retriever import CandidateRetriever
+from src.personalization.score_aggregator import ScoreAggregator
+from src.personalization.personalized_ranker import PersonalizedRanker
+
+
+def build_components(artifacts=None, hub_lambda: float | None = None,
+                     vote_boost: float = 0.0, rating_boost: float = 0.0,
+                     min_overview_len: int = 0):
+    ret = CandidateRetriever(artifacts, min_overview_len=min_overview_len)
+    if hub_lambda is not None: ret.hub_lambda = hub_lambda
+    return (SeedLoader(artifacts), ret, ScoreAggregator(),
+            PersonalizedRanker(artifacts, vote_boost=vote_boost, rating_boost=rating_boost))
+
+
+def recommend(seed_rows, components=None, strategy: str = "top2_mean", top_n: int = 50,
+              postprocess_on: bool = True, postprocess_kwargs: dict | None = None,
+              exclude_rows=None, **comp_kwargs) -> pd.DataFrame:
+    loader, retriever, agg, ranker = components or build_components(**comp_kwargs)
+    embs = loader.load(list(seed_rows))
+    sim = retriever.compute_similarity_matrix(embs)
+    scored = agg.aggregate_all(sim, embs, retriever.full_corpus_frame(),
+                               strategies=[strategy])[strategy]
+    excl = set(int(r) for r in seed_rows) | set(int(r) for r in (exclude_rows or ()))
+    # 후처리가 위에서부터 걸러내므로 넉넉히 뽑아 둔다
+    rank_n = top_n * 8 if postprocess_on else top_n
+    ranked = ranker.rank(scored, exclude_rows=excl, top_n=rank_n,
+                         servable_mask=retriever.servable)
+    if postprocess_on:
+        from src.postprocess import postprocess as pp
+        ranked = pp(ranked, ranker.dataset, top_n=top_n, seed_rows=seed_rows,
+                    **(postprocess_kwargs or {}))
+    return ranked

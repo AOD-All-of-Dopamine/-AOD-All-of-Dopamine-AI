@@ -11,3 +11,4 @@ __pycache__/
 data/*.jsonl
 data/*.json
 artifacts/
+artifacts/p1/chunks/
