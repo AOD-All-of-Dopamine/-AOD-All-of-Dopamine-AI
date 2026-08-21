@@ -160,6 +160,11 @@ cf7cf4d292be39df49a5b41a1847a50c  h63_verdict.md
 11264029ca4a40e18683e64bb14124c6  h64_meta.py
 5709ce09507725b7bd060b4a230c4160  h64_preregister.md
 9ec9d9db82404d708f2b1259a174d85f  h64_verdict.md
+197a98ca0f48a0249bb74f0447484e11  h65_instrument.py
+f3f37dec2fb6925143a72c067f588770  h65_l3.py
+a9a3ecb4bbfab0a6d4ff198e9cead37e  h65_preregister.md
+37d04335f9853e60fcbdff788ed1b68e  h65_result.json
+319c94b6efd6e0b1e8c7ece8f15441c8  h65_verdict.md
 93647ad0286b758948716ea3b4737930  README.md
 ba5f2862463f90c1d4d16e55ed9e0770  used_seeds_h50.json
 10f3a7f5e67799fff6e78da6dd2bf342  used_seeds.json
