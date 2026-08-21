@@ -1,0 +1,3464 @@
+[
+ {
+  "pid": "Y368",
+  "seed": 0,
+  "dom": "wn",
+  "cand_name": "전생은 드워프인데 현생은 예술 천재"
+ },
+ {
+  "pid": "Y054",
+  "seed": 0,
+  "dom": "wn",
+  "cand_name": "이혼 후 재벌가 막내아들로 환생하다"
+ },
+ {
+  "pid": "Y568",
+  "seed": 0,
+  "dom": "wn",
+  "cand_name": "회귀헌터는 잘 살고 싶다"
+ },
+ {
+  "pid": "Y498",
+  "seed": 0,
+  "dom": "wn",
+  "cand_name": "대박인생"
+ },
+ {
+  "pid": "Y348",
+  "seed": 0,
+  "dom": "wn",
+  "cand_name": "미래를 보는 천재 매니저"
+ },
+ {
+  "pid": "Y485",
+  "seed": 0,
+  "dom": "wn",
+  "cand_name": "전생 탐정은 배우를 꿈꾼다"
+ },
+ {
+  "pid": "Y388",
+  "seed": 0,
+  "dom": "steam",
+  "cand_name": "Fallstreak: Requiem for my Homeland"
+ },
+ {
+  "pid": "Y376",
+  "seed": 0,
+  "dom": "steam",
+  "cand_name": "도색 함정"
+ },
+ {
+  "pid": "Y167",
+  "seed": 0,
+  "dom": "steam",
+  "cand_name": "심장에 해로워"
+ },
+ {
+  "pid": "Y539",
+  "seed": 0,
+  "dom": "steam",
+  "cand_name": "Last Resort"
+ },
+ {
+  "pid": "Y104",
+  "seed": 0,
+  "dom": "steam",
+  "cand_name": "メルト・アウェイ"
+ },
+ {
+  "pid": "Y018",
+  "seed": 0,
+  "dom": "steam",
+  "cand_name": "Kunado Chronicles"
+ },
+ {
+  "pid": "Y164",
+  "seed": 0,
+  "dom": "steam",
+  "cand_name": "Re:Fragment ~Absolute Ambition~"
+ },
+ {
+  "pid": "Y570",
+  "seed": 0,
+  "dom": "steam",
+  "cand_name": "OMNIMUS"
+ },
+ {
+  "pid": "Y058",
+  "seed": 0,
+  "dom": "steam",
+  "cand_name": "Himawari - The Sunflower -"
+ },
+ {
+  "pid": "Y557",
+  "seed": 0,
+  "dom": "steam",
+  "cand_name": "52 / 0 = ∞"
+ },
+ {
+  "pid": "Y401",
+  "seed": 0,
+  "dom": "tmdb",
+  "cand_name": "해롤드와 모드"
+ },
+ {
+  "pid": "Y409",
+  "seed": 0,
+  "dom": "tmdb",
+  "cand_name": "내 남편과 결혼해줘"
+ },
+ {
+  "pid": "Y278",
+  "seed": 0,
+  "dom": "tmdb",
+  "cand_name": "수어사이드 쇼"
+ },
+ {
+  "pid": "Y289",
+  "seed": 0,
+  "dom": "tmdb",
+  "cand_name": "어비스"
+ },
+ {
+  "pid": "Y107",
+  "seed": 0,
+  "dom": "tmdb",
+  "cand_name": "저승까지 파티피플!"
+ },
+ {
+  "pid": "Y021",
+  "seed": 0,
+  "dom": "tmdb",
+  "cand_name": "'백조의 노래' - Swan Song"
+ },
+ {
+  "pid": "Y231",
+  "seed": 0,
+  "dom": "tmdb",
+  "cand_name": "인피등롱"
+ },
+ {
+  "pid": "Y253",
+  "seed": 0,
+  "dom": "wn",
+  "cand_name": "농구의 신, 다시 태어나다"
+ },
+ {
+  "pid": "Y427",
+  "seed": 0,
+  "dom": "wn",
+  "cand_name": "다시 태어난 내가 당신을 만난다면"
+ },
+ {
+  "pid": "Y475",
+  "seed": 0,
+  "dom": "steam",
+  "cand_name": "Suicide Guy: Sleepin' Deeply"
+ },
+ {
+  "pid": "Y214",
+  "seed": 0,
+  "dom": "tmdb",
+  "cand_name": "고흐, 영원의 문에서"
+ },
+ {
+  "pid": "Y075",
+  "seed": 1,
+  "dom": "wn",
+  "cand_name": "검신광룡"
+ },
+ {
+  "pid": "Y228",
+  "seed": 1,
+  "dom": "wn",
+  "cand_name": "검존환생"
+ },
+ {
+  "pid": "Y014",
+  "seed": 1,
+  "dom": "wn",
+  "cand_name": "검신검마"
+ },
+ {
+  "pid": "Y386",
+  "seed": 1,
+  "dom": "wn",
+  "cand_name": "검화행"
+ },
+ {
+  "pid": "Y011",
+  "seed": 1,
+  "dom": "wn",
+  "cand_name": "환생검귀"
+ },
+ {
+  "pid": "Y400",
+  "seed": 1,
+  "dom": "steam",
+  "cand_name": "Concealed"
+ },
+ {
+  "pid": "Y316",
+  "seed": 1,
+  "dom": "steam",
+  "cand_name": "Dread Weight"
+ },
+ {
+  "pid": "Y347",
+  "seed": 1,
+  "dom": "steam",
+  "cand_name": "엔의 단검"
+ },
+ {
+  "pid": "Y441",
+  "seed": 1,
+  "dom": "steam",
+  "cand_name": "derealization"
+ },
+ {
+  "pid": "Y002",
+  "seed": 1,
+  "dom": "steam",
+  "cand_name": "Outdoor Adventures With Marisa Kirisame"
+ },
+ {
+  "pid": "Y535",
+  "seed": 1,
+  "dom": "steam",
+  "cand_name": "Death Becomes You: Yuri Onsen Vacation"
+ },
+ {
+  "pid": "Y083",
+  "seed": 1,
+  "dom": "steam",
+  "cand_name": "神祇Pantheon"
+ },
+ {
+  "pid": "Y043",
+  "seed": 1,
+  "dom": "steam",
+  "cand_name": "일레븐지스"
+ },
+ {
+  "pid": "Y340",
+  "seed": 1,
+  "dom": "tmdb",
+  "cand_name": "성검학원의 마검사"
+ },
+ {
+  "pid": "Y538",
+  "seed": 1,
+  "dom": "tmdb",
+  "cand_name": "헤븐리 소드"
+ },
+ {
+  "pid": "Y428",
+  "seed": 1,
+  "dom": "tmdb",
+  "cand_name": "신검전설"
+ },
+ {
+  "pid": "Y146",
+  "seed": 1,
+  "dom": "tmdb",
+  "cand_name": "지팡이와 검의 위스토리아"
+ },
+ {
+  "pid": "Y122",
+  "seed": 1,
+  "dom": "tmdb",
+  "cand_name": "라그나 크림슨"
+ },
+ {
+  "pid": "Y267",
+  "seed": 1,
+  "dom": "tmdb",
+  "cand_name": "낙제 기사의 영웅담"
+ },
+ {
+  "pid": "Y367",
+  "seed": 1,
+  "dom": "tmdb",
+  "cand_name": "무사 쥬베이"
+ },
+ {
+  "pid": "Y154",
+  "seed": 1,
+  "dom": "wn",
+  "cand_name": "천살검신"
+ },
+ {
+  "pid": "Y030",
+  "seed": 1,
+  "dom": "steam",
+  "cand_name": "义闻录：轮回"
+ },
+ {
+  "pid": "Y203",
+  "seed": 1,
+  "dom": "steam",
+  "cand_name": "Dear Nobody"
+ },
+ {
+  "pid": "Y271",
+  "seed": 1,
+  "dom": "tmdb",
+  "cand_name": "적인걸 2: 신도해왕의 비밀"
+ },
+ {
+  "pid": "Y062",
+  "seed": 2,
+  "dom": "wn",
+  "cand_name": "신선 한번 해 보려고 귀환했다"
+ },
+ {
+  "pid": "Y280",
+  "seed": 2,
+  "dom": "wn",
+  "cand_name": "마법의 신이 되다"
+ },
+ {
+  "pid": "Y464",
+  "seed": 2,
+  "dom": "wn",
+  "cand_name": "신화 속 대마법사의 재림"
+ },
+ {
+  "pid": "Y101",
+  "seed": 2,
+  "dom": "wn",
+  "cand_name": "일그러진 밤의 신"
+ },
+ {
+  "pid": "Y322",
+  "seed": 2,
+  "dom": "wn",
+  "cand_name": "신의 피를 품은 자들"
+ },
+ {
+  "pid": "Y151",
+  "seed": 2,
+  "dom": "wn",
+  "cand_name": "신들에게 주워진 남자"
+ },
+ {
+  "pid": "Y080",
+  "seed": 2,
+  "dom": "wn",
+  "cand_name": "신이지만 흙수저입니다"
+ },
+ {
+  "pid": "Y526",
+  "seed": 2,
+  "dom": "steam",
+  "cand_name": "Pick My Heart Chapter 2"
+ },
+ {
+  "pid": "Y470",
+  "seed": 2,
+  "dom": "steam",
+  "cand_name": "Internal Affairs: Love Parliament!"
+ },
+ {
+  "pid": "Y426",
+  "seed": 2,
+  "dom": "steam",
+  "cand_name": "Celestia: Chain of Fate"
+ },
+ {
+  "pid": "Y076",
+  "seed": 2,
+  "dom": "steam",
+  "cand_name": "Pick My Heart Chapter 1"
+ },
+ {
+  "pid": "Y543",
+  "seed": 2,
+  "dom": "steam",
+  "cand_name": "My Days with the Demoness"
+ },
+ {
+  "pid": "Y545",
+  "seed": 2,
+  "dom": "steam",
+  "cand_name": "人间 The Lost We Lost"
+ },
+ {
+  "pid": "Y301",
+  "seed": 2,
+  "dom": "steam",
+  "cand_name": "Chasing Tails ~A Promise in the Snow~"
+ },
+ {
+  "pid": "Y500",
+  "seed": 2,
+  "dom": "steam",
+  "cand_name": "Thorned Gaze"
+ },
+ {
+  "pid": "Y432",
+  "seed": 2,
+  "dom": "steam",
+  "cand_name": "Analogue: A Hate Story"
+ },
+ {
+  "pid": "Y575",
+  "seed": 2,
+  "dom": "steam",
+  "cand_name": "Hello Lady! - Complete Edition"
+ },
+ {
+  "pid": "Y334",
+  "seed": 2,
+  "dom": "tmdb",
+  "cand_name": "이웃집에 신이 산다"
+ },
+ {
+  "pid": "Y281",
+  "seed": 2,
+  "dom": "tmdb",
+  "cand_name": "충사 -방울 물방울-"
+ },
+ {
+  "pid": "Y283",
+  "seed": 2,
+  "dom": "tmdb",
+  "cand_name": "쾌락 궁전의 창립"
+ },
+ {
+  "pid": "Y258",
+  "seed": 2,
+  "dom": "tmdb",
+  "cand_name": "오! 나의 여신님"
+ },
+ {
+  "pid": "Y430",
+  "seed": 2,
+  "dom": "tmdb",
+  "cand_name": "신만이 아는 세계"
+ },
+ {
+  "pid": "Y123",
+  "seed": 2,
+  "dom": "tmdb",
+  "cand_name": "전생귀족의 이세계 모험록 ~자중할 줄 모르는 신들의 사도~"
+ },
+ {
+  "pid": "Y439",
+  "seed": 2,
+  "dom": "tmdb",
+  "cand_name": "프리징"
+ },
+ {
+  "pid": "Y012",
+  "seed": 2,
+  "dom": "tmdb",
+  "cand_name": "신을 죽여라"
+ },
+ {
+  "pid": "Y016",
+  "seed": 2,
+  "dom": "tmdb",
+  "cand_name": "현자의 손자"
+ },
+ {
+  "pid": "Y455",
+  "seed": 2,
+  "dom": "tmdb",
+  "cand_name": "구가의 서"
+ },
+ {
+  "pid": "Y079",
+  "seed": 2,
+  "dom": "steam",
+  "cand_name": "The Counter Gambit"
+ },
+ {
+  "pid": "Y246",
+  "seed": 2,
+  "dom": "steam",
+  "cand_name": "희생의 아파트"
+ },
+ {
+  "pid": "Y495",
+  "seed": 2,
+  "dom": "steam",
+  "cand_name": "The Gray-Crowned Reincarnate"
+ },
+ {
+  "pid": "Y127",
+  "seed": 2,
+  "dom": "steam",
+  "cand_name": "HAPPY SAIN† SHEOL"
+ },
+ {
+  "pid": "Y272",
+  "seed": 2,
+  "dom": "tmdb",
+  "cand_name": "외과의사 엘리제"
+ },
+ {
+  "pid": "Y004",
+  "seed": 2,
+  "dom": "tmdb",
+  "cand_name": "버켓 오브 블러드"
+ },
+ {
+  "pid": "Y156",
+  "seed": 3,
+  "dom": "wn",
+  "cand_name": "흑막이 주인공을 키운다"
+ },
+ {
+  "pid": "Y463",
+  "seed": 3,
+  "dom": "wn",
+  "cand_name": "환생마왕은 갱생이 어렵다"
+ },
+ {
+  "pid": "Y292",
+  "seed": 3,
+  "dom": "wn",
+  "cand_name": "편의점을 소환하는 공작님"
+ },
+ {
+  "pid": "Y125",
+  "seed": 3,
+  "dom": "wn",
+  "cand_name": "던전팜!"
+ },
+ {
+  "pid": "Y223",
+  "seed": 3,
+  "dom": "wn",
+  "cand_name": "사상 최강의 오빠"
+ },
+ {
+  "pid": "Y403",
+  "seed": 3,
+  "dom": "wn",
+  "cand_name": "악역 NPC는 고인물이었습니다"
+ },
+ {
+  "pid": "Y414",
+  "seed": 3,
+  "dom": "steam",
+  "cand_name": "Grim Legends: The Forsaken Bride"
+ },
+ {
+  "pid": "Y260",
+  "seed": 3,
+  "dom": "steam",
+  "cand_name": "Chronicles of Magic: Divided Kingdoms"
+ },
+ {
+  "pid": "Y576",
+  "seed": 3,
+  "dom": "steam",
+  "cand_name": "Left in the Dark: No One on Board"
+ },
+ {
+  "pid": "Y293",
+  "seed": 3,
+  "dom": "steam",
+  "cand_name": "Endless Fables 4: Shadow Within"
+ },
+ {
+  "pid": "Y065",
+  "seed": 3,
+  "dom": "steam",
+  "cand_name": "Two Realms: Whispers from the Rift"
+ },
+ {
+  "pid": "Y536",
+  "seed": 3,
+  "dom": "steam",
+  "cand_name": "Grim Tales: The Heir Collector's Edition"
+ },
+ {
+  "pid": "Y357",
+  "seed": 3,
+  "dom": "steam",
+  "cand_name": "The Secret Order 7: Shadow Breach"
+ },
+ {
+  "pid": "Y081",
+  "seed": 3,
+  "dom": "steam",
+  "cand_name": "Fairy Godmother Stories: Puss in Boots Collector's Edition"
+ },
+ {
+  "pid": "Y461",
+  "seed": 3,
+  "dom": "steam",
+  "cand_name": "Gloom"
+ },
+ {
+  "pid": "Y211",
+  "seed": 3,
+  "dom": "tmdb",
+  "cand_name": "변방의 형제들 3"
+ },
+ {
+  "pid": "Y525",
+  "seed": 3,
+  "dom": "tmdb",
+  "cand_name": "변방의 형제들"
+ },
+ {
+  "pid": "Y472",
+  "seed": 3,
+  "dom": "tmdb",
+  "cand_name": "어둠 속에서 울려 퍼지는"
+ },
+ {
+  "pid": "Y307",
+  "seed": 3,
+  "dom": "tmdb",
+  "cand_name": "비키니 워리어즈"
+ },
+ {
+  "pid": "Y147",
+  "seed": 3,
+  "dom": "tmdb",
+  "cand_name": "세컨드 찬스"
+ },
+ {
+  "pid": "Y350",
+  "seed": 3,
+  "dom": "tmdb",
+  "cand_name": "컴 투 대디: 30년만의 재회"
+ },
+ {
+  "pid": "Y468",
+  "seed": 3,
+  "dom": "wn",
+  "cand_name": "환생 후 천하제일인이 되어 귀환했다"
+ },
+ {
+  "pid": "Y501",
+  "seed": 3,
+  "dom": "wn",
+  "cand_name": "다시 태어난 내가 당신을 만난다면"
+ },
+ {
+  "pid": "Y360",
+  "seed": 3,
+  "dom": "steam",
+  "cand_name": "파샤 행성: 부활"
+ },
+ {
+  "pid": "Y394",
+  "seed": 3,
+  "dom": "tmdb",
+  "cand_name": "포레스트 검프"
+ },
+ {
+  "pid": "Y033",
+  "seed": 3,
+  "dom": "tmdb",
+  "cand_name": "토카레브"
+ },
+ {
+  "pid": "Y201",
+  "seed": 4,
+  "dom": "wn",
+  "cand_name": "용제검전"
+ },
+ {
+  "pid": "Y408",
+  "seed": 4,
+  "dom": "wn",
+  "cand_name": "검귀회귀"
+ },
+ {
+  "pid": "Y270",
+  "seed": 4,
+  "dom": "wn",
+  "cand_name": "검귀, 매화"
+ },
+ {
+  "pid": "Y406",
+  "seed": 4,
+  "dom": "wn",
+  "cand_name": "흑접귀환"
+ },
+ {
+  "pid": "Y467",
+  "seed": 4,
+  "dom": "wn",
+  "cand_name": "환생검귀"
+ },
+ {
+  "pid": "Y314",
+  "seed": 4,
+  "dom": "wn",
+  "cand_name": "운룡회귀"
+ },
+ {
+  "pid": "Y530",
+  "seed": 4,
+  "dom": "wn",
+  "cand_name": "회귀검존"
+ },
+ {
+  "pid": "Y087",
+  "seed": 4,
+  "dom": "steam",
+  "cand_name": "아르카디아의 연금술사"
+ },
+ {
+  "pid": "Y207",
+  "seed": 4,
+  "dom": "steam",
+  "cand_name": "이어진 마음: 보름달의 저주 컬렉터 에디션"
+ },
+ {
+  "pid": "Y273",
+  "seed": 4,
+  "dom": "steam",
+  "cand_name": "The Meridian Under the Heaven: Valhalla"
+ },
+ {
+  "pid": "Y142",
+  "seed": 4,
+  "dom": "steam",
+  "cand_name": "그랑 엠파이어 : 아마네"
+ },
+ {
+  "pid": "Y224",
+  "seed": 4,
+  "dom": "steam",
+  "cand_name": "위험한 그놈들-여성향 스릴러 연애 스토리"
+ },
+ {
+  "pid": "Y093",
+  "seed": 4,
+  "dom": "steam",
+  "cand_name": "청춘 프레임"
+ },
+ {
+  "pid": "Y069",
+  "seed": 4,
+  "dom": "steam",
+  "cand_name": "Celestia: Chain of Fate"
+ },
+ {
+  "pid": "Y165",
+  "seed": 4,
+  "dom": "tmdb",
+  "cand_name": "적인걸 2: 신도해왕의 비밀"
+ },
+ {
+  "pid": "Y178",
+  "seed": 4,
+  "dom": "tmdb",
+  "cand_name": "산하령"
+ },
+ {
+  "pid": "Y502",
+  "seed": 4,
+  "dom": "tmdb",
+  "cand_name": "용문비갑"
+ },
+ {
+  "pid": "Y572",
+  "seed": 4,
+  "dom": "tmdb",
+  "cand_name": "연화루"
+ },
+ {
+  "pid": "Y034",
+  "seed": 4,
+  "dom": "tmdb",
+  "cand_name": "차시천하"
+ },
+ {
+  "pid": "Y304",
+  "seed": 4,
+  "dom": "tmdb",
+  "cand_name": "스트리트 파이터: 전설의 귀환"
+ },
+ {
+  "pid": "Y533",
+  "seed": 4,
+  "dom": "tmdb",
+  "cand_name": "영야성하"
+ },
+ {
+  "pid": "Y361",
+  "seed": 4,
+  "dom": "steam",
+  "cand_name": "검신제로"
+ },
+ {
+  "pid": "Y118",
+  "seed": 4,
+  "dom": "steam",
+  "cand_name": "최고의 대장장이"
+ },
+ {
+  "pid": "Y371",
+  "seed": 4,
+  "dom": "tmdb",
+  "cand_name": "와호장룡"
+ },
+ {
+  "pid": "Y119",
+  "seed": 4,
+  "dom": "tmdb",
+  "cand_name": "레미제라블"
+ },
+ {
+  "pid": "Y510",
+  "seed": 4,
+  "dom": "tmdb",
+  "cand_name": "디 워"
+ },
+ {
+  "pid": "Y537",
+  "seed": 5,
+  "dom": "wn",
+  "cand_name": "퓨어 게이머"
+ },
+ {
+  "pid": "Y411",
+  "seed": 5,
+  "dom": "wn",
+  "cand_name": "치트 프린세스"
+ },
+ {
+  "pid": "Y248",
+  "seed": 5,
+  "dom": "wn",
+  "cand_name": "레벨업의 제왕"
+ },
+ {
+  "pid": "Y166",
+  "seed": 5,
+  "dom": "wn",
+  "cand_name": "몬스터와 힐링하는 S급 헌터"
+ },
+ {
+  "pid": "Y466",
+  "seed": 5,
+  "dom": "wn",
+  "cand_name": "소환하는 헌터"
+ },
+ {
+  "pid": "Y103",
+  "seed": 5,
+  "dom": "steam",
+  "cand_name": "Blade of Mercy: Bloody Countess"
+ },
+ {
+  "pid": "Y471",
+  "seed": 5,
+  "dom": "steam",
+  "cand_name": "Another Sight - Definitive Edition"
+ },
+ {
+  "pid": "Y114",
+  "seed": 5,
+  "dom": "steam",
+  "cand_name": "Souldiers"
+ },
+ {
+  "pid": "Y319",
+  "seed": 5,
+  "dom": "steam",
+  "cand_name": "Stories of Somnia"
+ },
+ {
+  "pid": "Y250",
+  "seed": 5,
+  "dom": "steam",
+  "cand_name": "Rusty Rangers"
+ },
+ {
+  "pid": "Y323",
+  "seed": 5,
+  "dom": "steam",
+  "cand_name": "TWINSTAR 双星"
+ },
+ {
+  "pid": "Y305",
+  "seed": 5,
+  "dom": "steam",
+  "cand_name": "Ebenezer and the Invisible World"
+ },
+ {
+  "pid": "Y006",
+  "seed": 5,
+  "dom": "steam",
+  "cand_name": "Gemini X"
+ },
+ {
+  "pid": "Y315",
+  "seed": 5,
+  "dom": "steam",
+  "cand_name": "Ghost Song"
+ },
+ {
+  "pid": "Y303",
+  "seed": 5,
+  "dom": "steam",
+  "cand_name": "드라큘라: 라스트 헌트"
+ },
+ {
+  "pid": "Y179",
+  "seed": 5,
+  "dom": "tmdb",
+  "cand_name": "나 혼자만 레벨업"
+ },
+ {
+  "pid": "Y383",
+  "seed": 5,
+  "dom": "tmdb",
+  "cand_name": "헝거게임: 노래하는 새와 뱀의 발라드"
+ },
+ {
+  "pid": "Y284",
+  "seed": 5,
+  "dom": "tmdb",
+  "cand_name": "쥬만지: 새로운 세계"
+ },
+ {
+  "pid": "Y100",
+  "seed": 5,
+  "dom": "tmdb",
+  "cand_name": "샹그릴라 프론티어 ~망겜 헌터, 갓겜에 도전하다~"
+ },
+ {
+  "pid": "Y413",
+  "seed": 5,
+  "dom": "tmdb",
+  "cand_name": "원피스 필름 골드"
+ },
+ {
+  "pid": "Y102",
+  "seed": 5,
+  "dom": "tmdb",
+  "cand_name": "미래일기"
+ },
+ {
+  "pid": "Y126",
+  "seed": 5,
+  "dom": "tmdb",
+  "cand_name": "주먹왕 랄프"
+ },
+ {
+  "pid": "Y444",
+  "seed": 5,
+  "dom": "tmdb",
+  "cand_name": "극장판 포켓몬스터: 루기아의 탄생"
+ },
+ {
+  "pid": "Y312",
+  "seed": 5,
+  "dom": "wn",
+  "cand_name": "만렙찍고 레벨업"
+ },
+ {
+  "pid": "Y038",
+  "seed": 5,
+  "dom": "wn",
+  "cand_name": "레벨업은 개뿔, 난 벌크업이다"
+ },
+ {
+  "pid": "Y029",
+  "seed": 5,
+  "dom": "wn",
+  "cand_name": "죽어도 죽지 않는 남자"
+ },
+ {
+  "pid": "Y562",
+  "seed": 5,
+  "dom": "steam",
+  "cand_name": "Hotel Security"
+ },
+ {
+  "pid": "Y084",
+  "seed": 5,
+  "dom": "steam",
+  "cand_name": "Henosis™"
+ },
+ {
+  "pid": "Y574",
+  "seed": 5,
+  "dom": "steam",
+  "cand_name": "AFK Shift"
+ },
+ {
+  "pid": "Y219",
+  "seed": 5,
+  "dom": "steam",
+  "cand_name": "GAME.exe 2 - Phantom Strike"
+ },
+ {
+  "pid": "Y189",
+  "seed": 5,
+  "dom": "steam",
+  "cand_name": "Space Kettle"
+ },
+ {
+  "pid": "Y331",
+  "seed": 5,
+  "dom": "tmdb",
+  "cand_name": "트리거: 데스 배틀"
+ },
+ {
+  "pid": "Y489",
+  "seed": 5,
+  "dom": "tmdb",
+  "cand_name": "컨뎀드"
+ },
+ {
+  "pid": "Y324",
+  "seed": 6,
+  "dom": "wn",
+  "cand_name": "애완용 늑대 황자가 내게 집착한다"
+ },
+ {
+  "pid": "Y109",
+  "seed": 6,
+  "dom": "wn",
+  "cand_name": "냥줍하면 강해져"
+ },
+ {
+  "pid": "Y320",
+  "seed": 6,
+  "dom": "wn",
+  "cand_name": "맥거핀"
+ },
+ {
+  "pid": "Y336",
+  "seed": 6,
+  "dom": "wn",
+  "cand_name": "내 고양이가 악녀였다"
+ },
+ {
+  "pid": "Y133",
+  "seed": 6,
+  "dom": "wn",
+  "cand_name": "버프 주는 어린 왕이 되었다"
+ },
+ {
+  "pid": "Y398",
+  "seed": 6,
+  "dom": "steam",
+  "cand_name": "Princess Maker 2 Refine"
+ },
+ {
+  "pid": "Y279",
+  "seed": 6,
+  "dom": "steam",
+  "cand_name": "프린세스 메이커 : 예언의 아이들"
+ },
+ {
+  "pid": "Y544",
+  "seed": 6,
+  "dom": "steam",
+  "cand_name": "프린세스 메이커 2 리제네레이션"
+ },
+ {
+  "pid": "Y026",
+  "seed": 6,
+  "dom": "steam",
+  "cand_name": "프린세스 메이커 ５"
+ },
+ {
+  "pid": "Y391",
+  "seed": 6,
+  "dom": "steam",
+  "cand_name": "프린세스 메이커 리파인"
+ },
+ {
+  "pid": "Y045",
+  "seed": 6,
+  "dom": "steam",
+  "cand_name": "우리집 반려소녀"
+ },
+ {
+  "pid": "Y158",
+  "seed": 6,
+  "dom": "steam",
+  "cand_name": "Meowphoria"
+ },
+ {
+  "pid": "Y130",
+  "seed": 6,
+  "dom": "steam",
+  "cand_name": "데몬 터치!"
+ },
+ {
+  "pid": "Y086",
+  "seed": 6,
+  "dom": "tmdb",
+  "cand_name": "슈렉 2"
+ },
+ {
+  "pid": "Y534",
+  "seed": 6,
+  "dom": "tmdb",
+  "cand_name": "트위티의 대모험"
+ },
+ {
+  "pid": "Y259",
+  "seed": 6,
+  "dom": "tmdb",
+  "cand_name": "장화신은 고양이 디 오리지널"
+ },
+ {
+  "pid": "Y462",
+  "seed": 6,
+  "dom": "tmdb",
+  "cand_name": "극장판 도라에몽: 진구의 아프리카 모험 ~베코와 5인의 탐험대~"
+ },
+ {
+  "pid": "Y517",
+  "seed": 6,
+  "dom": "tmdb",
+  "cand_name": "숲속왕국의 꿀벌 여왕"
+ },
+ {
+  "pid": "Y437",
+  "seed": 6,
+  "dom": "tmdb",
+  "cand_name": "가필드 2"
+ },
+ {
+  "pid": "Y446",
+  "seed": 6,
+  "dom": "wn",
+  "cand_name": "천마 레벨업"
+ },
+ {
+  "pid": "Y503",
+  "seed": 6,
+  "dom": "steam",
+  "cand_name": "Amikin Village"
+ },
+ {
+  "pid": "Y078",
+  "seed": 6,
+  "dom": "steam",
+  "cand_name": "Seed of the Dead: Sweet Home"
+ },
+ {
+  "pid": "Y088",
+  "seed": 6,
+  "dom": "steam",
+  "cand_name": "Gachi Dash"
+ },
+ {
+  "pid": "Y375",
+  "seed": 6,
+  "dom": "tmdb",
+  "cand_name": "신비한 개구리 나라, 앰피비아"
+ },
+ {
+  "pid": "Y381",
+  "seed": 7,
+  "dom": "wn",
+  "cand_name": "오늘부터 플레이어"
+ },
+ {
+  "pid": "Y232",
+  "seed": 7,
+  "dom": "wn",
+  "cand_name": "애만 키워도 레벨 업!"
+ },
+ {
+  "pid": "Y412",
+  "seed": 7,
+  "dom": "wn",
+  "cand_name": "재능 먹는 플레이어"
+ },
+ {
+  "pid": "Y037",
+  "seed": 7,
+  "dom": "wn",
+  "cand_name": "스킬빨로 레벨업"
+ },
+ {
+  "pid": "Y161",
+  "seed": 7,
+  "dom": "steam",
+  "cand_name": "프린세스 메이커 : 예언의 아이들"
+ },
+ {
+  "pid": "Y483",
+  "seed": 7,
+  "dom": "steam",
+  "cand_name": "Princess Tomorrow"
+ },
+ {
+  "pid": "Y404",
+  "seed": 7,
+  "dom": "steam",
+  "cand_name": "프린세스 메이커 ５"
+ },
+ {
+  "pid": "Y563",
+  "seed": 7,
+  "dom": "steam",
+  "cand_name": "Daughter of Dawn - 시작의 소녀"
+ },
+ {
+  "pid": "Y298",
+  "seed": 7,
+  "dom": "steam",
+  "cand_name": "소녀육성기록: 격동의 시대"
+ },
+ {
+  "pid": "Y124",
+  "seed": 7,
+  "dom": "steam",
+  "cand_name": "아르카디아의 연금술사"
+ },
+ {
+  "pid": "Y547",
+  "seed": 7,
+  "dom": "steam",
+  "cand_name": "Witchveil Hollow"
+ },
+ {
+  "pid": "Y482",
+  "seed": 7,
+  "dom": "steam",
+  "cand_name": "프린세스 메이커 2 리제네레이션"
+ },
+ {
+  "pid": "Y229",
+  "seed": 7,
+  "dom": "steam",
+  "cand_name": "라라바이 데이즈"
+ },
+ {
+  "pid": "Y187",
+  "seed": 7,
+  "dom": "steam",
+  "cand_name": "Garden Witch Life"
+ },
+ {
+  "pid": "Y333",
+  "seed": 7,
+  "dom": "tmdb",
+  "cand_name": "매직 메이커 -이세계 마법을 만드는 법-"
+ },
+ {
+  "pid": "Y153",
+  "seed": 7,
+  "dom": "tmdb",
+  "cand_name": "프린스 앤 프린세스"
+ },
+ {
+  "pid": "Y091",
+  "seed": 7,
+  "dom": "tmdb",
+  "cand_name": "책벌레의 하극상 ~사서가 되기 위해서라면 뭐든지 할 수 있어~"
+ },
+ {
+  "pid": "Y519",
+  "seed": 7,
+  "dom": "tmdb",
+  "cand_name": "영웅왕, 극한의 무를 위해 전생하다 ~그리고 세계 최강의 견습 기사가 되다♀~"
+ },
+ {
+  "pid": "Y152",
+  "seed": 7,
+  "dom": "tmdb",
+  "cand_name": "바비 펄 프린세스"
+ },
+ {
+  "pid": "Y452",
+  "seed": 7,
+  "dom": "tmdb",
+  "cand_name": "전생 왕녀와 천재 영애의 마법 혁명"
+ },
+ {
+  "pid": "Y354",
+  "seed": 7,
+  "dom": "tmdb",
+  "cand_name": "수속성의 마법사"
+ },
+ {
+  "pid": "Y170",
+  "seed": 7,
+  "dom": "wn",
+  "cand_name": "레벨 업! 하는 식당"
+ },
+ {
+  "pid": "Y198",
+  "seed": 7,
+  "dom": "wn",
+  "cand_name": "레벨업은 개뿔, 난 벌크업이다"
+ },
+ {
+  "pid": "Y025",
+  "seed": 7,
+  "dom": "steam",
+  "cand_name": "Cafe Dash: Cooking, Diner Game"
+ },
+ {
+  "pid": "Y405",
+  "seed": 7,
+  "dom": "steam",
+  "cand_name": "Banana Clicker"
+ },
+ {
+  "pid": "Y089",
+  "seed": 7,
+  "dom": "steam",
+  "cand_name": "Clicker Heroes"
+ },
+ {
+  "pid": "Y139",
+  "seed": 7,
+  "dom": "steam",
+  "cand_name": "피자 위의 인생"
+ },
+ {
+  "pid": "Y299",
+  "seed": 7,
+  "dom": "steam",
+  "cand_name": "토리다마2 -담력 시험-"
+ },
+ {
+  "pid": "Y000",
+  "seed": 7,
+  "dom": "steam",
+  "cand_name": "Fish Can Run 2"
+ },
+ {
+  "pid": "Y515",
+  "seed": 7,
+  "dom": "tmdb",
+  "cand_name": "데스마치에서 시작되는 이세계 광상곡"
+ },
+ {
+  "pid": "Y227",
+  "seed": 7,
+  "dom": "tmdb",
+  "cand_name": "레몬첼로 도서관 탈출 게임"
+ },
+ {
+  "pid": "Y346",
+  "seed": 8,
+  "dom": "wn",
+  "cand_name": "용제검전"
+ },
+ {
+  "pid": "Y171",
+  "seed": 8,
+  "dom": "wn",
+  "cand_name": "강호무뢰한"
+ },
+ {
+  "pid": "Y001",
+  "seed": 8,
+  "dom": "wn",
+  "cand_name": "절대풍운검"
+ },
+ {
+  "pid": "Y474",
+  "seed": 8,
+  "dom": "steam",
+  "cand_name": "美女，请别影响我成仙"
+ },
+ {
+  "pid": "Y385",
+  "seed": 8,
+  "dom": "steam",
+  "cand_name": "Trap Yuri Tempest"
+ },
+ {
+  "pid": "Y511",
+  "seed": 8,
+  "dom": "steam",
+  "cand_name": "Lunar Legacy"
+ },
+ {
+  "pid": "Y443",
+  "seed": 8,
+  "dom": "steam",
+  "cand_name": "무인도 생존 ~ 미녀섬에서 탈출"
+ },
+ {
+  "pid": "Y297",
+  "seed": 8,
+  "dom": "steam",
+  "cand_name": "때 이른 검은 백합"
+ },
+ {
+  "pid": "Y257",
+  "seed": 8,
+  "dom": "steam",
+  "cand_name": "커피여우 김삼월"
+ },
+ {
+  "pid": "Y407",
+  "seed": 8,
+  "dom": "steam",
+  "cand_name": "클리어 체리 아이스."
+ },
+ {
+  "pid": "Y435",
+  "seed": 8,
+  "dom": "steam",
+  "cand_name": "하오웨이1: 너의 독재적인 군벌"
+ },
+ {
+  "pid": "Y112",
+  "seed": 8,
+  "dom": "tmdb",
+  "cand_name": "차시천하"
+ },
+ {
+  "pid": "Y425",
+  "seed": 8,
+  "dom": "tmdb",
+  "cand_name": "적인걸 2: 신도해왕의 비밀"
+ },
+ {
+  "pid": "Y524",
+  "seed": 8,
+  "dom": "tmdb",
+  "cand_name": "리벤저"
+ },
+ {
+  "pid": "Y254",
+  "seed": 8,
+  "dom": "tmdb",
+  "cand_name": "보표"
+ },
+ {
+  "pid": "Y382",
+  "seed": 8,
+  "dom": "tmdb",
+  "cand_name": "용문비갑"
+ },
+ {
+  "pid": "Y436",
+  "seed": 8,
+  "dom": "tmdb",
+  "cand_name": "응조철포삼"
+ },
+ {
+  "pid": "Y554",
+  "seed": 8,
+  "dom": "tmdb",
+  "cand_name": "포획"
+ },
+ {
+  "pid": "Y513",
+  "seed": 8,
+  "dom": "steam",
+  "cand_name": "만세검총"
+ },
+ {
+  "pid": "Y567",
+  "seed": 8,
+  "dom": "steam",
+  "cand_name": "义闻录：轮回"
+ },
+ {
+  "pid": "Y242",
+  "seed": 8,
+  "dom": "steam",
+  "cand_name": "The Bunker Notes 벙커일기"
+ },
+ {
+  "pid": "Y459",
+  "seed": 8,
+  "dom": "steam",
+  "cand_name": "수호지: 하늘을 거스르다"
+ },
+ {
+  "pid": "Y546",
+  "seed": 8,
+  "dom": "steam",
+  "cand_name": "검신제로"
+ },
+ {
+  "pid": "Y116",
+  "seed": 8,
+  "dom": "steam",
+  "cand_name": "HAPPY SAIN† SHEOL"
+ },
+ {
+  "pid": "Y551",
+  "seed": 8,
+  "dom": "tmdb",
+  "cand_name": "와호장룡"
+ },
+ {
+  "pid": "Y286",
+  "seed": 8,
+  "dom": "tmdb",
+  "cand_name": "호협"
+ },
+ {
+  "pid": "Y473",
+  "seed": 8,
+  "dom": "tmdb",
+  "cand_name": "무사 4대 문파와의 혈투"
+ },
+ {
+  "pid": "Y397",
+  "seed": 8,
+  "dom": "tmdb",
+  "cand_name": "기문둔갑"
+ },
+ {
+  "pid": "Y374",
+  "seed": 9,
+  "dom": "wn",
+  "cand_name": "남주가 돈으로 나를 조련한다"
+ },
+ {
+  "pid": "Y496",
+  "seed": 9,
+  "dom": "wn",
+  "cand_name": "여주 때려치우고, 카페 오픈합니다"
+ },
+ {
+  "pid": "Y197",
+  "seed": 9,
+  "dom": "wn",
+  "cand_name": "돈미새 여주는 섬에 감금됐다"
+ },
+ {
+  "pid": "Y265",
+  "seed": 9,
+  "dom": "wn",
+  "cand_name": "오늘 밤 의무에 충실하세요"
+ },
+ {
+  "pid": "Y341",
+  "seed": 9,
+  "dom": "wn",
+  "cand_name": "언니가 남주였다"
+ },
+ {
+  "pid": "Y215",
+  "seed": 9,
+  "dom": "wn",
+  "cand_name": "여주가 내 약혼자와 바람났다"
+ },
+ {
+  "pid": "Y499",
+  "seed": 9,
+  "dom": "wn",
+  "cand_name": "여주 대신 남주와 결혼했다"
+ },
+ {
+  "pid": "Y478",
+  "seed": 9,
+  "dom": "wn",
+  "cand_name": "악당의 슬기로운 은퇴 계획"
+ },
+ {
+  "pid": "Y041",
+  "seed": 9,
+  "dom": "wn",
+  "cand_name": "목표는 뽀시래기 영애입니다"
+ },
+ {
+  "pid": "Y180",
+  "seed": 9,
+  "dom": "wn",
+  "cand_name": "남주가 내 집착에 집착한다"
+ },
+ {
+  "pid": "Y349",
+  "seed": 9,
+  "dom": "steam",
+  "cand_name": "Help Me"
+ },
+ {
+  "pid": "Y255",
+  "seed": 9,
+  "dom": "steam",
+  "cand_name": "Bunny’s Rent-a-Mom Agency"
+ },
+ {
+  "pid": "Y479",
+  "seed": 9,
+  "dom": "steam",
+  "cand_name": "Sayonara Okaasan"
+ },
+ {
+  "pid": "Y220",
+  "seed": 9,
+  "dom": "steam",
+  "cand_name": "Amairo Chocolate 2"
+ },
+ {
+  "pid": "Y440",
+  "seed": 9,
+  "dom": "steam",
+  "cand_name": "L'Agence - The Hearts of Paris"
+ },
+ {
+  "pid": "Y327",
+  "seed": 9,
+  "dom": "steam",
+  "cand_name": "Lake Town Stories"
+ },
+ {
+  "pid": "Y300",
+  "seed": 9,
+  "dom": "steam",
+  "cand_name": "Spirit Whisperer Conversation With Akari"
+ },
+ {
+  "pid": "Y169",
+  "seed": 9,
+  "dom": "steam",
+  "cand_name": "CrocApoca!! 크록아포카!! 악어 소녀와 세상의 종말"
+ },
+ {
+  "pid": "Y094",
+  "seed": 9,
+  "dom": "steam",
+  "cand_name": "Otter Yakuza"
+ },
+ {
+  "pid": "Y177",
+  "seed": 9,
+  "dom": "tmdb",
+  "cand_name": "강변호텔"
+ },
+ {
+  "pid": "Y236",
+  "seed": 9,
+  "dom": "tmdb",
+  "cand_name": "낫띵"
+ },
+ {
+  "pid": "Y196",
+  "seed": 9,
+  "dom": "tmdb",
+  "cand_name": "극주부도"
+ },
+ {
+  "pid": "Y516",
+  "seed": 9,
+  "dom": "tmdb",
+  "cand_name": "음식남녀"
+ },
+ {
+  "pid": "Y507",
+  "seed": 9,
+  "dom": "tmdb",
+  "cand_name": "철콘 근크리트"
+ },
+ {
+  "pid": "Y097",
+  "seed": 9,
+  "dom": "wn",
+  "cand_name": "남다른 초야를 치르게 되었다"
+ },
+ {
+  "pid": "Y050",
+  "seed": 9,
+  "dom": "wn",
+  "cand_name": "공녀님은 너무 사랑받아서 곤란합니다"
+ },
+ {
+  "pid": "Y264",
+  "seed": 9,
+  "dom": "wn",
+  "cand_name": "발칙한 요녀를 원하신다면"
+ },
+ {
+  "pid": "Y176",
+  "seed": 9,
+  "dom": "wn",
+  "cand_name": "약혼자가 어느 날 첫사랑을 데려왔다 외전"
+ },
+ {
+  "pid": "Y128",
+  "seed": 9,
+  "dom": "steam",
+  "cand_name": "Venba"
+ },
+ {
+  "pid": "Y389",
+  "seed": 9,
+  "dom": "steam",
+  "cand_name": "비 온 뒤의 책갈피"
+ },
+ {
+  "pid": "Y157",
+  "seed": 9,
+  "dom": "steam",
+  "cand_name": "NEKOPARA - Catboys Paradise"
+ },
+ {
+  "pid": "Y051",
+  "seed": 10,
+  "dom": "wn",
+  "cand_name": "미식을 파는 상인"
+ },
+ {
+  "pid": "Y310",
+  "seed": 10,
+  "dom": "wn",
+  "cand_name": "이세계에서 디저트를 만드는 법"
+ },
+ {
+  "pid": "Y040",
+  "seed": 10,
+  "dom": "wn",
+  "cand_name": "세상의 레시피들"
+ },
+ {
+  "pid": "Y342",
+  "seed": 10,
+  "dom": "steam",
+  "cand_name": "프린세스 메이커 : 예언의 아이들"
+ },
+ {
+  "pid": "Y465",
+  "seed": 10,
+  "dom": "steam",
+  "cand_name": "Princess Maker 2 Refine"
+ },
+ {
+  "pid": "Y522",
+  "seed": 10,
+  "dom": "steam",
+  "cand_name": "프린세스 메이커 ５"
+ },
+ {
+  "pid": "Y007",
+  "seed": 10,
+  "dom": "steam",
+  "cand_name": "프린세스 메이커 2 리제네레이션"
+ },
+ {
+  "pid": "Y099",
+  "seed": 10,
+  "dom": "steam",
+  "cand_name": "프린세스 메이커 리파인"
+ },
+ {
+  "pid": "Y344",
+  "seed": 10,
+  "dom": "steam",
+  "cand_name": "Chef Life: A Restaurant Simulator"
+ },
+ {
+  "pid": "Y212",
+  "seed": 10,
+  "dom": "steam",
+  "cand_name": "PrincessCliffhouse(ver0.1)"
+ },
+ {
+  "pid": "Y561",
+  "seed": 10,
+  "dom": "steam",
+  "cand_name": "회전 초밥집의 일상"
+ },
+ {
+  "pid": "Y182",
+  "seed": 10,
+  "dom": "tmdb",
+  "cand_name": "책벌레의 하극상 ~사서가 되기 위해서라면 뭐든지 할 수 있어~"
+ },
+ {
+  "pid": "Y291",
+  "seed": 10,
+  "dom": "tmdb",
+  "cand_name": "30대 후반 아저씨의 이세계 통판 생활"
+ },
+ {
+  "pid": "Y569",
+  "seed": 10,
+  "dom": "tmdb",
+  "cand_name": "영웅왕, 극한의 무를 위해 전생하다 ~그리고 세계 최강의 견습 기사가 되다♀~"
+ },
+ {
+  "pid": "Y143",
+  "seed": 10,
+  "dom": "tmdb",
+  "cand_name": "바비 펄 프린세스"
+ },
+ {
+  "pid": "Y243",
+  "seed": 10,
+  "dom": "tmdb",
+  "cand_name": "팬"
+ },
+ {
+  "pid": "Y095",
+  "seed": 10,
+  "dom": "tmdb",
+  "cand_name": "비키니 워리어즈"
+ },
+ {
+  "pid": "Y433",
+  "seed": 10,
+  "dom": "tmdb",
+  "cand_name": "당신의 맛"
+ },
+ {
+  "pid": "Y282",
+  "seed": 10,
+  "dom": "tmdb",
+  "cand_name": "이상한 전생"
+ },
+ {
+  "pid": "Y137",
+  "seed": 11,
+  "dom": "wn",
+  "cand_name": "이세계가 지구를 제압하고 100년, 도쿄에 돌아오니 엘프 가족이 생겼습니다."
+ },
+ {
+  "pid": "Y185",
+  "seed": 11,
+  "dom": "wn",
+  "cand_name": "전생 현자의 이세계 라이프"
+ },
+ {
+  "pid": "Y417",
+  "seed": 11,
+  "dom": "wn",
+  "cand_name": "이세계 마법 공무원이 되었다"
+ },
+ {
+  "pid": "Y370",
+  "seed": 11,
+  "dom": "wn",
+  "cand_name": "이세계에서 깽판치는 용사중 나만 슬라임"
+ },
+ {
+  "pid": "Y506",
+  "seed": 11,
+  "dom": "wn",
+  "cand_name": "마왕님 이세계 뒤집어 놓으신다"
+ },
+ {
+  "pid": "Y294",
+  "seed": 11,
+  "dom": "wn",
+  "cand_name": "이세계에 왔지만 아무것도 없었습니다."
+ },
+ {
+  "pid": "Y384",
+  "seed": 11,
+  "dom": "wn",
+  "cand_name": "용사이자, 성자이자, 현자가 되었다"
+ },
+ {
+  "pid": "Y262",
+  "seed": 11,
+  "dom": "wn",
+  "cand_name": "뉴비가 이세계에서 살아남는 법"
+ },
+ {
+  "pid": "Y514",
+  "seed": 11,
+  "dom": "steam",
+  "cand_name": "태국에서의 심장 박동"
+ },
+ {
+  "pid": "Y380",
+  "seed": 11,
+  "dom": "steam",
+  "cand_name": "사니양 연구실"
+ },
+ {
+  "pid": "Y309",
+  "seed": 11,
+  "dom": "steam",
+  "cand_name": "아르카디아의 연금술사"
+ },
+ {
+  "pid": "Y317",
+  "seed": 11,
+  "dom": "steam",
+  "cand_name": "Adventure of a Lifetime"
+ },
+ {
+  "pid": "Y326",
+  "seed": 11,
+  "dom": "steam",
+  "cand_name": "리얼石"
+ },
+ {
+  "pid": "Y313",
+  "seed": 11,
+  "dom": "steam",
+  "cand_name": "이하나시의 마녀"
+ },
+ {
+  "pid": "Y541",
+  "seed": 11,
+  "dom": "steam",
+  "cand_name": "청춘 프레임"
+ },
+ {
+  "pid": "Y410",
+  "seed": 11,
+  "dom": "steam",
+  "cand_name": "그랑 엠파이어 : 아마네"
+ },
+ {
+  "pid": "Y055",
+  "seed": 11,
+  "dom": "steam",
+  "cand_name": "Touhou Gensokyo Visitor"
+ },
+ {
+  "pid": "Y172",
+  "seed": 11,
+  "dom": "steam",
+  "cand_name": "안 돼! 스승님이 여요정에게 납치됐어!"
+ },
+ {
+  "pid": "Y351",
+  "seed": 11,
+  "dom": "tmdb",
+  "cand_name": "치유마법의 잘못된 사용법"
+ },
+ {
+  "pid": "Y523",
+  "seed": 11,
+  "dom": "tmdb",
+  "cand_name": "언젠가 최강의 연금술사?"
+ },
+ {
+  "pid": "Y136",
+  "seed": 11,
+  "dom": "tmdb",
+  "cand_name": "제로의 사역마"
+ },
+ {
+  "pid": "Y469",
+  "seed": 11,
+  "dom": "tmdb",
+  "cand_name": "30대 후반 아저씨의 이세계 통판 생활"
+ },
+ {
+  "pid": "Y277",
+  "seed": 11,
+  "dom": "tmdb",
+  "cand_name": "즉사 치트가 너무 최강이라, 이세계 녀석들이 전혀 상대가 되지 않습니다만."
+ },
+ {
+  "pid": "Y390",
+  "seed": 11,
+  "dom": "wn",
+  "cand_name": "부서진 성좌의 회귀"
+ },
+ {
+  "pid": "Y070",
+  "seed": 11,
+  "dom": "wn",
+  "cand_name": "백수를 지망하는 황자의 영지 운영기"
+ },
+ {
+  "pid": "Y268",
+  "seed": 11,
+  "dom": "steam",
+  "cand_name": "Spell of Infinity"
+ },
+ {
+  "pid": "Y199",
+  "seed": 11,
+  "dom": "tmdb",
+  "cand_name": "애쉬 래드 2: 황금성을 찾아서"
+ },
+ {
+  "pid": "Y275",
+  "seed": 11,
+  "dom": "tmdb",
+  "cand_name": "왕좌의 게임"
+ },
+ {
+  "pid": "Y053",
+  "seed": 11,
+  "dom": "tmdb",
+  "cand_name": "아일랜드"
+ },
+ {
+  "pid": "Y339",
+  "seed": 12,
+  "dom": "wn",
+  "cand_name": "내가 죽은 후 남주들이 이상해졌다"
+ },
+ {
+  "pid": "Y235",
+  "seed": 12,
+  "dom": "wn",
+  "cand_name": "죽음이 예정된 조연으로 빙의되었습니다"
+ },
+ {
+  "pid": "Y295",
+  "seed": 12,
+  "dom": "wn",
+  "cand_name": "곧 죽어도 힙합"
+ },
+ {
+  "pid": "Y106",
+  "seed": 12,
+  "dom": "wn",
+  "cand_name": "자살 예방 페어"
+ },
+ {
+  "pid": "Y131",
+  "seed": 12,
+  "dom": "wn",
+  "cand_name": "세상의 끝에서"
+ },
+ {
+  "pid": "Y204",
+  "seed": 12,
+  "dom": "wn",
+  "cand_name": "전생 탐정은 배우를 꿈꾼다"
+ },
+ {
+  "pid": "Y090",
+  "seed": 12,
+  "dom": "steam",
+  "cand_name": "심장에 해로워"
+ },
+ {
+  "pid": "Y429",
+  "seed": 12,
+  "dom": "steam",
+  "cand_name": "도색 함정"
+ },
+ {
+  "pid": "Y039",
+  "seed": 12,
+  "dom": "steam",
+  "cand_name": "Warehuman -ウェアヒューマン-"
+ },
+ {
+  "pid": "Y484",
+  "seed": 12,
+  "dom": "steam",
+  "cand_name": "To the Moon"
+ },
+ {
+  "pid": "Y366",
+  "seed": 12,
+  "dom": "steam",
+  "cand_name": "HAPPY SAIN† SHEOL"
+ },
+ {
+  "pid": "Y494",
+  "seed": 12,
+  "dom": "steam",
+  "cand_name": "스위트 클락워크"
+ },
+ {
+  "pid": "Y067",
+  "seed": 12,
+  "dom": "steam",
+  "cand_name": "Fallstreak: Requiem for my Homeland"
+ },
+ {
+  "pid": "Y193",
+  "seed": 12,
+  "dom": "steam",
+  "cand_name": "Dread Weight"
+ },
+ {
+  "pid": "Y491",
+  "seed": 12,
+  "dom": "steam",
+  "cand_name": "The Blackwell Legacy"
+ },
+ {
+  "pid": "Y059",
+  "seed": 12,
+  "dom": "steam",
+  "cand_name": "Dream Ending"
+ },
+ {
+  "pid": "Y241",
+  "seed": 12,
+  "dom": "tmdb",
+  "cand_name": "세계의 심장"
+ },
+ {
+  "pid": "Y521",
+  "seed": 12,
+  "dom": "tmdb",
+  "cand_name": "Y: 더 라스트 맨"
+ },
+ {
+  "pid": "Y285",
+  "seed": 12,
+  "dom": "tmdb",
+  "cand_name": "마지막 전투"
+ },
+ {
+  "pid": "Y447",
+  "seed": 12,
+  "dom": "tmdb",
+  "cand_name": "어 롱 웨이 다운"
+ },
+ {
+  "pid": "Y150",
+  "seed": 12,
+  "dom": "tmdb",
+  "cand_name": "최후의 Z"
+ },
+ {
+  "pid": "Y129",
+  "seed": 12,
+  "dom": "tmdb",
+  "cand_name": "어느 예술가의 마지막 일주일"
+ },
+ {
+  "pid": "Y328",
+  "seed": 12,
+  "dom": "tmdb",
+  "cand_name": "운명"
+ },
+ {
+  "pid": "Y138",
+  "seed": 12,
+  "dom": "tmdb",
+  "cand_name": "수어사이드 쇼"
+ },
+ {
+  "pid": "Y387",
+  "seed": 12,
+  "dom": "tmdb",
+  "cand_name": "미드나잇 애프터"
+ },
+ {
+  "pid": "Y064",
+  "seed": 12,
+  "dom": "wn",
+  "cand_name": "천재 유학생이 되었다"
+ },
+ {
+  "pid": "Y155",
+  "seed": 12,
+  "dom": "wn",
+  "cand_name": "만렙 귀환자의 뉴비생활"
+ },
+ {
+  "pid": "Y335",
+  "seed": 12,
+  "dom": "wn",
+  "cand_name": "회귀자의 성공 라이프"
+ },
+ {
+  "pid": "Y046",
+  "seed": 12,
+  "dom": "wn",
+  "cand_name": "회귀재벌은 인생 2회차"
+ },
+ {
+  "pid": "Y194",
+  "seed": 12,
+  "dom": "wn",
+  "cand_name": "회귀해서 주식재벌"
+ },
+ {
+  "pid": "Y245",
+  "seed": 12,
+  "dom": "wn",
+  "cand_name": "교사는 회귀해도 개고생이네"
+ },
+ {
+  "pid": "Y356",
+  "seed": 12,
+  "dom": "steam",
+  "cand_name": "봄이 오면 꽃이 피고"
+ },
+ {
+  "pid": "Y306",
+  "seed": 12,
+  "dom": "steam",
+  "cand_name": "극 서원 연의"
+ },
+ {
+  "pid": "Y504",
+  "seed": 12,
+  "dom": "steam",
+  "cand_name": "你好！我们还有场恋爱没谈"
+ },
+ {
+  "pid": "Y442",
+  "seed": 12,
+  "dom": "steam",
+  "cand_name": "부활 1995: 인생 역전 프로젝트"
+ },
+ {
+  "pid": "Y490",
+  "seed": 12,
+  "dom": "steam",
+  "cand_name": "Homeless Life Simulator"
+ },
+ {
+  "pid": "Y240",
+  "seed": 12,
+  "dom": "steam",
+  "cand_name": "기획사 스토리 (March to a Million)"
+ },
+ {
+  "pid": "Y221",
+  "seed": 12,
+  "dom": "steam",
+  "cand_name": "不完全调和少女"
+ },
+ {
+  "pid": "Y337",
+  "seed": 12,
+  "dom": "tmdb",
+  "cand_name": "내 남편과 결혼해줘"
+ },
+ {
+  "pid": "Y553",
+  "seed": 12,
+  "dom": "tmdb",
+  "cand_name": "외과의사 엘리제"
+ },
+ {
+  "pid": "Y560",
+  "seed": 12,
+  "dom": "tmdb",
+  "cand_name": "컬러풀"
+ },
+ {
+  "pid": "Y416",
+  "seed": 12,
+  "dom": "tmdb",
+  "cand_name": "베스트셀러"
+ },
+ {
+  "pid": "Y216",
+  "seed": 13,
+  "dom": "wn",
+  "cand_name": "사상 최강의 오빠"
+ },
+ {
+  "pid": "Y287",
+  "seed": 13,
+  "dom": "wn",
+  "cand_name": "노예부터 왕까지"
+ },
+ {
+  "pid": "Y528",
+  "seed": 13,
+  "dom": "wn",
+  "cand_name": "알프스 산맥의 제왕"
+ },
+ {
+  "pid": "Y431",
+  "seed": 13,
+  "dom": "wn",
+  "cand_name": "회귀로 지존이 된다"
+ },
+ {
+  "pid": "Y163",
+  "seed": 13,
+  "dom": "steam",
+  "cand_name": "Kristala"
+ },
+ {
+  "pid": "Y369",
+  "seed": 13,
+  "dom": "steam",
+  "cand_name": "Sword Legacy: Omen"
+ },
+ {
+  "pid": "Y458",
+  "seed": 13,
+  "dom": "steam",
+  "cand_name": "Isekai Villain"
+ },
+ {
+  "pid": "Y230",
+  "seed": 13,
+  "dom": "steam",
+  "cand_name": "Empire Patron"
+ },
+ {
+  "pid": "Y217",
+  "seed": 13,
+  "dom": "steam",
+  "cand_name": "The Abased"
+ },
+ {
+  "pid": "Y036",
+  "seed": 13,
+  "dom": "steam",
+  "cand_name": "Lords Of The Fallen™ 2014"
+ },
+ {
+  "pid": "Y052",
+  "seed": 13,
+  "dom": "steam",
+  "cand_name": "HERETIC"
+ },
+ {
+  "pid": "Y160",
+  "seed": 13,
+  "dom": "tmdb",
+  "cand_name": "라이온 킹"
+ },
+ {
+  "pid": "Y188",
+  "seed": 13,
+  "dom": "tmdb",
+  "cand_name": "무파사: 라이온 킹"
+ },
+ {
+  "pid": "Y422",
+  "seed": 13,
+  "dom": "tmdb",
+  "cand_name": "라이온 킹 2"
+ },
+ {
+  "pid": "Y454",
+  "seed": 13,
+  "dom": "tmdb",
+  "cand_name": "라이온 킹 3"
+ },
+ {
+  "pid": "Y492",
+  "seed": 13,
+  "dom": "tmdb",
+  "cand_name": "엘시드"
+ },
+ {
+  "pid": "Y110",
+  "seed": 13,
+  "dom": "tmdb",
+  "cand_name": "신디 로퍼의 안데스 탐험"
+ },
+ {
+  "pid": "Y448",
+  "seed": 13,
+  "dom": "tmdb",
+  "cand_name": "슈렉 2"
+ },
+ {
+  "pid": "Y290",
+  "seed": 13,
+  "dom": "tmdb",
+  "cand_name": "바후발리 2: 더 컨클루전"
+ },
+ {
+  "pid": "Y421",
+  "seed": 13,
+  "dom": "wn",
+  "cand_name": "망나니 회귀하다"
+ },
+ {
+  "pid": "Y565",
+  "seed": 13,
+  "dom": "wn",
+  "cand_name": "유성검가의 망나니로 살아남는 법"
+ },
+ {
+  "pid": "Y149",
+  "seed": 13,
+  "dom": "steam",
+  "cand_name": "악의 영역 RPG"
+ },
+ {
+  "pid": "Y438",
+  "seed": 13,
+  "dom": "steam",
+  "cand_name": "The Tarnishing of Juxtia"
+ },
+ {
+  "pid": "Y213",
+  "seed": 13,
+  "dom": "steam",
+  "cand_name": "The Surprising Adventures of Munchausen"
+ },
+ {
+  "pid": "Y222",
+  "seed": 13,
+  "dom": "tmdb",
+  "cand_name": "나니아 연대기: 캐스피언 왕자"
+ },
+ {
+  "pid": "Y209",
+  "seed": 13,
+  "dom": "tmdb",
+  "cand_name": "나니아 연대기: 새벽 출정호의 항해"
+ },
+ {
+  "pid": "Y024",
+  "seed": 13,
+  "dom": "tmdb",
+  "cand_name": "미시카: 더 갓슬레이어"
+ },
+ {
+  "pid": "Y377",
+  "seed": 13,
+  "dom": "tmdb",
+  "cand_name": "홀리 마운틴"
+ },
+ {
+  "pid": "Y393",
+  "seed": 13,
+  "dom": "tmdb",
+  "cand_name": "애쉬 래드 2: 황금성을 찾아서"
+ },
+ {
+  "pid": "Y338",
+  "seed": 14,
+  "dom": "wn",
+  "cand_name": "상냥한 그 남주를 길들이는 방법"
+ },
+ {
+  "pid": "Y202",
+  "seed": 14,
+  "dom": "wn",
+  "cand_name": "남주의 여자사람친구가 되었다"
+ },
+ {
+  "pid": "Y068",
+  "seed": 14,
+  "dom": "wn",
+  "cand_name": "남주들의 호감도를 피해라"
+ },
+ {
+  "pid": "Y233",
+  "seed": 14,
+  "dom": "wn",
+  "cand_name": "흑막인 줄 알았던 남주가 이상하다"
+ },
+ {
+  "pid": "Y009",
+  "seed": 14,
+  "dom": "steam",
+  "cand_name": "청춘 프레임"
+ },
+ {
+  "pid": "Y263",
+  "seed": 14,
+  "dom": "steam",
+  "cand_name": "이별 끝에 만난다면"
+ },
+ {
+  "pid": "Y399",
+  "seed": 14,
+  "dom": "steam",
+  "cand_name": "검은 나비의 사이키델리카"
+ },
+ {
+  "pid": "Y077",
+  "seed": 14,
+  "dom": "steam",
+  "cand_name": "도색 함정"
+ },
+ {
+  "pid": "Y415",
+  "seed": 14,
+  "dom": "steam",
+  "cand_name": "심장에 해로워"
+ },
+ {
+  "pid": "Y345",
+  "seed": 14,
+  "dom": "steam",
+  "cand_name": "히파티아"
+ },
+ {
+  "pid": "Y020",
+  "seed": 14,
+  "dom": "steam",
+  "cand_name": "Garden of Love"
+ },
+ {
+  "pid": "Y318",
+  "seed": 14,
+  "dom": "steam",
+  "cand_name": "우리 사이의 고요한 공간"
+ },
+ {
+  "pid": "Y159",
+  "seed": 14,
+  "dom": "steam",
+  "cand_name": "이클립스 : Special Forces"
+ },
+ {
+  "pid": "Y237",
+  "seed": 14,
+  "dom": "tmdb",
+  "cand_name": "소셜 애니멀스"
+ },
+ {
+  "pid": "Y365",
+  "seed": 14,
+  "dom": "tmdb",
+  "cand_name": "전하를 조심해"
+ },
+ {
+  "pid": "Y035",
+  "seed": 14,
+  "dom": "tmdb",
+  "cand_name": "서스피션"
+ },
+ {
+  "pid": "Y008",
+  "seed": 14,
+  "dom": "tmdb",
+  "cand_name": "안기고 싶은 남자 1위에게 협박당하고 있습니다"
+ },
+ {
+  "pid": "Y325",
+  "seed": 14,
+  "dom": "tmdb",
+  "cand_name": "나의 프리티 갱스터 보이"
+ },
+ {
+  "pid": "Y031",
+  "seed": 14,
+  "dom": "tmdb",
+  "cand_name": "연애 지상주의 구역"
+ },
+ {
+  "pid": "Y488",
+  "seed": 14,
+  "dom": "tmdb",
+  "cand_name": "리치 인 러브"
+ },
+ {
+  "pid": "Y239",
+  "seed": 14,
+  "dom": "steam",
+  "cand_name": "스위트 클락워크"
+ },
+ {
+  "pid": "Y200",
+  "seed": 14,
+  "dom": "steam",
+  "cand_name": "러브 플루트"
+ },
+ {
+  "pid": "Y234",
+  "seed": 14,
+  "dom": "steam",
+  "cand_name": "Error: Love - 인류 버그 배제 계획"
+ },
+ {
+  "pid": "Y042",
+  "seed": 14,
+  "dom": "steam",
+  "cand_name": "Maitetsu:Last Run!!"
+ },
+ {
+  "pid": "Y066",
+  "seed": 14,
+  "dom": "tmdb",
+  "cand_name": "해피엔딩 네버엔딩"
+ },
+ {
+  "pid": "Y486",
+  "seed": 14,
+  "dom": "tmdb",
+  "cand_name": "김씨 표류기"
+ },
+ {
+  "pid": "Y134",
+  "seed": 15,
+  "dom": "wn",
+  "cand_name": "황태자가 내게 집착한다"
+ },
+ {
+  "pid": "Y493",
+  "seed": 15,
+  "dom": "wn",
+  "cand_name": "아기 황태자비의 아틀리에"
+ },
+ {
+  "pid": "Y098",
+  "seed": 15,
+  "dom": "wn",
+  "cand_name": "황태자, 나는 당신이 싫어"
+ },
+ {
+  "pid": "Y450",
+  "seed": 15,
+  "dom": "wn",
+  "cand_name": "황태자는 내 소꿉친구"
+ },
+ {
+  "pid": "Y074",
+  "seed": 15,
+  "dom": "wn",
+  "cand_name": "홧김에 여주가 되어 보려 합니다"
+ },
+ {
+  "pid": "Y251",
+  "seed": 15,
+  "dom": "wn",
+  "cand_name": "내 남편과 바람피울 뻔했다"
+ },
+ {
+  "pid": "Y225",
+  "seed": 15,
+  "dom": "wn",
+  "cand_name": "황태자의 처음을 훔쳐버렸다"
+ },
+ {
+  "pid": "Y082",
+  "seed": 15,
+  "dom": "wn",
+  "cand_name": "내 남편은 내가 정한다"
+ },
+ {
+  "pid": "Y378",
+  "seed": 15,
+  "dom": "steam",
+  "cand_name": "청춘 프레임"
+ },
+ {
+  "pid": "Y379",
+  "seed": 15,
+  "dom": "steam",
+  "cand_name": "Trap Yuri Tempest"
+ },
+ {
+  "pid": "Y252",
+  "seed": 15,
+  "dom": "steam",
+  "cand_name": "Velvet Bite: Softly, with Teeth"
+ },
+ {
+  "pid": "Y329",
+  "seed": 15,
+  "dom": "steam",
+  "cand_name": "橘香仲夏"
+ },
+ {
+  "pid": "Y420",
+  "seed": 15,
+  "dom": "steam",
+  "cand_name": "Steventon Street: Deluxe Edition"
+ },
+ {
+  "pid": "Y071",
+  "seed": 15,
+  "dom": "steam",
+  "cand_name": "이터널 글로리"
+ },
+ {
+  "pid": "Y063",
+  "seed": 15,
+  "dom": "steam",
+  "cand_name": "여름미녀, 심장 폭주 주의보!"
+ },
+ {
+  "pid": "Y451",
+  "seed": 15,
+  "dom": "tmdb",
+  "cand_name": "마틸다: 황제의 연인"
+ },
+ {
+  "pid": "Y529",
+  "seed": 15,
+  "dom": "tmdb",
+  "cand_name": "프렌치 트위스트"
+ },
+ {
+  "pid": "Y559",
+  "seed": 15,
+  "dom": "tmdb",
+  "cand_name": "미녀와 야수"
+ },
+ {
+  "pid": "Y487",
+  "seed": 15,
+  "dom": "tmdb",
+  "cand_name": "항해자"
+ },
+ {
+  "pid": "Y072",
+  "seed": 15,
+  "dom": "tmdb",
+  "cand_name": "끝에서 시작되다"
+ },
+ {
+  "pid": "Y003",
+  "seed": 15,
+  "dom": "tmdb",
+  "cand_name": "사랑하는 시바여 돌아오라"
+ },
+ {
+  "pid": "Y049",
+  "seed": 15,
+  "dom": "tmdb",
+  "cand_name": "포획"
+ },
+ {
+  "pid": "Y005",
+  "seed": 15,
+  "dom": "steam",
+  "cand_name": "Fabulous - Angela's High School Reunion"
+ },
+ {
+  "pid": "Y027",
+  "seed": 15,
+  "dom": "tmdb",
+  "cand_name": "천국의 열매"
+ },
+ {
+  "pid": "Y555",
+  "seed": 15,
+  "dom": "tmdb",
+  "cand_name": "더 타임 오브 데어 라이브즈"
+ },
+ {
+  "pid": "Y056",
+  "seed": 15,
+  "dom": "tmdb",
+  "cand_name": "결혼 피로연"
+ },
+ {
+  "pid": "Y205",
+  "seed": 16,
+  "dom": "wn",
+  "cand_name": "물어 와요, 황제 폐하"
+ },
+ {
+  "pid": "Y028",
+  "seed": 16,
+  "dom": "wn",
+  "cand_name": "망나니 황녀님이 너무하셔"
+ },
+ {
+  "pid": "Y238",
+  "seed": 16,
+  "dom": "wn",
+  "cand_name": "검은 요정이 당신을 부를 때"
+ },
+ {
+  "pid": "Y184",
+  "seed": 16,
+  "dom": "wn",
+  "cand_name": "마왕 왕녀님"
+ },
+ {
+  "pid": "Y174",
+  "seed": 16,
+  "dom": "steam",
+  "cand_name": "Spirit Talk - 코지 비주얼 노벨"
+ },
+ {
+  "pid": "Y449",
+  "seed": 16,
+  "dom": "steam",
+  "cand_name": "우리 사이의 고요한 공간"
+ },
+ {
+  "pid": "Y048",
+  "seed": 16,
+  "dom": "steam",
+  "cand_name": "Pick My Heart Chapter 1"
+ },
+ {
+  "pid": "Y302",
+  "seed": 16,
+  "dom": "steam",
+  "cand_name": "Astra's Garden"
+ },
+ {
+  "pid": "Y274",
+  "seed": 16,
+  "dom": "steam",
+  "cand_name": "Love and Demons"
+ },
+ {
+  "pid": "Y564",
+  "seed": 16,
+  "dom": "steam",
+  "cand_name": "The Gray-Crowned Reincarnate"
+ },
+ {
+  "pid": "Y308",
+  "seed": 16,
+  "dom": "steam",
+  "cand_name": "사랑을 노래하는 방법 REMASTERED"
+ },
+ {
+  "pid": "Y542",
+  "seed": 16,
+  "dom": "steam",
+  "cand_name": "风岬-The Everlasting lovestory at the Windcap"
+ },
+ {
+  "pid": "Y244",
+  "seed": 16,
+  "dom": "steam",
+  "cand_name": "The Shadow Between Words"
+ },
+ {
+  "pid": "Y477",
+  "seed": 16,
+  "dom": "tmdb",
+  "cand_name": "메리다와 마법의 숲"
+ },
+ {
+  "pid": "Y330",
+  "seed": 16,
+  "dom": "tmdb",
+  "cand_name": "별 내리는 왕국의 니나"
+ },
+ {
+  "pid": "Y226",
+  "seed": 16,
+  "dom": "tmdb",
+  "cand_name": "사랑의 기쁨"
+ },
+ {
+  "pid": "Y105",
+  "seed": 16,
+  "dom": "tmdb",
+  "cand_name": "썸벨리나"
+ },
+ {
+  "pid": "Y434",
+  "seed": 16,
+  "dom": "tmdb",
+  "cand_name": "인어공주 2"
+ },
+ {
+  "pid": "Y424",
+  "seed": 16,
+  "dom": "tmdb",
+  "cand_name": "데드 얼라이브"
+ },
+ {
+  "pid": "Y363",
+  "seed": 16,
+  "dom": "tmdb",
+  "cand_name": "비스트마스터"
+ },
+ {
+  "pid": "Y044",
+  "seed": 16,
+  "dom": "wn",
+  "cand_name": "황제의 애착 악녀"
+ },
+ {
+  "pid": "Y173",
+  "seed": 16,
+  "dom": "steam",
+  "cand_name": "Tales Of Aravorn: An Elven Marriage"
+ },
+ {
+  "pid": "Y288",
+  "seed": 16,
+  "dom": "steam",
+  "cand_name": "Zero-Sum Heart"
+ },
+ {
+  "pid": "Y108",
+  "seed": 16,
+  "dom": "steam",
+  "cand_name": "Trap Yuri Tempest"
+ },
+ {
+  "pid": "Y175",
+  "seed": 16,
+  "dom": "steam",
+  "cand_name": "The Meridian Under the Heaven: Valhalla"
+ },
+ {
+  "pid": "Y460",
+  "seed": 17,
+  "dom": "wn",
+  "cand_name": "베이츠"
+ },
+ {
+  "pid": "Y276",
+  "seed": 17,
+  "dom": "wn",
+  "cand_name": "검 하나로 레이드"
+ },
+ {
+  "pid": "Y115",
+  "seed": 17,
+  "dom": "wn",
+  "cand_name": "세계를 속인 남자"
+ },
+ {
+  "pid": "Y266",
+  "seed": 17,
+  "dom": "wn",
+  "cand_name": "용사의 옆집에 산다는 것"
+ },
+ {
+  "pid": "Y571",
+  "seed": 17,
+  "dom": "wn",
+  "cand_name": "너드남이 알고 보니 폭군이라 합니다"
+ },
+ {
+  "pid": "Y353",
+  "seed": 17,
+  "dom": "wn",
+  "cand_name": "흑막이 주인공을 키운다"
+ },
+ {
+  "pid": "Y296",
+  "seed": 17,
+  "dom": "steam",
+  "cand_name": "Grim Legends: The Forsaken Bride"
+ },
+ {
+  "pid": "Y249",
+  "seed": 17,
+  "dom": "steam",
+  "cand_name": "Lake Town Stories"
+ },
+ {
+  "pid": "Y512",
+  "seed": 17,
+  "dom": "steam",
+  "cand_name": "Fairune: Fragment Isles"
+ },
+ {
+  "pid": "Y531",
+  "seed": 17,
+  "dom": "steam",
+  "cand_name": "Lost Lands: Dark Overlord Collector's Edition"
+ },
+ {
+  "pid": "Y373",
+  "seed": 17,
+  "dom": "steam",
+  "cand_name": "Teslagrad 2"
+ },
+ {
+  "pid": "Y057",
+  "seed": 17,
+  "dom": "steam",
+  "cand_name": "미해결 사건: 살인적인 대본 컬렉터 에디션"
+ },
+ {
+  "pid": "Y120",
+  "seed": 17,
+  "dom": "steam",
+  "cand_name": "Another Sight - Definitive Edition"
+ },
+ {
+  "pid": "Y372",
+  "seed": 17,
+  "dom": "steam",
+  "cand_name": "Lost Chronicles"
+ },
+ {
+  "pid": "Y445",
+  "seed": 17,
+  "dom": "tmdb",
+  "cand_name": "피터팬 & 웬디"
+ },
+ {
+  "pid": "Y206",
+  "seed": 17,
+  "dom": "tmdb",
+  "cand_name": "헨젤과 그레텔: 마녀 사냥꾼"
+ },
+ {
+  "pid": "Y540",
+  "seed": 17,
+  "dom": "tmdb",
+  "cand_name": "천공의 성 라퓨타"
+ },
+ {
+  "pid": "Y456",
+  "seed": 17,
+  "dom": "tmdb",
+  "cand_name": "로드 짐"
+ },
+ {
+  "pid": "Y332",
+  "seed": 17,
+  "dom": "tmdb",
+  "cand_name": "피터 팬"
+ },
+ {
+  "pid": "Y508",
+  "seed": 17,
+  "dom": "tmdb",
+  "cand_name": "굴뚝마을의 푸펠"
+ },
+ {
+  "pid": "Y141",
+  "seed": 17,
+  "dom": "tmdb",
+  "cand_name": "비키니 워리어즈"
+ },
+ {
+  "pid": "Y548",
+  "seed": 17,
+  "dom": "tmdb",
+  "cand_name": "애쉬 래드: 트롤의 숲"
+ },
+ {
+  "pid": "Y509",
+  "seed": 17,
+  "dom": "tmdb",
+  "cand_name": "해적왕녀"
+ },
+ {
+  "pid": "Y359",
+  "seed": 17,
+  "dom": "tmdb",
+  "cand_name": "이상한 나라의 앨리스"
+ },
+ {
+  "pid": "Y208",
+  "seed": 17,
+  "dom": "wn",
+  "cand_name": "망작의 2부를 시작합니다 1~3권"
+ },
+ {
+  "pid": "Y162",
+  "seed": 17,
+  "dom": "wn",
+  "cand_name": "빙의했지만 집에 갈래요"
+ },
+ {
+  "pid": "Y362",
+  "seed": 17,
+  "dom": "wn",
+  "cand_name": "망작의 2부를 시작합니다 4권"
+ },
+ {
+  "pid": "Y135",
+  "seed": 17,
+  "dom": "steam",
+  "cand_name": "Chronique des Silencieux"
+ },
+ {
+  "pid": "Y148",
+  "seed": 17,
+  "dom": "steam",
+  "cand_name": "The Secret Order 7: Shadow Breach"
+ },
+ {
+  "pid": "Y247",
+  "seed": 17,
+  "dom": "steam",
+  "cand_name": "502호 : 청춘 미스터리 추리 게임"
+ },
+ {
+  "pid": "Y527",
+  "seed": 17,
+  "dom": "tmdb",
+  "cand_name": "온다"
+ },
+ {
+  "pid": "Y556",
+  "seed": 17,
+  "dom": "tmdb",
+  "cand_name": "텔 노 원"
+ },
+ {
+  "pid": "Y183",
+  "seed": 17,
+  "dom": "tmdb",
+  "cand_name": "마녀의 발견"
+ },
+ {
+  "pid": "Y532",
+  "seed": 18,
+  "dom": "wn",
+  "cand_name": "퀘스트 깨는 영주님"
+ },
+ {
+  "pid": "Y321",
+  "seed": 18,
+  "dom": "wn",
+  "cand_name": "마법 쓰면 근손실 나는데"
+ },
+ {
+  "pid": "Y418",
+  "seed": 18,
+  "dom": "wn",
+  "cand_name": "로열로드"
+ },
+ {
+  "pid": "Y343",
+  "seed": 18,
+  "dom": "wn",
+  "cand_name": "태양 아래의 에벤하트 12권"
+ },
+ {
+  "pid": "Y552",
+  "seed": 18,
+  "dom": "wn",
+  "cand_name": "피폐 악녀, 최애캐 집착에 갇히다"
+ },
+ {
+  "pid": "Y085",
+  "seed": 18,
+  "dom": "steam",
+  "cand_name": "우리 사이의 고요한 공간"
+ },
+ {
+  "pid": "Y013",
+  "seed": 18,
+  "dom": "steam",
+  "cand_name": "거짓말쟁이 왕을 속이는 방법"
+ },
+ {
+  "pid": "Y191",
+  "seed": 18,
+  "dom": "steam",
+  "cand_name": "The Gray-Crowned Reincarnate"
+ },
+ {
+  "pid": "Y355",
+  "seed": 18,
+  "dom": "steam",
+  "cand_name": "Love and Demons"
+ },
+ {
+  "pid": "Y520",
+  "seed": 18,
+  "dom": "steam",
+  "cand_name": "Putrika 1st.cut:The Reason She Must Perish"
+ },
+ {
+  "pid": "Y117",
+  "seed": 18,
+  "dom": "steam",
+  "cand_name": "왕실 로맨스: 금지된 마법 컬렉터 에디션"
+ },
+ {
+  "pid": "Y113",
+  "seed": 18,
+  "dom": "steam",
+  "cand_name": "Pick My Heart Chapter 1"
+ },
+ {
+  "pid": "Y096",
+  "seed": 18,
+  "dom": "steam",
+  "cand_name": "Kairos: Until the Dawn Breaks"
+ },
+ {
+  "pid": "Y453",
+  "seed": 18,
+  "dom": "tmdb",
+  "cand_name": "나니아 연대기: 사자, 마녀 그리고 옷장"
+ },
+ {
+  "pid": "Y311",
+  "seed": 18,
+  "dom": "tmdb",
+  "cand_name": "스타더스트"
+ },
+ {
+  "pid": "Y132",
+  "seed": 18,
+  "dom": "tmdb",
+  "cand_name": "별 내리는 왕국의 니나"
+ },
+ {
+  "pid": "Y505",
+  "seed": 18,
+  "dom": "tmdb",
+  "cand_name": "7번째 아들"
+ },
+ {
+  "pid": "Y518",
+  "seed": 18,
+  "dom": "tmdb",
+  "cand_name": "일곱 개의 대죄"
+ },
+ {
+  "pid": "Y396",
+  "seed": 18,
+  "dom": "tmdb",
+  "cand_name": "더 프린세스: 도둑맞은 공주"
+ },
+ {
+  "pid": "Y210",
+  "seed": 18,
+  "dom": "tmdb",
+  "cand_name": "나니아 연대기: 캐스피언 왕자"
+ },
+ {
+  "pid": "Y195",
+  "seed": 18,
+  "dom": "wn",
+  "cand_name": "겨울 숲의 마녀"
+ },
+ {
+  "pid": "Y190",
+  "seed": 18,
+  "dom": "wn",
+  "cand_name": "황제의 애착 악녀"
+ },
+ {
+  "pid": "Y192",
+  "seed": 18,
+  "dom": "wn",
+  "cand_name": "공녀님은 너무 사랑받아서 곤란합니다"
+ },
+ {
+  "pid": "Y019",
+  "seed": 18,
+  "dom": "steam",
+  "cand_name": "Witch Story"
+ },
+ {
+  "pid": "Y145",
+  "seed": 18,
+  "dom": "steam",
+  "cand_name": "Yaga"
+ },
+ {
+  "pid": "Y481",
+  "seed": 18,
+  "dom": "steam",
+  "cand_name": "이어진 마음: 보름달의 저주 컬렉터 에디션"
+ },
+ {
+  "pid": "Y476",
+  "seed": 18,
+  "dom": "steam",
+  "cand_name": "花满楼"
+ },
+ {
+  "pid": "Y060",
+  "seed": 18,
+  "dom": "tmdb",
+  "cand_name": "마녀보감"
+ },
+ {
+  "pid": "Y352",
+  "seed": 18,
+  "dom": "tmdb",
+  "cand_name": "유어 하이니스"
+ },
+ {
+  "pid": "Y480",
+  "seed": 18,
+  "dom": "tmdb",
+  "cand_name": "엘비라"
+ },
+ {
+  "pid": "Y144",
+  "seed": 18,
+  "dom": "tmdb",
+  "cand_name": "프렌치 아메리칸"
+ },
+ {
+  "pid": "Y017",
+  "seed": 18,
+  "dom": "tmdb",
+  "cand_name": "테일 오브 테일즈"
+ },
+ {
+  "pid": "Y402",
+  "seed": 19,
+  "dom": "wn",
+  "cand_name": "당신의 결혼을 위하여"
+ },
+ {
+  "pid": "Y111",
+  "seed": 19,
+  "dom": "wn",
+  "cand_name": "너라는 빌런"
+ },
+ {
+  "pid": "Y121",
+  "seed": 19,
+  "dom": "wn",
+  "cand_name": "선결혼, 후연애의 결말"
+ },
+ {
+  "pid": "Y186",
+  "seed": 19,
+  "dom": "wn",
+  "cand_name": "어쩔 수 없는, 결혼"
+ },
+ {
+  "pid": "Y395",
+  "seed": 19,
+  "dom": "wn",
+  "cand_name": "집착의 본능"
+ },
+ {
+  "pid": "Y549",
+  "seed": 19,
+  "dom": "wn",
+  "cand_name": "뺏어줘서 고마워, 언니"
+ },
+ {
+  "pid": "Y419",
+  "seed": 19,
+  "dom": "steam",
+  "cand_name": "유이의 여름방학"
+ },
+ {
+  "pid": "Y181",
+  "seed": 19,
+  "dom": "steam",
+  "cand_name": "별에게 소원을 (When you wish upon a star)"
+ },
+ {
+  "pid": "Y023",
+  "seed": 19,
+  "dom": "steam",
+  "cand_name": "여동생 ♡ 만들기 : 당신이 바라는 소녀의 모습 - Teen version"
+ },
+ {
+  "pid": "Y010",
+  "seed": 19,
+  "dom": "steam",
+  "cand_name": "Cringe Rizz Lines"
+ },
+ {
+  "pid": "Y256",
+  "seed": 19,
+  "dom": "steam",
+  "cand_name": "히파티아"
+ },
+ {
+  "pid": "Y573",
+  "seed": 19,
+  "dom": "steam",
+  "cand_name": "The Princess, the Stray Cat, and Matters of the Heart"
+ },
+ {
+  "pid": "Y423",
+  "seed": 19,
+  "dom": "steam",
+  "cand_name": "Internal Affairs: Love Parliament!"
+ },
+ {
+  "pid": "Y092",
+  "seed": 19,
+  "dom": "steam",
+  "cand_name": "우주공강"
+ },
+ {
+  "pid": "Y497",
+  "seed": 19,
+  "dom": "tmdb",
+  "cand_name": "저스트 세이 예스"
+ },
+ {
+  "pid": "Y364",
+  "seed": 19,
+  "dom": "tmdb",
+  "cand_name": "백인 추장"
+ },
+ {
+  "pid": "Y015",
+  "seed": 19,
+  "dom": "tmdb",
+  "cand_name": "킬 미 이프 유 캔"
+ },
+ {
+  "pid": "Y269",
+  "seed": 19,
+  "dom": "tmdb",
+  "cand_name": "로마에서 생긴 일"
+ },
+ {
+  "pid": "Y061",
+  "seed": 19,
+  "dom": "tmdb",
+  "cand_name": "로드 투 로마"
+ },
+ {
+  "pid": "Y558",
+  "seed": 19,
+  "dom": "tmdb",
+  "cand_name": "사랑을 설계해 드립니다"
+ },
+ {
+  "pid": "Y140",
+  "seed": 19,
+  "dom": "tmdb",
+  "cand_name": "위크엔드 인 파리"
+ },
+ {
+  "pid": "Y047",
+  "seed": 19,
+  "dom": "tmdb",
+  "cand_name": "어쩌다 로맨스"
+ },
+ {
+  "pid": "Y550",
+  "seed": 19,
+  "dom": "tmdb",
+  "cand_name": "낯선 여인과의 하루"
+ },
+ {
+  "pid": "Y168",
+  "seed": 19,
+  "dom": "tmdb",
+  "cand_name": "데스티네이션 웨딩"
+ },
+ {
+  "pid": "Y218",
+  "seed": 19,
+  "dom": "wn",
+  "cand_name": "너의 거짓말을 낳았다"
+ },
+ {
+  "pid": "Y022",
+  "seed": 19,
+  "dom": "wn",
+  "cand_name": "비밀이 있다"
+ },
+ {
+  "pid": "Y358",
+  "seed": 19,
+  "dom": "steam",
+  "cand_name": "Love Alone Death"
+ },
+ {
+  "pid": "Y566",
+  "seed": 19,
+  "dom": "steam",
+  "cand_name": "Dear Nobody"
+ },
+ {
+  "pid": "Y032",
+  "seed": 19,
+  "dom": "steam",
+  "cand_name": "Velvet Bite: Softly, with Teeth"
+ },
+ {
+  "pid": "Y261",
+  "seed": 19,
+  "dom": "steam",
+  "cand_name": "랜덤채팅의 그녀"
+ },
+ {
+  "pid": "Y073",
+  "seed": 19,
+  "dom": "steam",
+  "cand_name": "eden*"
+ },
+ {
+  "pid": "Y457",
+  "seed": 19,
+  "dom": "tmdb",
+  "cand_name": "애인"
+ },
+ {
+  "pid": "Y392",
+  "seed": 19,
+  "dom": "tmdb",
+  "cand_name": "비포 선라이즈"
+ }
+]

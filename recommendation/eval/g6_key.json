@@ -1,0 +1,1542 @@
+[
+ {
+  "id": "S000",
+  "batch": "15차",
+  "seed": 0,
+  "cand": null,
+  "name": "스킬빨로 아카데미 천재가 되었다"
+ },
+ {
+  "id": "C001",
+  "batch": "15차",
+  "seed": 0,
+  "cand": 0,
+  "name": "부활 1995: 인생 역전 프로젝트"
+ },
+ {
+  "id": "C002",
+  "batch": "15차",
+  "seed": 0,
+  "cand": 1,
+  "name": "Idol Maker"
+ },
+ {
+  "id": "C003",
+  "batch": "15차",
+  "seed": 0,
+  "cand": 2,
+  "name": "Observe"
+ },
+ {
+  "id": "C004",
+  "batch": "15차",
+  "seed": 0,
+  "cand": 3,
+  "name": "Kraken Academy!!"
+ },
+ {
+  "id": "C005",
+  "batch": "15차",
+  "seed": 0,
+  "cand": 4,
+  "name": "봄이 오면 꽃이 피고"
+ },
+ {
+  "id": "C006",
+  "batch": "15차",
+  "seed": 0,
+  "cand": 5,
+  "name": "Pixel Cafe"
+ },
+ {
+  "id": "C007",
+  "batch": "15차",
+  "seed": 0,
+  "cand": 6,
+  "name": "우주공강"
+ },
+ {
+  "id": "C008",
+  "batch": "15차",
+  "seed": 0,
+  "cand": 7,
+  "name": "Jump Like a Grad Student"
+ },
+ {
+  "id": "C009",
+  "batch": "15차",
+  "seed": 0,
+  "cand": 8,
+  "name": "DAY 10,909"
+ },
+ {
+  "id": "C010",
+  "batch": "15차",
+  "seed": 0,
+  "cand": 9,
+  "name": "Parker & Lane: Twisted Minds"
+ },
+ {
+  "id": "S011",
+  "batch": "15차",
+  "seed": 1,
+  "cand": null,
+  "name": "네 옆자리를 지키고 싶어서"
+ },
+ {
+  "id": "C012",
+  "batch": "15차",
+  "seed": 1,
+  "cand": 0,
+  "name": "프렌치커넥션"
+ },
+ {
+  "id": "C013",
+  "batch": "15차",
+  "seed": 1,
+  "cand": 1,
+  "name": "러브 플루트"
+ },
+ {
+  "id": "C014",
+  "batch": "15차",
+  "seed": 1,
+  "cand": 2,
+  "name": "Why do you love me?"
+ },
+ {
+  "id": "C015",
+  "batch": "15차",
+  "seed": 1,
+  "cand": 3,
+  "name": "Secret Crush -Unrequited love-"
+ },
+ {
+  "id": "C016",
+  "batch": "15차",
+  "seed": 1,
+  "cand": 4,
+  "name": "7'scarlet"
+ },
+ {
+  "id": "C017",
+  "batch": "15차",
+  "seed": 1,
+  "cand": 5,
+  "name": "My Deskmate Douki-Cyan"
+ },
+ {
+  "id": "C018",
+  "batch": "15차",
+  "seed": 1,
+  "cand": 6,
+  "name": "Lake Town Stories"
+ },
+ {
+  "id": "C019",
+  "batch": "15차",
+  "seed": 1,
+  "cand": 7,
+  "name": "イケ勘 - イケメンになるかどうか勘で付き合うゲーム -"
+ },
+ {
+  "id": "C020",
+  "batch": "15차",
+  "seed": 1,
+  "cand": 8,
+  "name": "Sarah, you are way too heavy"
+ },
+ {
+  "id": "C021",
+  "batch": "15차",
+  "seed": 1,
+  "cand": 9,
+  "name": "심장에 해로워"
+ },
+ {
+  "id": "S022",
+  "batch": "15차",
+  "seed": 7,
+  "cand": null,
+  "name": "창궁무적검"
+ },
+ {
+  "id": "C023",
+  "batch": "15차",
+  "seed": 7,
+  "cand": 0,
+  "name": "해동비사 (海東秘史)"
+ },
+ {
+  "id": "C024",
+  "batch": "15차",
+  "seed": 7,
+  "cand": 1,
+  "name": "연무"
+ },
+ {
+  "id": "C025",
+  "batch": "15차",
+  "seed": 7,
+  "cand": 2,
+  "name": "义闻录：轮回"
+ },
+ {
+  "id": "C026",
+  "batch": "15차",
+  "seed": 7,
+  "cand": 3,
+  "name": "绝世好武功 The Matchless KungFu"
+ },
+ {
+  "id": "C027",
+  "batch": "15차",
+  "seed": 7,
+  "cand": 4,
+  "name": "검신제로"
+ },
+ {
+  "id": "C028",
+  "batch": "15차",
+  "seed": 7,
+  "cand": 5,
+  "name": "축귀"
+ },
+ {
+  "id": "C029",
+  "batch": "15차",
+  "seed": 7,
+  "cand": 6,
+  "name": "만세검총"
+ },
+ {
+  "id": "C030",
+  "batch": "15차",
+  "seed": 7,
+  "cand": 7,
+  "name": "No Mortal Space"
+ },
+ {
+  "id": "C031",
+  "batch": "15차",
+  "seed": 7,
+  "cand": 8,
+  "name": "헌원검2"
+ },
+ {
+  "id": "C032",
+  "batch": "15차",
+  "seed": 7,
+  "cand": 9,
+  "name": "청구야담: 팔도견문록"
+ },
+ {
+  "id": "S033",
+  "batch": "15차",
+  "seed": 14,
+  "cand": null,
+  "name": "성진변"
+ },
+ {
+  "id": "C034",
+  "batch": "15차",
+  "seed": 14,
+  "cand": 0,
+  "name": "마법 무기"
+ },
+ {
+  "id": "C035",
+  "batch": "15차",
+  "seed": 14,
+  "cand": 1,
+  "name": "Paper Shakespeare: Cthulhu Coriolanus"
+ },
+ {
+  "id": "C036",
+  "batch": "15차",
+  "seed": 14,
+  "cand": 2,
+  "name": "Queen's Revolution ~ the romance in upheavals ~"
+ },
+ {
+  "id": "C037",
+  "batch": "15차",
+  "seed": 14,
+  "cand": 3,
+  "name": "지금 우리 학교는"
+ },
+ {
+  "id": "C038",
+  "batch": "15차",
+  "seed": 14,
+  "cand": 4,
+  "name": "검신제로"
+ },
+ {
+  "id": "C039",
+  "batch": "15차",
+  "seed": 14,
+  "cand": 5,
+  "name": "Paper2Galgame"
+ },
+ {
+  "id": "C040",
+  "batch": "15차",
+  "seed": 14,
+  "cand": 6,
+  "name": "기동전대 VS"
+ },
+ {
+  "id": "C041",
+  "batch": "15차",
+  "seed": 14,
+  "cand": 7,
+  "name": "Royal Defense"
+ },
+ {
+  "id": "C042",
+  "batch": "15차",
+  "seed": 14,
+  "cand": 8,
+  "name": "独闯江湖 lone ranger"
+ },
+ {
+  "id": "C043",
+  "batch": "15차",
+  "seed": 14,
+  "cand": 9,
+  "name": "义闻录：轮回"
+ },
+ {
+  "id": "S044",
+  "batch": "15차",
+  "seed": 16,
+  "cand": null,
+  "name": "팔남이라니, 그건 아니지!"
+ },
+ {
+  "id": "C045",
+  "batch": "15차",
+  "seed": 16,
+  "cand": 0,
+  "name": "Come to my party!"
+ },
+ {
+  "id": "C046",
+  "batch": "15차",
+  "seed": 16,
+  "cand": 1,
+  "name": "Venba"
+ },
+ {
+  "id": "C047",
+  "batch": "15차",
+  "seed": 16,
+  "cand": 2,
+  "name": "러브 플루트"
+ },
+ {
+  "id": "C048",
+  "batch": "15차",
+  "seed": 16,
+  "cand": 3,
+  "name": "별빛 아래"
+ },
+ {
+  "id": "C049",
+  "batch": "15차",
+  "seed": 16,
+  "cand": 4,
+  "name": "イケ勘 - イケメンになるかどうか勘で付き合うゲーム -"
+ },
+ {
+  "id": "C050",
+  "batch": "15차",
+  "seed": 16,
+  "cand": 5,
+  "name": "Gachi Dash"
+ },
+ {
+  "id": "C051",
+  "batch": "15차",
+  "seed": 16,
+  "cand": 6,
+  "name": "Chrysolite"
+ },
+ {
+  "id": "C052",
+  "batch": "15차",
+  "seed": 16,
+  "cand": 7,
+  "name": "Cook For Love"
+ },
+ {
+  "id": "C053",
+  "batch": "15차",
+  "seed": 16,
+  "cand": 8,
+  "name": "动物职场"
+ },
+ {
+  "id": "C054",
+  "batch": "15차",
+  "seed": 16,
+  "cand": 9,
+  "name": "Nihilumbra"
+ },
+ {
+  "id": "S055",
+  "batch": "16차",
+  "seed": 1,
+  "cand": null,
+  "name": "방출 후 천재 코치가 되었다"
+ },
+ {
+  "id": "C056",
+  "batch": "16차",
+  "seed": 1,
+  "cand": 0,
+  "name": "로스트 저지먼트: 심판받지 않은 기억"
+ },
+ {
+  "id": "C057",
+  "batch": "16차",
+  "seed": 1,
+  "cand": 1,
+  "name": "Slay the GoblinZ"
+ },
+ {
+  "id": "C058",
+  "batch": "16차",
+  "seed": 1,
+  "cand": 2,
+  "name": "Idol Maker"
+ },
+ {
+  "id": "C059",
+  "batch": "16차",
+  "seed": 1,
+  "cand": 3,
+  "name": "극 서원 연의"
+ },
+ {
+  "id": "C060",
+  "batch": "16차",
+  "seed": 1,
+  "cand": 4,
+  "name": "Mortar and Pestle"
+ },
+ {
+  "id": "C061",
+  "batch": "16차",
+  "seed": 1,
+  "cand": 5,
+  "name": "Cook, Serve, Delicious! 2!!"
+ },
+ {
+  "id": "C062",
+  "batch": "16차",
+  "seed": 1,
+  "cand": 6,
+  "name": "악마의 오피스"
+ },
+ {
+  "id": "C063",
+  "batch": "16차",
+  "seed": 1,
+  "cand": 7,
+  "name": "천사 승급 시험: Re"
+ },
+ {
+  "id": "C064",
+  "batch": "16차",
+  "seed": 1,
+  "cand": 8,
+  "name": "역전검사 1&2 미츠루기 셀렉션"
+ },
+ {
+  "id": "C065",
+  "batch": "16차",
+  "seed": 1,
+  "cand": 9,
+  "name": "Ekoman"
+ },
+ {
+  "id": "S066",
+  "batch": "16차",
+  "seed": 2,
+  "cand": null,
+  "name": "N 툴 플레이어"
+ },
+ {
+  "id": "C067",
+  "batch": "16차",
+  "seed": 2,
+  "cand": 0,
+  "name": "Kunoichi's Cadence"
+ },
+ {
+  "id": "C068",
+  "batch": "16차",
+  "seed": 2,
+  "cand": 1,
+  "name": "Rugby Career Manager"
+ },
+ {
+  "id": "C069",
+  "batch": "16차",
+  "seed": 2,
+  "cand": 2,
+  "name": "Divine Pig"
+ },
+ {
+  "id": "C070",
+  "batch": "16차",
+  "seed": 2,
+  "cand": 3,
+  "name": "99999량"
+ },
+ {
+  "id": "C071",
+  "batch": "16차",
+  "seed": 2,
+  "cand": 4,
+  "name": "动物职场"
+ },
+ {
+  "id": "C072",
+  "batch": "16차",
+  "seed": 2,
+  "cand": 5,
+  "name": "NARUTO -나루토- 질풍전 나루티밋 스톰 4"
+ },
+ {
+  "id": "C073",
+  "batch": "16차",
+  "seed": 2,
+  "cand": 6,
+  "name": "UltFoot: Football Manager"
+ },
+ {
+  "id": "C074",
+  "batch": "16차",
+  "seed": 2,
+  "cand": 7,
+  "name": "NUTMEG! A Nostalgic Deckbuilding Football Manager"
+ },
+ {
+  "id": "C075",
+  "batch": "16차",
+  "seed": 2,
+  "cand": 8,
+  "name": "Noyan: Club Chairman"
+ },
+ {
+  "id": "C076",
+  "batch": "16차",
+  "seed": 2,
+  "cand": 9,
+  "name": "TIKI-TIKI: TAKA-TAKA"
+ },
+ {
+  "id": "S077",
+  "batch": "16차",
+  "seed": 3,
+  "cand": null,
+  "name": "고구려가 농사도 잘함"
+ },
+ {
+  "id": "C078",
+  "batch": "16차",
+  "seed": 3,
+  "cand": 0,
+  "name": "Mirthwood"
+ },
+ {
+  "id": "C079",
+  "batch": "16차",
+  "seed": 3,
+  "cand": 1,
+  "name": "Drunk But Not Wasted Monk"
+ },
+ {
+  "id": "C080",
+  "batch": "16차",
+  "seed": 3,
+  "cand": 2,
+  "name": "삼국지천하포무"
+ },
+ {
+  "id": "C081",
+  "batch": "16차",
+  "seed": 3,
+  "cand": 3,
+  "name": "Tavern Ventures: Guilds & Tales"
+ },
+ {
+  "id": "C082",
+  "batch": "16차",
+  "seed": 3,
+  "cand": 4,
+  "name": "Tale of Specters: Joseon 1592"
+ },
+ {
+  "id": "C083",
+  "batch": "16차",
+  "seed": 3,
+  "cand": 5,
+  "name": "창조 삼국지"
+ },
+ {
+  "id": "C084",
+  "batch": "16차",
+  "seed": 3,
+  "cand": 6,
+  "name": "목장의 숨결(Breath of the Pasture)"
+ },
+ {
+  "id": "C085",
+  "batch": "16차",
+  "seed": 3,
+  "cand": 7,
+  "name": "삼국지: 신의 한 수"
+ },
+ {
+  "id": "C086",
+  "batch": "16차",
+  "seed": 3,
+  "cand": 8,
+  "name": "Unsung Heroes: The Golden Mask"
+ },
+ {
+  "id": "C087",
+  "batch": "16차",
+  "seed": 3,
+  "cand": 9,
+  "name": "용의 원정"
+ },
+ {
+  "id": "S088",
+  "batch": "16차",
+  "seed": 4,
+  "cand": null,
+  "name": "초록빛 구원"
+ },
+ {
+  "id": "C089",
+  "batch": "16차",
+  "seed": 4,
+  "cand": 0,
+  "name": "별에게 소원을 (When you wish upon a star)"
+ },
+ {
+  "id": "C090",
+  "batch": "16차",
+  "seed": 4,
+  "cand": 1,
+  "name": "Awakening: Moonfell Wood"
+ },
+ {
+  "id": "C091",
+  "batch": "16차",
+  "seed": 4,
+  "cand": 2,
+  "name": "DARK SOULS™: REMASTERED"
+ },
+ {
+  "id": "C092",
+  "batch": "16차",
+  "seed": 4,
+  "cand": 3,
+  "name": "러브 플루트"
+ },
+ {
+  "id": "C093",
+  "batch": "16차",
+  "seed": 4,
+  "cand": 4,
+  "name": "아이돌마스터 스탈릿 시즌"
+ },
+ {
+  "id": "C094",
+  "batch": "16차",
+  "seed": 4,
+  "cand": 5,
+  "name": "Silence"
+ },
+ {
+  "id": "C095",
+  "batch": "16차",
+  "seed": 4,
+  "cand": 6,
+  "name": "Tokyo Girls Chronicle"
+ },
+ {
+  "id": "C096",
+  "batch": "16차",
+  "seed": 4,
+  "cand": 7,
+  "name": "SB Empire"
+ },
+ {
+  "id": "C097",
+  "batch": "16차",
+  "seed": 4,
+  "cand": 8,
+  "name": "클리어 체리 아이스."
+ },
+ {
+  "id": "C098",
+  "batch": "16차",
+  "seed": 4,
+  "cand": 9,
+  "name": "OPUS: Rocket of Whispers"
+ },
+ {
+  "id": "S099",
+  "batch": "16차",
+  "seed": 5,
+  "cand": null,
+  "name": "망겜 속 수호자"
+ },
+ {
+  "id": "C100",
+  "batch": "16차",
+  "seed": 5,
+  "cand": 0,
+  "name": "Ancraophobia"
+ },
+ {
+  "id": "C101",
+  "batch": "16차",
+  "seed": 5,
+  "cand": 1,
+  "name": "Extinction"
+ },
+ {
+  "id": "C102",
+  "batch": "16차",
+  "seed": 5,
+  "cand": 2,
+  "name": "Reflections of Life: Slipping Hope Collector's Edition"
+ },
+ {
+  "id": "C103",
+  "batch": "16차",
+  "seed": 5,
+  "cand": 3,
+  "name": "Lost Lands: Dark Overlord Collector's Edition"
+ },
+ {
+  "id": "C104",
+  "batch": "16차",
+  "seed": 5,
+  "cand": 4,
+  "name": "Seeking Asylum: The Game (DEMO)"
+ },
+ {
+  "id": "C105",
+  "batch": "16차",
+  "seed": 5,
+  "cand": 5,
+  "name": "Guild Master Manager"
+ },
+ {
+  "id": "C106",
+  "batch": "16차",
+  "seed": 5,
+  "cand": 6,
+  "name": "Legendary Tales: Map of Hope Collector's Edition"
+ },
+ {
+  "id": "C107",
+  "batch": "16차",
+  "seed": 5,
+  "cand": 7,
+  "name": "Deadly Nightmare Unwanted Heritage"
+ },
+ {
+  "id": "C108",
+  "batch": "16차",
+  "seed": 5,
+  "cand": 8,
+  "name": "Soulsearch"
+ },
+ {
+  "id": "C109",
+  "batch": "16차",
+  "seed": 5,
+  "cand": 9,
+  "name": "Guardian Of December"
+ },
+ {
+  "id": "S110",
+  "batch": "16차",
+  "seed": 6,
+  "cand": null,
+  "name": "신들이 보우하사"
+ },
+ {
+  "id": "C111",
+  "batch": "16차",
+  "seed": 6,
+  "cand": 0,
+  "name": "Fox Fairy Saga · Nine Nights: Prologue"
+ },
+ {
+  "id": "C112",
+  "batch": "16차",
+  "seed": 6,
+  "cand": 1,
+  "name": "SOUTH PARK: SNOW DAY!"
+ },
+ {
+  "id": "C113",
+  "batch": "16차",
+  "seed": 6,
+  "cand": 2,
+  "name": "Saveggies"
+ },
+ {
+  "id": "C114",
+  "batch": "16차",
+  "seed": 6,
+  "cand": 3,
+  "name": "Warehuman -ウェアヒューマン-"
+ },
+ {
+  "id": "C115",
+  "batch": "16차",
+  "seed": 6,
+  "cand": 4,
+  "name": "지구방위군 6"
+ },
+ {
+  "id": "C116",
+  "batch": "16차",
+  "seed": 6,
+  "cand": 5,
+  "name": "수선강요전"
+ },
+ {
+  "id": "C117",
+  "batch": "16차",
+  "seed": 6,
+  "cand": 6,
+  "name": "크라운즈 트라이얼 (Crown's Trial)"
+ },
+ {
+  "id": "C118",
+  "batch": "16차",
+  "seed": 6,
+  "cand": 7,
+  "name": "Boing Over It"
+ },
+ {
+  "id": "C119",
+  "batch": "16차",
+  "seed": 6,
+  "cand": 8,
+  "name": "봄이 오면 꽃이 피고"
+ },
+ {
+  "id": "C120",
+  "batch": "16차",
+  "seed": 6,
+  "cand": 9,
+  "name": "보보 베이: 뽀짝 몬스터 대작전"
+ },
+ {
+  "id": "S121",
+  "batch": "16차",
+  "seed": 7,
+  "cand": null,
+  "name": "Dr. 신선한 : 미래를 보는 의사"
+ },
+ {
+  "id": "C122",
+  "batch": "16차",
+  "seed": 7,
+  "cand": 0,
+  "name": "Doctor Simulator"
+ },
+ {
+  "id": "C123",
+  "batch": "16차",
+  "seed": 7,
+  "cand": 1,
+  "name": "Heart's Medicine - Doctor's Oath"
+ },
+ {
+  "id": "C124",
+  "batch": "16차",
+  "seed": 7,
+  "cand": 2,
+  "name": "Heart's Medicine - Hospital Heat"
+ },
+ {
+  "id": "C125",
+  "batch": "16차",
+  "seed": 7,
+  "cand": 3,
+  "name": "Heart's Medicine - Time to Heal"
+ },
+ {
+  "id": "C126",
+  "batch": "16차",
+  "seed": 7,
+  "cand": 4,
+  "name": "スタットコール 救命恋愛24時"
+ },
+ {
+  "id": "C127",
+  "batch": "16차",
+  "seed": 7,
+  "cand": 5,
+  "name": "응급실 시뮬레이터"
+ },
+ {
+  "id": "C128",
+  "batch": "16차",
+  "seed": 7,
+  "cand": 6,
+  "name": "Underdose"
+ },
+ {
+  "id": "C129",
+  "batch": "16차",
+  "seed": 7,
+  "cand": 7,
+  "name": "Dr. Oops!"
+ },
+ {
+  "id": "C130",
+  "batch": "16차",
+  "seed": 7,
+  "cand": 8,
+  "name": "Anomaly Core: Hospital"
+ },
+ {
+  "id": "C131",
+  "batch": "16차",
+  "seed": 7,
+  "cand": 9,
+  "name": "No More Future"
+ },
+ {
+  "id": "S132",
+  "batch": "16차",
+  "seed": 11,
+  "cand": null,
+  "name": "세 개의 칼날"
+ },
+ {
+  "id": "C133",
+  "batch": "16차",
+  "seed": 11,
+  "cand": 0,
+  "name": "봄이 오면 꽃이 피고"
+ },
+ {
+  "id": "C134",
+  "batch": "16차",
+  "seed": 11,
+  "cand": 1,
+  "name": "애거서 크리스티: 오리엔트 특급 살인 (Agatha Christie - Murder on the Orient Express)"
+ },
+ {
+  "id": "C135",
+  "batch": "16차",
+  "seed": 11,
+  "cand": 2,
+  "name": "청구야담: 팔도견문록"
+ },
+ {
+  "id": "C136",
+  "batch": "16차",
+  "seed": 11,
+  "cand": 3,
+  "name": "더 에니그마 케이스"
+ },
+ {
+  "id": "C137",
+  "batch": "16차",
+  "seed": 11,
+  "cand": 4,
+  "name": "Best Served Cold"
+ },
+ {
+  "id": "C138",
+  "batch": "16차",
+  "seed": 11,
+  "cand": 5,
+  "name": "One of Us"
+ },
+ {
+  "id": "C139",
+  "batch": "16차",
+  "seed": 11,
+  "cand": 6,
+  "name": "애거사 크리스티 - 나일강의 죽음 (Agatha Christie - Death on the Nile)"
+ },
+ {
+  "id": "C140",
+  "batch": "16차",
+  "seed": 11,
+  "cand": 7,
+  "name": "The Mermaid Mask"
+ },
+ {
+  "id": "C141",
+  "batch": "16차",
+  "seed": 11,
+  "cand": 8,
+  "name": "Ghostwire: Tokyo - 서막"
+ },
+ {
+  "id": "C142",
+  "batch": "16차",
+  "seed": 11,
+  "cand": 9,
+  "name": "은폐된 살인의 진실들 - 하드코어 본격 추리 탐정 게임"
+ },
+ {
+  "id": "S143",
+  "batch": "16차",
+  "seed": 15,
+  "cand": null,
+  "name": "혁련세가 차남이 되었다"
+ },
+ {
+  "id": "C144",
+  "batch": "16차",
+  "seed": 15,
+  "cand": 0,
+  "name": "검신제로"
+ },
+ {
+  "id": "C145",
+  "batch": "16차",
+  "seed": 15,
+  "cand": 1,
+  "name": "봄이 오면 꽃이 피고"
+ },
+ {
+  "id": "C146",
+  "batch": "16차",
+  "seed": 15,
+  "cand": 2,
+  "name": "ECHO Re:Kill"
+ },
+ {
+  "id": "C147",
+  "batch": "16차",
+  "seed": 15,
+  "cand": 3,
+  "name": "Suicide Guy: Sleepin' Deeply"
+ },
+ {
+  "id": "C148",
+  "batch": "16차",
+  "seed": 15,
+  "cand": 4,
+  "name": "스위트 클락워크"
+ },
+ {
+  "id": "C149",
+  "batch": "16차",
+  "seed": 15,
+  "cand": 5,
+  "name": "매니스"
+ },
+ {
+  "id": "C150",
+  "batch": "16차",
+  "seed": 15,
+  "cand": 6,
+  "name": "지구방위군 6"
+ },
+ {
+  "id": "C151",
+  "batch": "16차",
+  "seed": 15,
+  "cand": 7,
+  "name": "동방홍마향: New Classic ～ the Embodiment of Scarlet Devil."
+ },
+ {
+  "id": "C152",
+  "batch": "16차",
+  "seed": 15,
+  "cand": 8,
+  "name": "The Life You Missed"
+ },
+ {
+  "id": "C153",
+  "batch": "16차",
+  "seed": 15,
+  "cand": 9,
+  "name": "수선강요전"
+ },
+ {
+  "id": "S154",
+  "batch": "16차",
+  "seed": 17,
+  "cand": null,
+  "name": "중간보스의 심복으로 살아남기"
+ },
+ {
+  "id": "C155",
+  "batch": "16차",
+  "seed": 17,
+  "cand": 0,
+  "name": "Uncharted Tides: Port Royal"
+ },
+ {
+  "id": "C156",
+  "batch": "16차",
+  "seed": 17,
+  "cand": 1,
+  "name": "Blood of Inquisition"
+ },
+ {
+  "id": "C157",
+  "batch": "16차",
+  "seed": 17,
+  "cand": 2,
+  "name": "커피여우 김삼월"
+ },
+ {
+  "id": "C158",
+  "batch": "16차",
+  "seed": 17,
+  "cand": 3,
+  "name": "사랑을 노래하는 방법"
+ },
+ {
+  "id": "C159",
+  "batch": "16차",
+  "seed": 17,
+  "cand": 4,
+  "name": "Shadow of the Moonlight"
+ },
+ {
+  "id": "C160",
+  "batch": "16차",
+  "seed": 17,
+  "cand": 5,
+  "name": "Rustown"
+ },
+ {
+  "id": "C161",
+  "batch": "16차",
+  "seed": 17,
+  "cand": 6,
+  "name": "Warehuman -ウェアヒューマン-"
+ },
+ {
+  "id": "C162",
+  "batch": "16차",
+  "seed": 17,
+  "cand": 7,
+  "name": "Project BS"
+ },
+ {
+  "id": "C163",
+  "batch": "16차",
+  "seed": 17,
+  "cand": 8,
+  "name": "From Lex to Rex"
+ },
+ {
+  "id": "C164",
+  "batch": "16차",
+  "seed": 17,
+  "cand": 9,
+  "name": "Волшебная свадьба гусляра Ивана"
+ },
+ {
+  "id": "S165",
+  "batch": "18차",
+  "seed": 1,
+  "cand": null,
+  "name": "리그너스 대륙전기"
+ },
+ {
+  "id": "C166",
+  "batch": "18차",
+  "seed": 1,
+  "cand": 0,
+  "name": "Reigns: Game of Thrones"
+ },
+ {
+  "id": "C167",
+  "batch": "18차",
+  "seed": 1,
+  "cand": 1,
+  "name": "로도스도 전기 - 디드리트 인 원더 라비린스"
+ },
+ {
+  "id": "C168",
+  "batch": "18차",
+  "seed": 1,
+  "cand": 2,
+  "name": "Initium Legenda"
+ },
+ {
+  "id": "C169",
+  "batch": "18차",
+  "seed": 1,
+  "cand": 3,
+  "name": "Tavern Ventures: Guilds & Tales"
+ },
+ {
+  "id": "C170",
+  "batch": "18차",
+  "seed": 1,
+  "cand": 4,
+  "name": "피터의 영어 모험 [영어 배우기]"
+ },
+ {
+  "id": "C171",
+  "batch": "18차",
+  "seed": 1,
+  "cand": 5,
+  "name": "용의 원정"
+ },
+ {
+  "id": "C172",
+  "batch": "18차",
+  "seed": 1,
+  "cand": 6,
+  "name": "Lanternium"
+ },
+ {
+  "id": "C173",
+  "batch": "18차",
+  "seed": 1,
+  "cand": 7,
+  "name": "프런티어 헌터： 엘사의 운명의 바퀴"
+ },
+ {
+  "id": "C174",
+  "batch": "18차",
+  "seed": 1,
+  "cand": 8,
+  "name": "动物职场"
+ },
+ {
+  "id": "C175",
+  "batch": "18차",
+  "seed": 1,
+  "cand": 9,
+  "name": "Souldiers"
+ },
+ {
+  "id": "S176",
+  "batch": "18차",
+  "seed": 13,
+  "cand": null,
+  "name": "악녀가 바뀌었다"
+ },
+ {
+  "id": "C177",
+  "batch": "18차",
+  "seed": 13,
+  "cand": 0,
+  "name": "스위트 클락워크"
+ },
+ {
+  "id": "C178",
+  "batch": "18차",
+  "seed": 13,
+  "cand": 1,
+  "name": "Derail: Sacrifice"
+ },
+ {
+  "id": "C179",
+  "batch": "18차",
+  "seed": 13,
+  "cand": 2,
+  "name": "Uncharted Tides: Port Royal"
+ },
+ {
+  "id": "C180",
+  "batch": "18차",
+  "seed": 13,
+  "cand": 3,
+  "name": "and Roger"
+ },
+ {
+  "id": "C181",
+  "batch": "18차",
+  "seed": 13,
+  "cand": 4,
+  "name": "Warehuman -ウェアヒューマン-"
+ },
+ {
+  "id": "C182",
+  "batch": "18차",
+  "seed": 13,
+  "cand": 5,
+  "name": "Without a Voice"
+ },
+ {
+  "id": "C183",
+  "batch": "18차",
+  "seed": 13,
+  "cand": 6,
+  "name": "The Meridian Under the Heaven: Valhalla"
+ },
+ {
+  "id": "C184",
+  "batch": "18차",
+  "seed": 13,
+  "cand": 7,
+  "name": "The Void Chronicles: One's Desolation"
+ },
+ {
+  "id": "C185",
+  "batch": "18차",
+  "seed": 13,
+  "cand": 8,
+  "name": "Columbus"
+ },
+ {
+  "id": "C186",
+  "batch": "18차",
+  "seed": 13,
+  "cand": 9,
+  "name": "Crime Passional"
+ },
+ {
+  "id": "S187",
+  "batch": "18차",
+  "seed": 14,
+  "cand": null,
+  "name": "악신의 총애를 받는 성직자가 되었다"
+ },
+ {
+  "id": "C188",
+  "batch": "18차",
+  "seed": 14,
+  "cand": 0,
+  "name": "The Inquisitor"
+ },
+ {
+  "id": "C189",
+  "batch": "18차",
+  "seed": 14,
+  "cand": 1,
+  "name": "Idle Chapel"
+ },
+ {
+  "id": "C190",
+  "batch": "18차",
+  "seed": 14,
+  "cand": 2,
+  "name": "Deadly Nightmare Unwanted Heritage"
+ },
+ {
+  "id": "C191",
+  "batch": "18차",
+  "seed": 14,
+  "cand": 3,
+  "name": "Zjawa: Bloodstained Soul"
+ },
+ {
+  "id": "C192",
+  "batch": "18차",
+  "seed": 14,
+  "cand": 4,
+  "name": "어서오세요 신성재판에"
+ },
+ {
+  "id": "C193",
+  "batch": "18차",
+  "seed": 14,
+  "cand": 5,
+  "name": "Inquisitor’s Heart and Soul"
+ },
+ {
+  "id": "C194",
+  "batch": "18차",
+  "seed": 14,
+  "cand": 6,
+  "name": "아기정령들 (Little Elementals)"
+ },
+ {
+  "id": "C195",
+  "batch": "18차",
+  "seed": 14,
+  "cand": 7,
+  "name": "Kraken Academy!!"
+ },
+ {
+  "id": "C196",
+  "batch": "18차",
+  "seed": 14,
+  "cand": 8,
+  "name": "Overlord™"
+ },
+ {
+  "id": "C197",
+  "batch": "18차",
+  "seed": 14,
+  "cand": 9,
+  "name": "1666: Amsterdam"
+ },
+ {
+  "id": "S198",
+  "batch": "18차",
+  "seed": 15,
+  "cand": null,
+  "name": "황제의 길라잡이"
+ },
+ {
+  "id": "C199",
+  "batch": "18차",
+  "seed": 15,
+  "cand": 0,
+  "name": "Chronicles of Magic: Divided Kingdoms"
+ },
+ {
+  "id": "C200",
+  "batch": "18차",
+  "seed": 15,
+  "cand": 1,
+  "name": "봄이 오면 꽃이 피고"
+ },
+ {
+  "id": "C201",
+  "batch": "18차",
+  "seed": 15,
+  "cand": 2,
+  "name": "King's Heir: Rise to the Throne"
+ },
+ {
+  "id": "C202",
+  "batch": "18차",
+  "seed": 15,
+  "cand": 3,
+  "name": "Evil Advisor Verdict"
+ },
+ {
+  "id": "C203",
+  "batch": "18차",
+  "seed": 15,
+  "cand": 4,
+  "name": "Kung Fu Time Travel"
+ },
+ {
+  "id": "C204",
+  "batch": "18차",
+  "seed": 15,
+  "cand": 5,
+  "name": "The Surprising Adventures of Munchausen"
+ },
+ {
+  "id": "C205",
+  "batch": "18차",
+  "seed": 15,
+  "cand": 6,
+  "name": "Lost Lands: Dark Overlord Collector's Edition"
+ },
+ {
+  "id": "C206",
+  "batch": "18차",
+  "seed": 15,
+  "cand": 7,
+  "name": "Landomayzer"
+ },
+ {
+  "id": "C207",
+  "batch": "18차",
+  "seed": 15,
+  "cand": 8,
+  "name": "그랑 엠파이어 : 그래픽 리마스터"
+ },
+ {
+  "id": "C208",
+  "batch": "18차",
+  "seed": 15,
+  "cand": 9,
+  "name": "KADI: 오스만 판관"
+ },
+ {
+  "id": "S209",
+  "batch": "18차",
+  "seed": 19,
+  "cand": null,
+  "name": "시한부 성녀인데 흑막 대공을 길들여버렸다"
+ },
+ {
+  "id": "C210",
+  "batch": "18차",
+  "seed": 19,
+  "cand": 0,
+  "name": "극 서원 연의"
+ },
+ {
+  "id": "C211",
+  "batch": "18차",
+  "seed": 19,
+  "cand": 1,
+  "name": "봄이 오면 꽃이 피고"
+ },
+ {
+  "id": "C212",
+  "batch": "18차",
+  "seed": 19,
+  "cand": 2,
+  "name": "L.L.L.Liar 瞑目月台"
+ },
+ {
+  "id": "C213",
+  "batch": "18차",
+  "seed": 19,
+  "cand": 3,
+  "name": "Crime Passional"
+ },
+ {
+  "id": "C214",
+  "batch": "18차",
+  "seed": 19,
+  "cand": 4,
+  "name": "명존실망: 금의야행"
+ },
+ {
+  "id": "C215",
+  "batch": "18차",
+  "seed": 19,
+  "cand": 5,
+  "name": "Merica Tale"
+ },
+ {
+  "id": "C216",
+  "batch": "18차",
+  "seed": 19,
+  "cand": 6,
+  "name": "엔의 단검"
+ },
+ {
+  "id": "C217",
+  "batch": "18차",
+  "seed": 19,
+  "cand": 7,
+  "name": "Hope in the City"
+ },
+ {
+  "id": "C218",
+  "batch": "18차",
+  "seed": 19,
+  "cand": 8,
+  "name": "데치카: 인연의 섬"
+ },
+ {
+  "id": "C219",
+  "batch": "18차",
+  "seed": 19,
+  "cand": 9,
+  "name": "黑白灰 Woolhampton Chronicles"
+ }
+]

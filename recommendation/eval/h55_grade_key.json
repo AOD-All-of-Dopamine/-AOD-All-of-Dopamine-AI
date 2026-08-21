@@ -1,0 +1,2711 @@
+[
+ {
+  "pid": "W269",
+  "rdom": "steam",
+  "rname": "No More Future",
+  "dom": "wn",
+  "cand": "다시 사는 연기천재"
+ },
+ {
+  "pid": "W326",
+  "rdom": "tmdb",
+  "rname": "러브 인 베를린",
+  "dom": "wn",
+  "cand": "다시 사는 연기천재"
+ },
+ {
+  "pid": "W287",
+  "rdom": "steam",
+  "rname": "No More Future",
+  "dom": "wn",
+  "cand": "돌아와 다시 서다."
+ },
+ {
+  "pid": "W078",
+  "rdom": "tmdb",
+  "rname": "러브 인 베를린",
+  "dom": "wn",
+  "cand": "돌아와 다시 서다."
+ },
+ {
+  "pid": "W241",
+  "rdom": "steam",
+  "rname": "No More Future",
+  "dom": "wn",
+  "cand": "리턴 리셋"
+ },
+ {
+  "pid": "W279",
+  "rdom": "tmdb",
+  "rname": "러브 인 베를린",
+  "dom": "wn",
+  "cand": "리턴 리셋"
+ },
+ {
+  "pid": "W336",
+  "rdom": "wn",
+  "rname": "인생, 다시 한 번!",
+  "dom": "steam",
+  "cand": "Crimson Frontier: Youth"
+ },
+ {
+  "pid": "W253",
+  "rdom": "steam",
+  "rname": "No More Future",
+  "dom": "steam",
+  "cand": "Crimson Frontier: Youth"
+ },
+ {
+  "pid": "W311",
+  "rdom": "tmdb",
+  "rname": "러브 인 베를린",
+  "dom": "steam",
+  "cand": "Crimson Frontier: Youth"
+ },
+ {
+  "pid": "W063",
+  "rdom": "wn",
+  "rname": "인생, 다시 한 번!",
+  "dom": "tmdb",
+  "cand": "버켓 오브 블러드"
+ },
+ {
+  "pid": "W175",
+  "rdom": "steam",
+  "rname": "No More Future",
+  "dom": "tmdb",
+  "cand": "버켓 오브 블러드"
+ },
+ {
+  "pid": "W292",
+  "rdom": "tmdb",
+  "rname": "러브 인 베를린",
+  "dom": "tmdb",
+  "cand": "버켓 오브 블러드"
+ },
+ {
+  "pid": "W085",
+  "rdom": "wn",
+  "rname": "인생, 다시 한 번!",
+  "dom": "wn",
+  "cand": "현재와 미래의 미필적고의"
+ },
+ {
+  "pid": "W030",
+  "rdom": "steam",
+  "rname": "No More Future",
+  "dom": "wn",
+  "cand": "현재와 미래의 미필적고의"
+ },
+ {
+  "pid": "W001",
+  "rdom": "tmdb",
+  "rname": "러브 인 베를린",
+  "dom": "wn",
+  "cand": "현재와 미래의 미필적고의"
+ },
+ {
+  "pid": "W121",
+  "rdom": "wn",
+  "rname": "인생, 다시 한 번!",
+  "dom": "wn",
+  "cand": "무림인 현대 적응기"
+ },
+ {
+  "pid": "W145",
+  "rdom": "steam",
+  "rname": "No More Future",
+  "dom": "wn",
+  "cand": "무림인 현대 적응기"
+ },
+ {
+  "pid": "W182",
+  "rdom": "tmdb",
+  "rname": "러브 인 베를린",
+  "dom": "wn",
+  "cand": "무림인 현대 적응기"
+ },
+ {
+  "pid": "W043",
+  "rdom": "wn",
+  "rname": "인생, 다시 한 번!",
+  "dom": "wn",
+  "cand": "전지적 의사 시점"
+ },
+ {
+  "pid": "W234",
+  "rdom": "steam",
+  "rname": "No More Future",
+  "dom": "wn",
+  "cand": "전지적 의사 시점"
+ },
+ {
+  "pid": "W347",
+  "rdom": "tmdb",
+  "rname": "러브 인 베를린",
+  "dom": "wn",
+  "cand": "전지적 의사 시점"
+ },
+ {
+  "pid": "W289",
+  "rdom": "steam",
+  "rname": "No More Future",
+  "dom": "steam",
+  "cand": "旅人物語 ～Journeys of Real People～"
+ },
+ {
+  "pid": "W133",
+  "rdom": "tmdb",
+  "rname": "러브 인 베를린",
+  "dom": "steam",
+  "cand": "旅人物語 ～Journeys of Real People～"
+ },
+ {
+  "pid": "W340",
+  "rdom": "steam",
+  "rname": "No More Future",
+  "dom": "steam",
+  "cand": "Suicide Guy: Sleepin' Deeply"
+ },
+ {
+  "pid": "W277",
+  "rdom": "tmdb",
+  "rname": "러브 인 베를린",
+  "dom": "steam",
+  "cand": "Suicide Guy: Sleepin' Deeply"
+ },
+ {
+  "pid": "W123",
+  "rdom": "steam",
+  "rname": "No More Future",
+  "dom": "steam",
+  "cand": "봄이 오면 꽃이 피고"
+ },
+ {
+  "pid": "W378",
+  "rdom": "tmdb",
+  "rname": "러브 인 베를린",
+  "dom": "steam",
+  "cand": "봄이 오면 꽃이 피고"
+ },
+ {
+  "pid": "W041",
+  "rdom": "steam",
+  "rname": "No More Future",
+  "dom": "tmdb",
+  "cand": "웨이킹 라이프"
+ },
+ {
+  "pid": "W013",
+  "rdom": "tmdb",
+  "rname": "러브 인 베를린",
+  "dom": "tmdb",
+  "cand": "웨이킹 라이프"
+ },
+ {
+  "pid": "W368",
+  "rdom": "wn",
+  "rname": "인생, 다시 한 번!",
+  "dom": "tmdb",
+  "cand": "미드나잇 애프터"
+ },
+ {
+  "pid": "W024",
+  "rdom": "steam",
+  "rname": "No More Future",
+  "dom": "tmdb",
+  "cand": "미드나잇 애프터"
+ },
+ {
+  "pid": "W318",
+  "rdom": "tmdb",
+  "rname": "러브 인 베를린",
+  "dom": "tmdb",
+  "cand": "미드나잇 애프터"
+ },
+ {
+  "pid": "W059",
+  "rdom": "wn",
+  "rname": "인생, 다시 한 번!",
+  "dom": "tmdb",
+  "cand": "배틀 오브 메모리즈"
+ },
+ {
+  "pid": "W115",
+  "rdom": "steam",
+  "rname": "No More Future",
+  "dom": "tmdb",
+  "cand": "배틀 오브 메모리즈"
+ },
+ {
+  "pid": "W020",
+  "rdom": "tmdb",
+  "rname": "러브 인 베를린",
+  "dom": "tmdb",
+  "cand": "배틀 오브 메모리즈"
+ },
+ {
+  "pid": "W235",
+  "rdom": "steam",
+  "rname": "Poor Samantha",
+  "dom": "wn",
+  "cand": "잠마검선"
+ },
+ {
+  "pid": "W191",
+  "rdom": "tmdb",
+  "rname": "전생했더니 검이었습니다",
+  "dom": "wn",
+  "cand": "잠마검선"
+ },
+ {
+  "pid": "W065",
+  "rdom": "steam",
+  "rname": "Poor Samantha",
+  "dom": "wn",
+  "cand": "검마"
+ },
+ {
+  "pid": "W313",
+  "rdom": "tmdb",
+  "rname": "전생했더니 검이었습니다",
+  "dom": "wn",
+  "cand": "검마"
+ },
+ {
+  "pid": "W243",
+  "rdom": "steam",
+  "rname": "Poor Samantha",
+  "dom": "wn",
+  "cand": "성검가"
+ },
+ {
+  "pid": "W254",
+  "rdom": "tmdb",
+  "rname": "전생했더니 검이었습니다",
+  "dom": "wn",
+  "cand": "성검가"
+ },
+ {
+  "pid": "W327",
+  "rdom": "wn",
+  "rname": "정마검",
+  "dom": "steam",
+  "cand": "맛있는 사랑"
+ },
+ {
+  "pid": "W359",
+  "rdom": "steam",
+  "rname": "Poor Samantha",
+  "dom": "steam",
+  "cand": "맛있는 사랑"
+ },
+ {
+  "pid": "W299",
+  "rdom": "tmdb",
+  "rname": "전생했더니 검이었습니다",
+  "dom": "steam",
+  "cand": "맛있는 사랑"
+ },
+ {
+  "pid": "W118",
+  "rdom": "wn",
+  "rname": "정마검",
+  "dom": "steam",
+  "cand": "死掉的女儿（The Dead Daughter）"
+ },
+ {
+  "pid": "W161",
+  "rdom": "steam",
+  "rname": "Poor Samantha",
+  "dom": "steam",
+  "cand": "死掉的女儿（The Dead Daughter）"
+ },
+ {
+  "pid": "W197",
+  "rdom": "tmdb",
+  "rname": "전생했더니 검이었습니다",
+  "dom": "steam",
+  "cand": "死掉的女儿（The Dead Daughter）"
+ },
+ {
+  "pid": "W240",
+  "rdom": "wn",
+  "rname": "정마검",
+  "dom": "steam",
+  "cand": "and Roger"
+ },
+ {
+  "pid": "W386",
+  "rdom": "steam",
+  "rname": "Poor Samantha",
+  "dom": "steam",
+  "cand": "and Roger"
+ },
+ {
+  "pid": "W050",
+  "rdom": "tmdb",
+  "rname": "전생했더니 검이었습니다",
+  "dom": "steam",
+  "cand": "and Roger"
+ },
+ {
+  "pid": "W177",
+  "rdom": "steam",
+  "rname": "Poor Samantha",
+  "dom": "tmdb",
+  "cand": "호협"
+ },
+ {
+  "pid": "W308",
+  "rdom": "tmdb",
+  "rname": "전생했더니 검이었습니다",
+  "dom": "tmdb",
+  "cand": "호협"
+ },
+ {
+  "pid": "W278",
+  "rdom": "wn",
+  "rname": "정마검",
+  "dom": "tmdb",
+  "cand": "전생 현자의 이세계 라이프 ~두 번째 직업을 얻고 세계 최강이 되었습니다~"
+ },
+ {
+  "pid": "W126",
+  "rdom": "steam",
+  "rname": "Poor Samantha",
+  "dom": "tmdb",
+  "cand": "전생 현자의 이세계 라이프 ~두 번째 직업을 얻고 세계 최강이 되었습니다~"
+ },
+ {
+  "pid": "W138",
+  "rdom": "tmdb",
+  "rname": "전생했더니 검이었습니다",
+  "dom": "tmdb",
+  "cand": "전생 현자의 이세계 라이프 ~두 번째 직업을 얻고 세계 최강이 되었습니다~"
+ },
+ {
+  "pid": "W210",
+  "rdom": "wn",
+  "rname": "정마검",
+  "dom": "tmdb",
+  "cand": "진화의 열매 ~모르는 사이 성공한 인생~"
+ },
+ {
+  "pid": "W136",
+  "rdom": "steam",
+  "rname": "Poor Samantha",
+  "dom": "tmdb",
+  "cand": "진화의 열매 ~모르는 사이 성공한 인생~"
+ },
+ {
+  "pid": "W106",
+  "rdom": "tmdb",
+  "rname": "전생했더니 검이었습니다",
+  "dom": "tmdb",
+  "cand": "진화의 열매 ~모르는 사이 성공한 인생~"
+ },
+ {
+  "pid": "W092",
+  "rdom": "wn",
+  "rname": "정마검",
+  "dom": "wn",
+  "cand": "유성검가의 망나니로 살아남는 법"
+ },
+ {
+  "pid": "W302",
+  "rdom": "steam",
+  "rname": "Poor Samantha",
+  "dom": "wn",
+  "cand": "유성검가의 망나니로 살아남는 법"
+ },
+ {
+  "pid": "W143",
+  "rdom": "tmdb",
+  "rname": "전생했더니 검이었습니다",
+  "dom": "wn",
+  "cand": "유성검가의 망나니로 살아남는 법"
+ },
+ {
+  "pid": "W295",
+  "rdom": "wn",
+  "rname": "정마검",
+  "dom": "wn",
+  "cand": "그녀는 마왕?!"
+ },
+ {
+  "pid": "W361",
+  "rdom": "steam",
+  "rname": "Poor Samantha",
+  "dom": "wn",
+  "cand": "그녀는 마왕?!"
+ },
+ {
+  "pid": "W113",
+  "rdom": "tmdb",
+  "rname": "전생했더니 검이었습니다",
+  "dom": "wn",
+  "cand": "그녀는 마왕?!"
+ },
+ {
+  "pid": "W097",
+  "rdom": "wn",
+  "rname": "정마검",
+  "dom": "wn",
+  "cand": "뉴비 스승님과 고인물 제자님"
+ },
+ {
+  "pid": "W324",
+  "rdom": "steam",
+  "rname": "Poor Samantha",
+  "dom": "wn",
+  "cand": "뉴비 스승님과 고인물 제자님"
+ },
+ {
+  "pid": "W089",
+  "rdom": "tmdb",
+  "rname": "전생했더니 검이었습니다",
+  "dom": "wn",
+  "cand": "뉴비 스승님과 고인물 제자님"
+ },
+ {
+  "pid": "W301",
+  "rdom": "wn",
+  "rname": "정마검",
+  "dom": "steam",
+  "cand": "Legacy of Kain: Defiance Remastered"
+ },
+ {
+  "pid": "W372",
+  "rdom": "steam",
+  "rname": "Poor Samantha",
+  "dom": "steam",
+  "cand": "Legacy of Kain: Defiance Remastered"
+ },
+ {
+  "pid": "W114",
+  "rdom": "tmdb",
+  "rname": "전생했더니 검이었습니다",
+  "dom": "steam",
+  "cand": "Legacy of Kain: Defiance Remastered"
+ },
+ {
+  "pid": "W261",
+  "rdom": "steam",
+  "rname": "Poor Samantha",
+  "dom": "steam",
+  "cand": "역전검사 1&2 미츠루기 셀렉션"
+ },
+ {
+  "pid": "W170",
+  "rdom": "tmdb",
+  "rname": "전생했더니 검이었습니다",
+  "dom": "steam",
+  "cand": "역전검사 1&2 미츠루기 셀렉션"
+ },
+ {
+  "pid": "W365",
+  "rdom": "wn",
+  "rname": "정마검",
+  "dom": "tmdb",
+  "cand": "데이트 어 라이브 마유리 저지먼트"
+ },
+ {
+  "pid": "W017",
+  "rdom": "steam",
+  "rname": "Poor Samantha",
+  "dom": "tmdb",
+  "cand": "데이트 어 라이브 마유리 저지먼트"
+ },
+ {
+  "pid": "W168",
+  "rdom": "tmdb",
+  "rname": "전생했더니 검이었습니다",
+  "dom": "tmdb",
+  "cand": "데이트 어 라이브 마유리 저지먼트"
+ },
+ {
+  "pid": "W271",
+  "rdom": "wn",
+  "rname": "정마검",
+  "dom": "tmdb",
+  "cand": "햇빛 쏟아지던 날들"
+ },
+ {
+  "pid": "W064",
+  "rdom": "steam",
+  "rname": "Poor Samantha",
+  "dom": "tmdb",
+  "cand": "햇빛 쏟아지던 날들"
+ },
+ {
+  "pid": "W006",
+  "rdom": "tmdb",
+  "rname": "전생했더니 검이었습니다",
+  "dom": "tmdb",
+  "cand": "햇빛 쏟아지던 날들"
+ },
+ {
+  "pid": "W141",
+  "rdom": "steam",
+  "rname": "Poor Samantha",
+  "dom": "tmdb",
+  "cand": "베르세르크"
+ },
+ {
+  "pid": "W321",
+  "rdom": "tmdb",
+  "rname": "전생했더니 검이었습니다",
+  "dom": "tmdb",
+  "cand": "베르세르크"
+ },
+ {
+  "pid": "W259",
+  "rdom": "steam",
+  "rname": "The Counter Gambit",
+  "dom": "wn",
+  "cand": "미술 천재의 힐링 작업실"
+ },
+ {
+  "pid": "W185",
+  "rdom": "tmdb",
+  "rname": "하백의 신부",
+  "dom": "wn",
+  "cand": "미술 천재의 힐링 작업실"
+ },
+ {
+  "pid": "W134",
+  "rdom": "steam",
+  "rname": "The Counter Gambit",
+  "dom": "wn",
+  "cand": "다시 태어난 반 고흐"
+ },
+ {
+  "pid": "W370",
+  "rdom": "tmdb",
+  "rname": "하백의 신부",
+  "dom": "wn",
+  "cand": "다시 태어난 반 고흐"
+ },
+ {
+  "pid": "W047",
+  "rdom": "steam",
+  "rname": "The Counter Gambit",
+  "dom": "wn",
+  "cand": "전생은 드워프인데 현생은 예술 천재"
+ },
+ {
+  "pid": "W125",
+  "rdom": "tmdb",
+  "rname": "하백의 신부",
+  "dom": "wn",
+  "cand": "전생은 드워프인데 현생은 예술 천재"
+ },
+ {
+  "pid": "W142",
+  "rdom": "wn",
+  "rname": "신과 함께 미술천재",
+  "dom": "steam",
+  "cand": "Love Around Ladies College"
+ },
+ {
+  "pid": "W112",
+  "rdom": "steam",
+  "rname": "The Counter Gambit",
+  "dom": "steam",
+  "cand": "Love Around Ladies College"
+ },
+ {
+  "pid": "W105",
+  "rdom": "tmdb",
+  "rname": "하백의 신부",
+  "dom": "steam",
+  "cand": "Love Around Ladies College"
+ },
+ {
+  "pid": "W149",
+  "rdom": "wn",
+  "rname": "신과 함께 미술천재",
+  "dom": "steam",
+  "cand": "Highschool Romance"
+ },
+ {
+  "pid": "W117",
+  "rdom": "steam",
+  "rname": "The Counter Gambit",
+  "dom": "steam",
+  "cand": "Highschool Romance"
+ },
+ {
+  "pid": "W045",
+  "rdom": "tmdb",
+  "rname": "하백의 신부",
+  "dom": "steam",
+  "cand": "Highschool Romance"
+ },
+ {
+  "pid": "W338",
+  "rdom": "wn",
+  "rname": "신과 함께 미술천재",
+  "dom": "wn",
+  "cand": "1대1의 신(神)"
+ },
+ {
+  "pid": "W237",
+  "rdom": "steam",
+  "rname": "The Counter Gambit",
+  "dom": "wn",
+  "cand": "1대1의 신(神)"
+ },
+ {
+  "pid": "W280",
+  "rdom": "tmdb",
+  "rname": "하백의 신부",
+  "dom": "wn",
+  "cand": "1대1의 신(神)"
+ },
+ {
+  "pid": "W229",
+  "rdom": "wn",
+  "rname": "신과 함께 미술천재",
+  "dom": "wn",
+  "cand": "신의 게임의 신"
+ },
+ {
+  "pid": "W083",
+  "rdom": "steam",
+  "rname": "The Counter Gambit",
+  "dom": "wn",
+  "cand": "신의 게임의 신"
+ },
+ {
+  "pid": "W384",
+  "rdom": "tmdb",
+  "rname": "하백의 신부",
+  "dom": "wn",
+  "cand": "신의 게임의 신"
+ },
+ {
+  "pid": "W067",
+  "rdom": "wn",
+  "rname": "신과 함께 미술천재",
+  "dom": "wn",
+  "cand": "그 악녀 인생, 제가 한번 살아 볼게요"
+ },
+ {
+  "pid": "W116",
+  "rdom": "steam",
+  "rname": "The Counter Gambit",
+  "dom": "wn",
+  "cand": "그 악녀 인생, 제가 한번 살아 볼게요"
+ },
+ {
+  "pid": "W091",
+  "rdom": "tmdb",
+  "rname": "하백의 신부",
+  "dom": "wn",
+  "cand": "그 악녀 인생, 제가 한번 살아 볼게요"
+ },
+ {
+  "pid": "W274",
+  "rdom": "steam",
+  "rname": "The Counter Gambit",
+  "dom": "steam",
+  "cand": "뱀과 새"
+ },
+ {
+  "pid": "W162",
+  "rdom": "tmdb",
+  "rname": "하백의 신부",
+  "dom": "steam",
+  "cand": "뱀과 새"
+ },
+ {
+  "pid": "W247",
+  "rdom": "steam",
+  "rname": "The Counter Gambit",
+  "dom": "steam",
+  "cand": "봄이 오면 꽃이 피고"
+ },
+ {
+  "pid": "W154",
+  "rdom": "tmdb",
+  "rname": "하백의 신부",
+  "dom": "steam",
+  "cand": "봄이 오면 꽃이 피고"
+ },
+ {
+  "pid": "W233",
+  "rdom": "steam",
+  "rname": "The Counter Gambit",
+  "dom": "steam",
+  "cand": "Sleepover"
+ },
+ {
+  "pid": "W375",
+  "rdom": "tmdb",
+  "rname": "하백의 신부",
+  "dom": "steam",
+  "cand": "Sleepover"
+ },
+ {
+  "pid": "W352",
+  "rdom": "wn",
+  "rname": "신과 함께 미술천재",
+  "dom": "tmdb",
+  "cand": "실제상황"
+ },
+ {
+  "pid": "W309",
+  "rdom": "steam",
+  "rname": "The Counter Gambit",
+  "dom": "tmdb",
+  "cand": "실제상황"
+ },
+ {
+  "pid": "W354",
+  "rdom": "tmdb",
+  "rname": "하백의 신부",
+  "dom": "tmdb",
+  "cand": "실제상황"
+ },
+ {
+  "pid": "W236",
+  "rdom": "wn",
+  "rname": "신과 함께 미술천재",
+  "dom": "tmdb",
+  "cand": "어비스"
+ },
+ {
+  "pid": "W263",
+  "rdom": "steam",
+  "rname": "The Counter Gambit",
+  "dom": "tmdb",
+  "cand": "어비스"
+ },
+ {
+  "pid": "W329",
+  "rdom": "tmdb",
+  "rname": "하백의 신부",
+  "dom": "tmdb",
+  "cand": "어비스"
+ },
+ {
+  "pid": "W029",
+  "rdom": "wn",
+  "rname": "신과 함께 미술천재",
+  "dom": "tmdb",
+  "cand": "예스터데이를 노래하며"
+ },
+ {
+  "pid": "W186",
+  "rdom": "steam",
+  "rname": "The Counter Gambit",
+  "dom": "tmdb",
+  "cand": "예스터데이를 노래하며"
+ },
+ {
+  "pid": "W040",
+  "rdom": "tmdb",
+  "rname": "하백의 신부",
+  "dom": "tmdb",
+  "cand": "예스터데이를 노래하며"
+ },
+ {
+  "pid": "W207",
+  "rdom": "steam",
+  "rname": "Lost Lands: Dark Overlord Collector's Edition",
+  "dom": "wn",
+  "cand": "적대 가문의 사생아로 환생했다"
+ },
+ {
+  "pid": "W176",
+  "rdom": "tmdb",
+  "rname": "변방의 형제들 2",
+  "dom": "wn",
+  "cand": "적대 가문의 사생아로 환생했다"
+ },
+ {
+  "pid": "W193",
+  "rdom": "steam",
+  "rname": "Lost Lands: Dark Overlord Collector's Edition",
+  "dom": "wn",
+  "cand": "폭군의 망나니 오빠로 사는 법"
+ },
+ {
+  "pid": "W383",
+  "rdom": "tmdb",
+  "rname": "변방의 형제들 2",
+  "dom": "wn",
+  "cand": "폭군의 망나니 오빠로 사는 법"
+ },
+ {
+  "pid": "W294",
+  "rdom": "steam",
+  "rname": "Lost Lands: Dark Overlord Collector's Edition",
+  "dom": "wn",
+  "cand": "디프란"
+ },
+ {
+  "pid": "W080",
+  "rdom": "tmdb",
+  "rname": "변방의 형제들 2",
+  "dom": "wn",
+  "cand": "디프란"
+ },
+ {
+  "pid": "W281",
+  "rdom": "wn",
+  "rname": "폐급 후손으로 환생했다",
+  "dom": "steam",
+  "cand": "Nevertales: Faryon Collector's Edition"
+ },
+ {
+  "pid": "W158",
+  "rdom": "steam",
+  "rname": "Lost Lands: Dark Overlord Collector's Edition",
+  "dom": "steam",
+  "cand": "Nevertales: Faryon Collector's Edition"
+ },
+ {
+  "pid": "W051",
+  "rdom": "tmdb",
+  "rname": "변방의 형제들 2",
+  "dom": "steam",
+  "cand": "Nevertales: Faryon Collector's Edition"
+ },
+ {
+  "pid": "W148",
+  "rdom": "wn",
+  "rname": "폐급 후손으로 환생했다",
+  "dom": "steam",
+  "cand": "Reflections of Life: Call of the Ancestors Collector's Edition"
+ },
+ {
+  "pid": "W081",
+  "rdom": "steam",
+  "rname": "Lost Lands: Dark Overlord Collector's Edition",
+  "dom": "steam",
+  "cand": "Reflections of Life: Call of the Ancestors Collector's Edition"
+ },
+ {
+  "pid": "W224",
+  "rdom": "tmdb",
+  "rname": "변방의 형제들 2",
+  "dom": "steam",
+  "cand": "Reflections of Life: Call of the Ancestors Collector's Edition"
+ },
+ {
+  "pid": "W216",
+  "rdom": "wn",
+  "rname": "폐급 후손으로 환생했다",
+  "dom": "tmdb",
+  "cand": "바깥 나라의 소녀"
+ },
+ {
+  "pid": "W093",
+  "rdom": "steam",
+  "rname": "Lost Lands: Dark Overlord Collector's Edition",
+  "dom": "tmdb",
+  "cand": "바깥 나라의 소녀"
+ },
+ {
+  "pid": "W337",
+  "rdom": "tmdb",
+  "rname": "변방의 형제들 2",
+  "dom": "tmdb",
+  "cand": "바깥 나라의 소녀"
+ },
+ {
+  "pid": "W360",
+  "rdom": "wn",
+  "rname": "폐급 후손으로 환생했다",
+  "dom": "wn",
+  "cand": "나를 차별한 가족을 버립니다"
+ },
+ {
+  "pid": "W058",
+  "rdom": "steam",
+  "rname": "Lost Lands: Dark Overlord Collector's Edition",
+  "dom": "wn",
+  "cand": "나를 차별한 가족을 버립니다"
+ },
+ {
+  "pid": "W022",
+  "rdom": "tmdb",
+  "rname": "변방의 형제들 2",
+  "dom": "wn",
+  "cand": "나를 차별한 가족을 버립니다"
+ },
+ {
+  "pid": "W015",
+  "rdom": "wn",
+  "rname": "폐급 후손으로 환생했다",
+  "dom": "wn",
+  "cand": "마계 출신 이웃들이 힘을 숨김"
+ },
+ {
+  "pid": "W151",
+  "rdom": "steam",
+  "rname": "Lost Lands: Dark Overlord Collector's Edition",
+  "dom": "wn",
+  "cand": "마계 출신 이웃들이 힘을 숨김"
+ },
+ {
+  "pid": "W198",
+  "rdom": "tmdb",
+  "rname": "변방의 형제들 2",
+  "dom": "wn",
+  "cand": "마계 출신 이웃들이 힘을 숨김"
+ },
+ {
+  "pid": "W255",
+  "rdom": "wn",
+  "rname": "폐급 후손으로 환생했다",
+  "dom": "wn",
+  "cand": "새벽의 문"
+ },
+ {
+  "pid": "W288",
+  "rdom": "steam",
+  "rname": "Lost Lands: Dark Overlord Collector's Edition",
+  "dom": "wn",
+  "cand": "새벽의 문"
+ },
+ {
+  "pid": "W246",
+  "rdom": "tmdb",
+  "rname": "변방의 형제들 2",
+  "dom": "wn",
+  "cand": "새벽의 문"
+ },
+ {
+  "pid": "W248",
+  "rdom": "steam",
+  "rname": "Lost Lands: Dark Overlord Collector's Edition",
+  "dom": "steam",
+  "cand": "Shadow of the Moonlight"
+ },
+ {
+  "pid": "W062",
+  "rdom": "tmdb",
+  "rname": "변방의 형제들 2",
+  "dom": "steam",
+  "cand": "Shadow of the Moonlight"
+ },
+ {
+  "pid": "W225",
+  "rdom": "wn",
+  "rname": "폐급 후손으로 환생했다",
+  "dom": "steam",
+  "cand": "SB Empire"
+ },
+ {
+  "pid": "W290",
+  "rdom": "steam",
+  "rname": "Lost Lands: Dark Overlord Collector's Edition",
+  "dom": "steam",
+  "cand": "SB Empire"
+ },
+ {
+  "pid": "W189",
+  "rdom": "tmdb",
+  "rname": "변방의 형제들 2",
+  "dom": "steam",
+  "cand": "SB Empire"
+ },
+ {
+  "pid": "W107",
+  "rdom": "steam",
+  "rname": "Lost Lands: Dark Overlord Collector's Edition",
+  "dom": "steam",
+  "cand": "Pinkybites"
+ },
+ {
+  "pid": "W042",
+  "rdom": "tmdb",
+  "rname": "변방의 형제들 2",
+  "dom": "steam",
+  "cand": "Pinkybites"
+ },
+ {
+  "pid": "W214",
+  "rdom": "wn",
+  "rname": "폐급 후손으로 환생했다",
+  "dom": "tmdb",
+  "cand": "로카: 어둠의 찬드라"
+ },
+ {
+  "pid": "W317",
+  "rdom": "steam",
+  "rname": "Lost Lands: Dark Overlord Collector's Edition",
+  "dom": "tmdb",
+  "cand": "로카: 어둠의 찬드라"
+ },
+ {
+  "pid": "W003",
+  "rdom": "tmdb",
+  "rname": "변방의 형제들 2",
+  "dom": "tmdb",
+  "cand": "로카: 어둠의 찬드라"
+ },
+ {
+  "pid": "W346",
+  "rdom": "wn",
+  "rname": "폐급 후손으로 환생했다",
+  "dom": "tmdb",
+  "cand": "로스트 걸"
+ },
+ {
+  "pid": "W166",
+  "rdom": "steam",
+  "rname": "Lost Lands: Dark Overlord Collector's Edition",
+  "dom": "tmdb",
+  "cand": "로스트 걸"
+ },
+ {
+  "pid": "W072",
+  "rdom": "tmdb",
+  "rname": "변방의 형제들 2",
+  "dom": "tmdb",
+  "cand": "로스트 걸"
+ },
+ {
+  "pid": "W323",
+  "rdom": "wn",
+  "rname": "폐급 후손으로 환생했다",
+  "dom": "tmdb",
+  "cand": "미드나잇 애프터"
+ },
+ {
+  "pid": "W086",
+  "rdom": "steam",
+  "rname": "Lost Lands: Dark Overlord Collector's Edition",
+  "dom": "tmdb",
+  "cand": "미드나잇 애프터"
+ },
+ {
+  "pid": "W199",
+  "rdom": "tmdb",
+  "rname": "변방의 형제들 2",
+  "dom": "tmdb",
+  "cand": "미드나잇 애프터"
+ },
+ {
+  "pid": "W060",
+  "rdom": "steam",
+  "rname": "Queen's Revolution ~ the romance in upheavals ~",
+  "dom": "wn",
+  "cand": "대호귀환"
+ },
+ {
+  "pid": "W119",
+  "rdom": "tmdb",
+  "rname": "와호장룡",
+  "dom": "wn",
+  "cand": "대호귀환"
+ },
+ {
+  "pid": "W230",
+  "rdom": "steam",
+  "rname": "Queen's Revolution ~ the romance in upheavals ~",
+  "dom": "wn",
+  "cand": "귀환천하"
+ },
+ {
+  "pid": "W357",
+  "rdom": "tmdb",
+  "rname": "와호장룡",
+  "dom": "wn",
+  "cand": "귀환천하"
+ },
+ {
+  "pid": "W019",
+  "rdom": "steam",
+  "rname": "Queen's Revolution ~ the romance in upheavals ~",
+  "dom": "wn",
+  "cand": "술사귀환"
+ },
+ {
+  "pid": "W249",
+  "rdom": "tmdb",
+  "rname": "와호장룡",
+  "dom": "wn",
+  "cand": "술사귀환"
+ },
+ {
+  "pid": "W322",
+  "rdom": "wn",
+  "rname": "용장귀환",
+  "dom": "steam",
+  "cand": "King's Angel: Otome"
+ },
+ {
+  "pid": "W135",
+  "rdom": "steam",
+  "rname": "Queen's Revolution ~ the romance in upheavals ~",
+  "dom": "steam",
+  "cand": "King's Angel: Otome"
+ },
+ {
+  "pid": "W100",
+  "rdom": "tmdb",
+  "rname": "와호장룡",
+  "dom": "steam",
+  "cand": "King's Angel: Otome"
+ },
+ {
+  "pid": "W073",
+  "rdom": "wn",
+  "rname": "용장귀환",
+  "dom": "steam",
+  "cand": "Demonheart"
+ },
+ {
+  "pid": "W139",
+  "rdom": "steam",
+  "rname": "Queen's Revolution ~ the romance in upheavals ~",
+  "dom": "steam",
+  "cand": "Demonheart"
+ },
+ {
+  "pid": "W167",
+  "rdom": "tmdb",
+  "rname": "와호장룡",
+  "dom": "steam",
+  "cand": "Demonheart"
+ },
+ {
+  "pid": "W163",
+  "rdom": "steam",
+  "rname": "Queen's Revolution ~ the romance in upheavals ~",
+  "dom": "tmdb",
+  "cand": "적인걸 2: 신도해왕의 비밀"
+ },
+ {
+  "pid": "W341",
+  "rdom": "tmdb",
+  "rname": "와호장룡",
+  "dom": "tmdb",
+  "cand": "적인걸 2: 신도해왕의 비밀"
+ },
+ {
+  "pid": "W379",
+  "rdom": "steam",
+  "rname": "Queen's Revolution ~ the romance in upheavals ~",
+  "dom": "tmdb",
+  "cand": "보표"
+ },
+ {
+  "pid": "W099",
+  "rdom": "tmdb",
+  "rname": "와호장룡",
+  "dom": "tmdb",
+  "cand": "보표"
+ },
+ {
+  "pid": "W061",
+  "rdom": "wn",
+  "rname": "용장귀환",
+  "dom": "tmdb",
+  "cand": "금의위: 14검의 비밀"
+ },
+ {
+  "pid": "W332",
+  "rdom": "steam",
+  "rname": "Queen's Revolution ~ the romance in upheavals ~",
+  "dom": "tmdb",
+  "cand": "금의위: 14검의 비밀"
+ },
+ {
+  "pid": "W077",
+  "rdom": "tmdb",
+  "rname": "와호장룡",
+  "dom": "tmdb",
+  "cand": "금의위: 14검의 비밀"
+ },
+ {
+  "pid": "W009",
+  "rdom": "wn",
+  "rname": "용장귀환",
+  "dom": "wn",
+  "cand": "로판 덕후가 무협지에 빙의했다"
+ },
+ {
+  "pid": "W027",
+  "rdom": "steam",
+  "rname": "Queen's Revolution ~ the romance in upheavals ~",
+  "dom": "wn",
+  "cand": "로판 덕후가 무협지에 빙의했다"
+ },
+ {
+  "pid": "W150",
+  "rdom": "tmdb",
+  "rname": "와호장룡",
+  "dom": "wn",
+  "cand": "로판 덕후가 무협지에 빙의했다"
+ },
+ {
+  "pid": "W345",
+  "rdom": "wn",
+  "rname": "용장귀환",
+  "dom": "wn",
+  "cand": "검은 요정이 당신을 부를 때"
+ },
+ {
+  "pid": "W328",
+  "rdom": "steam",
+  "rname": "Queen's Revolution ~ the romance in upheavals ~",
+  "dom": "wn",
+  "cand": "검은 요정이 당신을 부를 때"
+ },
+ {
+  "pid": "W153",
+  "rdom": "tmdb",
+  "rname": "와호장룡",
+  "dom": "wn",
+  "cand": "검은 요정이 당신을 부를 때"
+ },
+ {
+  "pid": "W026",
+  "rdom": "wn",
+  "rname": "용장귀환",
+  "dom": "wn",
+  "cand": "마지막 용의 유언에 따라"
+ },
+ {
+  "pid": "W192",
+  "rdom": "steam",
+  "rname": "Queen's Revolution ~ the romance in upheavals ~",
+  "dom": "wn",
+  "cand": "마지막 용의 유언에 따라"
+ },
+ {
+  "pid": "W178",
+  "rdom": "tmdb",
+  "rname": "와호장룡",
+  "dom": "wn",
+  "cand": "마지막 용의 유언에 따라"
+ },
+ {
+  "pid": "W128",
+  "rdom": "steam",
+  "rname": "Queen's Revolution ~ the romance in upheavals ~",
+  "dom": "steam",
+  "cand": "해동비사 (海東秘史)"
+ },
+ {
+  "pid": "W266",
+  "rdom": "tmdb",
+  "rname": "와호장룡",
+  "dom": "steam",
+  "cand": "해동비사 (海東秘史)"
+ },
+ {
+  "pid": "W377",
+  "rdom": "steam",
+  "rname": "Queen's Revolution ~ the romance in upheavals ~",
+  "dom": "steam",
+  "cand": "Kung Fu Time Travel"
+ },
+ {
+  "pid": "W242",
+  "rdom": "tmdb",
+  "rname": "와호장룡",
+  "dom": "steam",
+  "cand": "Kung Fu Time Travel"
+ },
+ {
+  "pid": "W152",
+  "rdom": "wn",
+  "rname": "용장귀환",
+  "dom": "tmdb",
+  "cand": "마오유우 마왕용사"
+ },
+ {
+  "pid": "W217",
+  "rdom": "steam",
+  "rname": "Queen's Revolution ~ the romance in upheavals ~",
+  "dom": "tmdb",
+  "cand": "마오유우 마왕용사"
+ },
+ {
+  "pid": "W382",
+  "rdom": "tmdb",
+  "rname": "와호장룡",
+  "dom": "tmdb",
+  "cand": "마오유우 마왕용사"
+ },
+ {
+  "pid": "W239",
+  "rdom": "wn",
+  "rname": "용장귀환",
+  "dom": "tmdb",
+  "cand": "마도조사"
+ },
+ {
+  "pid": "W381",
+  "rdom": "steam",
+  "rname": "Queen's Revolution ~ the romance in upheavals ~",
+  "dom": "tmdb",
+  "cand": "마도조사"
+ },
+ {
+  "pid": "W070",
+  "rdom": "tmdb",
+  "rname": "와호장룡",
+  "dom": "tmdb",
+  "cand": "마도조사"
+ },
+ {
+  "pid": "W052",
+  "rdom": "steam",
+  "rname": "Queen's Revolution ~ the romance in upheavals ~",
+  "dom": "tmdb",
+  "cand": "용문비갑"
+ },
+ {
+  "pid": "W275",
+  "rdom": "tmdb",
+  "rname": "와호장룡",
+  "dom": "tmdb",
+  "cand": "용문비갑"
+ },
+ {
+  "pid": "W044",
+  "rdom": "steam",
+  "rname": "로도스도 전기 - 디드리트 인 원더 라비린스",
+  "dom": "wn",
+  "cand": "몬스터와 힐링하는 S급 헌터"
+ },
+ {
+  "pid": "W079",
+  "rdom": "tmdb",
+  "rname": "나 혼자만 레벨업 -리어웨이크닝-",
+  "dom": "wn",
+  "cand": "몬스터와 힐링하는 S급 헌터"
+ },
+ {
+  "pid": "W155",
+  "rdom": "wn",
+  "rname": "SSS급 버그를 쓰는 게이머",
+  "dom": "wn",
+  "cand": "SS급 가챠 뽑는 헌터"
+ },
+ {
+  "pid": "W103",
+  "rdom": "steam",
+  "rname": "로도스도 전기 - 디드리트 인 원더 라비린스",
+  "dom": "wn",
+  "cand": "SS급 가챠 뽑는 헌터"
+ },
+ {
+  "pid": "W004",
+  "rdom": "tmdb",
+  "rname": "나 혼자만 레벨업 -리어웨이크닝-",
+  "dom": "wn",
+  "cand": "SS급 가챠 뽑는 헌터"
+ },
+ {
+  "pid": "W319",
+  "rdom": "wn",
+  "rname": "SSS급 버그를 쓰는 게이머",
+  "dom": "wn",
+  "cand": "F등급 헌터의 싸움"
+ },
+ {
+  "pid": "W376",
+  "rdom": "steam",
+  "rname": "로도스도 전기 - 디드리트 인 원더 라비린스",
+  "dom": "wn",
+  "cand": "F등급 헌터의 싸움"
+ },
+ {
+  "pid": "W053",
+  "rdom": "tmdb",
+  "rname": "나 혼자만 레벨업 -리어웨이크닝-",
+  "dom": "wn",
+  "cand": "F등급 헌터의 싸움"
+ },
+ {
+  "pid": "W071",
+  "rdom": "wn",
+  "rname": "SSS급 버그를 쓰는 게이머",
+  "dom": "steam",
+  "cand": "Noreya: The Gold Project"
+ },
+ {
+  "pid": "W179",
+  "rdom": "steam",
+  "rname": "로도스도 전기 - 디드리트 인 원더 라비린스",
+  "dom": "steam",
+  "cand": "Noreya: The Gold Project"
+ },
+ {
+  "pid": "W172",
+  "rdom": "tmdb",
+  "rname": "나 혼자만 레벨업 -리어웨이크닝-",
+  "dom": "steam",
+  "cand": "Noreya: The Gold Project"
+ },
+ {
+  "pid": "W364",
+  "rdom": "steam",
+  "rname": "로도스도 전기 - 디드리트 인 원더 라비린스",
+  "dom": "tmdb",
+  "cand": "나 혼자만 레벨업"
+ },
+ {
+  "pid": "W124",
+  "rdom": "tmdb",
+  "rname": "나 혼자만 레벨업 -리어웨이크닝-",
+  "dom": "tmdb",
+  "cand": "나 혼자만 레벨업"
+ },
+ {
+  "pid": "W201",
+  "rdom": "wn",
+  "rname": "SSS급 버그를 쓰는 게이머",
+  "dom": "tmdb",
+  "cand": "극장판 헌터X헌터: 더 라스트 미션"
+ },
+ {
+  "pid": "W305",
+  "rdom": "steam",
+  "rname": "로도스도 전기 - 디드리트 인 원더 라비린스",
+  "dom": "tmdb",
+  "cand": "극장판 헌터X헌터: 더 라스트 미션"
+ },
+ {
+  "pid": "W244",
+  "rdom": "tmdb",
+  "rname": "나 혼자만 레벨업 -리어웨이크닝-",
+  "dom": "tmdb",
+  "cand": "극장판 헌터X헌터: 더 라스트 미션"
+ },
+ {
+  "pid": "W203",
+  "rdom": "wn",
+  "rname": "SSS급 버그를 쓰는 게이머",
+  "dom": "tmdb",
+  "cand": "헌터X헌터"
+ },
+ {
+  "pid": "W181",
+  "rdom": "steam",
+  "rname": "로도스도 전기 - 디드리트 인 원더 라비린스",
+  "dom": "tmdb",
+  "cand": "헌터X헌터"
+ },
+ {
+  "pid": "W131",
+  "rdom": "tmdb",
+  "rname": "나 혼자만 레벨업 -리어웨이크닝-",
+  "dom": "tmdb",
+  "cand": "헌터X헌터"
+ },
+ {
+  "pid": "W380",
+  "rdom": "wn",
+  "rname": "SSS급 버그를 쓰는 게이머",
+  "dom": "wn",
+  "cand": "너는 최강의 빙의자님!"
+ },
+ {
+  "pid": "W025",
+  "rdom": "steam",
+  "rname": "로도스도 전기 - 디드리트 인 원더 라비린스",
+  "dom": "wn",
+  "cand": "너는 최강의 빙의자님!"
+ },
+ {
+  "pid": "W011",
+  "rdom": "tmdb",
+  "rname": "나 혼자만 레벨업 -리어웨이크닝-",
+  "dom": "wn",
+  "cand": "너는 최강의 빙의자님!"
+ },
+ {
+  "pid": "W014",
+  "rdom": "wn",
+  "rname": "SSS급 버그를 쓰는 게이머",
+  "dom": "wn",
+  "cand": "라스트 킹덤"
+ },
+ {
+  "pid": "W362",
+  "rdom": "steam",
+  "rname": "로도스도 전기 - 디드리트 인 원더 라비린스",
+  "dom": "wn",
+  "cand": "라스트 킹덤"
+ },
+ {
+  "pid": "W256",
+  "rdom": "tmdb",
+  "rname": "나 혼자만 레벨업 -리어웨이크닝-",
+  "dom": "wn",
+  "cand": "라스트 킹덤"
+ },
+ {
+  "pid": "W265",
+  "rdom": "wn",
+  "rname": "SSS급 버그를 쓰는 게이머",
+  "dom": "wn",
+  "cand": "지금 공략하러 갑니다"
+ },
+ {
+  "pid": "W000",
+  "rdom": "steam",
+  "rname": "로도스도 전기 - 디드리트 인 원더 라비린스",
+  "dom": "wn",
+  "cand": "지금 공략하러 갑니다"
+ },
+ {
+  "pid": "W227",
+  "rdom": "tmdb",
+  "rname": "나 혼자만 레벨업 -리어웨이크닝-",
+  "dom": "wn",
+  "cand": "지금 공략하러 갑니다"
+ },
+ {
+  "pid": "W184",
+  "rdom": "steam",
+  "rname": "로도스도 전기 - 디드리트 인 원더 라비린스",
+  "dom": "steam",
+  "cand": "Hotel Security"
+ },
+ {
+  "pid": "W335",
+  "rdom": "tmdb",
+  "rname": "나 혼자만 레벨업 -리어웨이크닝-",
+  "dom": "steam",
+  "cand": "Hotel Security"
+ },
+ {
+  "pid": "W127",
+  "rdom": "wn",
+  "rname": "SSS급 버그를 쓰는 게이머",
+  "dom": "steam",
+  "cand": "Creepy Tale: Snow Child"
+ },
+ {
+  "pid": "W296",
+  "rdom": "steam",
+  "rname": "로도스도 전기 - 디드리트 인 원더 라비린스",
+  "dom": "steam",
+  "cand": "Creepy Tale: Snow Child"
+ },
+ {
+  "pid": "W190",
+  "rdom": "tmdb",
+  "rname": "나 혼자만 레벨업 -리어웨이크닝-",
+  "dom": "steam",
+  "cand": "Creepy Tale: Snow Child"
+ },
+ {
+  "pid": "W075",
+  "rdom": "wn",
+  "rname": "SSS급 버그를 쓰는 게이머",
+  "dom": "steam",
+  "cand": "물방울 소리"
+ },
+ {
+  "pid": "W270",
+  "rdom": "steam",
+  "rname": "로도스도 전기 - 디드리트 인 원더 라비린스",
+  "dom": "steam",
+  "cand": "물방울 소리"
+ },
+ {
+  "pid": "W276",
+  "rdom": "tmdb",
+  "rname": "나 혼자만 레벨업 -리어웨이크닝-",
+  "dom": "steam",
+  "cand": "물방울 소리"
+ },
+ {
+  "pid": "W344",
+  "rdom": "steam",
+  "rname": "로도스도 전기 - 디드리트 인 원더 라비린스",
+  "dom": "tmdb",
+  "cand": "쥬만지: 새로운 세계"
+ },
+ {
+  "pid": "W258",
+  "rdom": "tmdb",
+  "rname": "나 혼자만 레벨업 -리어웨이크닝-",
+  "dom": "tmdb",
+  "cand": "쥬만지: 새로운 세계"
+ },
+ {
+  "pid": "W353",
+  "rdom": "steam",
+  "rname": "로도스도 전기 - 디드리트 인 원더 라비린스",
+  "dom": "tmdb",
+  "cand": "샹그릴라 프론티어 ~망겜 헌터, 갓겜에 도전하다~"
+ },
+ {
+  "pid": "W173",
+  "rdom": "tmdb",
+  "rname": "나 혼자만 레벨업 -리어웨이크닝-",
+  "dom": "tmdb",
+  "cand": "샹그릴라 프론티어 ~망겜 헌터, 갓겜에 도전하다~"
+ },
+ {
+  "pid": "W245",
+  "rdom": "wn",
+  "rname": "SSS급 버그를 쓰는 게이머",
+  "dom": "tmdb",
+  "cand": "그란 투리스모"
+ },
+ {
+  "pid": "W033",
+  "rdom": "steam",
+  "rname": "로도스도 전기 - 디드리트 인 원더 라비린스",
+  "dom": "tmdb",
+  "cand": "그란 투리스모"
+ },
+ {
+  "pid": "W082",
+  "rdom": "tmdb",
+  "rname": "나 혼자만 레벨업 -리어웨이크닝-",
+  "dom": "tmdb",
+  "cand": "그란 투리스모"
+ },
+ {
+  "pid": "W304",
+  "rdom": "steam",
+  "rname": "Princess Maker ~Faery Tales Come True~ (HD Remake)",
+  "dom": "wn",
+  "cand": "레벨업의 제왕"
+ },
+ {
+  "pid": "W108",
+  "rdom": "tmdb",
+  "rname": "고양이의 보은",
+  "dom": "wn",
+  "cand": "레벨업의 제왕"
+ },
+ {
+  "pid": "W238",
+  "rdom": "steam",
+  "rname": "Princess Maker ~Faery Tales Come True~ (HD Remake)",
+  "dom": "wn",
+  "cand": "밥만 먹고 레벨업"
+ },
+ {
+  "pid": "W037",
+  "rdom": "tmdb",
+  "rname": "고양이의 보은",
+  "dom": "wn",
+  "cand": "밥만 먹고 레벨업"
+ },
+ {
+  "pid": "W250",
+  "rdom": "steam",
+  "rname": "Princess Maker ~Faery Tales Come True~ (HD Remake)",
+  "dom": "wn",
+  "cand": "내 고양이가 악녀였다"
+ },
+ {
+  "pid": "W156",
+  "rdom": "tmdb",
+  "rname": "고양이의 보은",
+  "dom": "wn",
+  "cand": "내 고양이가 악녀였다"
+ },
+ {
+  "pid": "W205",
+  "rdom": "steam",
+  "rname": "Princess Maker ~Faery Tales Come True~ (HD Remake)",
+  "dom": "steam",
+  "cand": "프린세스 메이커 : 예언의 아이들"
+ },
+ {
+  "pid": "W343",
+  "rdom": "tmdb",
+  "rname": "고양이의 보은",
+  "dom": "steam",
+  "cand": "프린세스 메이커 : 예언의 아이들"
+ },
+ {
+  "pid": "W068",
+  "rdom": "steam",
+  "rname": "Princess Maker ~Faery Tales Come True~ (HD Remake)",
+  "dom": "steam",
+  "cand": "프린세스 메이커 리파인"
+ },
+ {
+  "pid": "W293",
+  "rdom": "tmdb",
+  "rname": "고양이의 보은",
+  "dom": "steam",
+  "cand": "프린세스 메이커 리파인"
+ },
+ {
+  "pid": "W147",
+  "rdom": "steam",
+  "rname": "Princess Maker ~Faery Tales Come True~ (HD Remake)",
+  "dom": "steam",
+  "cand": "프린세스 메이커 2 리제네레이션"
+ },
+ {
+  "pid": "W260",
+  "rdom": "tmdb",
+  "rname": "고양이의 보은",
+  "dom": "steam",
+  "cand": "프린세스 메이커 2 리제네레이션"
+ },
+ {
+  "pid": "W363",
+  "rdom": "wn",
+  "rname": "애만 키워도 레벨 업!",
+  "dom": "tmdb",
+  "cand": "울고 싶은 나는 고양이 가면을 쓴다"
+ },
+ {
+  "pid": "W367",
+  "rdom": "steam",
+  "rname": "Princess Maker ~Faery Tales Come True~ (HD Remake)",
+  "dom": "tmdb",
+  "cand": "울고 싶은 나는 고양이 가면을 쓴다"
+ },
+ {
+  "pid": "W110",
+  "rdom": "tmdb",
+  "rname": "고양이의 보은",
+  "dom": "tmdb",
+  "cand": "울고 싶은 나는 고양이 가면을 쓴다"
+ },
+ {
+  "pid": "W204",
+  "rdom": "wn",
+  "rname": "애만 키워도 레벨 업!",
+  "dom": "wn",
+  "cand": "짐승의 경계에 침범하지 말 것"
+ },
+ {
+  "pid": "W366",
+  "rdom": "steam",
+  "rname": "Princess Maker ~Faery Tales Come True~ (HD Remake)",
+  "dom": "wn",
+  "cand": "짐승의 경계에 침범하지 말 것"
+ },
+ {
+  "pid": "W005",
+  "rdom": "tmdb",
+  "rname": "고양이의 보은",
+  "dom": "wn",
+  "cand": "짐승의 경계에 침범하지 말 것"
+ },
+ {
+  "pid": "W285",
+  "rdom": "wn",
+  "rname": "애만 키워도 레벨 업!",
+  "dom": "wn",
+  "cand": "꿈은 없고요, 그냥 놀고 싶습니다"
+ },
+ {
+  "pid": "W267",
+  "rdom": "steam",
+  "rname": "Princess Maker ~Faery Tales Come True~ (HD Remake)",
+  "dom": "wn",
+  "cand": "꿈은 없고요, 그냥 놀고 싶습니다"
+ },
+ {
+  "pid": "W272",
+  "rdom": "tmdb",
+  "rname": "고양이의 보은",
+  "dom": "wn",
+  "cand": "꿈은 없고요, 그냥 놀고 싶습니다"
+ },
+ {
+  "pid": "W222",
+  "rdom": "wn",
+  "rname": "애만 키워도 레벨 업!",
+  "dom": "wn",
+  "cand": "권자의 길"
+ },
+ {
+  "pid": "W140",
+  "rdom": "steam",
+  "rname": "Princess Maker ~Faery Tales Come True~ (HD Remake)",
+  "dom": "wn",
+  "cand": "권자의 길"
+ },
+ {
+  "pid": "W349",
+  "rdom": "tmdb",
+  "rname": "고양이의 보은",
+  "dom": "wn",
+  "cand": "권자의 길"
+ },
+ {
+  "pid": "W320",
+  "rdom": "wn",
+  "rname": "애만 키워도 레벨 업!",
+  "dom": "steam",
+  "cand": "사랑을 노래하는 방법"
+ },
+ {
+  "pid": "W122",
+  "rdom": "steam",
+  "rname": "Princess Maker ~Faery Tales Come True~ (HD Remake)",
+  "dom": "steam",
+  "cand": "사랑을 노래하는 방법"
+ },
+ {
+  "pid": "W218",
+  "rdom": "tmdb",
+  "rname": "고양이의 보은",
+  "dom": "steam",
+  "cand": "사랑을 노래하는 방법"
+ },
+ {
+  "pid": "W208",
+  "rdom": "wn",
+  "rname": "애만 키워도 레벨 업!",
+  "dom": "tmdb",
+  "cand": "달링 인 더 프랑키스"
+ },
+ {
+  "pid": "W282",
+  "rdom": "steam",
+  "rname": "Princess Maker ~Faery Tales Come True~ (HD Remake)",
+  "dom": "tmdb",
+  "cand": "달링 인 더 프랑키스"
+ },
+ {
+  "pid": "W195",
+  "rdom": "tmdb",
+  "rname": "고양이의 보은",
+  "dom": "tmdb",
+  "cand": "달링 인 더 프랑키스"
+ },
+ {
+  "pid": "W355",
+  "rdom": "wn",
+  "rname": "애만 키워도 레벨 업!",
+  "dom": "tmdb",
+  "cand": "여성향 게임의 파멸 플래그밖에 없는 악역 영애로 환생해버렸다..."
+ },
+ {
+  "pid": "W160",
+  "rdom": "steam",
+  "rname": "Princess Maker ~Faery Tales Come True~ (HD Remake)",
+  "dom": "tmdb",
+  "cand": "여성향 게임의 파멸 플래그밖에 없는 악역 영애로 환생해버렸다..."
+ },
+ {
+  "pid": "W350",
+  "rdom": "tmdb",
+  "rname": "고양이의 보은",
+  "dom": "tmdb",
+  "cand": "여성향 게임의 파멸 플래그밖에 없는 악역 영애로 환생해버렸다..."
+ },
+ {
+  "pid": "W048",
+  "rdom": "steam",
+  "rname": "마녀의 공식: 빛과 함께",
+  "dom": "wn",
+  "cand": "나 먼저 레벨업 했다"
+ },
+ {
+  "pid": "W074",
+  "rdom": "tmdb",
+  "rname": "이상한 전생",
+  "dom": "wn",
+  "cand": "나 먼저 레벨업 했다"
+ },
+ {
+  "pid": "W146",
+  "rdom": "steam",
+  "rname": "마녀의 공식: 빛과 함께",
+  "dom": "wn",
+  "cand": "만렙찍고 레벨업"
+ },
+ {
+  "pid": "W109",
+  "rdom": "tmdb",
+  "rname": "이상한 전생",
+  "dom": "wn",
+  "cand": "만렙찍고 레벨업"
+ },
+ {
+  "pid": "W055",
+  "rdom": "steam",
+  "rname": "마녀의 공식: 빛과 함께",
+  "dom": "wn",
+  "cand": "레벨업의 제왕"
+ },
+ {
+  "pid": "W374",
+  "rdom": "tmdb",
+  "rname": "이상한 전생",
+  "dom": "wn",
+  "cand": "레벨업의 제왕"
+ },
+ {
+  "pid": "W002",
+  "rdom": "wn",
+  "rname": "레벨업 못하는 플레이어",
+  "dom": "tmdb",
+  "cand": "슈가 앤 스타"
+ },
+ {
+  "pid": "W090",
+  "rdom": "steam",
+  "rname": "마녀의 공식: 빛과 함께",
+  "dom": "tmdb",
+  "cand": "슈가 앤 스타"
+ },
+ {
+  "pid": "W251",
+  "rdom": "tmdb",
+  "rname": "이상한 전생",
+  "dom": "tmdb",
+  "cand": "슈가 앤 스타"
+ },
+ {
+  "pid": "W307",
+  "rdom": "wn",
+  "rname": "레벨업 못하는 플레이어",
+  "dom": "tmdb",
+  "cand": "페어리 테일 : 드래곤 크라이"
+ },
+ {
+  "pid": "W031",
+  "rdom": "steam",
+  "rname": "마녀의 공식: 빛과 함께",
+  "dom": "tmdb",
+  "cand": "페어리 테일 : 드래곤 크라이"
+ },
+ {
+  "pid": "W219",
+  "rdom": "tmdb",
+  "rname": "이상한 전생",
+  "dom": "tmdb",
+  "cand": "페어리 테일 : 드래곤 크라이"
+ },
+ {
+  "pid": "W213",
+  "rdom": "wn",
+  "rname": "레벨업 못하는 플레이어",
+  "dom": "tmdb",
+  "cand": "에라곤"
+ },
+ {
+  "pid": "W102",
+  "rdom": "steam",
+  "rname": "마녀의 공식: 빛과 함께",
+  "dom": "tmdb",
+  "cand": "에라곤"
+ },
+ {
+  "pid": "W310",
+  "rdom": "tmdb",
+  "rname": "이상한 전생",
+  "dom": "tmdb",
+  "cand": "에라곤"
+ },
+ {
+  "pid": "W094",
+  "rdom": "wn",
+  "rname": "레벨업 못하는 플레이어",
+  "dom": "wn",
+  "cand": "버프 주는 어린 왕이 되었다"
+ },
+ {
+  "pid": "W169",
+  "rdom": "steam",
+  "rname": "마녀의 공식: 빛과 함께",
+  "dom": "wn",
+  "cand": "버프 주는 어린 왕이 되었다"
+ },
+ {
+  "pid": "W325",
+  "rdom": "tmdb",
+  "rname": "이상한 전생",
+  "dom": "wn",
+  "cand": "버프 주는 어린 왕이 되었다"
+ },
+ {
+  "pid": "W232",
+  "rdom": "wn",
+  "rname": "레벨업 못하는 플레이어",
+  "dom": "wn",
+  "cand": "착각계 주인공을 기르는 방법"
+ },
+ {
+  "pid": "W312",
+  "rdom": "steam",
+  "rname": "마녀의 공식: 빛과 함께",
+  "dom": "wn",
+  "cand": "착각계 주인공을 기르는 방법"
+ },
+ {
+  "pid": "W120",
+  "rdom": "tmdb",
+  "rname": "이상한 전생",
+  "dom": "wn",
+  "cand": "착각계 주인공을 기르는 방법"
+ },
+ {
+  "pid": "W088",
+  "rdom": "wn",
+  "rname": "레벨업 못하는 플레이어",
+  "dom": "wn",
+  "cand": "권자의 길"
+ },
+ {
+  "pid": "W098",
+  "rdom": "steam",
+  "rname": "마녀의 공식: 빛과 함께",
+  "dom": "wn",
+  "cand": "권자의 길"
+ },
+ {
+  "pid": "W087",
+  "rdom": "tmdb",
+  "rname": "이상한 전생",
+  "dom": "wn",
+  "cand": "권자의 길"
+ },
+ {
+  "pid": "W257",
+  "rdom": "steam",
+  "rname": "마녀의 공식: 빛과 함께",
+  "dom": "steam",
+  "cand": "Slay the GoblinZ"
+ },
+ {
+  "pid": "W010",
+  "rdom": "tmdb",
+  "rname": "이상한 전생",
+  "dom": "steam",
+  "cand": "Slay the GoblinZ"
+ },
+ {
+  "pid": "W223",
+  "rdom": "wn",
+  "rname": "레벨업 못하는 플레이어",
+  "dom": "steam",
+  "cand": "Gale of Windoria"
+ },
+ {
+  "pid": "W348",
+  "rdom": "steam",
+  "rname": "마녀의 공식: 빛과 함께",
+  "dom": "steam",
+  "cand": "Gale of Windoria"
+ },
+ {
+  "pid": "W211",
+  "rdom": "tmdb",
+  "rname": "이상한 전생",
+  "dom": "steam",
+  "cand": "Gale of Windoria"
+ },
+ {
+  "pid": "W157",
+  "rdom": "wn",
+  "rname": "레벨업 못하는 플레이어",
+  "dom": "steam",
+  "cand": "Heat 'n Hit: The Blacksmith Simulator"
+ },
+ {
+  "pid": "W283",
+  "rdom": "steam",
+  "rname": "마녀의 공식: 빛과 함께",
+  "dom": "steam",
+  "cand": "Heat 'n Hit: The Blacksmith Simulator"
+ },
+ {
+  "pid": "W315",
+  "rdom": "tmdb",
+  "rname": "이상한 전생",
+  "dom": "steam",
+  "cand": "Heat 'n Hit: The Blacksmith Simulator"
+ },
+ {
+  "pid": "W039",
+  "rdom": "steam",
+  "rname": "마녀의 공식: 빛과 함께",
+  "dom": "tmdb",
+  "cand": "데스마치에서 시작되는 이세계 광상곡"
+ },
+ {
+  "pid": "W056",
+  "rdom": "tmdb",
+  "rname": "이상한 전생",
+  "dom": "tmdb",
+  "cand": "데스마치에서 시작되는 이세계 광상곡"
+ },
+ {
+  "pid": "W300",
+  "rdom": "steam",
+  "rname": "마녀의 공식: 빛과 함께",
+  "dom": "tmdb",
+  "cand": "신참 아재 모험가, 최강 파티에서 죽을 정도로 단련해서 무적이 된다"
+ },
+ {
+  "pid": "W096",
+  "rdom": "tmdb",
+  "rname": "이상한 전생",
+  "dom": "tmdb",
+  "cand": "신참 아재 모험가, 최강 파티에서 죽을 정도로 단련해서 무적이 된다"
+ },
+ {
+  "pid": "W286",
+  "rdom": "wn",
+  "rname": "레벨업 못하는 플레이어",
+  "dom": "tmdb",
+  "cand": "마녀가 되고 싶어"
+ },
+ {
+  "pid": "W111",
+  "rdom": "steam",
+  "rname": "마녀의 공식: 빛과 함께",
+  "dom": "tmdb",
+  "cand": "마녀가 되고 싶어"
+ },
+ {
+  "pid": "W066",
+  "rdom": "tmdb",
+  "rname": "이상한 전생",
+  "dom": "tmdb",
+  "cand": "마녀가 되고 싶어"
+ },
+ {
+  "pid": "W330",
+  "rdom": "steam",
+  "rname": "The Meridian Under the Heaven: Valhalla",
+  "dom": "wn",
+  "cand": "풍운사일"
+ },
+ {
+  "pid": "W165",
+  "rdom": "tmdb",
+  "rname": "와호장룡",
+  "dom": "wn",
+  "cand": "풍운사일"
+ },
+ {
+  "pid": "W057",
+  "rdom": "steam",
+  "rname": "The Meridian Under the Heaven: Valhalla",
+  "dom": "wn",
+  "cand": "풍운영웅"
+ },
+ {
+  "pid": "W076",
+  "rdom": "tmdb",
+  "rname": "와호장룡",
+  "dom": "wn",
+  "cand": "풍운영웅"
+ },
+ {
+  "pid": "W129",
+  "rdom": "steam",
+  "rname": "The Meridian Under the Heaven: Valhalla",
+  "dom": "wn",
+  "cand": "풍운무림"
+ },
+ {
+  "pid": "W202",
+  "rdom": "tmdb",
+  "rname": "와호장룡",
+  "dom": "wn",
+  "cand": "풍운무림"
+ },
+ {
+  "pid": "W351",
+  "rdom": "wn",
+  "rname": "풍운방",
+  "dom": "steam",
+  "cand": "橘香仲夏"
+ },
+ {
+  "pid": "W385",
+  "rdom": "steam",
+  "rname": "The Meridian Under the Heaven: Valhalla",
+  "dom": "steam",
+  "cand": "橘香仲夏"
+ },
+ {
+  "pid": "W008",
+  "rdom": "tmdb",
+  "rname": "와호장룡",
+  "dom": "steam",
+  "cand": "橘香仲夏"
+ },
+ {
+  "pid": "W132",
+  "rdom": "wn",
+  "rname": "풍운방",
+  "dom": "steam",
+  "cand": "러브커스: 사랑이 아니면 죽음뿐"
+ },
+ {
+  "pid": "W187",
+  "rdom": "steam",
+  "rname": "The Meridian Under the Heaven: Valhalla",
+  "dom": "steam",
+  "cand": "러브커스: 사랑이 아니면 죽음뿐"
+ },
+ {
+  "pid": "W137",
+  "rdom": "tmdb",
+  "rname": "와호장룡",
+  "dom": "steam",
+  "cand": "러브커스: 사랑이 아니면 죽음뿐"
+ },
+ {
+  "pid": "W194",
+  "rdom": "wn",
+  "rname": "풍운방",
+  "dom": "steam",
+  "cand": "The Symbiant II"
+ },
+ {
+  "pid": "W226",
+  "rdom": "steam",
+  "rname": "The Meridian Under the Heaven: Valhalla",
+  "dom": "steam",
+  "cand": "The Symbiant II"
+ },
+ {
+  "pid": "W303",
+  "rdom": "tmdb",
+  "rname": "와호장룡",
+  "dom": "steam",
+  "cand": "The Symbiant II"
+ },
+ {
+  "pid": "W016",
+  "rdom": "steam",
+  "rname": "The Meridian Under the Heaven: Valhalla",
+  "dom": "tmdb",
+  "cand": "적인걸 2: 신도해왕의 비밀"
+ },
+ {
+  "pid": "W231",
+  "rdom": "steam",
+  "rname": "The Meridian Under the Heaven: Valhalla",
+  "dom": "tmdb",
+  "cand": "보표"
+ },
+ {
+  "pid": "W036",
+  "rdom": "wn",
+  "rname": "풍운방",
+  "dom": "tmdb",
+  "cand": "금의위: 14검의 비밀"
+ },
+ {
+  "pid": "W046",
+  "rdom": "steam",
+  "rname": "The Meridian Under the Heaven: Valhalla",
+  "dom": "tmdb",
+  "cand": "금의위: 14검의 비밀"
+ },
+ {
+  "pid": "W306",
+  "rdom": "wn",
+  "rname": "풍운방",
+  "dom": "wn",
+  "cand": "늪가에 서 있는 나무"
+ },
+ {
+  "pid": "W130",
+  "rdom": "steam",
+  "rname": "The Meridian Under the Heaven: Valhalla",
+  "dom": "wn",
+  "cand": "늪가에 서 있는 나무"
+ },
+ {
+  "pid": "W104",
+  "rdom": "tmdb",
+  "rname": "와호장룡",
+  "dom": "wn",
+  "cand": "늪가에 서 있는 나무"
+ },
+ {
+  "pid": "W174",
+  "rdom": "wn",
+  "rname": "풍운방",
+  "dom": "wn",
+  "cand": "로판 덕후가 무협지에 빙의했다"
+ },
+ {
+  "pid": "W028",
+  "rdom": "steam",
+  "rname": "The Meridian Under the Heaven: Valhalla",
+  "dom": "wn",
+  "cand": "로판 덕후가 무협지에 빙의했다"
+ },
+ {
+  "pid": "W095",
+  "rdom": "wn",
+  "rname": "풍운방",
+  "dom": "wn",
+  "cand": "비인비검"
+ },
+ {
+  "pid": "W228",
+  "rdom": "steam",
+  "rname": "The Meridian Under the Heaven: Valhalla",
+  "dom": "wn",
+  "cand": "비인비검"
+ },
+ {
+  "pid": "W316",
+  "rdom": "tmdb",
+  "rname": "와호장룡",
+  "dom": "wn",
+  "cand": "비인비검"
+ },
+ {
+  "pid": "W215",
+  "rdom": "steam",
+  "rname": "The Meridian Under the Heaven: Valhalla",
+  "dom": "steam",
+  "cand": "검협:풍진연곡"
+ },
+ {
+  "pid": "W221",
+  "rdom": "tmdb",
+  "rname": "와호장룡",
+  "dom": "steam",
+  "cand": "검협:풍진연곡"
+ },
+ {
+  "pid": "W049",
+  "rdom": "steam",
+  "rname": "The Meridian Under the Heaven: Valhalla",
+  "dom": "steam",
+  "cand": "해동비사 (海東秘史)"
+ },
+ {
+  "pid": "W196",
+  "rdom": "steam",
+  "rname": "The Meridian Under the Heaven: Valhalla",
+  "dom": "steam",
+  "cand": "LOOM™"
+ },
+ {
+  "pid": "W358",
+  "rdom": "tmdb",
+  "rname": "와호장룡",
+  "dom": "steam",
+  "cand": "LOOM™"
+ },
+ {
+  "pid": "W038",
+  "rdom": "steam",
+  "rname": "The Meridian Under the Heaven: Valhalla",
+  "dom": "tmdb",
+  "cand": "차시천하"
+ },
+ {
+  "pid": "W054",
+  "rdom": "tmdb",
+  "rname": "와호장룡",
+  "dom": "tmdb",
+  "cand": "차시천하"
+ },
+ {
+  "pid": "W220",
+  "rdom": "wn",
+  "rname": "풍운방",
+  "dom": "tmdb",
+  "cand": "디사이드 트로이메라이"
+ },
+ {
+  "pid": "W268",
+  "rdom": "steam",
+  "rname": "The Meridian Under the Heaven: Valhalla",
+  "dom": "tmdb",
+  "cand": "디사이드 트로이메라이"
+ },
+ {
+  "pid": "W101",
+  "rdom": "tmdb",
+  "rname": "와호장룡",
+  "dom": "tmdb",
+  "cand": "디사이드 트로이메라이"
+ },
+ {
+  "pid": "W023",
+  "rdom": "wn",
+  "rname": "풍운방",
+  "dom": "tmdb",
+  "cand": "죽은 자의 춤"
+ },
+ {
+  "pid": "W007",
+  "rdom": "steam",
+  "rname": "The Meridian Under the Heaven: Valhalla",
+  "dom": "tmdb",
+  "cand": "죽은 자의 춤"
+ },
+ {
+  "pid": "W339",
+  "rdom": "tmdb",
+  "rname": "와호장룡",
+  "dom": "tmdb",
+  "cand": "죽은 자의 춤"
+ },
+ {
+  "pid": "W084",
+  "rdom": "steam",
+  "rname": "SINce Memories: Off The Starry Sky",
+  "dom": "wn",
+  "cand": "아사쿠사 오니 부인 일기"
+ },
+ {
+  "pid": "W373",
+  "rdom": "tmdb",
+  "rname": "러브 고즈 커킨 프레이지",
+  "dom": "wn",
+  "cand": "아사쿠사 오니 부인 일기"
+ },
+ {
+  "pid": "W021",
+  "rdom": "wn",
+  "rname": "카쿠리요의 여관밥",
+  "dom": "steam",
+  "cand": "드래곤을 죽여라"
+ },
+ {
+  "pid": "W369",
+  "rdom": "steam",
+  "rname": "SINce Memories: Off The Starry Sky",
+  "dom": "steam",
+  "cand": "드래곤을 죽여라"
+ },
+ {
+  "pid": "W314",
+  "rdom": "tmdb",
+  "rname": "러브 고즈 커킨 프레이지",
+  "dom": "steam",
+  "cand": "드래곤을 죽여라"
+ },
+ {
+  "pid": "W206",
+  "rdom": "steam",
+  "rname": "SINce Memories: Off The Starry Sky",
+  "dom": "tmdb",
+  "cand": "쪽빛보다 푸르게"
+ },
+ {
+  "pid": "W291",
+  "rdom": "tmdb",
+  "rname": "러브 고즈 커킨 프레이지",
+  "dom": "tmdb",
+  "cand": "쪽빛보다 푸르게"
+ },
+ {
+  "pid": "W212",
+  "rdom": "wn",
+  "rname": "카쿠리요의 여관밥",
+  "dom": "tmdb",
+  "cand": "내 이름은 줄리아 로스"
+ },
+ {
+  "pid": "W012",
+  "rdom": "steam",
+  "rname": "SINce Memories: Off The Starry Sky",
+  "dom": "tmdb",
+  "cand": "내 이름은 줄리아 로스"
+ },
+ {
+  "pid": "W183",
+  "rdom": "tmdb",
+  "rname": "러브 고즈 커킨 프레이지",
+  "dom": "tmdb",
+  "cand": "내 이름은 줄리아 로스"
+ },
+ {
+  "pid": "W264",
+  "rdom": "steam",
+  "rname": "SINce Memories: Off The Starry Sky",
+  "dom": "tmdb",
+  "cand": "세상의 중심에서 사랑을 외치다"
+ },
+ {
+  "pid": "W209",
+  "rdom": "tmdb",
+  "rname": "러브 고즈 커킨 프레이지",
+  "dom": "tmdb",
+  "cand": "세상의 중심에서 사랑을 외치다"
+ },
+ {
+  "pid": "W342",
+  "rdom": "wn",
+  "rname": "카쿠리요의 여관밥",
+  "dom": "wn",
+  "cand": "아찔함과 야릇함 사이"
+ },
+ {
+  "pid": "W171",
+  "rdom": "steam",
+  "rname": "SINce Memories: Off The Starry Sky",
+  "dom": "wn",
+  "cand": "아찔함과 야릇함 사이"
+ },
+ {
+  "pid": "W333",
+  "rdom": "tmdb",
+  "rname": "러브 고즈 커킨 프레이지",
+  "dom": "wn",
+  "cand": "아찔함과 야릇함 사이"
+ },
+ {
+  "pid": "W159",
+  "rdom": "wn",
+  "rname": "카쿠리요의 여관밥",
+  "dom": "wn",
+  "cand": "취향입니다, 존중해 주시죠!"
+ },
+ {
+  "pid": "W334",
+  "rdom": "steam",
+  "rname": "SINce Memories: Off The Starry Sky",
+  "dom": "wn",
+  "cand": "취향입니다, 존중해 주시죠!"
+ },
+ {
+  "pid": "W018",
+  "rdom": "tmdb",
+  "rname": "러브 고즈 커킨 프레이지",
+  "dom": "wn",
+  "cand": "취향입니다, 존중해 주시죠!"
+ },
+ {
+  "pid": "W069",
+  "rdom": "wn",
+  "rname": "카쿠리요의 여관밥",
+  "dom": "wn",
+  "cand": "악녀는 조용히 살고 싶습니다"
+ },
+ {
+  "pid": "W252",
+  "rdom": "steam",
+  "rname": "SINce Memories: Off The Starry Sky",
+  "dom": "wn",
+  "cand": "악녀는 조용히 살고 싶습니다"
+ },
+ {
+  "pid": "W262",
+  "rdom": "tmdb",
+  "rname": "러브 고즈 커킨 프레이지",
+  "dom": "wn",
+  "cand": "악녀는 조용히 살고 싶습니다"
+ },
+ {
+  "pid": "W188",
+  "rdom": "wn",
+  "rname": "카쿠리요의 여관밥",
+  "dom": "steam",
+  "cand": "러브 플루트"
+ },
+ {
+  "pid": "W371",
+  "rdom": "steam",
+  "rname": "SINce Memories: Off The Starry Sky",
+  "dom": "steam",
+  "cand": "러브 플루트"
+ },
+ {
+  "pid": "W144",
+  "rdom": "tmdb",
+  "rname": "러브 고즈 커킨 프레이지",
+  "dom": "steam",
+  "cand": "러브 플루트"
+ },
+ {
+  "pid": "W034",
+  "rdom": "wn",
+  "rname": "카쿠리요의 여관밥",
+  "dom": "steam",
+  "cand": "Platonically Mauled by a Magic Cougar"
+ },
+ {
+  "pid": "W298",
+  "rdom": "steam",
+  "rname": "SINce Memories: Off The Starry Sky",
+  "dom": "steam",
+  "cand": "Platonically Mauled by a Magic Cougar"
+ },
+ {
+  "pid": "W164",
+  "rdom": "tmdb",
+  "rname": "러브 고즈 커킨 프레이지",
+  "dom": "steam",
+  "cand": "Platonically Mauled by a Magic Cougar"
+ },
+ {
+  "pid": "W331",
+  "rdom": "wn",
+  "rname": "카쿠리요의 여관밥",
+  "dom": "tmdb",
+  "cand": "퍼펙트 데이즈"
+ },
+ {
+  "pid": "W200",
+  "rdom": "steam",
+  "rname": "SINce Memories: Off The Starry Sky",
+  "dom": "tmdb",
+  "cand": "퍼펙트 데이즈"
+ },
+ {
+  "pid": "W035",
+  "rdom": "tmdb",
+  "rname": "러브 고즈 커킨 프레이지",
+  "dom": "tmdb",
+  "cand": "퍼펙트 데이즈"
+ },
+ {
+  "pid": "W297",
+  "rdom": "wn",
+  "rname": "카쿠리요의 여관밥",
+  "dom": "tmdb",
+  "cand": "내가 인기 있어서 어쩌자는 거야"
+ },
+ {
+  "pid": "W356",
+  "rdom": "steam",
+  "rname": "SINce Memories: Off The Starry Sky",
+  "dom": "tmdb",
+  "cand": "내가 인기 있어서 어쩌자는 거야"
+ },
+ {
+  "pid": "W180",
+  "rdom": "tmdb",
+  "rname": "러브 고즈 커킨 프레이지",
+  "dom": "tmdb",
+  "cand": "내가 인기 있어서 어쩌자는 거야"
+ },
+ {
+  "pid": "W284",
+  "rdom": "wn",
+  "rname": "카쿠리요의 여관밥",
+  "dom": "tmdb",
+  "cand": "그루지"
+ },
+ {
+  "pid": "W273",
+  "rdom": "steam",
+  "rname": "SINce Memories: Off The Starry Sky",
+  "dom": "tmdb",
+  "cand": "그루지"
+ },
+ {
+  "pid": "W032",
+  "rdom": "tmdb",
+  "rname": "러브 고즈 커킨 프레이지",
+  "dom": "tmdb",
+  "cand": "그루지"
+ }
+]

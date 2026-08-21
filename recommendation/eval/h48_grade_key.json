@@ -1,0 +1,3202 @@
+[
+ {
+  "pid": "P149",
+  "origin": "fresh",
+  "seed": "10",
+  "cand": 0,
+  "seed_name": "언니, 이 백화점은 내 거야",
+  "cand_name": "Come to my party!"
+ },
+ {
+  "pid": "P324",
+  "origin": "g6",
+  "seed": "16차#5",
+  "cand": 8,
+  "seed_name": "망겜 속 수호자",
+  "cand_name": "Soulsearch"
+ },
+ {
+  "pid": "P256",
+  "origin": "g6",
+  "seed": "16차#7",
+  "cand": 1,
+  "seed_name": "Dr. 신선한 : 미래를 보는 의사",
+  "cand_name": "Heart's Medicine - Doctor's Oath"
+ },
+ {
+  "pid": "P228",
+  "origin": "g6",
+  "seed": "18차#1",
+  "cand": 0,
+  "seed_name": "리그너스 대륙전기",
+  "cand_name": "Reigns: Game of Thrones"
+ },
+ {
+  "pid": "P140",
+  "origin": "g6",
+  "seed": "15차#16",
+  "cand": 1,
+  "seed_name": "팔남이라니, 그건 아니지!",
+  "cand_name": "Venba"
+ },
+ {
+  "pid": "P361",
+  "origin": "g6",
+  "seed": "16차#4",
+  "cand": 3,
+  "seed_name": "초록빛 구원",
+  "cand_name": "러브 플루트"
+ },
+ {
+  "pid": "P319",
+  "origin": "g6",
+  "seed": "16차#5",
+  "cand": 1,
+  "seed_name": "망겜 속 수호자",
+  "cand_name": "Extinction"
+ },
+ {
+  "pid": "P374",
+  "origin": "fresh",
+  "seed": "15",
+  "cand": 7,
+  "seed_name": "차원이 다른 아이돌 1~9권",
+  "cand_name": "LOOM™"
+ },
+ {
+  "pid": "P318",
+  "origin": "g6",
+  "seed": "16차#11",
+  "cand": 8,
+  "seed_name": "세 개의 칼날",
+  "cand_name": "Ghostwire: Tokyo - 서막"
+ },
+ {
+  "pid": "P354",
+  "origin": "fresh",
+  "seed": "19",
+  "cand": 3,
+  "seed_name": "그 남자가 내 몸에 들어왔다",
+  "cand_name": "Suicide Guy: Sleepin' Deeply"
+ },
+ {
+  "pid": "P173",
+  "origin": "fresh",
+  "seed": "15",
+  "cand": 9,
+  "seed_name": "차원이 다른 아이돌 1~9권",
+  "cand_name": "극 서원 연의"
+ },
+ {
+  "pid": "P330",
+  "origin": "fresh",
+  "seed": "4",
+  "cand": 1,
+  "seed_name": "십파일방",
+  "cand_name": "연무"
+ },
+ {
+  "pid": "P120",
+  "origin": "fresh",
+  "seed": "6",
+  "cand": 4,
+  "seed_name": "사채왕의 손자",
+  "cand_name": "커피여우 김삼월"
+ },
+ {
+  "pid": "P129",
+  "origin": "fresh",
+  "seed": "8",
+  "cand": 2,
+  "seed_name": "일방적 짝사랑",
+  "cand_name": "봄이 오면 꽃이 피고"
+ },
+ {
+  "pid": "P066",
+  "origin": "g6",
+  "seed": "16차#17",
+  "cand": 8,
+  "seed_name": "중간보스의 심복으로 살아남기",
+  "cand_name": "From Lex to Rex"
+ },
+ {
+  "pid": "P392",
+  "origin": "g6",
+  "seed": "18차#15",
+  "cand": 2,
+  "seed_name": "황제의 길라잡이",
+  "cand_name": "King's Heir: Rise to the Throne"
+ },
+ {
+  "pid": "P165",
+  "origin": "g6",
+  "seed": "18차#13",
+  "cand": 9,
+  "seed_name": "악녀가 바뀌었다",
+  "cand_name": "Crime Passional"
+ },
+ {
+  "pid": "P031",
+  "origin": "g6",
+  "seed": "16차#3",
+  "cand": 0,
+  "seed_name": "고구려가 농사도 잘함",
+  "cand_name": "Mirthwood"
+ },
+ {
+  "pid": "P003",
+  "origin": "fresh",
+  "seed": "8",
+  "cand": 8,
+  "seed_name": "일방적 짝사랑",
+  "cand_name": "Trap Yuri Tempest"
+ },
+ {
+  "pid": "P039",
+  "origin": "fresh",
+  "seed": "10",
+  "cand": 7,
+  "seed_name": "언니, 이 백화점은 내 거야",
+  "cand_name": "Miss Lisette's Assassin Maid"
+ },
+ {
+  "pid": "P127",
+  "origin": "g6",
+  "seed": "16차#2",
+  "cand": 1,
+  "seed_name": "N 툴 플레이어",
+  "cand_name": "Rugby Career Manager"
+ },
+ {
+  "pid": "P028",
+  "origin": "g6",
+  "seed": "15차#7",
+  "cand": 9,
+  "seed_name": "창궁무적검",
+  "cand_name": "청구야담: 팔도견문록"
+ },
+ {
+  "pid": "P105",
+  "origin": "fresh",
+  "seed": "12",
+  "cand": 7,
+  "seed_name": "신화를 계승중입니다",
+  "cand_name": "트리 오브 세이비어"
+ },
+ {
+  "pid": "P393",
+  "origin": "g6",
+  "seed": "16차#11",
+  "cand": 0,
+  "seed_name": "세 개의 칼날",
+  "cand_name": "봄이 오면 꽃이 피고"
+ },
+ {
+  "pid": "P112",
+  "origin": "fresh",
+  "seed": "17",
+  "cand": 5,
+  "seed_name": "염왕화조",
+  "cand_name": "命运之轮（序章）/Journey of Destiny(dependent origination)"
+ },
+ {
+  "pid": "P280",
+  "origin": "fresh",
+  "seed": "0",
+  "cand": 5,
+  "seed_name": "재벌 매니지먼트",
+  "cand_name": "Rush Hour Relay"
+ },
+ {
+  "pid": "P052",
+  "origin": "fresh",
+  "seed": "8",
+  "cand": 0,
+  "seed_name": "일방적 짝사랑",
+  "cand_name": "프렌치커넥션"
+ },
+ {
+  "pid": "P013",
+  "origin": "g6",
+  "seed": "16차#5",
+  "cand": 4,
+  "seed_name": "망겜 속 수호자",
+  "cand_name": "Seeking Asylum: The Game (DEMO)"
+ },
+ {
+  "pid": "P306",
+  "origin": "fresh",
+  "seed": "5",
+  "cand": 3,
+  "seed_name": "하트 스토커",
+  "cand_name": "我和美女有个约会"
+ },
+ {
+  "pid": "P339",
+  "origin": "fresh",
+  "seed": "12",
+  "cand": 2,
+  "seed_name": "신화를 계승중입니다",
+  "cand_name": "~在魔界当女仆~恶魔天使与勇者的秘密喫茶店"
+ },
+ {
+  "pid": "P137",
+  "origin": "g6",
+  "seed": "18차#1",
+  "cand": 5,
+  "seed_name": "리그너스 대륙전기",
+  "cand_name": "용의 원정"
+ },
+ {
+  "pid": "P242",
+  "origin": "fresh",
+  "seed": "2",
+  "cand": 3,
+  "seed_name": "불상을 조각하는 성기사님!",
+  "cand_name": "Bogeys, Ghosts & Gods"
+ },
+ {
+  "pid": "P372",
+  "origin": "fresh",
+  "seed": "16",
+  "cand": 5,
+  "seed_name": "생사신",
+  "cand_name": "绝世好武功 The Matchless KungFu"
+ },
+ {
+  "pid": "P106",
+  "origin": "g6",
+  "seed": "16차#17",
+  "cand": 6,
+  "seed_name": "중간보스의 심복으로 살아남기",
+  "cand_name": "Warehuman -ウェアヒューマン-"
+ },
+ {
+  "pid": "P342",
+  "origin": "fresh",
+  "seed": "2",
+  "cand": 9,
+  "seed_name": "불상을 조각하는 성기사님!",
+  "cand_name": "어서오세요 신성재판에"
+ },
+ {
+  "pid": "P056",
+  "origin": "g6",
+  "seed": "16차#1",
+  "cand": 8,
+  "seed_name": "방출 후 천재 코치가 되었다",
+  "cand_name": "역전검사 1&2 미츠루기 셀렉션"
+ },
+ {
+  "pid": "P377",
+  "origin": "fresh",
+  "seed": "17",
+  "cand": 0,
+  "seed_name": "염왕화조",
+  "cand_name": "Revive"
+ },
+ {
+  "pid": "P201",
+  "origin": "fresh",
+  "seed": "17",
+  "cand": 3,
+  "seed_name": "염왕화조",
+  "cand_name": "Queen's Revolution ~ the romance in upheavals ~"
+ },
+ {
+  "pid": "P032",
+  "origin": "fresh",
+  "seed": "9",
+  "cand": 7,
+  "seed_name": "폐하, 이 회귀 좀 멈춰 주세요",
+  "cand_name": "The Inquisitor"
+ },
+ {
+  "pid": "P335",
+  "origin": "g6",
+  "seed": "18차#13",
+  "cand": 6,
+  "seed_name": "악녀가 바뀌었다",
+  "cand_name": "The Meridian Under the Heaven: Valhalla"
+ },
+ {
+  "pid": "P019",
+  "origin": "fresh",
+  "seed": "11",
+  "cand": 0,
+  "seed_name": "내가 유변이라니",
+  "cand_name": "연무"
+ },
+ {
+  "pid": "P162",
+  "origin": "fresh",
+  "seed": "3",
+  "cand": 3,
+  "seed_name": "내 인공지능이 마왕이 되었다",
+  "cand_name": "Demonarch"
+ },
+ {
+  "pid": "P321",
+  "origin": "g6",
+  "seed": "16차#6",
+  "cand": 6,
+  "seed_name": "신들이 보우하사",
+  "cand_name": "크라운즈 트라이얼 (Crown's Trial)"
+ },
+ {
+  "pid": "P027",
+  "origin": "fresh",
+  "seed": "19",
+  "cand": 7,
+  "seed_name": "그 남자가 내 몸에 들어왔다",
+  "cand_name": "Take me, Vitaly"
+ },
+ {
+  "pid": "P142",
+  "origin": "g6",
+  "seed": "16차#1",
+  "cand": 6,
+  "seed_name": "방출 후 천재 코치가 되었다",
+  "cand_name": "악마의 오피스"
+ },
+ {
+  "pid": "P166",
+  "origin": "g6",
+  "seed": "18차#19",
+  "cand": 4,
+  "seed_name": "시한부 성녀인데 흑막 대공을 길들여버렸다",
+  "cand_name": "명존실망: 금의야행"
+ },
+ {
+  "pid": "P366",
+  "origin": "g6",
+  "seed": "16차#15",
+  "cand": 5,
+  "seed_name": "혁련세가 차남이 되었다",
+  "cand_name": "매니스"
+ },
+ {
+  "pid": "P224",
+  "origin": "g6",
+  "seed": "15차#14",
+  "cand": 7,
+  "seed_name": "성진변",
+  "cand_name": "Royal Defense"
+ },
+ {
+  "pid": "P282",
+  "origin": "g6",
+  "seed": "18차#1",
+  "cand": 4,
+  "seed_name": "리그너스 대륙전기",
+  "cand_name": "피터의 영어 모험 [영어 배우기]"
+ },
+ {
+  "pid": "P094",
+  "origin": "g6",
+  "seed": "16차#6",
+  "cand": 5,
+  "seed_name": "신들이 보우하사",
+  "cand_name": "수선강요전"
+ },
+ {
+  "pid": "P388",
+  "origin": "fresh",
+  "seed": "6",
+  "cand": 0,
+  "seed_name": "사채왕의 손자",
+  "cand_name": "봄이 오면 꽃이 피고"
+ },
+ {
+  "pid": "P275",
+  "origin": "g6",
+  "seed": "15차#14",
+  "cand": 9,
+  "seed_name": "성진변",
+  "cand_name": "义闻录：轮回"
+ },
+ {
+  "pid": "P326",
+  "origin": "g6",
+  "seed": "16차#4",
+  "cand": 0,
+  "seed_name": "초록빛 구원",
+  "cand_name": "별에게 소원을 (When you wish upon a star)"
+ },
+ {
+  "pid": "P203",
+  "origin": "fresh",
+  "seed": "5",
+  "cand": 4,
+  "seed_name": "하트 스토커",
+  "cand_name": "Holdem God - MindBuster"
+ },
+ {
+  "pid": "P235",
+  "origin": "g6",
+  "seed": "18차#13",
+  "cand": 2,
+  "seed_name": "악녀가 바뀌었다",
+  "cand_name": "Uncharted Tides: Port Royal"
+ },
+ {
+  "pid": "P332",
+  "origin": "g6",
+  "seed": "16차#5",
+  "cand": 6,
+  "seed_name": "망겜 속 수호자",
+  "cand_name": "Legendary Tales: Map of Hope Collector's Edition"
+ },
+ {
+  "pid": "P208",
+  "origin": "g6",
+  "seed": "15차#0",
+  "cand": 3,
+  "seed_name": "스킬빨로 아카데미 천재가 되었다",
+  "cand_name": "Kraken Academy!!"
+ },
+ {
+  "pid": "P304",
+  "origin": "fresh",
+  "seed": "13",
+  "cand": 4,
+  "seed_name": "아빠의 축구",
+  "cand_name": "Father Forgets"
+ },
+ {
+  "pid": "P170",
+  "origin": "fresh",
+  "seed": "16",
+  "cand": 8,
+  "seed_name": "생사신",
+  "cand_name": "Survival Exorcist"
+ },
+ {
+  "pid": "P331",
+  "origin": "fresh",
+  "seed": "12",
+  "cand": 6,
+  "seed_name": "신화를 계승중입니다",
+  "cand_name": "Revive"
+ },
+ {
+  "pid": "P015",
+  "origin": "g6",
+  "seed": "18차#13",
+  "cand": 3,
+  "seed_name": "악녀가 바뀌었다",
+  "cand_name": "and Roger"
+ },
+ {
+  "pid": "P104",
+  "origin": "fresh",
+  "seed": "1",
+  "cand": 1,
+  "seed_name": "글러먹은 빙의",
+  "cand_name": "산역"
+ },
+ {
+  "pid": "P359",
+  "origin": "fresh",
+  "seed": "15",
+  "cand": 6,
+  "seed_name": "차원이 다른 아이돌 1~9권",
+  "cand_name": "The Gray-Crowned Reincarnate"
+ },
+ {
+  "pid": "P260",
+  "origin": "fresh",
+  "seed": "0",
+  "cand": 7,
+  "seed_name": "재벌 매니지먼트",
+  "cand_name": "극 서원 연의"
+ },
+ {
+  "pid": "P222",
+  "origin": "fresh",
+  "seed": "15",
+  "cand": 4,
+  "seed_name": "차원이 다른 아이돌 1~9권",
+  "cand_name": "로스트 저지먼트: 심판받지 않은 기억"
+ },
+ {
+  "pid": "P223",
+  "origin": "g6",
+  "seed": "18차#13",
+  "cand": 5,
+  "seed_name": "악녀가 바뀌었다",
+  "cand_name": "Without a Voice"
+ },
+ {
+  "pid": "P174",
+  "origin": "g6",
+  "seed": "16차#4",
+  "cand": 8,
+  "seed_name": "초록빛 구원",
+  "cand_name": "클리어 체리 아이스."
+ },
+ {
+  "pid": "P249",
+  "origin": "fresh",
+  "seed": "16",
+  "cand": 3,
+  "seed_name": "생사신",
+  "cand_name": "해동비사 (海東秘史)"
+ },
+ {
+  "pid": "P343",
+  "origin": "fresh",
+  "seed": "7",
+  "cand": 1,
+  "seed_name": "테미안",
+  "cand_name": "Rage in Peace"
+ },
+ {
+  "pid": "P089",
+  "origin": "fresh",
+  "seed": "4",
+  "cand": 3,
+  "seed_name": "십파일방",
+  "cand_name": "해동비사 (海東秘史)"
+ },
+ {
+  "pid": "P144",
+  "origin": "g6",
+  "seed": "18차#15",
+  "cand": 5,
+  "seed_name": "황제의 길라잡이",
+  "cand_name": "The Surprising Adventures of Munchausen"
+ },
+ {
+  "pid": "P041",
+  "origin": "fresh",
+  "seed": "2",
+  "cand": 1,
+  "seed_name": "불상을 조각하는 성기사님!",
+  "cand_name": "봄이 오면 꽃이 피고"
+ },
+ {
+  "pid": "P399",
+  "origin": "fresh",
+  "seed": "18",
+  "cand": 6,
+  "seed_name": "너를 위해서라면 나는 악역이라도",
+  "cand_name": "Miss Lisette's Assassin Maid"
+ },
+ {
+  "pid": "P155",
+  "origin": "fresh",
+  "seed": "0",
+  "cand": 9,
+  "seed_name": "재벌 매니지먼트",
+  "cand_name": "One Military Camp"
+ },
+ {
+  "pid": "P329",
+  "origin": "g6",
+  "seed": "15차#1",
+  "cand": 7,
+  "seed_name": "네 옆자리를 지키고 싶어서",
+  "cand_name": "イケ勘 - イケメンになるかどうか勘で付き合うゲーム -"
+ },
+ {
+  "pid": "P096",
+  "origin": "g6",
+  "seed": "16차#2",
+  "cand": 0,
+  "seed_name": "N 툴 플레이어",
+  "cand_name": "Kunoichi's Cadence"
+ },
+ {
+  "pid": "P078",
+  "origin": "fresh",
+  "seed": "6",
+  "cand": 9,
+  "seed_name": "사채왕의 손자",
+  "cand_name": "Queen's Revolution ~ the romance in upheavals ~"
+ },
+ {
+  "pid": "P103",
+  "origin": "g6",
+  "seed": "16차#4",
+  "cand": 4,
+  "seed_name": "초록빛 구원",
+  "cand_name": "아이돌마스터 스탈릿 시즌"
+ },
+ {
+  "pid": "P136",
+  "origin": "fresh",
+  "seed": "3",
+  "cand": 8,
+  "seed_name": "내 인공지능이 마왕이 되었다",
+  "cand_name": "★Fallalypse ★ Disconnect ❄"
+ },
+ {
+  "pid": "P268",
+  "origin": "g6",
+  "seed": "16차#2",
+  "cand": 2,
+  "seed_name": "N 툴 플레이어",
+  "cand_name": "Divine Pig"
+ },
+ {
+  "pid": "P168",
+  "origin": "g6",
+  "seed": "18차#1",
+  "cand": 8,
+  "seed_name": "리그너스 대륙전기",
+  "cand_name": "动物职场"
+ },
+ {
+  "pid": "P152",
+  "origin": "g6",
+  "seed": "18차#14",
+  "cand": 8,
+  "seed_name": "악신의 총애를 받는 성직자가 되었다",
+  "cand_name": "Overlord™"
+ },
+ {
+  "pid": "P320",
+  "origin": "fresh",
+  "seed": "19",
+  "cand": 9,
+  "seed_name": "그 남자가 내 몸에 들어왔다",
+  "cand_name": "Wagon Gloom"
+ },
+ {
+  "pid": "P226",
+  "origin": "g6",
+  "seed": "15차#16",
+  "cand": 8,
+  "seed_name": "팔남이라니, 그건 아니지!",
+  "cand_name": "动物职场"
+ },
+ {
+  "pid": "P220",
+  "origin": "g6",
+  "seed": "15차#14",
+  "cand": 3,
+  "seed_name": "성진변",
+  "cand_name": "지금 우리 학교는"
+ },
+ {
+  "pid": "P040",
+  "origin": "fresh",
+  "seed": "3",
+  "cand": 2,
+  "seed_name": "내 인공지능이 마왕이 되었다",
+  "cand_name": "Revive"
+ },
+ {
+  "pid": "P042",
+  "origin": "fresh",
+  "seed": "11",
+  "cand": 2,
+  "seed_name": "내가 유변이라니",
+  "cand_name": "Warehuman -ウェアヒューマン-"
+ },
+ {
+  "pid": "P365",
+  "origin": "fresh",
+  "seed": "13",
+  "cand": 3,
+  "seed_name": "아빠의 축구",
+  "cand_name": "Football Manager 26"
+ },
+ {
+  "pid": "P274",
+  "origin": "fresh",
+  "seed": "10",
+  "cand": 8,
+  "seed_name": "언니, 이 백화점은 내 거야",
+  "cand_name": "Recettear: An Item Shop's Tale"
+ },
+ {
+  "pid": "P284",
+  "origin": "fresh",
+  "seed": "0",
+  "cand": 4,
+  "seed_name": "재벌 매니지먼트",
+  "cand_name": "After University: Doner Simulator"
+ },
+ {
+  "pid": "P157",
+  "origin": "g6",
+  "seed": "18차#14",
+  "cand": 6,
+  "seed_name": "악신의 총애를 받는 성직자가 되었다",
+  "cand_name": "아기정령들 (Little Elementals)"
+ },
+ {
+  "pid": "P191",
+  "origin": "fresh",
+  "seed": "6",
+  "cand": 7,
+  "seed_name": "사채왕의 손자",
+  "cand_name": "극 서원 연의"
+ },
+ {
+  "pid": "P340",
+  "origin": "g6",
+  "seed": "18차#1",
+  "cand": 9,
+  "seed_name": "리그너스 대륙전기",
+  "cand_name": "Souldiers"
+ },
+ {
+  "pid": "P021",
+  "origin": "g6",
+  "seed": "15차#16",
+  "cand": 4,
+  "seed_name": "팔남이라니, 그건 아니지!",
+  "cand_name": "イケ勘 - イケメンになるかどうか勘で付き合うゲーム -"
+ },
+ {
+  "pid": "P375",
+  "origin": "fresh",
+  "seed": "12",
+  "cand": 8,
+  "seed_name": "신화를 계승중입니다",
+  "cand_name": "불개"
+ },
+ {
+  "pid": "P241",
+  "origin": "fresh",
+  "seed": "16",
+  "cand": 4,
+  "seed_name": "생사신",
+  "cand_name": "Yellowcreek Stories - The Cabin Watcher"
+ },
+ {
+  "pid": "P341",
+  "origin": "g6",
+  "seed": "16차#4",
+  "cand": 2,
+  "seed_name": "초록빛 구원",
+  "cand_name": "DARK SOULS™: REMASTERED"
+ },
+ {
+  "pid": "P245",
+  "origin": "g6",
+  "seed": "16차#3",
+  "cand": 5,
+  "seed_name": "고구려가 농사도 잘함",
+  "cand_name": "창조 삼국지"
+ },
+ {
+  "pid": "P247",
+  "origin": "g6",
+  "seed": "16차#1",
+  "cand": 4,
+  "seed_name": "방출 후 천재 코치가 되었다",
+  "cand_name": "Mortar and Pestle"
+ },
+ {
+  "pid": "P067",
+  "origin": "g6",
+  "seed": "16차#1",
+  "cand": 0,
+  "seed_name": "방출 후 천재 코치가 되었다",
+  "cand_name": "로스트 저지먼트: 심판받지 않은 기억"
+ },
+ {
+  "pid": "P281",
+  "origin": "fresh",
+  "seed": "0",
+  "cand": 0,
+  "seed_name": "재벌 매니지먼트",
+  "cand_name": "Business War: ERP 샌드박스 시뮬레이션"
+ },
+ {
+  "pid": "P025",
+  "origin": "fresh",
+  "seed": "10",
+  "cand": 4,
+  "seed_name": "언니, 이 백화점은 내 거야",
+  "cand_name": "Pinkybites"
+ },
+ {
+  "pid": "P116",
+  "origin": "g6",
+  "seed": "15차#1",
+  "cand": 3,
+  "seed_name": "네 옆자리를 지키고 싶어서",
+  "cand_name": "Secret Crush -Unrequited love-"
+ },
+ {
+  "pid": "P290",
+  "origin": "fresh",
+  "seed": "18",
+  "cand": 9,
+  "seed_name": "너를 위해서라면 나는 악역이라도",
+  "cand_name": "For My Darling"
+ },
+ {
+  "pid": "P333",
+  "origin": "fresh",
+  "seed": "19",
+  "cand": 2,
+  "seed_name": "그 남자가 내 몸에 들어왔다",
+  "cand_name": "The Man in the Fields"
+ },
+ {
+  "pid": "P010",
+  "origin": "fresh",
+  "seed": "3",
+  "cand": 0,
+  "seed_name": "내 인공지능이 마왕이 되었다",
+  "cand_name": "AI Digital Human Lab"
+ },
+ {
+  "pid": "P087",
+  "origin": "fresh",
+  "seed": "17",
+  "cand": 1,
+  "seed_name": "염왕화조",
+  "cand_name": "Kung Fu Time Travel"
+ },
+ {
+  "pid": "P243",
+  "origin": "g6",
+  "seed": "16차#17",
+  "cand": 7,
+  "seed_name": "중간보스의 심복으로 살아남기",
+  "cand_name": "Project BS"
+ },
+ {
+  "pid": "P267",
+  "origin": "g6",
+  "seed": "18차#15",
+  "cand": 0,
+  "seed_name": "황제의 길라잡이",
+  "cand_name": "Chronicles of Magic: Divided Kingdoms"
+ },
+ {
+  "pid": "P214",
+  "origin": "fresh",
+  "seed": "1",
+  "cand": 3,
+  "seed_name": "글러먹은 빙의",
+  "cand_name": "딸기맛 Sci-Fi"
+ },
+ {
+  "pid": "P298",
+  "origin": "g6",
+  "seed": "18차#14",
+  "cand": 9,
+  "seed_name": "악신의 총애를 받는 성직자가 되었다",
+  "cand_name": "1666: Amsterdam"
+ },
+ {
+  "pid": "P370",
+  "origin": "g6",
+  "seed": "16차#7",
+  "cand": 7,
+  "seed_name": "Dr. 신선한 : 미래를 보는 의사",
+  "cand_name": "Dr. Oops!"
+ },
+ {
+  "pid": "P147",
+  "origin": "fresh",
+  "seed": "5",
+  "cand": 1,
+  "seed_name": "하트 스토커",
+  "cand_name": "술도, 사랑도 어려운 아가씨"
+ },
+ {
+  "pid": "P355",
+  "origin": "g6",
+  "seed": "16차#1",
+  "cand": 1,
+  "seed_name": "방출 후 천재 코치가 되었다",
+  "cand_name": "Slay the GoblinZ"
+ },
+ {
+  "pid": "P059",
+  "origin": "g6",
+  "seed": "18차#15",
+  "cand": 1,
+  "seed_name": "황제의 길라잡이",
+  "cand_name": "봄이 오면 꽃이 피고"
+ },
+ {
+  "pid": "P107",
+  "origin": "fresh",
+  "seed": "4",
+  "cand": 9,
+  "seed_name": "십파일방",
+  "cand_name": "스위트 클락워크"
+ },
+ {
+  "pid": "P186",
+  "origin": "g6",
+  "seed": "15차#16",
+  "cand": 7,
+  "seed_name": "팔남이라니, 그건 아니지!",
+  "cand_name": "Cook For Love"
+ },
+ {
+  "pid": "P061",
+  "origin": "g6",
+  "seed": "16차#4",
+  "cand": 6,
+  "seed_name": "초록빛 구원",
+  "cand_name": "Tokyo Girls Chronicle"
+ },
+ {
+  "pid": "P073",
+  "origin": "fresh",
+  "seed": "10",
+  "cand": 2,
+  "seed_name": "언니, 이 백화점은 내 거야",
+  "cand_name": "Blood of Inquisition"
+ },
+ {
+  "pid": "P097",
+  "origin": "fresh",
+  "seed": "4",
+  "cand": 7,
+  "seed_name": "십파일방",
+  "cand_name": "달의 딸"
+ },
+ {
+  "pid": "P069",
+  "origin": "fresh",
+  "seed": "9",
+  "cand": 2,
+  "seed_name": "폐하, 이 회귀 좀 멈춰 주세요",
+  "cand_name": "Derail: Sacrifice"
+ },
+ {
+  "pid": "P153",
+  "origin": "g6",
+  "seed": "16차#1",
+  "cand": 9,
+  "seed_name": "방출 후 천재 코치가 되었다",
+  "cand_name": "Ekoman"
+ },
+ {
+  "pid": "P283",
+  "origin": "fresh",
+  "seed": "11",
+  "cand": 8,
+  "seed_name": "내가 유변이라니",
+  "cand_name": "봄이 오면 꽃이 피고"
+ },
+ {
+  "pid": "P148",
+  "origin": "g6",
+  "seed": "18차#13",
+  "cand": 8,
+  "seed_name": "악녀가 바뀌었다",
+  "cand_name": "Columbus"
+ },
+ {
+  "pid": "P006",
+  "origin": "fresh",
+  "seed": "1",
+  "cand": 7,
+  "seed_name": "글러먹은 빙의",
+  "cand_name": "흑서유"
+ },
+ {
+  "pid": "P159",
+  "origin": "fresh",
+  "seed": "2",
+  "cand": 4,
+  "seed_name": "불상을 조각하는 성기사님!",
+  "cand_name": "Worn By The Forgotten"
+ },
+ {
+  "pid": "P075",
+  "origin": "fresh",
+  "seed": "13",
+  "cand": 9,
+  "seed_name": "아빠의 축구",
+  "cand_name": "Football Stars Legend 24"
+ },
+ {
+  "pid": "P217",
+  "origin": "g6",
+  "seed": "15차#16",
+  "cand": 5,
+  "seed_name": "팔남이라니, 그건 아니지!",
+  "cand_name": "Gachi Dash"
+ },
+ {
+  "pid": "P360",
+  "origin": "g6",
+  "seed": "16차#15",
+  "cand": 8,
+  "seed_name": "혁련세가 차남이 되었다",
+  "cand_name": "The Life You Missed"
+ },
+ {
+  "pid": "P049",
+  "origin": "fresh",
+  "seed": "18",
+  "cand": 4,
+  "seed_name": "너를 위해서라면 나는 악역이라도",
+  "cand_name": "봄의 소리는 마치 너와 닮아서"
+ },
+ {
+  "pid": "P038",
+  "origin": "fresh",
+  "seed": "12",
+  "cand": 3,
+  "seed_name": "신화를 계승중입니다",
+  "cand_name": "- Mischief Dungeon Life - 異世界転生した俺のイタズラダンジョンライフ"
+ },
+ {
+  "pid": "P141",
+  "origin": "fresh",
+  "seed": "15",
+  "cand": 5,
+  "seed_name": "차원이 다른 아이돌 1~9권",
+  "cand_name": "CHILDREN OF SATURN"
+ },
+ {
+  "pid": "P002",
+  "origin": "fresh",
+  "seed": "14",
+  "cand": 9,
+  "seed_name": "무림여학원 - 시드노벨 Seed Novel",
+  "cand_name": "みすずの国"
+ },
+ {
+  "pid": "P237",
+  "origin": "fresh",
+  "seed": "13",
+  "cand": 0,
+  "seed_name": "아빠의 축구",
+  "cand_name": "World of Football"
+ },
+ {
+  "pid": "P077",
+  "origin": "fresh",
+  "seed": "3",
+  "cand": 9,
+  "seed_name": "내 인공지능이 마왕이 되었다",
+  "cand_name": "Whispers from the Star"
+ },
+ {
+  "pid": "P060",
+  "origin": "fresh",
+  "seed": "15",
+  "cand": 0,
+  "seed_name": "차원이 다른 아이돌 1~9권",
+  "cand_name": "역전재판 456 오도로키 셀렉션"
+ },
+ {
+  "pid": "P091",
+  "origin": "g6",
+  "seed": "15차#14",
+  "cand": 2,
+  "seed_name": "성진변",
+  "cand_name": "Queen's Revolution ~ the romance in upheavals ~"
+ },
+ {
+  "pid": "P305",
+  "origin": "g6",
+  "seed": "15차#7",
+  "cand": 8,
+  "seed_name": "창궁무적검",
+  "cand_name": "헌원검2"
+ },
+ {
+  "pid": "P200",
+  "origin": "fresh",
+  "seed": "7",
+  "cand": 3,
+  "seed_name": "테미안",
+  "cand_name": "Endless Fables 4: Shadow Within"
+ },
+ {
+  "pid": "P258",
+  "origin": "g6",
+  "seed": "15차#16",
+  "cand": 2,
+  "seed_name": "팔남이라니, 그건 아니지!",
+  "cand_name": "러브 플루트"
+ },
+ {
+  "pid": "P184",
+  "origin": "g6",
+  "seed": "18차#15",
+  "cand": 7,
+  "seed_name": "황제의 길라잡이",
+  "cand_name": "Landomayzer"
+ },
+ {
+  "pid": "P295",
+  "origin": "g6",
+  "seed": "15차#1",
+  "cand": 2,
+  "seed_name": "네 옆자리를 지키고 싶어서",
+  "cand_name": "Why do you love me?"
+ },
+ {
+  "pid": "P098",
+  "origin": "g6",
+  "seed": "16차#15",
+  "cand": 3,
+  "seed_name": "혁련세가 차남이 되었다",
+  "cand_name": "Suicide Guy: Sleepin' Deeply"
+ },
+ {
+  "pid": "P397",
+  "origin": "g6",
+  "seed": "16차#15",
+  "cand": 1,
+  "seed_name": "혁련세가 차남이 되었다",
+  "cand_name": "봄이 오면 꽃이 피고"
+ },
+ {
+  "pid": "P134",
+  "origin": "fresh",
+  "seed": "9",
+  "cand": 8,
+  "seed_name": "폐하, 이 회귀 좀 멈춰 주세요",
+  "cand_name": "On the Q.T."
+ },
+ {
+  "pid": "P080",
+  "origin": "g6",
+  "seed": "18차#14",
+  "cand": 3,
+  "seed_name": "악신의 총애를 받는 성직자가 되었다",
+  "cand_name": "Zjawa: Bloodstained Soul"
+ },
+ {
+  "pid": "P240",
+  "origin": "fresh",
+  "seed": "5",
+  "cand": 9,
+  "seed_name": "하트 스토커",
+  "cand_name": "Royal Signal : The Prince’s 5 Days"
+ },
+ {
+  "pid": "P024",
+  "origin": "fresh",
+  "seed": "16",
+  "cand": 9,
+  "seed_name": "생사신",
+  "cand_name": "커피여우 김삼월"
+ },
+ {
+  "pid": "P119",
+  "origin": "fresh",
+  "seed": "16",
+  "cand": 7,
+  "seed_name": "생사신",
+  "cand_name": "Kung Fu Time Travel"
+ },
+ {
+  "pid": "P070",
+  "origin": "g6",
+  "seed": "15차#16",
+  "cand": 6,
+  "seed_name": "팔남이라니, 그건 아니지!",
+  "cand_name": "Chrysolite"
+ },
+ {
+  "pid": "P188",
+  "origin": "g6",
+  "seed": "18차#19",
+  "cand": 1,
+  "seed_name": "시한부 성녀인데 흑막 대공을 길들여버렸다",
+  "cand_name": "봄이 오면 꽃이 피고"
+ },
+ {
+  "pid": "P109",
+  "origin": "g6",
+  "seed": "16차#1",
+  "cand": 7,
+  "seed_name": "방출 후 천재 코치가 되었다",
+  "cand_name": "천사 승급 시험: Re"
+ },
+ {
+  "pid": "P012",
+  "origin": "g6",
+  "seed": "16차#7",
+  "cand": 6,
+  "seed_name": "Dr. 신선한 : 미래를 보는 의사",
+  "cand_name": "Underdose"
+ },
+ {
+  "pid": "P138",
+  "origin": "g6",
+  "seed": "15차#14",
+  "cand": 0,
+  "seed_name": "성진변",
+  "cand_name": "마법 무기"
+ },
+ {
+  "pid": "P390",
+  "origin": "g6",
+  "seed": "16차#5",
+  "cand": 2,
+  "seed_name": "망겜 속 수호자",
+  "cand_name": "Reflections of Life: Slipping Hope Collector's Edition"
+ },
+ {
+  "pid": "P391",
+  "origin": "g6",
+  "seed": "18차#13",
+  "cand": 7,
+  "seed_name": "악녀가 바뀌었다",
+  "cand_name": "The Void Chronicles: One's Desolation"
+ },
+ {
+  "pid": "P182",
+  "origin": "fresh",
+  "seed": "2",
+  "cand": 8,
+  "seed_name": "불상을 조각하는 성기사님!",
+  "cand_name": "Sakura Mirror"
+ },
+ {
+  "pid": "P022",
+  "origin": "fresh",
+  "seed": "7",
+  "cand": 0,
+  "seed_name": "테미안",
+  "cand_name": "Last Light"
+ },
+ {
+  "pid": "P327",
+  "origin": "g6",
+  "seed": "18차#14",
+  "cand": 4,
+  "seed_name": "악신의 총애를 받는 성직자가 되었다",
+  "cand_name": "어서오세요 신성재판에"
+ },
+ {
+  "pid": "P376",
+  "origin": "g6",
+  "seed": "18차#1",
+  "cand": 6,
+  "seed_name": "리그너스 대륙전기",
+  "cand_name": "Lanternium"
+ },
+ {
+  "pid": "P325",
+  "origin": "g6",
+  "seed": "16차#15",
+  "cand": 4,
+  "seed_name": "혁련세가 차남이 되었다",
+  "cand_name": "스위트 클락워크"
+ },
+ {
+  "pid": "P057",
+  "origin": "g6",
+  "seed": "16차#11",
+  "cand": 4,
+  "seed_name": "세 개의 칼날",
+  "cand_name": "Best Served Cold"
+ },
+ {
+  "pid": "P018",
+  "origin": "fresh",
+  "seed": "5",
+  "cand": 0,
+  "seed_name": "하트 스토커",
+  "cand_name": "Uncharted Tides: Port Royal"
+ },
+ {
+  "pid": "P194",
+  "origin": "g6",
+  "seed": "15차#14",
+  "cand": 1,
+  "seed_name": "성진변",
+  "cand_name": "Paper Shakespeare: Cthulhu Coriolanus"
+ },
+ {
+  "pid": "P065",
+  "origin": "fresh",
+  "seed": "18",
+  "cand": 2,
+  "seed_name": "너를 위해서라면 나는 악역이라도",
+  "cand_name": "The Meridian Under the Heaven: Valhalla"
+ },
+ {
+  "pid": "P133",
+  "origin": "fresh",
+  "seed": "19",
+  "cand": 0,
+  "seed_name": "그 남자가 내 몸에 들어왔다",
+  "cand_name": "This Bed We Made"
+ },
+ {
+  "pid": "P085",
+  "origin": "g6",
+  "seed": "16차#11",
+  "cand": 6,
+  "seed_name": "세 개의 칼날",
+  "cand_name": "애거사 크리스티 - 나일강의 죽음 (Agatha Christie - Death on the Nile)"
+ },
+ {
+  "pid": "P358",
+  "origin": "g6",
+  "seed": "15차#0",
+  "cand": 7,
+  "seed_name": "스킬빨로 아카데미 천재가 되었다",
+  "cand_name": "Jump Like a Grad Student"
+ },
+ {
+  "pid": "P146",
+  "origin": "fresh",
+  "seed": "9",
+  "cand": 6,
+  "seed_name": "폐하, 이 회귀 좀 멈춰 주세요",
+  "cand_name": "Lost Lands: Dark Overlord Collector's Edition"
+ },
+ {
+  "pid": "P055",
+  "origin": "fresh",
+  "seed": "7",
+  "cand": 4,
+  "seed_name": "테미안",
+  "cand_name": "Testament: The Order of High Human"
+ },
+ {
+  "pid": "P113",
+  "origin": "g6",
+  "seed": "18차#19",
+  "cand": 3,
+  "seed_name": "시한부 성녀인데 흑막 대공을 길들여버렸다",
+  "cand_name": "Crime Passional"
+ },
+ {
+  "pid": "P398",
+  "origin": "fresh",
+  "seed": "14",
+  "cand": 4,
+  "seed_name": "무림여학원 - 시드노벨 Seed Novel",
+  "cand_name": "Concealed"
+ },
+ {
+  "pid": "P312",
+  "origin": "fresh",
+  "seed": "9",
+  "cand": 0,
+  "seed_name": "폐하, 이 회귀 좀 멈춰 주세요",
+  "cand_name": "봄이 오면 꽃이 피고"
+ },
+ {
+  "pid": "P299",
+  "origin": "g6",
+  "seed": "18차#15",
+  "cand": 3,
+  "seed_name": "황제의 길라잡이",
+  "cand_name": "Evil Advisor Verdict"
+ },
+ {
+  "pid": "P369",
+  "origin": "fresh",
+  "seed": "17",
+  "cand": 4,
+  "seed_name": "염왕화조",
+  "cand_name": "검협:풍진연곡"
+ },
+ {
+  "pid": "P394",
+  "origin": "fresh",
+  "seed": "13",
+  "cand": 5,
+  "seed_name": "아빠의 축구",
+  "cand_name": "Backyard Soccer '98"
+ },
+ {
+  "pid": "P005",
+  "origin": "g6",
+  "seed": "16차#11",
+  "cand": 1,
+  "seed_name": "세 개의 칼날",
+  "cand_name": "애거서 크리스티: 오리엔트 특급 살인 (Agatha Christie - Murder on the Orient Express)"
+ },
+ {
+  "pid": "P216",
+  "origin": "fresh",
+  "seed": "2",
+  "cand": 0,
+  "seed_name": "불상을 조각하는 성기사님!",
+  "cand_name": "The Inquisitor"
+ },
+ {
+  "pid": "P296",
+  "origin": "g6",
+  "seed": "18차#15",
+  "cand": 8,
+  "seed_name": "황제의 길라잡이",
+  "cand_name": "그랑 엠파이어 : 그래픽 리마스터"
+ },
+ {
+  "pid": "P072",
+  "origin": "g6",
+  "seed": "18차#1",
+  "cand": 2,
+  "seed_name": "리그너스 대륙전기",
+  "cand_name": "Initium Legenda"
+ },
+ {
+  "pid": "P378",
+  "origin": "fresh",
+  "seed": "15",
+  "cand": 8,
+  "seed_name": "차원이 다른 아이돌 1~9권",
+  "cand_name": "Come to my party!"
+ },
+ {
+  "pid": "P367",
+  "origin": "fresh",
+  "seed": "9",
+  "cand": 1,
+  "seed_name": "폐하, 이 회귀 좀 멈춰 주세요",
+  "cand_name": "Revive"
+ },
+ {
+  "pid": "P193",
+  "origin": "g6",
+  "seed": "16차#3",
+  "cand": 1,
+  "seed_name": "고구려가 농사도 잘함",
+  "cand_name": "Drunk But Not Wasted Monk"
+ },
+ {
+  "pid": "P225",
+  "origin": "fresh",
+  "seed": "18",
+  "cand": 5,
+  "seed_name": "너를 위해서라면 나는 악역이라도",
+  "cand_name": "스위트 클락워크"
+ },
+ {
+  "pid": "P183",
+  "origin": "fresh",
+  "seed": "13",
+  "cand": 1,
+  "seed_name": "아빠의 축구",
+  "cand_name": "프린세스 메이커 2 리제네레이션"
+ },
+ {
+  "pid": "P207",
+  "origin": "fresh",
+  "seed": "0",
+  "cand": 1,
+  "seed_name": "재벌 매니지먼트",
+  "cand_name": "Last Train Home"
+ },
+ {
+  "pid": "P382",
+  "origin": "g6",
+  "seed": "16차#11",
+  "cand": 7,
+  "seed_name": "세 개의 칼날",
+  "cand_name": "The Mermaid Mask"
+ },
+ {
+  "pid": "P265",
+  "origin": "g6",
+  "seed": "16차#5",
+  "cand": 5,
+  "seed_name": "망겜 속 수호자",
+  "cand_name": "Guild Master Manager"
+ },
+ {
+  "pid": "P115",
+  "origin": "g6",
+  "seed": "18차#19",
+  "cand": 2,
+  "seed_name": "시한부 성녀인데 흑막 대공을 길들여버렸다",
+  "cand_name": "L.L.L.Liar 瞑目月台"
+ },
+ {
+  "pid": "P262",
+  "origin": "g6",
+  "seed": "16차#11",
+  "cand": 9,
+  "seed_name": "세 개의 칼날",
+  "cand_name": "은폐된 살인의 진실들 - 하드코어 본격 추리 탐정 게임"
+ },
+ {
+  "pid": "P017",
+  "origin": "g6",
+  "seed": "16차#6",
+  "cand": 9,
+  "seed_name": "신들이 보우하사",
+  "cand_name": "보보 베이: 뽀짝 몬스터 대작전"
+ },
+ {
+  "pid": "P034",
+  "origin": "fresh",
+  "seed": "0",
+  "cand": 8,
+  "seed_name": "재벌 매니지먼트",
+  "cand_name": "Hairdresser Simulator"
+ },
+ {
+  "pid": "P396",
+  "origin": "g6",
+  "seed": "15차#0",
+  "cand": 1,
+  "seed_name": "스킬빨로 아카데미 천재가 되었다",
+  "cand_name": "Idol Maker"
+ },
+ {
+  "pid": "P190",
+  "origin": "g6",
+  "seed": "16차#15",
+  "cand": 9,
+  "seed_name": "혁련세가 차남이 되었다",
+  "cand_name": "수선강요전"
+ },
+ {
+  "pid": "P344",
+  "origin": "g6",
+  "seed": "16차#4",
+  "cand": 1,
+  "seed_name": "초록빛 구원",
+  "cand_name": "Awakening: Moonfell Wood"
+ },
+ {
+  "pid": "P001",
+  "origin": "fresh",
+  "seed": "7",
+  "cand": 7,
+  "seed_name": "테미안",
+  "cand_name": "Corpse Party II: Darkness Distortion"
+ },
+ {
+  "pid": "P037",
+  "origin": "fresh",
+  "seed": "17",
+  "cand": 9,
+  "seed_name": "염왕화조",
+  "cand_name": "Fantasy Quest"
+ },
+ {
+  "pid": "P334",
+  "origin": "fresh",
+  "seed": "19",
+  "cand": 6,
+  "seed_name": "그 남자가 내 몸에 들어왔다",
+  "cand_name": "Lucifer Within Us"
+ },
+ {
+  "pid": "P117",
+  "origin": "g6",
+  "seed": "18차#15",
+  "cand": 4,
+  "seed_name": "황제의 길라잡이",
+  "cand_name": "Kung Fu Time Travel"
+ },
+ {
+  "pid": "P088",
+  "origin": "g6",
+  "seed": "18차#19",
+  "cand": 0,
+  "seed_name": "시한부 성녀인데 흑막 대공을 길들여버렸다",
+  "cand_name": "극 서원 연의"
+ },
+ {
+  "pid": "P179",
+  "origin": "g6",
+  "seed": "15차#0",
+  "cand": 0,
+  "seed_name": "스킬빨로 아카데미 천재가 되었다",
+  "cand_name": "부활 1995: 인생 역전 프로젝트"
+ },
+ {
+  "pid": "P316",
+  "origin": "g6",
+  "seed": "18차#19",
+  "cand": 6,
+  "seed_name": "시한부 성녀인데 흑막 대공을 길들여버렸다",
+  "cand_name": "엔의 단검"
+ },
+ {
+  "pid": "P196",
+  "origin": "fresh",
+  "seed": "11",
+  "cand": 5,
+  "seed_name": "내가 유변이라니",
+  "cand_name": "역전검사 1&2 미츠루기 셀렉션"
+ },
+ {
+  "pid": "P379",
+  "origin": "g6",
+  "seed": "16차#3",
+  "cand": 7,
+  "seed_name": "고구려가 농사도 잘함",
+  "cand_name": "삼국지: 신의 한 수"
+ },
+ {
+  "pid": "P004",
+  "origin": "g6",
+  "seed": "16차#2",
+  "cand": 9,
+  "seed_name": "N 툴 플레이어",
+  "cand_name": "TIKI-TIKI: TAKA-TAKA"
+ },
+ {
+  "pid": "P389",
+  "origin": "g6",
+  "seed": "15차#1",
+  "cand": 5,
+  "seed_name": "네 옆자리를 지키고 싶어서",
+  "cand_name": "My Deskmate Douki-Cyan"
+ },
+ {
+  "pid": "P063",
+  "origin": "g6",
+  "seed": "15차#1",
+  "cand": 9,
+  "seed_name": "네 옆자리를 지키고 싶어서",
+  "cand_name": "심장에 해로워"
+ },
+ {
+  "pid": "P234",
+  "origin": "g6",
+  "seed": "15차#0",
+  "cand": 6,
+  "seed_name": "스킬빨로 아카데미 천재가 되었다",
+  "cand_name": "우주공강"
+ },
+ {
+  "pid": "P076",
+  "origin": "g6",
+  "seed": "15차#1",
+  "cand": 6,
+  "seed_name": "네 옆자리를 지키고 싶어서",
+  "cand_name": "Lake Town Stories"
+ },
+ {
+  "pid": "P209",
+  "origin": "g6",
+  "seed": "16차#3",
+  "cand": 2,
+  "seed_name": "고구려가 농사도 잘함",
+  "cand_name": "삼국지천하포무"
+ },
+ {
+  "pid": "P090",
+  "origin": "fresh",
+  "seed": "11",
+  "cand": 3,
+  "seed_name": "내가 유변이라니",
+  "cand_name": "The Meridian Under the Heaven: Valhalla"
+ },
+ {
+  "pid": "P227",
+  "origin": "fresh",
+  "seed": "1",
+  "cand": 6,
+  "seed_name": "글러먹은 빙의",
+  "cand_name": "Slitterhead"
+ },
+ {
+  "pid": "P064",
+  "origin": "fresh",
+  "seed": "8",
+  "cand": 7,
+  "seed_name": "일방적 짝사랑",
+  "cand_name": "うっかり婚～目覚めたら、ワケあり上司の妻でした～"
+ },
+ {
+  "pid": "P092",
+  "origin": "g6",
+  "seed": "16차#7",
+  "cand": 2,
+  "seed_name": "Dr. 신선한 : 미래를 보는 의사",
+  "cand_name": "Heart's Medicine - Hospital Heat"
+ },
+ {
+  "pid": "P254",
+  "origin": "fresh",
+  "seed": "4",
+  "cand": 8,
+  "seed_name": "십파일방",
+  "cand_name": "Weirdo"
+ },
+ {
+  "pid": "P206",
+  "origin": "g6",
+  "seed": "18차#13",
+  "cand": 1,
+  "seed_name": "악녀가 바뀌었다",
+  "cand_name": "Derail: Sacrifice"
+ },
+ {
+  "pid": "P253",
+  "origin": "g6",
+  "seed": "16차#5",
+  "cand": 7,
+  "seed_name": "망겜 속 수호자",
+  "cand_name": "Deadly Nightmare Unwanted Heritage"
+ },
+ {
+  "pid": "P317",
+  "origin": "fresh",
+  "seed": "8",
+  "cand": 4,
+  "seed_name": "일방적 짝사랑",
+  "cand_name": "러브, 샘"
+ },
+ {
+  "pid": "P020",
+  "origin": "g6",
+  "seed": "16차#17",
+  "cand": 0,
+  "seed_name": "중간보스의 심복으로 살아남기",
+  "cand_name": "Uncharted Tides: Port Royal"
+ },
+ {
+  "pid": "P095",
+  "origin": "fresh",
+  "seed": "3",
+  "cand": 1,
+  "seed_name": "내 인공지능이 마왕이 되었다",
+  "cand_name": "Black Submarine: deep seek"
+ },
+ {
+  "pid": "P336",
+  "origin": "fresh",
+  "seed": "9",
+  "cand": 9,
+  "seed_name": "폐하, 이 회귀 좀 멈춰 주세요",
+  "cand_name": "The Caligula Effect: Overdose"
+ },
+ {
+  "pid": "P270",
+  "origin": "g6",
+  "seed": "18차#15",
+  "cand": 9,
+  "seed_name": "황제의 길라잡이",
+  "cand_name": "KADI: 오스만 판관"
+ },
+ {
+  "pid": "P045",
+  "origin": "fresh",
+  "seed": "5",
+  "cand": 2,
+  "seed_name": "하트 스토커",
+  "cand_name": "두근두근 하우스: 연애 리얼리티 쇼・홍콩"
+ },
+ {
+  "pid": "P054",
+  "origin": "fresh",
+  "seed": "19",
+  "cand": 1,
+  "seed_name": "그 남자가 내 몸에 들어왔다",
+  "cand_name": "While Sleeping"
+ },
+ {
+  "pid": "P058",
+  "origin": "g6",
+  "seed": "16차#15",
+  "cand": 0,
+  "seed_name": "혁련세가 차남이 되었다",
+  "cand_name": "검신제로"
+ },
+ {
+  "pid": "P346",
+  "origin": "g6",
+  "seed": "18차#14",
+  "cand": 1,
+  "seed_name": "악신의 총애를 받는 성직자가 되었다",
+  "cand_name": "Idle Chapel"
+ },
+ {
+  "pid": "P180",
+  "origin": "fresh",
+  "seed": "11",
+  "cand": 7,
+  "seed_name": "내가 유변이라니",
+  "cand_name": "거짓말쟁이 왕을 속이는 방법 REMASTERED"
+ },
+ {
+  "pid": "P310",
+  "origin": "g6",
+  "seed": "16차#6",
+  "cand": 8,
+  "seed_name": "신들이 보우하사",
+  "cand_name": "봄이 오면 꽃이 피고"
+ },
+ {
+  "pid": "P252",
+  "origin": "g6",
+  "seed": "18차#13",
+  "cand": 4,
+  "seed_name": "악녀가 바뀌었다",
+  "cand_name": "Warehuman -ウェアヒューマン-"
+ },
+ {
+  "pid": "P007",
+  "origin": "fresh",
+  "seed": "16",
+  "cand": 0,
+  "seed_name": "생사신",
+  "cand_name": "검협:풍진연곡"
+ },
+ {
+  "pid": "P266",
+  "origin": "fresh",
+  "seed": "16",
+  "cand": 1,
+  "seed_name": "생사신",
+  "cand_name": "뱀과 새"
+ },
+ {
+  "pid": "P380",
+  "origin": "g6",
+  "seed": "15차#14",
+  "cand": 6,
+  "seed_name": "성진변",
+  "cand_name": "기동전대 VS"
+ },
+ {
+  "pid": "P215",
+  "origin": "g6",
+  "seed": "15차#7",
+  "cand": 1,
+  "seed_name": "창궁무적검",
+  "cand_name": "연무"
+ },
+ {
+  "pid": "P139",
+  "origin": "g6",
+  "seed": "16차#6",
+  "cand": 0,
+  "seed_name": "신들이 보우하사",
+  "cand_name": "Fox Fairy Saga · Nine Nights: Prologue"
+ },
+ {
+  "pid": "P086",
+  "origin": "g6",
+  "seed": "16차#7",
+  "cand": 8,
+  "seed_name": "Dr. 신선한 : 미래를 보는 의사",
+  "cand_name": "Anomaly Core: Hospital"
+ },
+ {
+  "pid": "P044",
+  "origin": "fresh",
+  "seed": "6",
+  "cand": 1,
+  "seed_name": "사채왕의 손자",
+  "cand_name": "Revive"
+ },
+ {
+  "pid": "P192",
+  "origin": "g6",
+  "seed": "16차#2",
+  "cand": 3,
+  "seed_name": "N 툴 플레이어",
+  "cand_name": "99999량"
+ },
+ {
+  "pid": "P164",
+  "origin": "g6",
+  "seed": "16차#7",
+  "cand": 0,
+  "seed_name": "Dr. 신선한 : 미래를 보는 의사",
+  "cand_name": "Doctor Simulator"
+ },
+ {
+  "pid": "P386",
+  "origin": "fresh",
+  "seed": "11",
+  "cand": 6,
+  "seed_name": "내가 유변이라니",
+  "cand_name": "청구야담: 팔도견문록"
+ },
+ {
+  "pid": "P181",
+  "origin": "g6",
+  "seed": "15차#14",
+  "cand": 4,
+  "seed_name": "성진변",
+  "cand_name": "검신제로"
+ },
+ {
+  "pid": "P171",
+  "origin": "g6",
+  "seed": "16차#5",
+  "cand": 3,
+  "seed_name": "망겜 속 수호자",
+  "cand_name": "Lost Lands: Dark Overlord Collector's Edition"
+ },
+ {
+  "pid": "P145",
+  "origin": "fresh",
+  "seed": "0",
+  "cand": 6,
+  "seed_name": "재벌 매니지먼트",
+  "cand_name": "War Hospital"
+ },
+ {
+  "pid": "P239",
+  "origin": "g6",
+  "seed": "16차#4",
+  "cand": 5,
+  "seed_name": "초록빛 구원",
+  "cand_name": "Silence"
+ },
+ {
+  "pid": "P102",
+  "origin": "fresh",
+  "seed": "9",
+  "cand": 4,
+  "seed_name": "폐하, 이 회귀 좀 멈춰 주세요",
+  "cand_name": "칼리굴라2"
+ },
+ {
+  "pid": "P219",
+  "origin": "fresh",
+  "seed": "10",
+  "cand": 9,
+  "seed_name": "언니, 이 백화점은 내 거야",
+  "cand_name": "L'Agence - The Hearts of Paris"
+ },
+ {
+  "pid": "P383",
+  "origin": "fresh",
+  "seed": "10",
+  "cand": 6,
+  "seed_name": "언니, 이 백화점은 내 거야",
+  "cand_name": "러브 플루트"
+ },
+ {
+  "pid": "P122",
+  "origin": "fresh",
+  "seed": "4",
+  "cand": 6,
+  "seed_name": "십파일방",
+  "cand_name": "Come to my party!"
+ },
+ {
+  "pid": "P185",
+  "origin": "g6",
+  "seed": "16차#5",
+  "cand": 9,
+  "seed_name": "망겜 속 수호자",
+  "cand_name": "Guardian Of December"
+ },
+ {
+  "pid": "P261",
+  "origin": "g6",
+  "seed": "15차#14",
+  "cand": 5,
+  "seed_name": "성진변",
+  "cand_name": "Paper2Galgame"
+ },
+ {
+  "pid": "P385",
+  "origin": "fresh",
+  "seed": "10",
+  "cand": 1,
+  "seed_name": "언니, 이 백화점은 내 거야",
+  "cand_name": "On the Q.T."
+ },
+ {
+  "pid": "P363",
+  "origin": "fresh",
+  "seed": "6",
+  "cand": 5,
+  "seed_name": "사채왕의 손자",
+  "cand_name": "Witch Story"
+ },
+ {
+  "pid": "P349",
+  "origin": "g6",
+  "seed": "16차#1",
+  "cand": 2,
+  "seed_name": "방출 후 천재 코치가 되었다",
+  "cand_name": "Idol Maker"
+ },
+ {
+  "pid": "P233",
+  "origin": "g6",
+  "seed": "16차#6",
+  "cand": 1,
+  "seed_name": "신들이 보우하사",
+  "cand_name": "SOUTH PARK: SNOW DAY!"
+ },
+ {
+  "pid": "P009",
+  "origin": "fresh",
+  "seed": "17",
+  "cand": 7,
+  "seed_name": "염왕화조",
+  "cand_name": "Somnus"
+ },
+ {
+  "pid": "P345",
+  "origin": "g6",
+  "seed": "16차#17",
+  "cand": 3,
+  "seed_name": "중간보스의 심복으로 살아남기",
+  "cand_name": "사랑을 노래하는 방법"
+ },
+ {
+  "pid": "P337",
+  "origin": "fresh",
+  "seed": "9",
+  "cand": 5,
+  "seed_name": "폐하, 이 회귀 좀 멈춰 주세요",
+  "cand_name": "荷莱Horae"
+ },
+ {
+  "pid": "P231",
+  "origin": "fresh",
+  "seed": "8",
+  "cand": 9,
+  "seed_name": "일방적 짝사랑",
+  "cand_name": "我和美女有个约会"
+ },
+ {
+  "pid": "P026",
+  "origin": "g6",
+  "seed": "15차#0",
+  "cand": 2,
+  "seed_name": "스킬빨로 아카데미 천재가 되었다",
+  "cand_name": "Observe"
+ },
+ {
+  "pid": "P277",
+  "origin": "fresh",
+  "seed": "18",
+  "cand": 8,
+  "seed_name": "너를 위해서라면 나는 악역이라도",
+  "cand_name": "Poor Samantha"
+ },
+ {
+  "pid": "P381",
+  "origin": "fresh",
+  "seed": "7",
+  "cand": 6,
+  "seed_name": "테미안",
+  "cand_name": "Terminal 81R"
+ },
+ {
+  "pid": "P232",
+  "origin": "g6",
+  "seed": "18차#13",
+  "cand": 0,
+  "seed_name": "악녀가 바뀌었다",
+  "cand_name": "스위트 클락워크"
+ },
+ {
+  "pid": "P189",
+  "origin": "fresh",
+  "seed": "18",
+  "cand": 3,
+  "seed_name": "너를 위해서라면 나는 악역이라도",
+  "cand_name": "가면을 벗는 방법 REMASTERED"
+ },
+ {
+  "pid": "P278",
+  "origin": "fresh",
+  "seed": "11",
+  "cand": 4,
+  "seed_name": "내가 유변이라니",
+  "cand_name": "It Came From Above Us"
+ },
+ {
+  "pid": "P291",
+  "origin": "fresh",
+  "seed": "1",
+  "cand": 5,
+  "seed_name": "글러먹은 빙의",
+  "cand_name": "Sinister City"
+ },
+ {
+  "pid": "P255",
+  "origin": "fresh",
+  "seed": "19",
+  "cand": 8,
+  "seed_name": "그 남자가 내 몸에 들어왔다",
+  "cand_name": "OutRUN"
+ },
+ {
+  "pid": "P286",
+  "origin": "fresh",
+  "seed": "14",
+  "cand": 1,
+  "seed_name": "무림여학원 - 시드노벨 Seed Novel",
+  "cand_name": "ZEROSEGI"
+ },
+ {
+  "pid": "P143",
+  "origin": "g6",
+  "seed": "16차#5",
+  "cand": 0,
+  "seed_name": "망겜 속 수호자",
+  "cand_name": "Ancraophobia"
+ },
+ {
+  "pid": "P387",
+  "origin": "fresh",
+  "seed": "17",
+  "cand": 2,
+  "seed_name": "염왕화조",
+  "cand_name": "妖闻录 STRANGE"
+ },
+ {
+  "pid": "P315",
+  "origin": "fresh",
+  "seed": "2",
+  "cand": 7,
+  "seed_name": "불상을 조각하는 성기사님!",
+  "cand_name": "Vampire Hunter: Nightrise"
+ },
+ {
+  "pid": "P043",
+  "origin": "fresh",
+  "seed": "18",
+  "cand": 0,
+  "seed_name": "너를 위해서라면 나는 악역이라도",
+  "cand_name": "Come to my party!"
+ },
+ {
+  "pid": "P250",
+  "origin": "fresh",
+  "seed": "4",
+  "cand": 4,
+  "seed_name": "십파일방",
+  "cand_name": "它说山雨欲来"
+ },
+ {
+  "pid": "P350",
+  "origin": "fresh",
+  "seed": "18",
+  "cand": 1,
+  "seed_name": "너를 위해서라면 나는 악역이라도",
+  "cand_name": "Uncharted Tides: Port Royal"
+ },
+ {
+  "pid": "P328",
+  "origin": "fresh",
+  "seed": "12",
+  "cand": 5,
+  "seed_name": "신화를 계승중입니다",
+  "cand_name": "Jeux bleu"
+ },
+ {
+  "pid": "P131",
+  "origin": "fresh",
+  "seed": "13",
+  "cand": 7,
+  "seed_name": "아빠의 축구",
+  "cand_name": "축구장의 대부"
+ },
+ {
+  "pid": "P101",
+  "origin": "fresh",
+  "seed": "12",
+  "cand": 0,
+  "seed_name": "신화를 계승중입니다",
+  "cand_name": "Pick My Heart Chapter 2"
+ },
+ {
+  "pid": "P108",
+  "origin": "g6",
+  "seed": "16차#11",
+  "cand": 5,
+  "seed_name": "세 개의 칼날",
+  "cand_name": "One of Us"
+ },
+ {
+  "pid": "P175",
+  "origin": "g6",
+  "seed": "18차#14",
+  "cand": 7,
+  "seed_name": "악신의 총애를 받는 성직자가 되었다",
+  "cand_name": "Kraken Academy!!"
+ },
+ {
+  "pid": "P351",
+  "origin": "g6",
+  "seed": "15차#0",
+  "cand": 9,
+  "seed_name": "스킬빨로 아카데미 천재가 되었다",
+  "cand_name": "Parker & Lane: Twisted Minds"
+ },
+ {
+  "pid": "P000",
+  "origin": "g6",
+  "seed": "16차#17",
+  "cand": 2,
+  "seed_name": "중간보스의 심복으로 살아남기",
+  "cand_name": "커피여우 김삼월"
+ },
+ {
+  "pid": "P292",
+  "origin": "fresh",
+  "seed": "13",
+  "cand": 6,
+  "seed_name": "아빠의 축구",
+  "cand_name": "Football Streaker Simulator"
+ },
+ {
+  "pid": "P307",
+  "origin": "g6",
+  "seed": "16차#4",
+  "cand": 7,
+  "seed_name": "초록빛 구원",
+  "cand_name": "SB Empire"
+ },
+ {
+  "pid": "P111",
+  "origin": "g6",
+  "seed": "16차#6",
+  "cand": 3,
+  "seed_name": "신들이 보우하사",
+  "cand_name": "Warehuman -ウェアヒューマン-"
+ },
+ {
+  "pid": "P210",
+  "origin": "g6",
+  "seed": "18차#1",
+  "cand": 7,
+  "seed_name": "리그너스 대륙전기",
+  "cand_name": "프런티어 헌터： 엘사의 운명의 바퀴"
+ },
+ {
+  "pid": "P368",
+  "origin": "fresh",
+  "seed": "1",
+  "cand": 8,
+  "seed_name": "글러먹은 빙의",
+  "cand_name": "Zero Escape: The Nonary Games"
+ },
+ {
+  "pid": "P050",
+  "origin": "g6",
+  "seed": "15차#7",
+  "cand": 4,
+  "seed_name": "창궁무적검",
+  "cand_name": "검신제로"
+ },
+ {
+  "pid": "P083",
+  "origin": "fresh",
+  "seed": "14",
+  "cand": 0,
+  "seed_name": "무림여학원 - 시드노벨 Seed Novel",
+  "cand_name": "命运之轮（序章）/Journey of Destiny(dependent origination)"
+ },
+ {
+  "pid": "P029",
+  "origin": "g6",
+  "seed": "16차#3",
+  "cand": 6,
+  "seed_name": "고구려가 농사도 잘함",
+  "cand_name": "목장의 숨결(Breath of the Pasture)"
+ },
+ {
+  "pid": "P303",
+  "origin": "g6",
+  "seed": "16차#6",
+  "cand": 2,
+  "seed_name": "신들이 보우하사",
+  "cand_name": "Saveggies"
+ },
+ {
+  "pid": "P257",
+  "origin": "fresh",
+  "seed": "8",
+  "cand": 1,
+  "seed_name": "일방적 짝사랑",
+  "cand_name": "あの夜からキミに恋してた for Steam"
+ },
+ {
+  "pid": "P195",
+  "origin": "g6",
+  "seed": "18차#1",
+  "cand": 1,
+  "seed_name": "리그너스 대륙전기",
+  "cand_name": "로도스도 전기 - 디드리트 인 원더 라비린스"
+ },
+ {
+  "pid": "P023",
+  "origin": "g6",
+  "seed": "16차#15",
+  "cand": 6,
+  "seed_name": "혁련세가 차남이 되었다",
+  "cand_name": "지구방위군 6"
+ },
+ {
+  "pid": "P099",
+  "origin": "fresh",
+  "seed": "10",
+  "cand": 5,
+  "seed_name": "언니, 이 백화점은 내 거야",
+  "cand_name": "백의성 애정 의존증"
+ },
+ {
+  "pid": "P248",
+  "origin": "g6",
+  "seed": "15차#1",
+  "cand": 4,
+  "seed_name": "네 옆자리를 지키고 싶어서",
+  "cand_name": "7'scarlet"
+ },
+ {
+  "pid": "P323",
+  "origin": "g6",
+  "seed": "16차#7",
+  "cand": 5,
+  "seed_name": "Dr. 신선한 : 미래를 보는 의사",
+  "cand_name": "응급실 시뮬레이터"
+ },
+ {
+  "pid": "P301",
+  "origin": "g6",
+  "seed": "16차#17",
+  "cand": 5,
+  "seed_name": "중간보스의 심복으로 살아남기",
+  "cand_name": "Rustown"
+ },
+ {
+  "pid": "P198",
+  "origin": "fresh",
+  "seed": "7",
+  "cand": 5,
+  "seed_name": "테미안",
+  "cand_name": "로드 오브 로드: 왕의 여명"
+ },
+ {
+  "pid": "P204",
+  "origin": "fresh",
+  "seed": "3",
+  "cand": 5,
+  "seed_name": "내 인공지능이 마왕이 되었다",
+  "cand_name": "The Birth of an Artificial Intelligence"
+ },
+ {
+  "pid": "P313",
+  "origin": "fresh",
+  "seed": "3",
+  "cand": 6,
+  "seed_name": "내 인공지능이 마왕이 되었다",
+  "cand_name": "Lost Lands: Dark Overlord Collector's Edition"
+ },
+ {
+  "pid": "P062",
+  "origin": "fresh",
+  "seed": "13",
+  "cand": 2,
+  "seed_name": "아빠의 축구",
+  "cand_name": "Football Star Life 23/24"
+ },
+ {
+  "pid": "P035",
+  "origin": "g6",
+  "seed": "16차#7",
+  "cand": 4,
+  "seed_name": "Dr. 신선한 : 미래를 보는 의사",
+  "cand_name": "スタットコール 救命恋愛24時"
+ },
+ {
+  "pid": "P178",
+  "origin": "fresh",
+  "seed": "2",
+  "cand": 5,
+  "seed_name": "불상을 조각하는 성기사님!",
+  "cand_name": "희생의 아파트"
+ },
+ {
+  "pid": "P221",
+  "origin": "g6",
+  "seed": "18차#19",
+  "cand": 7,
+  "seed_name": "시한부 성녀인데 흑막 대공을 길들여버렸다",
+  "cand_name": "Hope in the City"
+ },
+ {
+  "pid": "P128",
+  "origin": "g6",
+  "seed": "16차#3",
+  "cand": 4,
+  "seed_name": "고구려가 농사도 잘함",
+  "cand_name": "Tale of Specters: Joseon 1592"
+ },
+ {
+  "pid": "P084",
+  "origin": "g6",
+  "seed": "16차#7",
+  "cand": 3,
+  "seed_name": "Dr. 신선한 : 미래를 보는 의사",
+  "cand_name": "Heart's Medicine - Time to Heal"
+ },
+ {
+  "pid": "P212",
+  "origin": "g6",
+  "seed": "15차#0",
+  "cand": 8,
+  "seed_name": "스킬빨로 아카데미 천재가 되었다",
+  "cand_name": "DAY 10,909"
+ },
+ {
+  "pid": "P081",
+  "origin": "g6",
+  "seed": "15차#1",
+  "cand": 1,
+  "seed_name": "네 옆자리를 지키고 싶어서",
+  "cand_name": "러브 플루트"
+ },
+ {
+  "pid": "P068",
+  "origin": "fresh",
+  "seed": "1",
+  "cand": 4,
+  "seed_name": "글러먹은 빙의",
+  "cand_name": "봄이 오면 꽃이 피고"
+ },
+ {
+  "pid": "P384",
+  "origin": "g6",
+  "seed": "16차#2",
+  "cand": 4,
+  "seed_name": "N 툴 플레이어",
+  "cand_name": "动物职场"
+ },
+ {
+  "pid": "P154",
+  "origin": "g6",
+  "seed": "15차#16",
+  "cand": 9,
+  "seed_name": "팔남이라니, 그건 아니지!",
+  "cand_name": "Nihilumbra"
+ },
+ {
+  "pid": "P352",
+  "origin": "fresh",
+  "seed": "2",
+  "cand": 2,
+  "seed_name": "불상을 조각하는 성기사님!",
+  "cand_name": "Kung Fu Time Travel"
+ },
+ {
+  "pid": "P167",
+  "origin": "g6",
+  "seed": "16차#4",
+  "cand": 9,
+  "seed_name": "초록빛 구원",
+  "cand_name": "OPUS: Rocket of Whispers"
+ },
+ {
+  "pid": "P276",
+  "origin": "fresh",
+  "seed": "12",
+  "cand": 4,
+  "seed_name": "신화를 계승중입니다",
+  "cand_name": "Princess Maker 2 Refine"
+ },
+ {
+  "pid": "P263",
+  "origin": "g6",
+  "seed": "16차#15",
+  "cand": 7,
+  "seed_name": "혁련세가 차남이 되었다",
+  "cand_name": "동방홍마향: New Classic ～ the Embodiment of Scarlet Devil."
+ },
+ {
+  "pid": "P161",
+  "origin": "g6",
+  "seed": "15차#1",
+  "cand": 8,
+  "seed_name": "네 옆자리를 지키고 싶어서",
+  "cand_name": "Sarah, you are way too heavy"
+ },
+ {
+  "pid": "P151",
+  "origin": "fresh",
+  "seed": "7",
+  "cand": 2,
+  "seed_name": "테미안",
+  "cand_name": "NEVERLANDER: An Awfully Big Adventure"
+ },
+ {
+  "pid": "P199",
+  "origin": "g6",
+  "seed": "16차#6",
+  "cand": 7,
+  "seed_name": "신들이 보우하사",
+  "cand_name": "Boing Over It"
+ },
+ {
+  "pid": "P285",
+  "origin": "g6",
+  "seed": "16차#1",
+  "cand": 5,
+  "seed_name": "방출 후 천재 코치가 되었다",
+  "cand_name": "Cook, Serve, Delicious! 2!!"
+ },
+ {
+  "pid": "P176",
+  "origin": "g6",
+  "seed": "16차#3",
+  "cand": 3,
+  "seed_name": "고구려가 농사도 잘함",
+  "cand_name": "Tavern Ventures: Guilds & Tales"
+ },
+ {
+  "pid": "P046",
+  "origin": "g6",
+  "seed": "16차#6",
+  "cand": 4,
+  "seed_name": "신들이 보우하사",
+  "cand_name": "지구방위군 6"
+ },
+ {
+  "pid": "P322",
+  "origin": "g6",
+  "seed": "15차#7",
+  "cand": 5,
+  "seed_name": "창궁무적검",
+  "cand_name": "축귀"
+ },
+ {
+  "pid": "P160",
+  "origin": "fresh",
+  "seed": "15",
+  "cand": 3,
+  "seed_name": "차원이 다른 아이돌 1~9권",
+  "cand_name": "Next Star"
+ },
+ {
+  "pid": "P036",
+  "origin": "fresh",
+  "seed": "5",
+  "cand": 8,
+  "seed_name": "하트 스토커",
+  "cand_name": "My Little Prince - a jigsaw puzzle tale"
+ },
+ {
+  "pid": "P338",
+  "origin": "fresh",
+  "seed": "14",
+  "cand": 7,
+  "seed_name": "무림여학원 - 시드노벨 Seed Novel",
+  "cand_name": "さくらいろテトラプリズム"
+ },
+ {
+  "pid": "P079",
+  "origin": "fresh",
+  "seed": "0",
+  "cand": 2,
+  "seed_name": "재벌 매니지먼트",
+  "cand_name": "봄이 오면 꽃이 피고"
+ },
+ {
+  "pid": "P132",
+  "origin": "g6",
+  "seed": "16차#7",
+  "cand": 9,
+  "seed_name": "Dr. 신선한 : 미래를 보는 의사",
+  "cand_name": "No More Future"
+ },
+ {
+  "pid": "P110",
+  "origin": "g6",
+  "seed": "18차#19",
+  "cand": 5,
+  "seed_name": "시한부 성녀인데 흑막 대공을 길들여버렸다",
+  "cand_name": "Merica Tale"
+ },
+ {
+  "pid": "P356",
+  "origin": "fresh",
+  "seed": "8",
+  "cand": 3,
+  "seed_name": "일방적 짝사랑",
+  "cand_name": "가면을 벗는 방법 REMASTERED"
+ },
+ {
+  "pid": "P150",
+  "origin": "g6",
+  "seed": "15차#7",
+  "cand": 6,
+  "seed_name": "창궁무적검",
+  "cand_name": "만세검총"
+ },
+ {
+  "pid": "P289",
+  "origin": "fresh",
+  "seed": "17",
+  "cand": 6,
+  "seed_name": "염왕화조",
+  "cand_name": "Howl"
+ },
+ {
+  "pid": "P218",
+  "origin": "g6",
+  "seed": "15차#7",
+  "cand": 3,
+  "seed_name": "창궁무적검",
+  "cand_name": "绝世好武功 The Matchless KungFu"
+ },
+ {
+  "pid": "P353",
+  "origin": "g6",
+  "seed": "18차#14",
+  "cand": 5,
+  "seed_name": "악신의 총애를 받는 성직자가 되었다",
+  "cand_name": "Inquisitor’s Heart and Soul"
+ },
+ {
+  "pid": "P047",
+  "origin": "fresh",
+  "seed": "7",
+  "cand": 8,
+  "seed_name": "테미안",
+  "cand_name": "Calm Down, Will"
+ },
+ {
+  "pid": "P269",
+  "origin": "fresh",
+  "seed": "11",
+  "cand": 9,
+  "seed_name": "내가 유변이라니",
+  "cand_name": "Animal Mystery Crew"
+ },
+ {
+  "pid": "P093",
+  "origin": "fresh",
+  "seed": "16",
+  "cand": 6,
+  "seed_name": "생사신",
+  "cand_name": "Loving Life"
+ },
+ {
+  "pid": "P082",
+  "origin": "fresh",
+  "seed": "1",
+  "cand": 0,
+  "seed_name": "글러먹은 빙의",
+  "cand_name": "원혼: 복수의 영혼"
+ },
+ {
+  "pid": "P016",
+  "origin": "g6",
+  "seed": "16차#15",
+  "cand": 2,
+  "seed_name": "혁련세가 차남이 되었다",
+  "cand_name": "ECHO Re:Kill"
+ },
+ {
+  "pid": "P121",
+  "origin": "fresh",
+  "seed": "11",
+  "cand": 1,
+  "seed_name": "내가 유변이라니",
+  "cand_name": "Call of Senpai: Waifu Warfare 2"
+ },
+ {
+  "pid": "P123",
+  "origin": "fresh",
+  "seed": "19",
+  "cand": 5,
+  "seed_name": "그 남자가 내 몸에 들어왔다",
+  "cand_name": "Grinnel"
+ },
+ {
+  "pid": "P287",
+  "origin": "g6",
+  "seed": "18차#14",
+  "cand": 0,
+  "seed_name": "악신의 총애를 받는 성직자가 되었다",
+  "cand_name": "The Inquisitor"
+ },
+ {
+  "pid": "P114",
+  "origin": "fresh",
+  "seed": "14",
+  "cand": 3,
+  "seed_name": "무림여학원 - 시드노벨 Seed Novel",
+  "cand_name": "검협:풍진연곡"
+ },
+ {
+  "pid": "P033",
+  "origin": "fresh",
+  "seed": "14",
+  "cand": 8,
+  "seed_name": "무림여학원 - 시드노벨 Seed Novel",
+  "cand_name": "극 서원 연의"
+ },
+ {
+  "pid": "P300",
+  "origin": "g6",
+  "seed": "15차#16",
+  "cand": 0,
+  "seed_name": "팔남이라니, 그건 아니지!",
+  "cand_name": "Come to my party!"
+ },
+ {
+  "pid": "P230",
+  "origin": "g6",
+  "seed": "16차#17",
+  "cand": 4,
+  "seed_name": "중간보스의 심복으로 살아남기",
+  "cand_name": "Shadow of the Moonlight"
+ },
+ {
+  "pid": "P126",
+  "origin": "g6",
+  "seed": "16차#3",
+  "cand": 8,
+  "seed_name": "고구려가 농사도 잘함",
+  "cand_name": "Unsung Heroes: The Golden Mask"
+ },
+ {
+  "pid": "P236",
+  "origin": "fresh",
+  "seed": "19",
+  "cand": 4,
+  "seed_name": "그 남자가 내 몸에 들어왔다",
+  "cand_name": "Lost Lands: Dark Overlord Collector's Edition"
+ },
+ {
+  "pid": "P008",
+  "origin": "g6",
+  "seed": "15차#7",
+  "cand": 0,
+  "seed_name": "창궁무적검",
+  "cand_name": "해동비사 (海東秘史)"
+ },
+ {
+  "pid": "P371",
+  "origin": "fresh",
+  "seed": "7",
+  "cand": 9,
+  "seed_name": "테미안",
+  "cand_name": "Tandem: A Tale of Shadows"
+ },
+ {
+  "pid": "P259",
+  "origin": "g6",
+  "seed": "16차#2",
+  "cand": 8,
+  "seed_name": "N 툴 플레이어",
+  "cand_name": "Noyan: Club Chairman"
+ },
+ {
+  "pid": "P014",
+  "origin": "fresh",
+  "seed": "4",
+  "cand": 2,
+  "seed_name": "십파일방",
+  "cand_name": "LOOM™"
+ },
+ {
+  "pid": "P251",
+  "origin": "fresh",
+  "seed": "14",
+  "cand": 5,
+  "seed_name": "무림여학원 - 시드노벨 Seed Novel",
+  "cand_name": "7'scarlet"
+ },
+ {
+  "pid": "P302",
+  "origin": "fresh",
+  "seed": "4",
+  "cand": 0,
+  "seed_name": "십파일방",
+  "cand_name": "Chill with You : Lo-Fi Story"
+ },
+ {
+  "pid": "P297",
+  "origin": "g6",
+  "seed": "15차#7",
+  "cand": 7,
+  "seed_name": "창궁무적검",
+  "cand_name": "No Mortal Space"
+ },
+ {
+  "pid": "P288",
+  "origin": "g6",
+  "seed": "18차#15",
+  "cand": 6,
+  "seed_name": "황제의 길라잡이",
+  "cand_name": "Lost Lands: Dark Overlord Collector's Edition"
+ },
+ {
+  "pid": "P229",
+  "origin": "fresh",
+  "seed": "5",
+  "cand": 7,
+  "seed_name": "하트 스토커",
+  "cand_name": "Spirit Whisperer Conversation With Akari"
+ },
+ {
+  "pid": "P030",
+  "origin": "fresh",
+  "seed": "3",
+  "cand": 7,
+  "seed_name": "내 인공지능이 마왕이 되었다",
+  "cand_name": "AI Confidential"
+ },
+ {
+  "pid": "P246",
+  "origin": "fresh",
+  "seed": "1",
+  "cand": 2,
+  "seed_name": "글러먹은 빙의",
+  "cand_name": "어서오세요 신성재판에"
+ },
+ {
+  "pid": "P279",
+  "origin": "fresh",
+  "seed": "15",
+  "cand": 2,
+  "seed_name": "차원이 다른 아이돌 1~9권",
+  "cand_name": "칼리굴라2"
+ },
+ {
+  "pid": "P130",
+  "origin": "g6",
+  "seed": "16차#3",
+  "cand": 9,
+  "seed_name": "고구려가 농사도 잘함",
+  "cand_name": "용의 원정"
+ },
+ {
+  "pid": "P348",
+  "origin": "fresh",
+  "seed": "12",
+  "cand": 9,
+  "seed_name": "신화를 계승중입니다",
+  "cand_name": "ALL ADRIFT"
+ },
+ {
+  "pid": "P273",
+  "origin": "g6",
+  "seed": "15차#0",
+  "cand": 5,
+  "seed_name": "스킬빨로 아카데미 천재가 되었다",
+  "cand_name": "Pixel Cafe"
+ },
+ {
+  "pid": "P125",
+  "origin": "g6",
+  "seed": "16차#1",
+  "cand": 3,
+  "seed_name": "방출 후 천재 코치가 되었다",
+  "cand_name": "극 서원 연의"
+ },
+ {
+  "pid": "P124",
+  "origin": "g6",
+  "seed": "16차#17",
+  "cand": 1,
+  "seed_name": "중간보스의 심복으로 살아남기",
+  "cand_name": "Blood of Inquisition"
+ },
+ {
+  "pid": "P172",
+  "origin": "fresh",
+  "seed": "18",
+  "cand": 7,
+  "seed_name": "너를 위해서라면 나는 악역이라도",
+  "cand_name": "Lilith-M"
+ },
+ {
+  "pid": "P011",
+  "origin": "g6",
+  "seed": "16차#2",
+  "cand": 7,
+  "seed_name": "N 툴 플레이어",
+  "cand_name": "NUTMEG! A Nostalgic Deckbuilding Football Manager"
+ },
+ {
+  "pid": "P314",
+  "origin": "fresh",
+  "seed": "5",
+  "cand": 5,
+  "seed_name": "하트 스토커",
+  "cand_name": "태엽시계의 왕좌 - 리마스터"
+ },
+ {
+  "pid": "P177",
+  "origin": "fresh",
+  "seed": "4",
+  "cand": 5,
+  "seed_name": "십파일방",
+  "cand_name": "뱀과 새"
+ },
+ {
+  "pid": "P205",
+  "origin": "fresh",
+  "seed": "12",
+  "cand": 1,
+  "seed_name": "신화를 계승중입니다",
+  "cand_name": "봄이 오면 꽃이 피고"
+ },
+ {
+  "pid": "P238",
+  "origin": "fresh",
+  "seed": "8",
+  "cand": 6,
+  "seed_name": "일방적 짝사랑",
+  "cand_name": "Velvet Bite: Softly, with Teeth"
+ },
+ {
+  "pid": "P311",
+  "origin": "fresh",
+  "seed": "6",
+  "cand": 8,
+  "seed_name": "사채왕의 손자",
+  "cand_name": "Builder Bros"
+ },
+ {
+  "pid": "P051",
+  "origin": "fresh",
+  "seed": "5",
+  "cand": 6,
+  "seed_name": "하트 스토커",
+  "cand_name": "Come to my party!"
+ },
+ {
+  "pid": "P293",
+  "origin": "fresh",
+  "seed": "10",
+  "cand": 3,
+  "seed_name": "언니, 이 백화점은 내 거야",
+  "cand_name": "Unmoor"
+ },
+ {
+  "pid": "P187",
+  "origin": "g6",
+  "seed": "18차#19",
+  "cand": 9,
+  "seed_name": "시한부 성녀인데 흑막 대공을 길들여버렸다",
+  "cand_name": "黑白灰 Woolhampton Chronicles"
+ },
+ {
+  "pid": "P373",
+  "origin": "fresh",
+  "seed": "2",
+  "cand": 6,
+  "seed_name": "불상을 조각하는 성기사님!",
+  "cand_name": "Revive"
+ },
+ {
+  "pid": "P158",
+  "origin": "g6",
+  "seed": "16차#2",
+  "cand": 6,
+  "seed_name": "N 툴 플레이어",
+  "cand_name": "UltFoot: Football Manager"
+ },
+ {
+  "pid": "P308",
+  "origin": "g6",
+  "seed": "16차#17",
+  "cand": 9,
+  "seed_name": "중간보스의 심복으로 살아남기",
+  "cand_name": "Волшебная свадьба гусляра Ивана"
+ },
+ {
+  "pid": "P118",
+  "origin": "fresh",
+  "seed": "6",
+  "cand": 2,
+  "seed_name": "사채왕의 손자",
+  "cand_name": "Kung Fu Time Travel"
+ },
+ {
+  "pid": "P163",
+  "origin": "fresh",
+  "seed": "8",
+  "cand": 5,
+  "seed_name": "일방적 짝사랑",
+  "cand_name": "拜托！请你先告白"
+ },
+ {
+  "pid": "P362",
+  "origin": "g6",
+  "seed": "16차#11",
+  "cand": 3,
+  "seed_name": "세 개의 칼날",
+  "cand_name": "더 에니그마 케이스"
+ },
+ {
+  "pid": "P202",
+  "origin": "g6",
+  "seed": "15차#16",
+  "cand": 3,
+  "seed_name": "팔남이라니, 그건 아니지!",
+  "cand_name": "별빛 아래"
+ },
+ {
+  "pid": "P272",
+  "origin": "fresh",
+  "seed": "3",
+  "cand": 4,
+  "seed_name": "내 인공지능이 마왕이 되었다",
+  "cand_name": "Agence"
+ },
+ {
+  "pid": "P271",
+  "origin": "g6",
+  "seed": "18차#14",
+  "cand": 2,
+  "seed_name": "악신의 총애를 받는 성직자가 되었다",
+  "cand_name": "Deadly Nightmare Unwanted Heritage"
+ },
+ {
+  "pid": "P197",
+  "origin": "fresh",
+  "seed": "6",
+  "cand": 3,
+  "seed_name": "사채왕의 손자",
+  "cand_name": "The Sickle Upon Sekigahara"
+ },
+ {
+  "pid": "P244",
+  "origin": "fresh",
+  "seed": "14",
+  "cand": 6,
+  "seed_name": "무림여학원 - 시드노벨 Seed Novel",
+  "cand_name": "이하나시의 마녀"
+ },
+ {
+  "pid": "P100",
+  "origin": "g6",
+  "seed": "15차#14",
+  "cand": 8,
+  "seed_name": "성진변",
+  "cand_name": "独闯江湖 lone ranger"
+ },
+ {
+  "pid": "P395",
+  "origin": "fresh",
+  "seed": "14",
+  "cand": 2,
+  "seed_name": "무림여학원 - 시드노벨 Seed Novel",
+  "cand_name": "봄의 소리는 마치 너와 닮아서"
+ },
+ {
+  "pid": "P074",
+  "origin": "fresh",
+  "seed": "16",
+  "cand": 2,
+  "seed_name": "생사신",
+  "cand_name": "Suhoshin"
+ },
+ {
+  "pid": "P156",
+  "origin": "fresh",
+  "seed": "6",
+  "cand": 6,
+  "seed_name": "사채왕의 손자",
+  "cand_name": "Warehuman -ウェアヒューマン-"
+ },
+ {
+  "pid": "P213",
+  "origin": "fresh",
+  "seed": "15",
+  "cand": 1,
+  "seed_name": "차원이 다른 아이돌 1~9권",
+  "cand_name": "Cats of the Tang Dynasty"
+ },
+ {
+  "pid": "P135",
+  "origin": "fresh",
+  "seed": "13",
+  "cand": 8,
+  "seed_name": "아빠의 축구",
+  "cand_name": "EA SPORTS™ College Football 27"
+ },
+ {
+  "pid": "P357",
+  "origin": "g6",
+  "seed": "16차#11",
+  "cand": 2,
+  "seed_name": "세 개의 칼날",
+  "cand_name": "청구야담: 팔도견문록"
+ },
+ {
+  "pid": "P053",
+  "origin": "g6",
+  "seed": "18차#1",
+  "cand": 3,
+  "seed_name": "리그너스 대륙전기",
+  "cand_name": "Tavern Ventures: Guilds & Tales"
+ },
+ {
+  "pid": "P347",
+  "origin": "g6",
+  "seed": "15차#1",
+  "cand": 0,
+  "seed_name": "네 옆자리를 지키고 싶어서",
+  "cand_name": "프렌치커넥션"
+ },
+ {
+  "pid": "P071",
+  "origin": "g6",
+  "seed": "15차#0",
+  "cand": 4,
+  "seed_name": "스킬빨로 아카데미 천재가 되었다",
+  "cand_name": "봄이 오면 꽃이 피고"
+ },
+ {
+  "pid": "P264",
+  "origin": "fresh",
+  "seed": "1",
+  "cand": 9,
+  "seed_name": "글러먹은 빙의",
+  "cand_name": "Aurora Adventure: A Sunglade Planet Tale"
+ },
+ {
+  "pid": "P364",
+  "origin": "g6",
+  "seed": "15차#7",
+  "cand": 2,
+  "seed_name": "창궁무적검",
+  "cand_name": "义闻录：轮回"
+ },
+ {
+  "pid": "P169",
+  "origin": "fresh",
+  "seed": "0",
+  "cand": 3,
+  "seed_name": "재벌 매니지먼트",
+  "cand_name": "Elite MMA Manager"
+ },
+ {
+  "pid": "P211",
+  "origin": "fresh",
+  "seed": "17",
+  "cand": 8,
+  "seed_name": "염왕화조",
+  "cand_name": "Unearthing Mars 2: The Ancient War"
+ },
+ {
+  "pid": "P309",
+  "origin": "g6",
+  "seed": "16차#2",
+  "cand": 5,
+  "seed_name": "N 툴 플레이어",
+  "cand_name": "NARUTO -나루토- 질풍전 나루티밋 스톰 4"
+ },
+ {
+  "pid": "P048",
+  "origin": "g6",
+  "seed": "18차#19",
+  "cand": 8,
+  "seed_name": "시한부 성녀인데 흑막 대공을 길들여버렸다",
+  "cand_name": "데치카: 인연의 섬"
+ },
+ {
+  "pid": "P294",
+  "origin": "fresh",
+  "seed": "9",
+  "cand": 3,
+  "seed_name": "폐하, 이 회귀 좀 멈춰 주세요",
+  "cand_name": "The Meridian Under the Heaven: Valhalla"
+ }
+]
