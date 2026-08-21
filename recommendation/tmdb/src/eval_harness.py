@@ -46,6 +46,7 @@ def variant_recs(variant: dict, k: int, profiles: pd.DataFrame, components=None)
             postprocess_on=variant.get("postprocess", True),
             postprocess_kwargs=dict(
                 franchise_max=variant.get("franchise_max", 1),
+                seed_franchise_max=variant.get("seed_franchise_max", 0),
                 interleave=variant.get("interleave", True),
                 tv_max_ratio=variant.get("tv_max_ratio")))
     return out, comp

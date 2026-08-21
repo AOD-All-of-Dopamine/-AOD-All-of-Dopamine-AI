@@ -60,10 +60,18 @@ def franchise_prefixes(dataset: pd.DataFrame, min_count: int = 3) -> set[str]:
     if cache is not None: return cache
     from collections import defaultdict
     seen = defaultdict(set)
+    titles = set()
     for n in dataset["name"]:
         p2 = _prefix2(n)
         if p2: seen[p2].add(str(n))
-    out = {k for k, v in seen.items() if len(v) >= min_count}
+        toks = [_PUNCT.sub("", t) for t in _MARKS.sub("", str(n)).strip().split()]
+        toks = [t for t in toks if t]
+        if len(toks) == 2: titles.add(" ".join(toks).lower())
+    # 근거 둘 중 하나면 시리즈로 인정한다:
+    #   (1) 같은 앞 2어절이 서로 다른 제목 `min_count` 건 이상에서 반복된다
+    #   (2) **그 2어절 자체가 코퍼스의 작품 제목이다** — `다크 나이트` 가 존재하는데
+    #       `다크 나이트 라이즈` 가 있으면 속편이다. (1)만으로는 라이즈 하나뿐이라 못 잡는다.
+    out = {k for k, v in seen.items() if len(v) >= min_count} | (set(seen) & titles)
     franchise_prefixes._cache = out
     return out
 
@@ -75,11 +83,19 @@ def franchise_key(name: str, prefixes: set[str] | None = None) -> str:
     return base_title(name)
 
 def cap_franchise(df: pd.DataFrame, dataset: pd.DataFrame, franchise_max: int = 1,
-                  seed_rows=None) -> pd.DataFrame:
+                  seed_rows=None, seed_franchise_max: int = 0) -> pd.DataFrame:
     """같은 기본 제목을 `franchise_max` 개까지만 남긴다.
 
-    **시드가 속한 시리즈는 더 강하게 막는다** — 사용자가 이미 아는 시리즈다.
-    다만 완전히 막지는 않는다(`극장판 도라에몽`을 좋아하면 다른 편도 유효한 추천일 수 있다).
+    **시드가 속한 시리즈는 기본적으로 통째로 뺀다**(`seed_franchise_max=0`).
+
+    행 단위 제외만으로는 부족하다 — 채점 중 실측된 사고 2건:
+        시드 `아기가 생겼어요`(movie)  →  추천 `아기가 생겼어요`(tv)      같은 작품, 다른 매체
+        시드 `라이온 킹`(1994 애니)    →  추천 `라이온 킹`(2019 실사)     같은 작품, 다른 버전
+    TMDB 는 리메이크·실사판·TV판을 **같은 이름의 다른 행**으로 담는다. 사용자가 이미
+    본 작품을 다시 추천하는 것은 추천이 아니다.
+
+    `seed_franchise_max` 를 올리면 시드 시리즈의 다른 편도 허용된다
+    (`토이 스토리` → `토이 스토리 3`). **어느 쪽이 나은지는 측정 대상이다.**
     """
     if df.empty: return df
     pref = franchise_prefixes(dataset)
@@ -90,7 +106,7 @@ def cap_franchise(df: pd.DataFrame, dataset: pd.DataFrame, franchise_max: int = 
     keep, cnt = [], {}
     for t in df.itertuples(index=False):
         b = t.fbase
-        lim = franchise_max if b not in seed_bases else max(1, franchise_max)
+        lim = franchise_max if b not in seed_bases else seed_franchise_max
         if cnt.get(b, 0) < lim:
             cnt[b] = cnt.get(b, 0) + 1
             keep.append(True)
@@ -138,8 +154,10 @@ def cap_media(df: pd.DataFrame, dataset: pd.DataFrame, tv_max_ratio: float | Non
 
 def postprocess(ranked: pd.DataFrame, dataset: pd.DataFrame, top_n: int = 50,
                 franchise_max: int = 1, interleave: bool = True,
-                tv_max_ratio: float | None = None, seed_rows=None) -> pd.DataFrame:
-    df = cap_franchise(ranked, dataset, franchise_max=franchise_max, seed_rows=seed_rows)
+                tv_max_ratio: float | None = None, seed_rows=None,
+                seed_franchise_max: int = 0) -> pd.DataFrame:
+    df = cap_franchise(ranked, dataset, franchise_max=franchise_max, seed_rows=seed_rows,
+                       seed_franchise_max=seed_franchise_max)
     df = cap_media(df, dataset, tv_max_ratio)
     if interleave: df = interleave_by_seed(df, top_n=top_n)
     else: df = df.head(top_n).reset_index(drop=True)
