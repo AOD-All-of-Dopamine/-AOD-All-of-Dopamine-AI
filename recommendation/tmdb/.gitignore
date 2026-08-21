@@ -1,0 +1,13 @@
+.venv/
+__pycache__/
+*.pyc
+
+# 실제 키가 들어간다 — .env.example 만 커밋한다
+.env
+
+# 크롤 원본과 임베딩 산출물은 재수집/재생성 가능하다.
+# Steam 쪽에서 120MB 파일이 GitHub 하드 리밋(100MB)을 넘겨
+# 브랜치 전체 푸시가 거부된 적이 있다. **패턴으로 미리 막는다.**
+data/*.jsonl
+data/*.json
+artifacts/
