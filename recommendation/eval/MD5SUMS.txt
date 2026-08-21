@@ -153,6 +153,10 @@ d2c68784e01a64771d68e7acd4cfa54d  h62_grades.py
 5aa9d353360ad6225cc8e150f7cebd0e  h62_retrieve.py
 4de8ff5798f6720b06600a1c72d8040b  h62_score.py
 772e614bb0704a187fbcbf7dd168b12f  h62_verdict.md
+95ddef27af017c84151e059271df547d  h63_j4.py
+ab4aa8b98fa3e9cf36a78418fa5d6ce6  h63_preregister.md
+6a2c4958ba390fc0808414fd86ac4cfc  h63_rerank.py
+cf7cf4d292be39df49a5b41a1847a50c  h63_verdict.md
 93647ad0286b758948716ea3b4737930  README.md
 ba5f2862463f90c1d4d16e55ed9e0770  used_seeds_h50.json
 10f3a7f5e67799fff6e78da6dd2bf342  used_seeds.json
