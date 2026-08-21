@@ -11,4 +11,14 @@ __pycache__/
 data/*.jsonl
 data/*.json
 artifacts/
+# 단 **평가 자산은 증거다** — 프로필·등급 은행·채점 키는 커밋한다.
+# (임베딩 233MB·데이터셋은 위 규칙대로 계속 무시된다.)
+!artifacts/
+!artifacts/p1/
+!artifacts/p1/profiles.parquet
+!artifacts/p1/grades.py
+!artifacts/p1/grades_*.py
+!artifacts/p1/*_key.json
 artifacts/p1/chunks/
+artifacts/tmdb_v1/
+artifacts/*.npy
