@@ -47,6 +47,42 @@ VR_ONLY_CATEGORY = "VR 전용"
 TREND_FEATURES = PROJECT_ROOT / "artifacts" / "trend_v1" / "trend_features.parquet"
 
 _SERIES_STRIP = re.compile(r"[®™©]")
+_HANGUL_DIGIT = re.compile(r"(?<=[가-힣])(?=[0-9])")
+
+# 한↔영 시리즈 별칭 — 코퍼스가 같은 시리즈를 언어를 섞어 담는다
+# (시드 'Sid Meier's Civilization® VI' 의 차기작이 '시드 마이어의 문명 VII' 로 들어옴).
+# series_key 는 이름 기반이라 언어가 다르면 못 잡는다. 시드로 쓰이는 프랜차이즈 중
+# 코퍼스에 한글 표제가 실재하는 것을 등록한다. 총망라가 아니라 관측 기반이다.
+SERIES_ALIASES: list[set[str]] = [
+    {"sid meier", "시드 마이어의", "civilization"},
+    {"god of", "갓 오브"},
+    {"marvel s", "마블 스파이더맨", "spider man"},
+    {"monster hunter", "몬스터 헌터"},
+    {"final fantasy", "파이널 판타지"},
+    {"페르소나", "persona"},
+    {"dark souls", "다크 소울"},
+    {"elden ring", "엘든 링"},
+    {"assassin s", "어쌔신 크리드"},
+    {"tomb raider", "툼 레이더"},
+    {"the witcher", "더 위쳐"},
+    {"street fighter", "스트리트 파이터"},
+    {"forza horizon", "포르자 호라이즌"},
+    {"옥토패스 트래블러", "octopath traveler"},
+    {"이스", "ys"},
+    {"영웅전설", "the legend"},
+]
+_ALIAS_OF: dict[str, frozenset] = {}
+for _grp in SERIES_ALIASES:
+    fz = frozenset(_grp)
+    for _k in _grp:
+        _ALIAS_OF[_k] = fz
+
+
+def same_series(key_a: str, key_b: str) -> bool:
+    """언어 별칭까지 고려한 시리즈 동일성."""
+    if key_a == key_b:
+        return True
+    return key_b in _ALIAS_OF.get(key_a, ())
 _SERIES_NOISE = re.compile(
     r"\b(\d+|i{1,3}|iv|v|vi|vii|viii|ix|x|remastered|enhanced|definitive|special|"
     r"complete|collection|edition|goty|hd|vr|classic|source|deluxe|ultimate)\b"
@@ -60,6 +96,7 @@ def series_key(name: str) -> str:
     'MadOut' 과 'MadOut Ice Storm' → 'madout ice'  (완벽하지 않다 — 앞 2단어 근사)
     """
     s = _SERIES_STRIP.sub("", str(name)).lower()
+    s = _HANGUL_DIGIT.sub(" ", s)          # '페르소나3' → '페르소나 3' — 숫자는 노이즈로 떨어진다
     s = re.sub(r"[^a-z0-9가-힣 ]", " ", s)
     s = _SERIES_NOISE.sub(" ", s)
     toks = s.split()
@@ -576,6 +613,78 @@ def consensus_overlap_boost(df: pd.DataFrame, dataset: pd.DataFrame, wanted: set
     return out.sort_values(score_col, ascending=False).reset_index(drop=True)
 
 
+_ITER_MARK = re.compile(
+    r"(\b\d+\b|\b[ivx]{1,4}\b|리마스터|리마스터드|remaster(?:ed)?|definitive|"
+    r"complete|goty|anniversary|enhanced|redux|reawakened|\bhd\b|디피니티브|컴플리트)\s*$")
+
+
+def _is_iteration(name: str) -> bool:
+    """이름이 넘버링/에디션 꼴로 끝나는가 — '문명 VII' · '리마스터' · 'GOTY'."""
+    low = _SERIES_STRIP.sub("", str(name)).lower()
+    low = _HANGUL_DIGIT.sub(" ", low)
+    low = re.sub(r"[^a-z0-9가-힣 ]", " ", low).strip()
+    return bool(_ITER_MARK.search(low))
+
+
+def drop_seed_iterations(df: pd.DataFrame, dataset: pd.DataFrame, seed_appids) -> pd.DataFrame:
+    """시드의 넘버링/에디션 반복작을 제거한다 — '문명 VI 를 좋아함 → 문명 VII 추천' 방지.
+
+    사용자 피드백(2026-08-22): 시드의 차기 넘버링·리마스터 재추천은 발견이 아니라 중복이다.
+    사용자는 자기가 가진 게임의 차기작 존재를 이미 안다. 컷 전에 돌려 빈칸이 뒤에서 채워지게 한다.
+    """
+    if df.empty or not seed_appids:
+        return df
+    meta = dataset.set_index("steam_appid") if "steam_appid" in dataset.columns else dataset
+    names = meta.get("name")
+    if names is None:
+        return df
+    seed_keys = {series_key(str(names.get(a, ""))) for a in seed_appids}
+    seed_keys.discard("")
+    def bad(a):
+        nm = str(names.get(a, "")); k = series_key(nm)
+        return any(same_series(sk, k) for sk in seed_keys) and _is_iteration(nm)
+    return df[~df["steam_appid"].map(bad)].reset_index(drop=True)
+
+
+def promote_seed_companions(df: pd.DataFrame, dataset: pd.DataFrame,
+                            seed_appids, cap: int = 2) -> pd.DataFrame:
+    """시드와 같은 시리즈인 항목을 목록 맨 앞으로 올린다 (상한 `cap`).
+
+    2026-08-22 사용자 피드백: `coh_survival_craft`(좀보이드·돈스타브·포레스트)의 1위가
+    State of Decay 2 인 것이 "이해가 안 된다" — Don't Starve Together 같은 자명한 픽이
+    앞에 와야 한다. 임베딩 유사도는 이것을 못 잡는다(max 재정렬 실측 P@10 −0.0577).
+    시리즈 근사(`series_key`)가 잡는다.
+
+    실측(52프로필 · 은행 5,594쌍): 동반작 64개 중 58개가 3등급(적합률 0.953) —
+    "시드의 직계 후속·동반작이 가장 안전한 픽"이라는 직관이 데이터로 확인됐다.
+    상한 2 에서 P@10 은 정확히 중립(+0.0000)이다. 즉 이것은 점수를 사서 납득성을
+    파는 거래가 아니라, 같은 적합 집합 안에서 순서만 사람 눈에 맞게 바꾸는 것이다.
+
+    D-34("자명한 후속작이 점수를 부풀린다")와의 긴장을 적어 둔다 — 평가 관점에서는
+    자명한 픽이 싱겁지만, 제품 관점에서는 사용자가 그것을 맨 앞에서 기대한다.
+    사용자가 명시적으로 후자를 골랐다.
+
+    한계: `series_key` 는 앞 2단어 근사라 The Forest ↔ Sons of the Forest 는 못 잡는다.
+    """
+    if df.empty or not seed_appids:
+        return df
+    meta = dataset.set_index("steam_appid") if "steam_appid" in dataset.columns else dataset
+    names = meta["name"] if "name" in meta.columns else None
+    if names is None:
+        return df
+    seed_keys = {series_key(str(names.get(a, ""))) for a in seed_appids}
+    seed_keys.discard("")
+    comp_idx = []
+    for i, a in zip(df.index, df["steam_appid"]):
+        nm = str(names.get(a, ""))
+        k = series_key(nm)
+        if any(same_series(sk, k) for sk in seed_keys) and not _is_iteration(nm):
+            comp_idx.append(i)
+    comp_idx = comp_idx[: (cap or 0)]
+    rest = df.index[~df.index.isin(set(comp_idx))]
+    return pd.concat([df.loc[comp_idx], df.loc[rest]]).reset_index(drop=True)
+
+
 def postprocess(
     ranked: pd.DataFrame,
     dataset: pd.DataFrame,
@@ -594,6 +703,8 @@ def postprocess(
     drop_dead_mp: bool = False,
     seen_appids=None,
     series_session_max: int | None = None,
+    seed_companions_first: int = 2,
+    seed_appids=None,
 ) -> pd.DataFrame:
     """스펙 §5.4 순서: hard filter → 시리즈/퍼블리셔 상한 → 다양성 → Top-N.
 
@@ -694,6 +805,8 @@ def postprocess(
     if hard_filters:
         df = apply_hard_filters(df, dataset, require_known_reviews=require_known_reviews,
                                 min_reviews=min_reviews, real_reviews=real_reviews)
+    if seed_appids is not None and seed_companions_first is not None:
+        df = drop_seed_iterations(df, dataset, seed_appids)
     if series_max:
         prior = series_counts(seen_appids, dataset) if (seen_appids and series_session_max) else None
         df = cap_series(df, dataset, series_max,
@@ -704,6 +817,9 @@ def postprocess(
         df = interleave_by_seed(df, top_n, bucket_offset=bucket_offset)
     else:
         df = df.head(top_n).reset_index(drop=True)
+    if seed_appids is not None and seed_companions_first:
+        # 동반작 승격은 최종 컷 뒤의 재정렬이라 목록 구성은 그대로다 (P@k 중립, 실측 +0.0000).
+        df = promote_seed_companions(df, dataset, seed_appids, cap=seed_companions_first)
         df["rank"] = range(1, len(df) + 1)
     return df
 

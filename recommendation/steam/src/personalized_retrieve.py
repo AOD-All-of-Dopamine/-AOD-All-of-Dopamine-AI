@@ -95,9 +95,10 @@ def run_multi(
         if postprocess:
             from src.postprocess import postprocess as apply_postprocess
 
+            pk = dict(postprocess_kwargs or {})
+            pk.setdefault("seed_appids", list(liked_appids))
             ranked = apply_postprocess(
-                ranked, ranker.dataset.reset_index(), top_n=top_n,
-                **(postprocess_kwargs or {}),
+                ranked, ranker.dataset.reset_index(), top_n=top_n, **pk,
             )
         results[strategy] = ranked
         if output_dir:
