@@ -80,7 +80,9 @@ class Engine:
         df["rank"] = range(1, len(df) + 1)
 
         if postprocess_on:
-            return pp(df.head(k * 8), self.ds, top_n=k).head(k).reset_index(drop=True)
+            from src.postprocess import drop_seed_series
+            out = drop_seed_series(df.head(k * 8), self.ds, seed_ids)
+            return pp(out, self.ds, top_n=k).head(k).reset_index(drop=True)
         return df.head(k).reset_index(drop=True)
 
 
