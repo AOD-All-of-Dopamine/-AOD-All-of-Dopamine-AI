@@ -44,7 +44,7 @@ from src.config import artifact_dir
 
 class PersonalizedRanker:
     def __init__(self, artifacts=None, rating_boost: float = 0.0, align_w: float = 0.0,
-                 vote_boost: float = 0.0):
+                 vote_boost: float = 0.0, media_w: float = 0.0):
         d = artifact_dir(artifacts)
         idx = pd.read_parquet(d / "corpus_index.parquet").sort_values("embedding_row")
         ds = pd.read_parquet(d / "dataset.parquet").set_index("item_id")
@@ -53,6 +53,8 @@ class PersonalizedRanker:
         self.rating_boost = rating_boost
         self.align_w = align_w
         self.vote_boost = vote_boost   # 구설정 재현용. 신규 설계에서는 0 이다
+        self.media_w = media_w         # D-42. 시드 매체 집합 밖이면 (1−media_w) 를 곱한다
+        self._media = self.dataset["media"].to_numpy()
         vc = self.dataset["vote_count"].astype(float)
         self.vote_pct = vc.rank(pct=True).to_numpy()          # 결측 없음 → 눕힐 것이 없다
         va = self.dataset["vote_average"].astype(float)
@@ -60,13 +62,24 @@ class PersonalizedRanker:
 
     def rank(self, scored: pd.DataFrame, exclude_rows=None, top_n: int = 300,
              servable_mask: np.ndarray | None = None,
-             seed_pct: float | None = None) -> pd.DataFrame:
-        """`seed_pct` — 시드 인기 백분위 중앙. 없으면 정합 항을 끈다."""
+             seed_pct: float | None = None, seed_medias=None) -> pd.DataFrame:
+        """`seed_pct` — 시드 인기 백분위 중앙. 없으면 정합 항을 끈다.
+
+        `seed_medias` — 시드의 media 집합 (D-42). `media_w > 0` 이고 후보 media 가
+        이 집합에 없으면 `(1 − media_w)` 를 곱한다. 혼합 시드({movie, tv})면 페널티가
+        자연히 0 이다. 진단(2,600쌍): 영화 시드에 TV 적합률 0.764 vs 영화 0.877,
+        TV 시드에 영화 0.726 vs TV 0.920 — 양방향으로 나쁘다. coh_pixar(top-50 의
+        56%가 TV, 그 적합률 0.32)가 최악 표현형. 하드 필터는 매체를 넘나드는 취향
+        (mix2_anime_film 0.82 · coh_sageuk 1.00)을 해쳐서 소프트로 간다.
+        """
         df = scored.copy()
         r = df["row"].to_numpy()
         base = 1.0 + self.rating_norm[r] * self.rating_boost
         if self.vote_boost:                      # 구설정 재현 경로
             base = base + self.vote_pct[r] * self.vote_boost
+        if self.media_w and seed_medias:
+            mis = ~np.isin(self._media[r], list(seed_medias))
+            base = base * (1.0 - self.media_w * mis)
         if self.align_w and seed_pct is not None:
             # 거리 페널티. 계수가 1 을 넘지 않도록 잘라 음수 점수를 막는다.
             gap = np.abs(self.vote_pct[r] - float(seed_pct))

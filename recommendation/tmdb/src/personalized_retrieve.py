@@ -14,12 +14,14 @@ from src.personalization.personalized_ranker import PersonalizedRanker
 
 def build_components(artifacts=None, hub_lambda: float | None = None,
                      vote_boost: float = 0.0, rating_boost: float = 0.0,
-                     align_w: float = 0.0, min_overview_len: int = 0):
+                     align_w: float = 0.0, min_overview_len: int = 0,
+                     media_w: float = 0.0):
     ret = CandidateRetriever(artifacts, min_overview_len=min_overview_len)
     if hub_lambda is not None: ret.hub_lambda = hub_lambda
     return (SeedLoader(artifacts), ret, ScoreAggregator(),
             PersonalizedRanker(artifacts, vote_boost=vote_boost,
-                               rating_boost=rating_boost, align_w=align_w))
+                               rating_boost=rating_boost, align_w=align_w,
+                               media_w=media_w))
 
 
 def recommend(seed_rows, components=None, strategy: str = "top2_mean", top_n: int = 50,
@@ -35,8 +37,10 @@ def recommend(seed_rows, components=None, strategy: str = "top2_mean", top_n: in
     rank_n = top_n * 8 if postprocess_on else top_n
     # 시드 인기 백분위 중앙 — 정합 항의 목표값 (D-31)
     seed_pct = float(np.median(ranker.vote_pct[list(int(r) for r in seed_rows)]))
+    seed_medias = {ranker.dataset.iloc[int(r)]["media"] for r in seed_rows}
     ranked = ranker.rank(scored, exclude_rows=excl, top_n=rank_n,
-                         servable_mask=retriever.servable, seed_pct=seed_pct)
+                         servable_mask=retriever.servable, seed_pct=seed_pct,
+                         seed_medias=seed_medias)
     if postprocess_on:
         from src.postprocess import postprocess as pp
         ranked = pp(ranked, ranker.dataset, top_n=top_n, seed_rows=seed_rows,
