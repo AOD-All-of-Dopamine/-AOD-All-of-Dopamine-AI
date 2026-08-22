@@ -92,6 +92,26 @@ def _has_adult_descriptor(ids) -> bool:
         return False
 
 
+_REAL_CACHE: dict = {}
+
+
+def _real_reviews(meta: pd.DataFrame) -> pd.Series:
+    """D-39 크롤(artifacts/reviews)의 실측 리뷰 수. appid → float, 못 받은 것은 0."""
+    from pathlib import Path
+    key = id(meta)
+    if key in _REAL_CACHE:
+        return _REAL_CACHE[key]
+    d = Path(__file__).resolve().parents[1] / "artifacts" / "reviews"
+    parts = sorted(d.glob("part-*.parquet"))
+    if not parts:
+        raise SystemExit(f"{d} 가 비었다 — 먼저 `python -m src.crawl_reviews`")
+    rv = pd.concat([pd.read_parquet(f) for f in parts], ignore_index=True)
+    rv = rv[rv["total_reviews"] >= 0].drop_duplicates("steam_appid").set_index("steam_appid")
+    out = rv["total_reviews"].astype(float).reindex(meta.index).fillna(0.0)
+    _REAL_CACHE[key] = out
+    return out
+
+
 def apply_hard_filters(
     ranked: pd.DataFrame,
     dataset: pd.DataFrame,
@@ -100,6 +120,7 @@ def apply_hard_filters(
     drop_vr_only: bool = True,
     require_known_reviews: bool = False,
     min_reviews: int = 0,
+    real_reviews: bool = False,
 ) -> pd.DataFrame:
     """추천으로 내보내면 안 되는 것을 제거한다.
 
@@ -148,9 +169,22 @@ def apply_hard_filters(
     if require_known_reviews and "has_recommendations" in meta.columns:
         keep &= df["steam_appid"].map(lambda a: bool(meta["has_recommendations"].get(a, False)))
 
-    if min_reviews > 0 and "recommendations_total" in meta.columns:
-        # Int64 결측을 0 으로 눕혀야 한다 — pd.NA 는 비교에서 불리언이 되지 않는다.
-        totals = meta["recommendations_total"].astype("float").fillna(0.0)
+    if min_reviews > 0:
+        # D-40. `real_reviews=True` 면 D-39 크롤(실측)을 쓴다. 기본은 구 필드라 재현된다.
+        #
+        # 구 필드로 하한을 걸면 **결측 87.4% 가 전부 0 으로 떨어져** 하한이 사실상
+        # `has_recommendations` 게이트가 된다. 그 게이트는 마블 라이벌즈(41만) ·
+        # THE FINALS(27만) · SCP: Secret Laboratory(23만) 같은 실제 대형 F2P 를 놓친다 —
+        # 미보고인데 리뷰 1,000 이상인 항목이 1,142개다. F2P·MMO 가 체계적으로 미보고라
+        # `coh_mmo` 가 가장 크게 손해 본다.
+        if real_reviews:
+            totals = _real_reviews(meta)
+        elif "recommendations_total" in meta.columns:
+            # Int64 결측을 0 으로 눕혀야 한다 — pd.NA 는 비교에서 불리언이 되지 않는다.
+            totals = meta["recommendations_total"].astype("float").fillna(0.0)
+        else:
+            totals = None
+    if min_reviews > 0 and totals is not None:
         keep &= df["steam_appid"].map(lambda a: totals.get(a, 0.0) >= min_reviews)
 
     if drop_unreleased and "coming_soon" in meta.columns:
@@ -552,6 +586,7 @@ def postprocess(
     hard_filters: bool = True,
     require_known_reviews: bool = False,
     min_reviews: int = 0,
+    real_reviews: bool = False,
     bucket_offset: int = 0,
     solo_seed_tags: set[str] | None = None,
     consensus_tags: set[str] | None = None,
@@ -658,7 +693,7 @@ def postprocess(
         df = consensus_overlap_boost(df, dataset, consensus_tags, consensus_boost)
     if hard_filters:
         df = apply_hard_filters(df, dataset, require_known_reviews=require_known_reviews,
-                                min_reviews=min_reviews)
+                                min_reviews=min_reviews, real_reviews=real_reviews)
     if series_max:
         prior = series_counts(seen_appids, dataset) if (seen_appids and series_session_max) else None
         df = cap_series(df, dataset, series_max,
