@@ -1,6 +1,21 @@
-"""개인화 랭킹 — 유사도가 주항, 인기도·평점이 보정항.
+"""개인화 랭킹 — 유사도가 주항, 평점과 **인기 정합**이 보정항.
 
-    final = seed_similarity × (1 + vote_pct×vote_boost + rating_norm×rating_boost)
+    final = sim × (1 + rating_norm×rating_boost) × (1 − align_w×|vote_pct − seed_pct|)
+
+**`vote_boost` 는 제거했다 (D-31).** 전역 상수 boost 는 모든 프로필을 같은
+방향으로 민다. 대작 취향에는 맞지만 롱테일 취향에는 정확히 반대다.
+Steam D-6 이 이미 증명했다 — "리뷰 수의 어떤 단조 변환으로도 대작 취향과
+저리뷰 취향을 동시에 만족시킬 수 없다."
+
+대신 **프로필 의존 정합 항**을 쓴다. 시드 인기 백분위 중앙 `seed_pct` 를
+목표로 삼고 후보가 거기서 멀수록 감점한다. 시드가 대작이면 대작을,
+롱테일이면 롱테일을 뽑는다. 방향이 프로필마다 달라진다.
+
+측정 근거(시드 대비 top-50 인기 백분위 편차 중앙):
+    일반군 36개  시드 0.992 → 구설정 -0.06   ← 구설정이 옳았던 구간
+    저인기군 16개 시드 0.649 → 구설정 +0.21
+    롱테일 5개   시드 0.07~0.37 → 구설정 +0.52 (레버 OFF 에서도 +0.38)
+검색 자체가 저인기 시드에서 인기작을 끌어오고, boost 가 악화시켰다.
 
 곱셈이므로 **유사하지 않은 작품은 아무리 인기 있어도 못 올라온다.**
 
@@ -28,25 +43,35 @@ from src.config import artifact_dir
 
 
 class PersonalizedRanker:
-    def __init__(self, artifacts=None, vote_boost: float = 0.0, rating_boost: float = 0.0):
+    def __init__(self, artifacts=None, rating_boost: float = 0.0, align_w: float = 0.0,
+                 vote_boost: float = 0.0):
         d = artifact_dir(artifacts)
         idx = pd.read_parquet(d / "corpus_index.parquet").sort_values("embedding_row")
         ds = pd.read_parquet(d / "dataset.parquet").set_index("item_id")
         self.dataset = ds.loc[idx["item_id"].to_numpy()].reset_index()
         self.dataset["row"] = np.arange(len(self.dataset))
-        self.vote_boost = vote_boost
         self.rating_boost = rating_boost
+        self.align_w = align_w
+        self.vote_boost = vote_boost   # 구설정 재현용. 신규 설계에서는 0 이다
         vc = self.dataset["vote_count"].astype(float)
         self.vote_pct = vc.rank(pct=True).to_numpy()          # 결측 없음 → 눕힐 것이 없다
         va = self.dataset["vote_average"].astype(float)
         self.rating_norm = ((va - 5.0) / 5.0).clip(-1, 1).to_numpy()   # 5점=0, 10점=1
 
     def rank(self, scored: pd.DataFrame, exclude_rows=None, top_n: int = 300,
-             servable_mask: np.ndarray | None = None) -> pd.DataFrame:
+             servable_mask: np.ndarray | None = None,
+             seed_pct: float | None = None) -> pd.DataFrame:
+        """`seed_pct` — 시드 인기 백분위 중앙. 없으면 정합 항을 끈다."""
         df = scored.copy()
         r = df["row"].to_numpy()
-        df["final_score"] = df["seed_similarity"].to_numpy() * (
-            1.0 + self.vote_pct[r] * self.vote_boost + self.rating_norm[r] * self.rating_boost)
+        base = 1.0 + self.rating_norm[r] * self.rating_boost
+        if self.vote_boost:                      # 구설정 재현 경로
+            base = base + self.vote_pct[r] * self.vote_boost
+        if self.align_w and seed_pct is not None:
+            # 거리 페널티. 계수가 1 을 넘지 않도록 잘라 음수 점수를 막는다.
+            gap = np.abs(self.vote_pct[r] - float(seed_pct))
+            base = base * np.clip(1.0 - self.align_w * gap, 0.05, None)
+        df["final_score"] = df["seed_similarity"].to_numpy() * base
         if servable_mask is not None:
             df = df[servable_mask[df["row"].to_numpy()]]
         if exclude_rows:
