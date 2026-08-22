@@ -6,9 +6,9 @@ aggregation:
   strategies: ["max", "mean", "top2_mean"]
   top_n: 300
   rec_boost: 0.03
-  # D-37 확정. quality = clip(log10(1+리뷰수)/5, 0, 1) 을 곱 보정으로 더한다.
-  # 52프로필 × k=50 · 미채점 0 에서 0.4638 → 0.6608.
-  quality_w: 0.10
+  # D-37 신설 · D-38 확정. quality = clip(log10(1+리뷰수)/5, 0, 1) 을 곱 보정으로 더한다.
+  # 52프로필 · 미채점 0 에서 k=50 0.4638 → 0.7692 · P@10 → 0.8923.
+  quality_w: 0.50
 
 profiles:
   n_coherent: 10

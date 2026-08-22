@@ -109,8 +109,8 @@ def run_multi(
 # 새로고침 3페이지까지 품질이 유지되도록 맞춘 값. 근거는 next_page docstring 참고.
 REFRESH_REC_BOOST = 0.15
 
-#: D-37 품질 사전분포 가중치. 근거는 PersonalizedRanker._build_quality docstring.
-REFRESH_QUALITY_W = 0.10
+#: D-37 신설 · D-38 확정. 근거는 PersonalizedRanker._build_quality docstring.
+REFRESH_QUALITY_W = 0.50
 
 # 전체 코퍼스(173,691)로 넓히면서 필요해진 품질 하한. 근거는 apply_hard_filters docstring.
 # 2026-08-12: 300 → 0. 하한은 얕은 페이지에서만 도움이 됐고 깊이에서는 오히려 해로웠다.
