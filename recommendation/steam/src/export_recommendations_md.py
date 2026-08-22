@@ -18,6 +18,7 @@ from src.config import PROJECT_ROOT, artifact_dir
 from src.experiment import file_fingerprint
 from src.personalized_retrieve import (
     REFRESH_MIN_REVIEWS,
+    REFRESH_QUALITY_W,
     REFRESH_REC_BOOST,
     build_components,
     next_page,
@@ -59,7 +60,8 @@ def build_doc(artifacts: str, page_size: int = 10) -> str:
     ds = pd.read_parquet(art / "dataset.parquet").set_index("steam_appid")
     profiles = pd.read_parquet(PROJECT_ROOT / "artifacts" / "p1" / "profiles.parquet")
     scores, judged_pids = load_scores()
-    comp = build_components(REFRESH_REC_BOOST, artifacts=artifacts)
+    comp = build_components(REFRESH_REC_BOOST, artifacts=artifacts,
+                            quality_w=REFRESH_QUALITY_W)
 
     L = [
         "# 추천 결과 스냅샷",
@@ -76,6 +78,7 @@ def build_doc(artifacts: str, page_size: int = 10) -> str:
         "| 표현 | `Description` + `Genres` + `Modes`(게임플레이 모드만, 플랫폼 문구 제거) |",
         "| 집계 | MAX (시드별 최대 유사도) |",
         f"| 인기도 부스트 | {REFRESH_REC_BOOST:.0%} |",
+        f"| 품질 사전분포 | log10(1+리뷰수)/5 × {REFRESH_QUALITY_W:.2f} (D-37) |",
         "| 후처리 | 시드 라운드로빈 인터리빙 · 시리즈 상한 1 · 퍼블리셔 상한 2 · hard filter(성인/VR전용/미출시) |",
         f"| 품질 하한 | 리뷰 {REFRESH_MIN_REVIEWS:,}개 이상 (전체 코퍼스에서 롱테일이 유명작을 밀어냄) |",
         "| 판정자 | Claude (Opus 5) — 사람 판정 아님 |",

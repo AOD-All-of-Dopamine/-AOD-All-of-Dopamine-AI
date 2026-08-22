@@ -40,22 +40,26 @@ class PersonalizedRanker:
     고치면(미보고를 순위에서 빼고 fillna(0)) 미보고 0.000 · 101개 0.037 ·
     9,264개 0.931 · 520만개 1.000 으로 해상도가 생긴다.
 
-    **그런데 rec_boost=0.15 는 이 결함 위에서 맞춰진 값이라 같이 옮겨야 한다.**
-    52프로필 · k=50 · 미판정 0 실측:
+    ────────────────────────────────────────────────────────────────────────
+    2026-08-22 — **위 결함은 D-37 에서 고쳤다. 백분위를 손대는 대신 축을 하나 더 놓았다.**
 
-        설정                     평균      미달   비고
-        현행(결함 유지)          0.8488     12
-        수정 + boost 0.15        0.8238*    -     coh_mmo 0.80→0.64, niche_soulslike_solo 0.84→0.76
-        수정 + boost 0.08        0.8573     13    18개 개선 / 8개 악화
+    여기 적혀 있던 비교표("현행 0.8488 · 수정+boost 0.15 → 0.8238 · boost 0.08 → 0.8573")는
+    **폐기한다.** 그 수치들은 기준이 관대한 구 등급 은행에서 나왔고, 눈가림 재채점 결과
+    구 기준과 현 기준의 적합률 차가 0.375 였다(D-24). 비교 자체가 성립하지 않는다.
 
-    boost 0.08 은 평균을 올리지만(+0.0085) 미달은 12→13 이다. 개선이 넓고 얕은 대신
-    (seven_horror_coop +0.14 · six_action_adv +0.10 · two_bigaction +0.10 · ten_cozy +0.08)
-    손실이 좁고 깊다(two_cozy_puzzle -0.18 · ten_jrpg -0.12).
+    `rec_percentile` 은 건드리지 않았다 — 한 번에 하나만 옮기기 위해서다. 대신
+    `quality_w × clip(log10(1+리뷰수)/5, 0, 1)` 을 보정항에 더했다. 로그는 동점 붕괴가
+    없어 백분위의 결함을 우회한다. `rec_boost 0.03` · `REFRESH_SEED_SCALED_FLOOR` ·
+    `REFRESH_MIN_REVIEWS` 는 그대로 두었으므로 함께 다시 잴 필요가 없었다.
 
-    **그래서 결함만 기록하고 아직 안 바꿨다.** 이 위에 얹혀 맞춰진 값이 셋 더 있다 —
-    `REFRESH_REC_BOOST` · `REFRESH_SEED_SCALED_FLOOR` · `REFRESH_MIN_REVIEWS`.
-    고치려면 그 셋을 함께 다시 재야 하고, 그건 한 번에 하나씩 옮기는 지금 방식으로는
-    안 된다. 부분만 고치면 지금처럼 이기고 지는 것을 맞바꾸게 된다.
+    단일 기준 은행 · 52프로필 × k=50 · 미채점 0 실측:
+
+        quality_w   적합률    0.8 미만   0.5 미만
+        0.00        0.4638    51/52      34/52
+        **0.10**    0.6608    46/52       3/52     ← 확정 (사전등록 규칙)
+        0.50        0.7692    26/52       2/52     ← 더 좋지만 미확증, D-38
+
+    51개 프로필이 오르고 1개만 내렸다(`lowrev_deckbuilder` −0.08, 사전등록 허용치 이내).
     ────────────────────────────────────────────────────────────────────────
 
     **`trend_signal` 은 정규화해서 쓴다.** 원값은 나이 코호트 대비 초과 백분위 × 신선도라
@@ -66,13 +70,33 @@ class PersonalizedRanker:
     """
 
     def __init__(self, rec_boost: float = 0.03, artifacts: str | Path | None = None,
-                 trend_weight: float = 0.0, trend_dir: str | Path | None = None):
+                 trend_weight: float = 0.0, trend_dir: str | Path | None = None,
+                 quality_w: float = 0.0, quality_cap: float = 5.0):
         self.artifacts = artifact_dir(artifacts)
         self.dataset = pd.read_parquet(self.artifacts / "dataset.parquet")
         self.rec_boost = rec_boost
         self.trend_weight = trend_weight
+        self.quality_w = quality_w          # D-37. 0 이면 끔 — 기존 실험이 그대로 재현된다
+        self.quality_cap = quality_cap
         self.dataset = self.dataset.set_index("steam_appid")
         self.trend = self._load_trend(trend_dir) if trend_weight else None
+        self._q = self._build_quality() if quality_w else None
+
+    def _build_quality(self) -> pd.Series:
+        """appid → 품질 사전분포 ∈ [0, 1]. `log10(1+리뷰수) / cap` 을 자른 값이다.
+
+        백분위를 쓰지 않는 이유는 위 docstring 의 결함 때문이다 — 코퍼스의 87.4%가
+        리뷰 0 이라 동점 평균순위가 최하위에 0.437 을 준다. 로그는 동점 붕괴가 없고
+        단조라 리뷰 0 → 0.00, 100개 → 0.40, 1만개 → 0.80, 10만개 → 1.00 이 된다.
+
+        **이건 "인기 있는 걸 밀어준다"가 아니다.** 리뷰 0 개인 Steam 항목은 대체로
+        미출시·방치·양산형이라 애초에 추천으로 성립하지 않는다. 실측(D-37, 2,600쌍):
+        리뷰 0 구간 적합률 0.271 · 1천~1만 0.815 · 1만+ 0.922 이고, 프로필 내부
+        상관은 52개 중 50개가 양수(중앙 +0.543)다. 저인기 취향 프로필도 마찬가지다.
+        """
+        import numpy as np
+        rec = pd.to_numeric(self.dataset["recommendations_total"], errors="coerce").fillna(0.0)
+        return (np.log10(1.0 + rec) / self.quality_cap).clip(0.0, 1.0)
 
     @staticmethod
     def _load_trend(trend_dir: str | Path | None) -> pd.Series:
@@ -106,6 +130,10 @@ class PersonalizedRanker:
             lambda x: pct.get(x, 0.0)
         )
         boost = result["recommendations_percentile"] * self.rec_boost
+
+        if self._q is not None:
+            result["quality"] = result["steam_appid"].map(lambda x: float(self._q.get(x, 0.0)))
+            boost = boost + result["quality"] * self.quality_w
 
         if self.trend is not None:
             result["trend_norm"] = result["steam_appid"].map(lambda x: float(self.trend.get(x, 0.0)))

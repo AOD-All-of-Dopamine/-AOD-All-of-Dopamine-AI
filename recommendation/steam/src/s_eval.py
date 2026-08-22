@@ -50,8 +50,12 @@ def _appid_col(df: pd.DataFrame) -> str:
     return df.columns[0]
 
 
-def variant_recs(variant: dict, k: int, profiles: pd.DataFrame, comps) -> dict:
+def variant_recs(variant: dict, k: int, profiles: pd.DataFrame, comps=None) -> dict:
+    """`comps` 를 주지 않으면 variant 의 quality_w 로 새로 만든다."""
     strat = variant.get("strategy", "top2_mean")
+    if comps is None:
+        comps = build_components(quality_w=variant.get("quality_w", 0.0),
+                                 quality_cap=variant.get("quality_cap", 5.0))
     out = {}
     for _, p in profiles.iterrows():
         res = run_multi(list(p["liked_appids"]), strategies=[strat], top_n=k,
