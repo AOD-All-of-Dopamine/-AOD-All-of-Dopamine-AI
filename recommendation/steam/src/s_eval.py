@@ -87,3 +87,56 @@ def score(recs: dict, bank: dict, k: int):
                          fit=float(np.mean([x >= 2 for x in gs])) if gs else np.nan,
                          mean_grade=float(np.mean(gs)) if gs else np.nan))
     return pd.DataFrame(rows), ungraded, miss
+
+
+def export_blind(pairs, tag: str, profiles=None) -> int:
+    """미채점 쌍을 눈가림 시트로 내보낸다 — `(pid, appid)` 목록을 받는다.
+
+    D-24 · D-37 · D-38 에서 같은 코드를 세 번 다시 썼다. 네 번째부터는 여기를 쓴다.
+    등급을 숨기고 **시드 · 장르 · 제목 · 소개문**만 보여 준다. 리뷰 수는 **넣지 않는다** —
+    지금 검증하려는 것이 리뷰 기반 신호라 시트에 노출하면 순환이 된다.
+
+    `artifacts/p1/{tag}_chunks.txt` 와 `{tag}_key.json` 을 쓰고 쌍 수를 돌려준다.
+    """
+    import json
+    from src.config import artifact_dir
+    profiles = load_profiles() if profiles is None else profiles
+    ds = pd.read_parquet(artifact_dir() / "dataset.parquet")
+    ds = ds.set_index(ds["steam_appid"].astype(int))
+    seeds = {r["profile_id"]: list(r["liked_appids"]) for _, r in profiles.iterrows()}
+
+    def nm(a):
+        try:
+            return str(ds.loc[int(a), "name"])
+        except Exception:
+            return f"appid{a}"
+
+    lines, key = [], []
+    for j, (pid, appid) in enumerate(sorted(pairs)):
+        row = ds.loc[int(appid)]
+        sd = " / ".join(nm(x) for x in seeds[pid][:3])
+        lines.append(f"{tag}{j:04d} [{sd[:50]}] ({row.get('genres', '')}) "
+                     f"{nm(appid)} | {str(row.get('short_description', ''))[:94]}")
+        key.append(dict(id=f"{tag}{j:04d}", pid=pid, appid=int(appid)))
+    (P1 / f"{tag}_chunks.txt").write_text("\n".join(lines) + "\n", encoding="utf-8")
+    json.dump(key, open(P1 / f"{tag}_key.json", "w"))
+    return len(key)
+
+
+def merge_grades(tag: str, var: str) -> tuple[int, int]:
+    """`grades_{tag}.py` 의 `{var}` 를 은행에 합친다. (추가, 충돌) 을 돌려준다."""
+    import json
+    ns: dict = {}
+    exec((P1 / f"grades_{tag}.py").read_text(encoding="utf-8"), ns)
+    g = ns[var]
+    key = {r["id"]: (r["pid"], int(r["appid"])) for r in json.load(open(P1 / f"{tag}_key.json"))}
+    bank = load_bank()
+    add = conflict = 0
+    for sid, v in g.items():
+        k = key[sid]
+        if k in bank:
+            conflict += bank[k] != v
+        else:
+            bank[k] = int(v); add += 1
+    save_bank(bank)
+    return add, conflict
