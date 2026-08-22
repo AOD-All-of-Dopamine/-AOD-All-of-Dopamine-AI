@@ -12,7 +12,8 @@ from src.personalization.personalized_ranker import PersonalizedRanker
 
 
 def build_components(rec_boost: float = 0.03, artifacts=None, trend_weight: float = 0.0,
-                     quality_w: float = 0.0, quality_cap: float = 5.0):
+                     quality_w: float = 0.0, quality_cap: float = 5.0,
+                     quality_src: str = "dataset"):
     """코퍼스 임베딩(76MB)과 dataset 을 읽는 무거운 생성자들을 한 번만 만든다.
 
     LOO 평가처럼 수십 번 호출하는 경우 `run_multi(..., components=...)` 로 재사용한다.
@@ -22,7 +23,8 @@ def build_components(rec_boost: float = 0.03, artifacts=None, trend_weight: floa
         CandidateRetriever(artifacts),
         ScoreAggregator(),
         PersonalizedRanker(rec_boost=rec_boost, artifacts=artifacts, trend_weight=trend_weight,
-                           quality_w=quality_w, quality_cap=quality_cap),
+                           quality_w=quality_w, quality_cap=quality_cap,
+                           quality_src=quality_src),
     )
 
 

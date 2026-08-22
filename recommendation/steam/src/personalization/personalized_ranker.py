@@ -5,6 +5,28 @@ import pandas as pd
 from src.config import PROJECT_ROOT, artifact_dir
 
 TREND_DIR = PROJECT_ROOT / "artifacts" / "trend_v2"
+REVIEW_DIR = PROJECT_ROOT / "artifacts" / "reviews"
+
+
+def _wilson_lower(pos, n, z: float = 1.96, index=None):
+    """긍정 비율의 Wilson score 95% 하한 ∈ [0, 1].
+
+    비율이 나쁘거나 **표본이 적으면** 낮아진다. 리뷰 3개 전원 긍정(1.00)은 0.29 로,
+    리뷰 1만개 중 90% 긍정은 0.89 로 내려간다. 양과 질을 한 항으로 합치는 셈이라
+    "무명이지만 좋은 것"을 "무명이고 나쁜 것"과 가를 수 있다 — 지금 데이터에 없는 축이다.
+    n=0 이면 0.
+    """
+    import numpy as np
+    if index is None and hasattr(pos, "index"):
+        index = pos.index          # 인덱스를 잃으면 곱셈에서 정렬이 깨진다
+    n = np.asarray(n, dtype=float); pos = np.asarray(pos, dtype=float)
+    with np.errstate(divide="ignore", invalid="ignore"):
+        p = np.where(n > 0, pos / np.maximum(n, 1), 0.0)
+        den = 1.0 + z * z / np.maximum(n, 1)
+        cen = p + z * z / (2 * np.maximum(n, 1))
+        mrg = z * np.sqrt(np.maximum(p * (1 - p) / np.maximum(n, 1)
+                                     + z * z / (4 * np.maximum(n, 1) ** 2), 0.0))
+    return pd.Series(np.where(n > 0, np.clip((cen - mrg) / den, 0.0, 1.0), 0.0), index=index)
 
 
 class PersonalizedRanker:
@@ -74,13 +96,15 @@ class PersonalizedRanker:
 
     def __init__(self, rec_boost: float = 0.03, artifacts: str | Path | None = None,
                  trend_weight: float = 0.0, trend_dir: str | Path | None = None,
-                 quality_w: float = 0.0, quality_cap: float = 5.0):
+                 quality_w: float = 0.0, quality_cap: float = 5.0,
+                 quality_src: str = "dataset"):
         self.artifacts = artifact_dir(artifacts)
         self.dataset = pd.read_parquet(self.artifacts / "dataset.parquet")
         self.rec_boost = rec_boost
         self.trend_weight = trend_weight
         self.quality_w = quality_w          # D-37. 0 이면 끔 — 기존 실험이 그대로 재현된다
         self.quality_cap = quality_cap
+        self.quality_src = quality_src      # D-39. dataset|volume|wilson|blend
         self.dataset = self.dataset.set_index("steam_appid")
         self.trend = self._load_trend(trend_dir) if trend_weight else None
         self._q = self._build_quality() if quality_w else None
@@ -98,8 +122,32 @@ class PersonalizedRanker:
         상관은 52개 중 50개가 양수(중앙 +0.543)다. 저인기 취향 프로필도 마찬가지다.
         """
         import numpy as np
-        rec = pd.to_numeric(self.dataset["recommendations_total"], errors="coerce").fillna(0.0)
-        return (np.log10(1.0 + rec) / self.quality_cap).clip(0.0, 1.0)
+        if self.quality_src == "dataset":            # 구 경로. 재현용으로 남긴다
+            rec = pd.to_numeric(self.dataset["recommendations_total"], errors="coerce").fillna(0.0)
+            return (np.log10(1.0 + rec) / self.quality_cap).clip(0.0, 1.0)
+
+        r = self._load_reviews()
+        vol = (np.log10(1.0 + r["total_reviews"]) / self.quality_cap).clip(0.0, 1.0)
+        if self.quality_src == "volume":
+            return vol
+        n = r["total_positive"] + r["total_negative"]
+        wil = _wilson_lower(r["total_positive"], n)
+        if self.quality_src == "wilson":
+            return wil
+        if self.quality_src == "blend":
+            return (vol * (0.5 + 0.5 * wil)).clip(0.0, 1.0)
+        raise ValueError(f"quality_src={self.quality_src!r} 를 모른다")
+
+    def _load_reviews(self) -> pd.DataFrame:
+        """D-39 크롤 결과. 못 받은 appid 는 0 으로 채운다(미출시작·상장폐지)."""
+        d = REVIEW_DIR
+        parts = sorted(d.glob("part-*.parquet"))
+        if not parts:
+            raise SystemExit(f"{d} 가 비었다 — 먼저 `python -m src.crawl_reviews` 를 돌려라")
+        rv = pd.concat([pd.read_parquet(f) for f in parts], ignore_index=True)
+        rv = rv[rv["total_reviews"] >= 0].drop_duplicates("steam_appid").set_index("steam_appid")
+        out = rv.reindex(self.dataset.index).fillna(0.0)
+        return out
 
     @staticmethod
     def _load_trend(trend_dir: str | Path | None) -> pd.Series:
