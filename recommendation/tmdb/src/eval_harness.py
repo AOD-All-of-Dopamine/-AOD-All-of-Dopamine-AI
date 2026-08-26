@@ -31,8 +31,16 @@ def save_bank(bank: dict):
     BANK.write_text("\n".join(lines), encoding="utf-8")
 
 def variant_recs(variant: dict, k: int, profiles: pd.DataFrame, components=None):
-    """변형 하나로 모든 프로필의 top-k 를 만든다."""
+    """변형 하나로 모든 프로필의 top-k 를 만든다.
+
+    **후처리 기본값은 `PRODUCTION_POSTPROCESS` 에서 가져온다** (D-55). 여기서 각
+    항목의 기본값을 따로 적으면 서빙과 갈라진다 — 실제로 D-46 을 확정한 직후
+    하네스는 `drop_seed_iter` 를 끈 채로 재고 있었다(0.9346 vs 서빙 0.9385).
+    같은 사고가 `align_w` 에서 한 번 있었다(D-43 verdict 부수 결함).
+    변형이 명시한 키만 덮어쓴다.
+    """
     from src.personalized_retrieve import build_components, recommend
+    from src.config import PRODUCTION_POSTPROCESS
     comp = components or build_components(
         hub_lambda=variant.get("hub_lambda", 0.0),
         vote_boost=variant.get("vote_boost", 0.0),
@@ -47,12 +55,11 @@ def variant_recs(variant: dict, k: int, profiles: pd.DataFrame, components=None)
             list(r.seed_rows), components=comp, top_n=k,
             strategy=variant.get("strategy", "top2_mean"),
             postprocess_on=variant.get("postprocess", True),
-            postprocess_kwargs=dict(
-                franchise_max=variant.get("franchise_max", 1),
-                seed_franchise_max=variant.get("seed_franchise_max", 0),
-                drop_seed_iter=variant.get("drop_seed_iter"),
-                interleave=variant.get("interleave", True),
-                tv_max_ratio=variant.get("tv_max_ratio")))
+            postprocess_kwargs={
+                **PRODUCTION_POSTPROCESS,
+                **{key: variant[key] for key in
+                   ("franchise_max", "seed_franchise_max", "drop_seed_iter",
+                    "interleave", "tv_max_ratio") if key in variant}})
     return out, comp
 
 def intra_list_similarity(vecs) -> float:

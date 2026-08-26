@@ -71,3 +71,20 @@ def artifact_dir(path: str | Path | None = None) -> Path:
 def ensure_artifacts_dir() -> Path:
     ARTIFACTS_DIR.mkdir(parents=True, exist_ok=True)
     return ARTIFACTS_DIR
+
+
+#: 확증된 랭킹 설정 — **여기가 유일한 출처다** (D-55).
+#:
+#: `configs/p1.yaml` 에 근거가 적혀 있고, 이 딕셔너리가 코드의 기본값이다.
+#: 예전에는 `build_components` 호출부 8곳이 각자 기본값을 들고 있었고,
+#: 그중 확정값을 쓰는 곳은 2곳뿐이었다 — 나머지는 D-38·D-49 **이전** 추천기를
+#: 돌리고 있었다. TMDB 에서 같은 사고가 두 번 났다(`align_w` 미전달 · D-46 미반영).
+#:
+#: 스윕하는 코드는 명시적으로 덮어쓴다. 그 외에는 건드리지 않는다.
+PRODUCTION = {
+    "rec_boost": 0.03,      # p1.yaml
+    "quality_w": 0.50,      # D-37 신설 · D-38 확정 · D-50(위)·D-51(아래) 양방향 최적 확인
+    "quality_cap": 5.0,
+    "quality_src": "dataset",
+    "tag_w": 0.40,          # D-49 확정
+}

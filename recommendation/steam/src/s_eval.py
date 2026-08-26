@@ -54,9 +54,12 @@ def variant_recs(variant: dict, k: int, profiles: pd.DataFrame, comps=None) -> d
     """`comps` 를 주지 않으면 variant 의 quality_w 로 새로 만든다."""
     strat = variant.get("strategy", "top2_mean")
     if comps is None:
-        comps = build_components(quality_w=variant.get("quality_w", 0.0),
-                                 quality_cap=variant.get("quality_cap", 5.0),
-                                 quality_src=variant.get("quality_src", "dataset"))
+        # 지정하지 않은 축은 **확정값**(config.PRODUCTION)이 들어간다 (D-55).
+        # 예전에는 0.0 이 기본이라 "한 축만 스윕"이 실은 "나머지 축을 전부 끈" 측정이었다.
+        comps = build_components(quality_w=variant.get("quality_w"),
+                                 quality_cap=variant.get("quality_cap"),
+                                 quality_src=variant.get("quality_src"),
+                                 tag_w=variant.get("tag_w"))
     out = {}
     for _, p in profiles.iterrows():
         res = run_multi(list(p["liked_appids"]), strategies=[strat], top_n=k,
@@ -71,7 +74,27 @@ def variant_recs(variant: dict, k: int, profiles: pd.DataFrame, comps=None) -> d
     return out
 
 
-def score(recs: dict, bank: dict, k: int):
+def intra_list_similarity(vecs) -> float:
+    """리스트 내부 유사도(ILS) — top-k 임베딩의 대각 제외 평균 쌍유사도.
+
+    **P@k 하나로는 부족하다(D-32).** 적합률은 "같은 책 10권"을 만점으로 센다.
+    웹소설 52프로필 실측에서 corr(적합률, ILS) = **+0.308** — 지표가 중복을
+    보상한다. 적합률 1.00 인 rule_rf_none 은 ILS 0.704 인데, 적합률 0.80 인
+    coh_talent 는 0.586 으로 **후자가 추천으로서 더 낫다.**
+
+    그래서 적합률과 항상 같이 낸다. 낮을수록 다양하다.
+    """
+    if vecs is None or len(vecs) < 2:
+        return float("nan")
+    V = np.asarray(vecs, dtype=np.float32)
+    V = V / np.clip(np.linalg.norm(V, axis=1, keepdims=True), 1e-9, None)
+    S = V @ V.T
+    n = len(V)
+    return float((S.sum() - np.trace(S)) / (n * (n - 1)))
+
+
+def score(recs: dict, bank: dict, k: int, vec_of=None):
+    """`vec_of(appids) -> (n, d)` 를 주면 프로필별 ILS 열도 채운다 (D-32)."""
     rows, ungraded, miss = [], 0, []
     for pid, df in recs.items():
         col = _appid_col(df)
@@ -83,9 +106,14 @@ def score(recs: dict, bank: dict, k: int):
                 miss.append((pid, int(a)))
             else:
                 gs.append(g)
+        ils = np.nan
+        if vec_of is not None:
+            try: ils = intra_list_similarity(vec_of(list(df[col].head(k))))
+            except Exception: pass
         rows.append(dict(profile_id=pid, n=len(gs),
                          fit=float(np.mean([x >= 2 for x in gs])) if gs else np.nan,
-                         mean_grade=float(np.mean(gs)) if gs else np.nan))
+                         mean_grade=float(np.mean(gs)) if gs else np.nan,
+                         ils=ils))
     return pd.DataFrame(rows), ungraded, miss
 
 
@@ -94,11 +122,17 @@ def export_blind(pairs, tag: str, profiles=None) -> int:
 
     D-24 · D-37 · D-38 에서 같은 코드를 세 번 다시 썼다. 네 번째부터는 여기를 쓴다.
     등급을 숨기고 **시드 · 장르 · 제목 · 소개문**만 보여 준다. 리뷰 수는 **넣지 않는다** —
-    지금 검증하려는 것이 리뷰 기반 신호라 시트에 노출하면 순환이 된다.
+    D-37/38 이 검증한 것이 리뷰 기반 신호라 시트에 노출하면 순환이 된다.
+    **`tags` 도 넣지 않는다** — D-49 가 검증하는 것이 태그 정합이라 같은 이유다.
+
+    **순서를 섞는다(D-48).** D-43/44 에서 프로필별·랭크순으로 냈더니 1,674쌍이
+    채점자에게 순위를 흘렸고, 시트 순번 구간별 적합률이 1–5위 0.956 → 21–40위 0.918 로
+    기울었다. 폭 0.038 은 판정 문턱(+0.03)과 같은 자릿수라 무시할 수 없다.
+    `seed` 는 고정이라 같은 입력이면 같은 시트가 나온다(재현용).
 
     `artifacts/p1/{tag}_chunks.txt` 와 `{tag}_key.json` 을 쓰고 쌍 수를 돌려준다.
     """
-    import json
+    import json, random
     from src.config import artifact_dir
     profiles = load_profiles() if profiles is None else profiles
     ds = pd.read_parquet(artifact_dir() / "dataset.parquet")
@@ -111,8 +145,10 @@ def export_blind(pairs, tag: str, profiles=None) -> int:
         except Exception:
             return f"appid{a}"
 
+    ordered = sorted(pairs)
+    random.Random(20260823).shuffle(ordered)      # D-48. 프로필 묶음·순위를 흘리지 않는다
     lines, key = [], []
-    for j, (pid, appid) in enumerate(sorted(pairs)):
+    for j, (pid, appid) in enumerate(ordered):
         row = ds.loc[int(appid)]
         sd = " / ".join(nm(x) for x in seeds[pid][:3])
         lines.append(f"{tag}{j:04d} [{sd[:50]}] ({row.get('genres', '')}) "

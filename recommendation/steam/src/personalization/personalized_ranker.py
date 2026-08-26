@@ -97,7 +97,7 @@ class PersonalizedRanker:
     def __init__(self, rec_boost: float = 0.03, artifacts: str | Path | None = None,
                  trend_weight: float = 0.0, trend_dir: str | Path | None = None,
                  quality_w: float = 0.0, quality_cap: float = 5.0,
-                 quality_src: str = "dataset"):
+                 quality_src: str = "dataset", tag_w: float = 0.0):
         self.artifacts = artifact_dir(artifacts)
         self.dataset = pd.read_parquet(self.artifacts / "dataset.parquet")
         self.rec_boost = rec_boost
@@ -108,6 +108,10 @@ class PersonalizedRanker:
         self.dataset = self.dataset.set_index("steam_appid")
         self.trend = self._load_trend(trend_dir) if trend_weight else None
         self._q = self._build_quality() if quality_w else None
+        # D-49. 시드 개별 최대 태그 피복률. 0 이면 끔 — 기존 실험이 그대로 재현된다.
+        self.tag_w = tag_w
+        self._tags = ({a: frozenset(str(t) for t in (v if v is not None else []))
+                       for a, v in self.dataset["tags"].items()} if tag_w else None)
 
     def _build_quality(self) -> pd.Series:
         """appid → 품질 사전분포 ∈ [0, 1]. `log10(1+리뷰수) / cap` 을 자른 값이다.
@@ -171,7 +175,15 @@ class PersonalizedRanker:
         candidates: pd.DataFrame,
         exclude_appids: set[int] | None = None,
         top_n: int = 300,
+        seed_appids=None,
     ) -> pd.DataFrame:
+        """`seed_appids` — D-49. `tag_w > 0` 일 때 태그 피복률을 계산하는 데 쓴다.
+
+        꼬리에서 유사도가 평평해(20위 0.4886 → 50위 0.4834) 변별력이 사라지고
+        그 자리를 quality 항이 채운다. 그래서 태그가 한 개만 걸친 유명작
+        (Iron Harvest RTS·Mechs 리뷰 11,628 g=0)이 올라온다. 태그 정합으로 가른다.
+        신호 실측(2,600쌍): 프로필 내부 상관 중앙 +0.390 · 부호일치 **52/52**.
+        """
         result = candidates.copy()
 
         rec_col = self.dataset["recommendations_total"].fillna(0)
@@ -189,6 +201,17 @@ class PersonalizedRanker:
         if self.trend is not None:
             result["trend_norm"] = result["steam_appid"].map(lambda x: float(self.trend.get(x, 0.0)))
             boost = boost + result["trend_norm"] * self.trend_weight
+
+        if self.tag_w and seed_appids and self._tags is not None:
+            # 시드 **개별** 최대 피복 |A∩S_i|/|S_i|. 합집합은 시드가 많을수록 느슨해진다.
+            # 분모에 후보 A 를 넣지 않는다 — TMDB D-43 에서 자카드가 후보의 추가 태그에
+            # 벌점을 줘 품질 높은 것을 밀어냈다.
+            ss = [self._tags.get(int(a), frozenset()) for a in seed_appids]
+            ss = [x for x in ss if x]
+            if ss:
+                result["tag_fit"] = result["steam_appid"].map(
+                    lambda a: max(len(self._tags.get(int(a), frozenset()) & s) / len(s) for s in ss))
+                boost = boost + result["tag_fit"] * self.tag_w
 
         result["final_score"] = result["seed_similarity"] * (1 + boost)
 
