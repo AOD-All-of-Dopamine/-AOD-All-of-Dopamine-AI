@@ -10,18 +10,19 @@ from src.personalization.seed_loader import SeedLoader
 from src.personalization.candidate_retriever import CandidateRetriever
 from src.personalization.score_aggregator import ScoreAggregator
 from src.personalization.personalized_ranker import PersonalizedRanker
+from src.config import PRODUCTION_POSTPROCESS
 
 
 def build_components(artifacts=None, hub_lambda: float | None = None,
                      vote_boost: float = 0.0, rating_boost: float = 0.0,
                      align_w: float = 0.0, min_overview_len: int = 0,
-                     media_w: float = 0.0):
+                     media_w: float = 0.0, genre_w: float = 0.0):
     ret = CandidateRetriever(artifacts, min_overview_len=min_overview_len)
     if hub_lambda is not None: ret.hub_lambda = hub_lambda
     return (SeedLoader(artifacts), ret, ScoreAggregator(),
             PersonalizedRanker(artifacts, vote_boost=vote_boost,
                                rating_boost=rating_boost, align_w=align_w,
-                               media_w=media_w))
+                               media_w=media_w, genre_w=genre_w))
 
 
 def recommend(seed_rows, components=None, strategy: str = "top2_mean", top_n: int = 50,
@@ -38,11 +39,18 @@ def recommend(seed_rows, components=None, strategy: str = "top2_mean", top_n: in
     # 시드 인기 백분위 중앙 — 정합 항의 목표값 (D-31)
     seed_pct = float(np.median(ranker.vote_pct[list(int(r) for r in seed_rows)]))
     seed_medias = {ranker.dataset.iloc[int(r)]["media"] for r in seed_rows}
+    seed_genres = None
+    if ranker.genre_w:
+        seed_genres = []
+        for rr in seed_rows:
+            g = ranker.dataset.iloc[int(rr)]["genres"]
+            seed_genres.append(frozenset(g.tolist() if hasattr(g, "tolist") else (g or [])))
     ranked = ranker.rank(scored, exclude_rows=excl, top_n=rank_n,
                          servable_mask=retriever.servable, seed_pct=seed_pct,
-                         seed_medias=seed_medias)
+                         seed_medias=seed_medias, seed_genres=seed_genres)
     if postprocess_on:
         from src.postprocess import postprocess as pp
         ranked = pp(ranked, ranker.dataset, top_n=top_n, seed_rows=seed_rows,
-                    **(postprocess_kwargs or {}))
+                    **(postprocess_kwargs if postprocess_kwargs is not None
+                       else PRODUCTION_POSTPROCESS))
     return ranked

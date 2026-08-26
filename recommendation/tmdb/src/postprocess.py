@@ -82,6 +82,74 @@ def franchise_key(name: str, prefixes: set[str] | None = None) -> str:
         if p and p in prefixes: return re.sub(r"\s+", "", p)
     return base_title(name)
 
+# ── 시드 반복작 (D-46) ──────────────────────────────────────────────────────
+# `franchise_key` 는 접두어/기본제목 기반이라 **시드의 다른 편을 하나도 못 잡았다.**
+# 실측(52프로필 top-50, 2026-08-26): 할로윈→할로윈 엔드·킬즈·H20·데스데이,
+# 28일 후→28주 후·28년 후, 라이온 킹→무파사: 라이온 킹, 데드풀→데드풀 2,
+# 워킹 데드→피어 더 워킹 데드 — 15건 전부 통과했다.
+#   할로윈 → 할로윈엔드   (공백 제거가 오히려 갈라놓는다)
+#   28일 후 → 28일후 vs 28주후
+#   데드풀 → 데드풀2      (접두어 경로가 base_title 의 끝숫자 제거를 건너뛴다)
+#
+# Steam 의 `_is_iteration()` 을 그대로 옮기면 **데드풀 2 하나만** 잡힌다 —
+# 그쪽은 이름이 숫자/에디션으로 끝나는 것만 보기 때문이다. 이름 붙은 속편
+# (할로윈 엔드)은 영화 쪽이 훨씬 흔하다. 그래서 토큰열 포함으로 다시 짠다.
+_PERIOD = re.compile(r"^\d+\s*(일|주|개월|월|년|시간|분)$")
+_NUMBERED = re.compile(r"^(\d+|[ivx]{1,4})$")
+
+def _tokseq(name: str) -> list[str]:
+    """제목을 토큰열로. `28일`·`20년` 은 **기간 슬롯**으로 뭉갠다 —
+    `28일 후`와 `28주 후`를 갈라놓는 것이 오직 그 한 토큰이기 때문이다."""
+    s = _MARKS.sub("", str(name))
+    s = re.sub(r"[^0-9A-Za-z가-힣 ]", " ", s)
+    return ["#기간" if _PERIOD.match(t) else t for t in s.lower().split() if t]
+
+def is_seed_iteration(seed_name: str, cand_name: str, numbered_only: bool = False) -> bool:
+    """후보가 **시드 제목을 통째로 품고 더 뻗은** 것인가.
+
+    방향이 핵심이다. `시드 ⊂ 후보` 만 본다 — 반대는 속편이 아니다:
+        시드 `드라큐라 백작부인` → 후보 `드라큐라`      (다른 영화)
+        시드 `다크 나이트`      → 후보 `다크`          (독일 드라마)
+    한 토큰짜리 시드는 **후보의 맨 앞**에서만 인정한다. 안 그러면
+        시드 `대부` → 후보 `리오네 사니타의 대부`(g=3) 를 잘못 지운다.
+
+    `numbered_only=True` 면 뻗은 부분이 숫자/로마숫자일 때만 — Steam 규칙에 해당한다.
+    """
+    s, c = _tokseq(seed_name), _tokseq(cand_name)
+    if not s or len(c) < len(s):
+        return False
+    for i in range(len(c) - len(s) + 1):
+        if c[i:i + len(s)] != s:
+            continue
+        if len(s) < 2 and i != 0:
+            return False
+        rest = c[i + len(s):]
+        if numbered_only:
+            return bool(rest) and _NUMBERED.match(rest[0]) is not None
+        return True
+    return False
+
+def drop_seed_iterations(df: pd.DataFrame, dataset: pd.DataFrame, seed_rows,
+                         numbered_only: bool = False) -> pd.DataFrame:
+    """시드의 다른 편을 뺀다. 컷 전에 돌려 빈칸이 뒤에서 채워지게 한다.
+
+    사용자가 Steam 에서 직접 지적한 결함과 같은 종류다(문명 VI 시드 → VII 추천) —
+    사용자는 자기가 적은 작품의 속편 존재를 이미 안다. **점수를 사는 변경이 아니다.**
+    실제로 지워지는 것 중 절반 가까이가 3등급이라 P@k 는 내려갈 수 있다(D-34 긴장).
+    """
+    if df.empty or seed_rows is None or len(list(seed_rows)) == 0:
+        return df
+    names = dataset.set_index("row")["name"] if "row" in dataset.columns else dataset["name"]
+    seed_names = [str(names.get(int(r), "")) for r in seed_rows]
+    seed_names = [n for n in seed_names if n]
+    if not seed_names:
+        return df
+    def bad(r):
+        cn = str(names.get(int(r), ""))
+        return any(is_seed_iteration(sn, cn, numbered_only) for sn in seed_names)
+    return df[~df["row"].map(bad)].reset_index(drop=True)
+
+
 def cap_franchise(df: pd.DataFrame, dataset: pd.DataFrame, franchise_max: int = 1,
                   seed_rows=None, seed_franchise_max: int = 0) -> pd.DataFrame:
     """같은 기본 제목을 `franchise_max` 개까지만 남긴다.
@@ -155,9 +223,13 @@ def cap_media(df: pd.DataFrame, dataset: pd.DataFrame, tv_max_ratio: float | Non
 def postprocess(ranked: pd.DataFrame, dataset: pd.DataFrame, top_n: int = 50,
                 franchise_max: int = 1, interleave: bool = True,
                 tv_max_ratio: float | None = None, seed_rows=None,
-                seed_franchise_max: int = 0) -> pd.DataFrame:
+                seed_franchise_max: int = 0,
+                drop_seed_iter: str | None = None) -> pd.DataFrame:
     df = cap_franchise(ranked, dataset, franchise_max=franchise_max, seed_rows=seed_rows,
                        seed_franchise_max=seed_franchise_max)
+    if drop_seed_iter:                       # D-46. "numbered" | "any"
+        df = drop_seed_iterations(df, dataset, seed_rows,
+                                  numbered_only=(drop_seed_iter == "numbered"))
     df = cap_media(df, dataset, tv_max_ratio)
     if interleave: df = interleave_by_seed(df, top_n=top_n)
     else: df = df.head(top_n).reset_index(drop=True)

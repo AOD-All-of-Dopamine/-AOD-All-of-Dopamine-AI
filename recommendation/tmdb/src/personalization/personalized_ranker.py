@@ -44,7 +44,8 @@ from src.config import artifact_dir
 
 class PersonalizedRanker:
     def __init__(self, artifacts=None, rating_boost: float = 0.0, align_w: float = 0.0,
-                 vote_boost: float = 0.0, media_w: float = 0.0):
+                 vote_boost: float = 0.0, media_w: float = 0.0,
+                 genre_w: float = 0.0):
         d = artifact_dir(artifacts)
         idx = pd.read_parquet(d / "corpus_index.parquet").sort_values("embedding_row")
         ds = pd.read_parquet(d / "dataset.parquet").set_index("item_id")
@@ -55,6 +56,9 @@ class PersonalizedRanker:
         self.vote_boost = vote_boost   # 구설정 재현용. 신규 설계에서는 0 이다
         self.media_w = media_w         # D-42. 시드 매체 집합 밖이면 (1−media_w) 를 곱한다
         self._media = self.dataset["media"].to_numpy()
+        self.genre_w = genre_w         # D-44. 시드 개별 최대 피복률로 장르 정합을 밀어준다
+        self._genres = [frozenset(g.tolist() if hasattr(g, "tolist") else (g or []))
+                        for g in self.dataset["genres"]] if genre_w else None
         vc = self.dataset["vote_count"].astype(float)
         self.vote_pct = vc.rank(pct=True).to_numpy()          # 결측 없음 → 눕힐 것이 없다
         va = self.dataset["vote_average"].astype(float)
@@ -62,7 +66,8 @@ class PersonalizedRanker:
 
     def rank(self, scored: pd.DataFrame, exclude_rows=None, top_n: int = 300,
              servable_mask: np.ndarray | None = None,
-             seed_pct: float | None = None, seed_medias=None) -> pd.DataFrame:
+             seed_pct: float | None = None, seed_medias=None,
+             seed_genres=None) -> pd.DataFrame:
         """`seed_pct` — 시드 인기 백분위 중앙. 없으면 정합 항을 끈다.
 
         `seed_medias` — 시드의 media 집합 (D-42). `media_w > 0` 이고 후보 media 가
@@ -77,6 +82,16 @@ class PersonalizedRanker:
         base = 1.0 + self.rating_norm[r] * self.rating_boost
         if self.vote_boost:                      # 구설정 재현 경로
             base = base + self.vote_pct[r] * self.vote_boost
+        if self.genre_w and seed_genres:
+            # 시드 **개별** 최대 피복률 |A∩S|/|S| (D-44). 합집합을 쓰면 시드가 많을수록
+            # 느슨해져 twenty_library(시드 20개 · 장르 15종)에서 무의미해진다.
+            # 분모에 후보 A 를 넣지 않는다 — 자카드(D-43)는 후보가 장르를 하나 더
+            # 달았다는 이유로 벌점을 줘서 시드가 균질한 프로필(five_horror)의 랭킹을
+            # 품질이 아닌 태그 일치도로 무너뜨렸다.
+            gf = np.array([max((len(self._genres[i] & sg) / len(sg) if sg else 0.0)
+                               for sg in seed_genres)
+                           for i in r], dtype=np.float32)
+            base = base * (1.0 + self.genre_w * gf)
         if self.media_w and seed_medias:
             mis = ~np.isin(self._media[r], list(seed_medias))
             base = base * (1.0 - self.media_w * mis)
