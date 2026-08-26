@@ -280,21 +280,44 @@ def list_page_ids(session: requests.Session, params: dict) -> list[str]:
     return list(dict.fromkeys(re.findall(r"productNo=(\d+)", r.text)))
 
 
-def enumerate_ids(session: requests.Session, rate: AdaptiveRate, max_pages: int = LIST_PAGE_CAP) -> list[str]:
+def slice_label(sl: dict) -> str:
+    return f"{GENRE_CODES[sl['genreCode']]}/{'완결' if sl['isFinished'] == 'true' else '연재중'}"
+
+
+def enumerate_ids(
+    session: requests.Session,
+    rate: AdaptiveRate,
+    max_pages: int = LIST_PAGE_CAP,
+    cache: Path | None = None,
+) -> list[str]:
     """장르 × 완결여부로 슬라이스해 productNo 를 모은다.
 
     슬라이스마다 10,000개 캡이 따로 걸리므로 전체 목록 하나로 도는 것보다 훨씬 많이 얻는다.
     빈 페이지가 나오면 그 슬라이스는 끝난 것으로 보고 다음으로 넘어간다.
+
+    **슬라이스를 끝낼 때마다 캐시에 저장한다.** 전체 열거는 2시간이 넘는데, 끝나고 한 번만
+    쓰면 중간에 죽었을 때(OOM·네트워크·중단) 전부 날아간다. 실제로 22,599건을 모은 상태에서
+    OOM 으로 통째로 잃었다. 다시 돌리면 완료된 슬라이스는 건너뛴다.
     """
     seen: dict[str, None] = {}
+    done_slices: set[str] = set()
+
+    if cache and cache.exists():
+        saved = json.loads(cache.read_text())
+        seen.update(dict.fromkeys(saved.get("ids", [])))
+        done_slices = set(saved.get("done_slices", []))
+        if seen:
+            print(f"  열거 이어받기: {len(seen):,}건 · 완료 슬라이스 {len(done_slices)}개", flush=True)
+
     slices = [
         {"categoryTypeCode": "genre", "genreCode": g, "isFinished": f}
         for g in GENRE_CODES
         for f in ("false", "true")
     ]
     for sl in slices:
-        name = GENRE_CODES[sl["genreCode"]]
-        label = f"{name}/{'완결' if sl['isFinished'] == 'true' else '연재중'}"
+        label = slice_label(sl)
+        if label in done_slices:
+            continue
         before = len(seen)
         for page in range(1, max_pages + 1):
             try:
@@ -311,6 +334,10 @@ def enumerate_ids(session: requests.Session, rate: AdaptiveRate, max_pages: int 
                 break
             seen.update(dict.fromkeys(ids))
             time.sleep(rate.delay)
+        done_slices.add(label)
+        if cache:
+            cache.write_text(json.dumps(
+                {"ids": list(seen), "done_slices": sorted(done_slices)}, ensure_ascii=False))
         print(f"  {label:16} +{len(seen) - before:>6,}  (누적 {len(seen):,})", flush=True)
     return list(seen)
 
@@ -359,13 +386,14 @@ def main():
     session = requests.Session()
     rate = AdaptiveRate(args.rps)
 
-    if cache.exists():
-        ids = json.loads(cache.read_text())
+    n_slices = len(GENRE_CODES) * 2
+    cached = json.loads(cache.read_text()) if cache.exists() else {}
+    if len(cached.get("done_slices", [])) == n_slices:
+        ids = cached["ids"]
         print(f"목록 캐시 재사용: {len(ids):,}건 ({cache})", flush=True)
     else:
         print("작품 목록 열거 중 (장르 × 완결여부 슬라이스)...", flush=True)
-        ids = enumerate_ids(session, rate, args.list_pages)
-        cache.write_text(json.dumps(ids))
+        ids = enumerate_ids(session, rate, args.list_pages, cache=cache)
         print(f"열거 완료: {len(ids):,}건 → {cache}", flush=True)
 
     done = already_done(out)

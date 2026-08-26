@@ -115,16 +115,47 @@ def iter_records(path: str | Path):
                     continue
 
 
+def drop_preview_editions(df: pd.DataFrame) -> pd.DataFrame:
+    """같은 작품의 **미리보기판**을 버리고 본편만 남긴다.
+
+    네이버 시리즈는 한 작품을 여러 상품으로 올린다. 실측(390건 중 24건 = 6%):
+
+        "아폴론 저축은행"  id=13114576  화수 1    관심 0       ← 미리보기
+                          id=12283752  화수 89   관심 13,000  ← 본편
+        "두 번 사는 흑기사" id=14317774  화수 8    관심 0
+                          id=14317079  화수 198  관심 1,900
+
+    제목·출판사·줄거리가 완전히 같고 화수와 관심 수만 다르다. 둘 다 남기면
+      · 코퍼스가 부풀고 (본 크롤 2.7만 기준 약 1,600건)
+      · 임베딩이 동일하니 추천 목록에 같은 작품이 두 번 뜨고
+      · 관심 0인 미리보기가 품질 하한에 걸려 **본편 대신 미리보기가 걸러지는** 일이 생긴다
+    후처리의 시리즈 상한이 추천 단계에서 막아주긴 하지만, 코퍼스 자체를 깨끗하게 두는 편이
+    낫다 — 하한·백분위 같은 통계가 전부 이 중복에 오염되기 때문이다.
+
+    화수가 많은 쪽을 본편으로 본다(동률이면 관심 수가 많은 쪽).
+    """
+    if df.empty:
+        return df
+    key = ["name", "publisher", "synopsis"]
+    df = df.sort_values(
+        ["episode_count", "interest_count"], ascending=False, na_position="last", kind="mergesort"
+    )
+    df = df.drop_duplicates(subset=key, keep="first")
+    return df
+
+
 def build_dataset(records, min_text_chars: int) -> pd.DataFrame:
     rows = [r for obj in records if (r := record_to_row(obj, min_text_chars))]
     df = pd.DataFrame(rows)
     if df.empty:
         return df
-    # dedup: 시놉시스가 더 긴 레코드 우선, 동률이면 최초 등장 (stable sort)
+    # 1차 dedup: 같은 item_id — 시놉시스가 더 긴 레코드 우선 (stable sort)
     df["_syn_len"] = df["synopsis"].str.len()
     df = df.sort_values("_syn_len", ascending=False, kind="mergesort")
     df = df.drop_duplicates(subset="item_id", keep="first")
-    df = df.drop(columns="_syn_len").reset_index(drop=True)
+    df = df.drop(columns="_syn_len")
+    # 2차 dedup: item_id 는 다르지만 같은 작품인 미리보기판
+    df = drop_preview_editions(df).reset_index(drop=True)
     for col in ("interest_count", "comment_count", "episode_count"):
         df[col] = df[col].astype("Int64")
     return df

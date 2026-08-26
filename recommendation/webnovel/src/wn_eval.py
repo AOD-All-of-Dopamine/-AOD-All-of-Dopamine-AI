@@ -46,8 +46,61 @@ class Engine:
         r = self.ds["rating"].to_numpy(dtype=np.float32)
         self.rating_norm = np.where(r > 0, np.clip((r - 5.0) / 5.0, -1.0, 1.0), 0.0)
 
+    def mmr(self, df: pd.DataFrame, k: int, lam: float) -> pd.DataFrame:
+        """MMR — 관련성과 **이미 고른 것과의 중복** 을 맞바꾼다 (D-53).
+
+            argmax_c  λ·rel(c) − (1−λ)·max_{s∈선택됨} cos(c, s)
+
+        `rel` 은 풀 안에서 min-max 정규화한 현행 점수다. 두 항의 눈금을 맞추지
+        않으면 λ 가 해석 불가능해진다 — `final_score` 는 보정으로 1 을 넘을 수 있는데
+        cos 는 그렇지 않다.
+
+        **ILS 를 낮추는 것 자체가 목적이 아니다.** §20·§21 에서 `quality_w` 를
+        양방향으로 움직였을 때 ILS 가 좋아 보이는 쪽이 적합률은 나빴다. 주장할 수 있는
+        것은 "적합 개수를 유지한 채 중복만 줄였다"뿐이고, 그건 P@k 관문이 지킨다.
+        """
+        if df.empty or lam >= 1.0:
+            return df.head(k).reset_index(drop=True)
+        rows = [self.id_to_row[i] for i in df["item_id"]]
+        V = self.emb[rows]
+        V = V / np.clip(np.linalg.norm(V, axis=1, keepdims=True), 1e-9, None)
+        rel = df["final_score"].to_numpy(dtype=np.float32)
+        lo, hi = float(rel.min()), float(rel.max())
+        rel = (rel - lo) / (hi - lo) if hi > lo else np.zeros_like(rel)
+        n = len(df)
+        picked, maxsim = [], np.zeros(n, dtype=np.float32)
+        alive = np.ones(n, dtype=bool)
+        for _ in range(min(k, n)):
+            score = lam * rel - (1.0 - lam) * maxsim
+            score[~alive] = -np.inf
+            j = int(np.argmax(score))
+            picked.append(j); alive[j] = False
+            maxsim = np.maximum(maxsim, V @ V[j])
+        return df.iloc[picked].reset_index(drop=True)
+
+    def mmr_by_seed(self, df: pd.DataFrame, lam: float) -> pd.DataFrame:
+        """`dominant_seed` 묶음 **안에서만** MMR 로 재정렬한다 (D-54).
+
+        D-53 에서 전역 MMR 은 `interleave_by_seed` 를 밀어냈고, top-50 이 덮는 시드
+        종류가 twenty_library 에서 **19 → 9** 로 반토막 나면서 목록이 **더** 뭉쳤다.
+        시드 커버리지와 임베딩 분산은 다른 다양성이다. 여기서는 각 묶음의 **원소
+        집합을 바꾸지 않고 순서만** 바꾸므로 커버리지가 설계상 보존된다.
+        """
+        if df.empty or lam >= 1.0 or "dominant_seed" not in df:
+            return df
+        parts = []
+        for _, g in df.groupby("dominant_seed", sort=False):
+            parts.append(self.mmr(g.reset_index(drop=True), len(g), lam))
+        # 묶음 **순서**는 손대지 않는다. `interleave_by_seed` 는 groupby(sort=False) 로
+        # 첫 등장 순서를 버킷 우선순위로 쓰므로, 여기서 묶음을 재정렬하면 어느 시드가
+        # 1위 자리를 갖는지가 바뀐다. 위 루프도 sort=False 라 순서가 보존된다.
+        return pd.concat(parts).reset_index(drop=True)
+
     def recommend(self, seed_ids, *, strategy="top2_mean", pop_boost=0.0,
                   rating_boost=0.0, hub_lambda=0.0, k=10,
+                  # `mmr_lambda` 는 **기각된 축이다** (D-53 전역 · D-54 시드묶음).
+                  # 1.0 = 끔. 켜지 않는다. 재현·재검증용으로만 남긴다.
+                  mmr_lambda=1.0,
                   postprocess_on=True, exclude=None) -> pd.DataFrame:
         rows = [self.id_to_row[i] for i in seed_ids]
         V = self.emb[rows]
@@ -82,8 +135,9 @@ class Engine:
         if postprocess_on:
             from src.postprocess import drop_seed_series
             out = drop_seed_series(df.head(k * 8), self.ds, seed_ids)
+            out = self.mmr_by_seed(out, mmr_lambda)      # D-54. 묶음 **안**에서만
             return pp(out, self.ds, top_n=k).head(k).reset_index(drop=True)
-        return df.head(k).reset_index(drop=True)
+        return self.mmr(df.head(k * 8), k, mmr_lambda)
 
 
 # ── 프로필 / 등급 은행 ───────────────────────────────────────────────────────
@@ -113,7 +167,8 @@ def save_bank(bank: dict) -> None:
 
 
 def variant_recs(variant: dict, k: int, profiles: pd.DataFrame, eng: Engine) -> dict:
-    v = {"strategy": "top2_mean", "pop_boost": 0.0, "rating_boost": 0.0, "hub_lambda": 0.0}
+    v = {"strategy": "top2_mean", "pop_boost": 0.0, "rating_boost": 0.0, "hub_lambda": 0.0,
+         "mmr_lambda": 1.0}
     v.update(variant)
     out = {}
     for _, p in profiles.iterrows():
@@ -121,9 +176,33 @@ def variant_recs(variant: dict, k: int, profiles: pd.DataFrame, eng: Engine) -> 
     return out
 
 
-def score(recs: dict, bank: dict, k: int) -> dict:
-    per, ungraded = {}, 0
+def intra_list_similarity(vecs) -> float:
+    """리스트 내부 유사도(ILS) — top-k 임베딩의 대각 제외 평균 쌍유사도.
+
+    **P@k 하나로는 부족하다(D-32).** 적합률은 "같은 책 10권"을 만점으로 센다.
+    웹소설 52프로필 실측에서 corr(적합률, ILS) = **+0.308** — 지표가 중복을
+    보상한다. 적합률 1.00 인 rule_rf_none 은 ILS 0.704 인데, 적합률 0.80 인
+    coh_talent 는 0.586 으로 **후자가 추천으로서 더 낫다.**
+
+    그래서 적합률과 항상 같이 낸다. 낮을수록 다양하다.
+    """
+    import numpy as _np
+    if vecs is None or len(vecs) < 2:
+        return float("nan")
+    V = _np.asarray(vecs, dtype=_np.float32)
+    V = V / _np.clip(_np.linalg.norm(V, axis=1, keepdims=True), 1e-9, None)
+    S = V @ V.T
+    n = len(V)
+    return float((S.sum() - _np.trace(S)) / (n * (n - 1)))
+
+
+def score(recs: dict, bank: dict, k: int, vec_of=None) -> dict:
+    """`vec_of(ids) -> (n, d)` 를 주면 프로필별 ILS 도 같이 낸다 (D-32)."""
+    per, ungraded, ils = {}, 0, {}
     for pid, df in recs.items():
+        if vec_of is not None:
+            try: ils[pid] = intra_list_similarity(vec_of(list(df["item_id"])[:k]))
+            except Exception: ils[pid] = float("nan")
         gs = []
         for iid in df["item_id"]:
             g = bank.get((pid, str(iid)))
@@ -135,5 +214,10 @@ def score(recs: dict, bank: dict, k: int) -> dict:
                     np.mean(gs) if gs else 0.0, len(gs))
     fit = float(np.mean([v[0] for v in per.values()]))
     mg = float(np.mean([v[1] for v in per.values()]))
-    return {"fit": fit, "mean_grade": mg, "ungraded": ungraded,
-            "graded": sum(v[2] for v in per.values()), "per": per}
+    out = {"fit": fit, "mean_grade": mg, "ungraded": ungraded,
+           "graded": sum(v[2] for v in per.values()), "per": per}
+    if ils:
+        vals = [v for v in ils.values() if v == v]
+        out["ils"] = float(np.mean(vals)) if vals else float("nan")
+        out["per_ils"] = ils
+    return out
