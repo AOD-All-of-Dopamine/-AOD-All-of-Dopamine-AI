@@ -151,8 +151,14 @@ def export_blind(pairs, tag: str, profiles=None) -> int:
     lines, key = [], []
     for j, (pid, appid) in enumerate(ordered):
         row = ds.loc[int(appid)]
-        sd = " / ".join(nm(x) for x in seeds[pid][:3])
-        lines.append(f"{tag}{j:04d} [{sd[:50]}] ({row.get('genres', '')}) "
+        # **시드를 전부 보여준다 (D-58).** 예전에는 앞 3개만, 그것도 50자로 잘라
+        # 보여줬다. `twenty_broad` 는 시드가 20개인데 Terraria/DST/Portal 셋만 보였고,
+        # 숨은 시드에 다크 소울·폴아웃4·몬헌·XCOM·데스티니가 있는 줄 모른 채
+        # ELDEN RING 을 g=1, Nioh 3 을 g=0 으로 매겼다. 세 플랫폼 모두 같은 편향이
+        # 있었다 — 시드 수 구간별 적합률이 TMDB 0.948 → 0.924 → 0.880 → 0.640 으로
+        # 단조 감소한다. **잘린 시드는 곧 없는 시드다.**
+        sd = " / ".join(nm(x) for x in seeds[pid])
+        lines.append(f"{tag}{j:04d} [{sd}] ({row.get('genres', '')}) "
                      f"{nm(appid)} | {str(row.get('short_description', ''))[:94]}")
         key.append(dict(id=f"{tag}{j:04d}", pid=pid, appid=int(appid)))
     (P1 / f"{tag}_chunks.txt").write_text("\n".join(lines) + "\n", encoding="utf-8")
