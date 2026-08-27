@@ -19,7 +19,7 @@ import numpy as np
 import pandas as pd
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-from src.config import artifact_dir  # noqa: E402
+from src.config import artifact_dir, PRODUCTION  # noqa: E402
 from src.postprocess import postprocess as pp  # noqa: E402
 
 ART = artifact_dir()
@@ -96,12 +96,17 @@ class Engine:
         # 1위 자리를 갖는지가 바뀐다. 위 루프도 sort=False 라 순서가 보존된다.
         return pd.concat(parts).reset_index(drop=True)
 
-    def recommend(self, seed_ids, *, strategy="top2_mean", pop_boost=0.0,
+    def recommend(self, seed_ids, *, strategy="top2_mean",
+                  # **`None` 이면 `config.PRODUCTION` 의 확정값**(D-66).
+                  # 예전 기본값 0.0 이 이 로그의 모든 웹소설 숫자를 만들었고,
+                  # 서빙은 0.03/0.15 로 돌고 있었다. 갈라진 채로 두지 않는다.
+                  pop_boost=None,
                   rating_boost=0.0, hub_lambda=0.0, k=10,
                   # `mmr_lambda` 는 **기각된 축이다** (D-53 전역 · D-54 시드묶음).
                   # 1.0 = 끔. 켜지 않는다. 재현·재검증용으로만 남긴다.
                   mmr_lambda=1.0,
                   postprocess_on=True, exclude=None) -> pd.DataFrame:
+        pop_boost = PRODUCTION["pop_boost"] if pop_boost is None else pop_boost
         rows = [self.id_to_row[i] for i in seed_ids]
         V = self.emb[rows]
         if hub_lambda:
@@ -167,8 +172,10 @@ def save_bank(bank: dict) -> None:
 
 
 def variant_recs(variant: dict, k: int, profiles: pd.DataFrame, eng: Engine) -> dict:
-    v = {"strategy": "top2_mean", "pop_boost": 0.0, "rating_boost": 0.0, "hub_lambda": 0.0,
-         "mmr_lambda": 1.0}
+    # 지정하지 않은 축은 **확정값**(config.PRODUCTION)이 들어간다 (D-66).
+    # 예전에는 pop_boost 기본이 0.0 이라 하네스가 서빙과 다른 것을 재고 있었다.
+    v = {k: PRODUCTION[k] for k in ("strategy", "pop_boost", "rating_boost",
+                                    "hub_lambda", "mmr_lambda")}
     v.update(variant)
     out = {}
     for _, p in profiles.iterrows():

@@ -4,18 +4,20 @@ from pathlib import Path
 import numpy as np
 import yaml
 
-from src.config import PROJECT_ROOT, ensure_artifacts_dir
+from src.config import PROJECT_ROOT, ensure_artifacts_dir, PRODUCTION
 from src.personalization.seed_loader import SeedLoader
 from src.personalization.candidate_retriever import CandidateRetriever
 from src.personalization.score_aggregator import ScoreAggregator
 from src.personalization.personalized_ranker import PersonalizedRanker
 
 
-def build_components(pop_boost: float = 0.03, artifacts=None):
+def build_components(pop_boost: float | None = None, artifacts=None):
     """코퍼스 임베딩(76MB)과 dataset 을 읽는 무거운 생성자들을 한 번만 만든다.
 
     LOO 평가처럼 수십 번 호출하는 경우 `run_multi(..., components=...)` 로 재사용한다.
+    `pop_boost=None` 이면 `config.PRODUCTION` 의 확정값을 쓴다 (D-66).
     """
+    pop_boost = PRODUCTION["pop_boost"] if pop_boost is None else pop_boost
     return (
         SeedLoader(artifacts),
         CandidateRetriever(artifacts),
@@ -28,7 +30,7 @@ def run_multi(
     liked_ids: list[int],
     strategies: list[str] | None = None,
     top_n: int = 300,
-    pop_boost: float = 0.03,
+    pop_boost: float | None = None,      # None = config.PRODUCTION (D-66)
     output_dir: str | None = None,
     components: tuple | None = None,
     postprocess: bool = False,
@@ -80,8 +82,12 @@ def run_multi(
     return results
 
 
-# 새로고침 깊은 페이지에서 품질이 유지되도록 맞춘 값. 근거는 next_page docstring 참고.
-REFRESH_POP_BOOST = 0.15
+# **D-66 으로 확정값에 맞췄다.** 0.15 는 Steam 의 깊은-페이지 진단(리뷰 중앙 2,831→434)을
+# 보고 고른 값이었고, 코드 자신이 *"숫자는 Steam 것이고 이 도메인에서 다시 판정해야 한다 …
+# 검증된 값이 아니다"* 라고 적어 뒀다. 웹소설에서 실제로 재니 **0.15 는 미달이다**:
+#     k=20 적합률 0.9452 (최고 대비 −0.0221) · 개별 최대하락 −0.350 → (A)(C) 위반
+# 확정값 0.03 은 k=20·k=50 양쪽에서 통과했다. 이제 여기도 `PRODUCTION` 을 읽는다.
+REFRESH_POP_BOOST = PRODUCTION["pop_boost"]
 
 # 품질 하한 기본값. `dataset_profile.json` 의 interest_count 분포를 보고 정한다.
 # Steam 은 결측이 곧 "리뷰 거의 없음"이라 이진 판정이 가능했지만, 관심 수는 연속값이라

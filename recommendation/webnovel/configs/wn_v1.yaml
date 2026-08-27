@@ -42,7 +42,7 @@ runtime:
 ranking:
   # 인기도 부스트. 실험 재현성을 위해 낮은 값을 기본으로 두고,
   # 제품 경로(next_page)는 personalized_retrieve.REFRESH_POP_BOOST 를 쓴다.
-  pop_boost: 0.03
+  pop_boost: 0.03          # D-66 확정. 단일 출처는 src/config.py PRODUCTION 이다
   # 품질 하한. 관심 수는 연속값이라 임계가 필요하다.
   # dataset_profile.json 의 interest_count 분포를 보고 확정한다.
   # **D-62 로 껐다.** 실측: 관심수 100 미만 슬롯(전체 30%)의 적합률이 0.961 로

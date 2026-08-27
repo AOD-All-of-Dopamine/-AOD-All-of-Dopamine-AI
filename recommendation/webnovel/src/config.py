@@ -71,3 +71,24 @@ def artifact_dir(path: str | Path | None = None) -> Path:
 def ensure_artifacts_dir() -> Path:
     ARTIFACTS_DIR.mkdir(parents=True, exist_ok=True)
     return ARTIFACTS_DIR
+
+
+# ── 확정 설정 ────────────────────────────────────────────────────────────────
+#: **확정값은 여기 하나에만 둔다.** 호출부마다 기본값을 적으면 확정한 순간부터
+#: 갈라진다 — 이 프로젝트에서 네 번 났다(`align_w` · `drop_seed_iter` ·
+#: Steam `quality_w`/`tag_w` · 그리고 여기 `pop_boost`).
+#:
+#: D-66 이전에 `pop_boost` 는 **세 값이 세 곳에 살아 있었다:**
+#:     0.0   `wn_eval.variant_recs` — 실험 로그의 모든 웹소설 숫자 · 시험대 백엔드
+#:     0.03  `configs/wn_v1.yaml` · `personalized_retrieve.build_components`
+#:     0.15  `personalized_retrieve.REFRESH_POP_BOOST` — 제품 새로고침
+#: 두 구현(`wn_eval.Engine` vs `PersonalizedRanker`)은 **같은 값에서 9.88/10 일치**한다.
+#: §25 가 기록한 "top-10 겹침 8.5/10"은 구현 차이가 아니라 이 상수 차이였다.
+PRODUCTION = {
+    "strategy": "top2_mean",
+    "pop_boost": 0.03,      # D-66 확정. k=20·k=50 양쪽 미채점 0 에서 판정
+    "rating_boost": 0.0,    # 신호 없음 (D-62: 평점 잔차 −0.034 · 베이지안 −0.045)
+    "hub_lambda": 0.0,
+    "mmr_lambda": 1.0,      # **기각된 축** (D-53 전역 · D-54 시드묶음). 1.0 = 끔
+    "min_interest_count": None,   # D-62. 걸면 30% 를 버리는데 버리는 쪽이 더 낫다
+}
