@@ -16,13 +16,13 @@ from src.config import PRODUCTION_POSTPROCESS
 def build_components(artifacts=None, hub_lambda: float | None = None,
                      vote_boost: float = 0.0, rating_boost: float = 0.0,
                      align_w: float = 0.0, min_overview_len: int = 0,
-                     media_w: float = 0.0, genre_w: float = 0.0):
+                     media_w: float = 0.0, genre_w: float = 0.0, vote_w: float = 0.0):
     ret = CandidateRetriever(artifacts, min_overview_len=min_overview_len)
     if hub_lambda is not None: ret.hub_lambda = hub_lambda
     return (SeedLoader(artifacts), ret, ScoreAggregator(),
             PersonalizedRanker(artifacts, vote_boost=vote_boost,
                                rating_boost=rating_boost, align_w=align_w,
-                               media_w=media_w, genre_w=genre_w))
+                               media_w=media_w, genre_w=genre_w, vote_w=vote_w))
 
 
 def recommend(seed_rows, components=None, strategy: str = "top2_mean", top_n: int = 50,

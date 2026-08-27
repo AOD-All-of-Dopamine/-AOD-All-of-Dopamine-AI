@@ -45,7 +45,7 @@ from src.config import artifact_dir
 class PersonalizedRanker:
     def __init__(self, artifacts=None, rating_boost: float = 0.0, align_w: float = 0.0,
                  vote_boost: float = 0.0, media_w: float = 0.0,
-                 genre_w: float = 0.0):
+                 genre_w: float = 0.0, vote_w: float = 0.0):
         d = artifact_dir(artifacts)
         idx = pd.read_parquet(d / "corpus_index.parquet").sort_values("embedding_row")
         ds = pd.read_parquet(d / "dataset.parquet").set_index("item_id")
@@ -54,6 +54,13 @@ class PersonalizedRanker:
         self.rating_boost = rating_boost
         self.align_w = align_w
         self.vote_boost = vote_boost   # 구설정 재현용. 신규 설계에서는 0 이다
+        # D-60. **D-31 의 전제가 TMDB 에서는 틀렸다.** D-31 은 Steam D-6("리뷰 수의 어떤
+        # 단조 변환으로도 대작 취향과 저리뷰 취향을 동시에 만족시킬 수 없다")을 TMDB 에서
+        # 재보지 않고 이식해 vote_boost 를 지웠다. 실측하니 **저인기 축(17개, 시드 백분위
+        # 0.559)에서도 log 투표수 잔차상관 +0.120 (13/17 양수)** 로 방향이 안 뒤집힌다.
+        # 대안이던 align_w 의 gap 은 저인기 축에서 +0.040 으로 **기대와 반대**였다.
+        # 식은 Steam 확정식과 동일하게 쓴다 — 자유 파라미터를 하나 줄인다.
+        self.vote_w = vote_w
         self.media_w = media_w         # D-42. 시드 매체 집합 밖이면 (1−media_w) 를 곱한다
         self._media = self.dataset["media"].to_numpy()
         self.genre_w = genre_w         # D-44. 시드 개별 최대 피복률로 장르 정합을 밀어준다
@@ -61,6 +68,7 @@ class PersonalizedRanker:
                         for g in self.dataset["genres"]] if genre_w else None
         vc = self.dataset["vote_count"].astype(float)
         self.vote_pct = vc.rank(pct=True).to_numpy()          # 결측 없음 → 눕힐 것이 없다
+        self.vote_q = np.clip(np.log10(1.0 + vc.to_numpy()) / 5.0, 0.0, 1.0)   # D-60
         va = self.dataset["vote_average"].astype(float)
         self.rating_norm = ((va - 5.0) / 5.0).clip(-1, 1).to_numpy()   # 5점=0, 10점=1
 
@@ -82,6 +90,8 @@ class PersonalizedRanker:
         base = 1.0 + self.rating_norm[r] * self.rating_boost
         if self.vote_boost:                      # 구설정 재현 경로
             base = base + self.vote_pct[r] * self.vote_boost
+        if self.vote_w:                          # D-60
+            base = base + self.vote_q[r] * self.vote_w
         if self.genre_w and seed_genres:
             # 시드 **개별** 최대 피복률 |A∩S|/|S| (D-44). 합집합을 쓰면 시드가 많을수록
             # 느슨해져 twenty_library(시드 20개 · 장르 15종)에서 무의미해진다.
