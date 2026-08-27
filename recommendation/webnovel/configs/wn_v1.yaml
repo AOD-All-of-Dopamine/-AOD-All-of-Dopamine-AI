@@ -45,7 +45,10 @@ ranking:
   pop_boost: 0.03
   # 품질 하한. 관심 수는 연속값이라 임계가 필요하다.
   # dataset_profile.json 의 interest_count 분포를 보고 확정한다.
-  min_interest_count: 100
+  # **D-62 로 껐다.** 실측: 관심수 100 미만 슬롯(전체 30%)의 적합률이 0.961 로
+  # 100 이상(0.958)보다 오히려 높다. log 관심수 잔차상관도 −0.006(24/52)로 신호가 없다.
+  # 이 코퍼스는 이미 출판사 큐레이션 목록이라 관심수 0 이 신작·니치를 뜻한다.
+  min_interest_count: null
 
 postprocess:
   series_max: 1
