@@ -59,7 +59,8 @@ def variant_recs(variant: dict, k: int, profiles: pd.DataFrame, comps=None) -> d
         comps = build_components(quality_w=variant.get("quality_w"),
                                  quality_cap=variant.get("quality_cap"),
                                  quality_src=variant.get("quality_src"),
-                                 tag_w=variant.get("tag_w"))
+                                 tag_w=variant.get("tag_w"),
+                                 mc_w=variant.get("mc_w"))
     out = {}
     for _, p in profiles.iterrows():
         res = run_multi(list(p["liked_appids"]), strategies=[strat], top_n=k,

@@ -97,7 +97,7 @@ class PersonalizedRanker:
     def __init__(self, rec_boost: float = 0.03, artifacts: str | Path | None = None,
                  trend_weight: float = 0.0, trend_dir: str | Path | None = None,
                  quality_w: float = 0.0, quality_cap: float = 5.0,
-                 quality_src: str = "dataset", tag_w: float = 0.0):
+                 quality_src: str = "dataset", tag_w: float = 0.0, mc_w: float = 0.0):
         self.artifacts = artifact_dir(artifacts)
         self.dataset = pd.read_parquet(self.artifacts / "dataset.parquet")
         self.rec_boost = rec_boost
@@ -112,6 +112,12 @@ class PersonalizedRanker:
         self.tag_w = tag_w
         self._tags = ({a: frozenset(str(t) for t in (v if v is not None else []))
                        for a, v in self.dataset["tags"].items()} if tag_w else None)
+        # D-56. **점수가 아니라 보유 여부**가 신호다 — "언론이 다뤘는가"가 격이고,
+        # 그 다음 미세 구분은 리뷰 수(quality)가 이미 잡는다.
+        # 잔차상관(quality·tag_fit 통제 후) 보유 +0.131 · 점수 +0.060 · 개발사격 +0.019.
+        self.mc_w = mc_w
+        self._mc = (self.dataset["has_metacritic"].fillna(False).astype(float)
+                    if mc_w else None)
 
     def _build_quality(self) -> pd.Series:
         """appid → 품질 사전분포 ∈ [0, 1]. `log10(1+리뷰수) / cap` 을 자른 값이다.
@@ -212,6 +218,9 @@ class PersonalizedRanker:
                 result["tag_fit"] = result["steam_appid"].map(
                     lambda a: max(len(self._tags.get(int(a), frozenset()) & s) / len(s) for s in ss))
                 boost = boost + result["tag_fit"] * self.tag_w
+        if self.mc_w and self._mc is not None:
+            result["has_mc"] = result["steam_appid"].map(self._mc).fillna(0.0)
+            boost = boost + result["has_mc"] * self.mc_w
 
         result["final_score"] = result["seed_similarity"] * (1 + boost)
 

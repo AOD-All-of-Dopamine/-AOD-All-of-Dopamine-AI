@@ -87,4 +87,5 @@ PRODUCTION = {
     "quality_cap": 5.0,
     "quality_src": "dataset",
     "tag_w": 0.40,          # D-49 확정
+    "mc_w": 0.20,           # D-56 확정. has_metacritic (점수가 아니라 **보유 여부**)
 }
