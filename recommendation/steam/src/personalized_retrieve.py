@@ -123,8 +123,17 @@ def run_multi(
     return results
 
 
-# 새로고침 3페이지까지 품질이 유지되도록 맞춘 값. 근거는 next_page docstring 참고.
-REFRESH_REC_BOOST = 0.15
+# **D-73 으로 확정값에 맞췄다.** 웹소설에서 같은 이름의 상수가 0.15 로 갈라져 있던 것을
+# D-66 이 고쳤는데, **Steam 에도 똑같은 상수가 있다는 것을 그때 확인하지 않았다.**
+#
+# 다만 이 축은 **Steam 에서 무력하다.** 실측: `rec_boost` 를 0.0 · 0.03 · 0.15 · 1.0 · 5.0
+# 으로 바꿔도 52프로필 top-50 이 **완전히 동일**하다(겹침 50.0/50). 원인은 D-39 가 기록한
+# 백분위 결함이다 — `recommendations_total` 이 87.4% 결측이라 fillna(0) 이 그것들을 바닥에
+# 눕히고, **리뷰가 있는 후보끼리는 top-20 백분위가 0.9976~0.9999 안에 뭉친다.**
+# 폭 0.002 짜리 항은 `quality_w=0.50`(폭 ~0.5) 옆에서 순위를 못 바꾼다.
+# ⇒ 값을 맞추는 것은 **행동 변화가 아니라 단일 출처 원칙**을 지키는 것이다.
+from src.config import PRODUCTION as _P
+REFRESH_REC_BOOST = _P["rec_boost"]
 
 #: D-37 신설 · D-38 확정. 근거는 PersonalizedRanker._build_quality docstring.
 REFRESH_QUALITY_W = 0.50

@@ -213,7 +213,8 @@ def product_ranker(artifacts: str = "artifacts/full_v1", **overrides):
     """지금 제품이 쓰는 설정 그대로의 ranker 를 만든다."""
     from src.personalized_retrieve import build_components, next_page
 
-    comp = build_components(overrides.pop("rec_boost", 0.15), artifacts=artifacts)
+    # 기본값 0.15 는 확정값(0.03)과 갈라져 있었다 (D-73). None 이면 config.PRODUCTION 을 쓴다.
+    comp = build_components(overrides.pop("rec_boost", None), artifacts=artifacts)
 
     def rank(profile_id: str, liked: list[int]) -> pd.DataFrame:
         return next_page(liked, page_size=overrides.get("page_size", 10), components=comp,
