@@ -204,14 +204,24 @@ def intra_list_similarity(vecs) -> float:
 
 
 def score(recs: dict, bank: dict, k: int, vec_of=None) -> dict:
-    """`vec_of(ids) -> (n, d)` 를 주면 프로필별 ILS 도 같이 낸다 (D-32)."""
+    """`vec_of(ids) -> (n, d)` 를 주면 프로필별 ILS 도 같이 낸다 (D-32).
+
+    **`k` 는 반드시 잘라야 한다 (D-70).** 예전에는 ILS 만 `[:k]` 를 쓰고
+    등급 루프는 `df["item_id"]` 전체를 돌았다. 지금까지의 호출부가 전부
+    `variant_recs(v, k, ...)` 로 만든 것을 같은 `k` 로 채점해서 길이가 맞았기 때문에
+    기록된 수치는 오염되지 않았지만, **k=50 으로 만든 목록을 k=10 으로 채점하면
+    조용히 k=50 을 낸다.** 더 나쁜 것은 그 경우 **ILS 는 상위 k, 적합률은 전체**로
+    서로 다른 집합에서 계산됐다는 점이다. Steam `s_eval.score` 와
+    TMDB `eval_harness.score` 는 둘 다 `.head(k)` 를 쓴다 — 여기만 달랐다.
+    """
     per, ungraded, ils = {}, 0, {}
     for pid, df in recs.items():
+        ids = list(df["item_id"])[:k]
         if vec_of is not None:
-            try: ils[pid] = intra_list_similarity(vec_of(list(df["item_id"])[:k]))
+            try: ils[pid] = intra_list_similarity(vec_of(ids))
             except Exception: ils[pid] = float("nan")
         gs = []
-        for iid in df["item_id"]:
+        for iid in ids:
             g = bank.get((pid, str(iid)))
             if g is None:
                 ungraded += 1
