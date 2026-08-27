@@ -16,7 +16,7 @@ import pandas as pd
 
 from src.config import PROJECT_ROOT, artifact_dir
 from src.experiment import file_fingerprint
-from src.personalized_retrieve import REFRESH_REC_BOOST, build_components, next_page
+from src.personalized_retrieve import REFRESH_POP_BOOST, build_components, next_page
 
 SCORE_LABEL = {3: "★★★", 2: "★★", 1: "★", 0: "✗"}
 LEGEND = "★★★ 매우 타당 · ★★ 타당 · ★ 약함 · ✗ 부적절 · – 미채점"
@@ -54,7 +54,7 @@ def build_doc(artifacts: str, page_size: int = 10) -> str:
     ds = pd.read_parquet(art / "dataset.parquet").set_index("item_id")
     profiles = pd.read_parquet(PROJECT_ROOT / "artifacts" / "p1" / "profiles.parquet")
     scores, judged_pids = load_scores()
-    comp = build_components(REFRESH_REC_BOOST, artifacts=artifacts)
+    comp = build_components(REFRESH_POP_BOOST, artifacts=artifacts)
 
     L = [
         "# 추천 결과 스냅샷",
@@ -70,7 +70,7 @@ def build_doc(artifacts: str, page_size: int = 10) -> str:
         "| 임베딩 모델 | Qwen/Qwen3-Embedding-0.6B, 1024차원, L2 정규화 |",
         "| 표현 | `Description` + `Genres` + `Modes`(게임플레이 모드만, 플랫폼 문구 제거) |",
         "| 집계 | MAX (시드별 최대 유사도) |",
-        f"| 인기도 부스트 | {REFRESH_REC_BOOST:.0%} |",
+        f"| 인기도 부스트 | {REFRESH_POP_BOOST:.0%} |",
         "| 후처리 | 시드 라운드로빈 인터리빙 · 시리즈 상한 1 · hard filter(성인/VR전용/미출시) |",
         "| 품질 하한 | 리뷰 수가 보고되는 게임만 (`has_interest`) |",
         "| 판정자 | Claude (Opus 5) — 사람 판정 아님 |",
