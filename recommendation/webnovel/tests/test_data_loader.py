@@ -82,7 +82,8 @@ class TestBuildDataset:
         assert "훨씬 더 긴" in df.iloc[0]["synopsis"]
 
     def test_nullable_int_columns(self):
-        df = build_dataset([raw(), raw(product_no=2, interest_count=None)], 20)
+        # 제목을 달리해야 한다 — 제목·출판사·줄거리가 같으면 같은 작품으로 합쳐진다
+        df = build_dataset([raw(), raw(product_no=2, title="다른작품", interest_count=None)], 20)
         assert str(df["interest_count"].dtype) == "Int64"
         assert df["interest_count"].isna().sum() == 1
 
@@ -92,10 +93,50 @@ class TestBuildDataset:
 
 class TestProfile:
     def test_records_distributions_used_for_thresholds(self):
-        df = build_dataset([raw(product_no=i, interest_count=i * 100) for i in range(1, 11)], 20)
+        df = build_dataset(
+            [raw(product_no=i, title=f"작품{i}", interest_count=i * 100) for i in range(1, 11)], 20
+        )
         p = compute_profile(10, df)
         assert p["valid_corpus_records"] == 10
         assert p["interest_coverage"] == 1.0
         # 품질 하한 임계를 이 분포에서 정한다
         assert p["interest_count"]["median"] == 550.0
         assert "median" in p["synopsis_chars"]
+
+
+class TestPreviewEditions:
+    """같은 작품의 미리보기판(화수 적고 관심 0)과 본편이 함께 올라온다 — 6% 실측."""
+
+    def _pair(self):
+        return [
+            raw(product_no=13114576, title="아폴론 저축은행", publisher="요다",
+                episode_count=1, interest_count=0),
+            raw(product_no=12283752, title="아폴론 저축은행", publisher="요다",
+                episode_count=89, interest_count=13000),
+        ]
+
+    def test_keeps_full_edition_not_preview(self):
+        df = build_dataset(self._pair(), 20)
+        assert len(df) == 1
+        assert df.iloc[0]["item_id"] == 12283752
+        assert df.iloc[0]["episode_count"] == 89
+
+    def test_order_does_not_matter(self):
+        df = build_dataset(list(reversed(self._pair())), 20)
+        assert df.iloc[0]["item_id"] == 12283752
+
+    def test_different_works_are_not_merged(self):
+        """제목이 같아도 출판사·줄거리가 다르면 다른 작품이다."""
+        df = build_dataset([
+            raw(product_no=1, title="검신", publisher="A", synopsis="첫 번째 이야기입니다." * 3),
+            raw(product_no=2, title="검신", publisher="B", synopsis="완전히 다른 이야기." * 3),
+        ], 20)
+        assert len(df) == 2
+
+    def test_missing_episode_count_does_not_win(self):
+        """화수 결측이 최댓값으로 정렬돼 미리보기가 살아남으면 안 된다."""
+        df = build_dataset([
+            raw(product_no=1, title="X", publisher="P", episode_count=None, interest_count=0),
+            raw(product_no=2, title="X", publisher="P", episode_count=120, interest_count=900),
+        ], 20)
+        assert len(df) == 1 and df.iloc[0]["item_id"] == 2
