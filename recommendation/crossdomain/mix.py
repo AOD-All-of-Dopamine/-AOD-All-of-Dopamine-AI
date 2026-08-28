@@ -77,4 +77,18 @@ def M3(lists, seeds, coh=None, k=10, wn_min_episodes=20, episodes=None):
     return M0(lists, seeds, coh, k)
 
 
-RULES = {"M0": M0, "M1": M1, "M2": M2, "M3": M3}
+def _wnfilter(lists, episodes, th=20):
+    if episodes and "wn" in lists:
+        lists = dict(lists); lists["wn"] = [i for i in lists["wn"] if episodes.get(i, episodes.get(str(i), 0)) >= th]
+    return lists
+
+def M4(lists, seeds, coh=None, k=10, wn_min_episodes=20, episodes=None):
+    """M1 + 웹소설 화수 필터 (X-5)."""
+    return M1(_wnfilter(lists, episodes, wn_min_episodes), seeds, coh, k)
+
+def M5(lists, seeds, coh, k=10, wn_min_episodes=20, episodes=None):
+    """M2 + 웹소설 화수 필터 (X-5)."""
+    return M2(_wnfilter(lists, episodes, wn_min_episodes), seeds, coh, k)
+
+
+RULES = {"M0": M0, "M1": M1, "M2": M2, "M3": M3, "M4": M4, "M5": M5}

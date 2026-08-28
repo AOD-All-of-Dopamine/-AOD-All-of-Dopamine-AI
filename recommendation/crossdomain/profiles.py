@@ -42,5 +42,32 @@ PROFILES = [
     dict(pid="x3_thin_bl",         steam="coh_cozy",               tmdb="coh_romcom",         wn="rule_bl_mid"),
     dict(pid="x3_thin_myst2",      steam="niche_puzzle_solo",      tmdb="mix2_elevated_horror", wn="mix2_mystery"),
     dict(pid="x3_thin_bl2",        steam="lowrev_cozy_narrative",  tmdb="coh_ghibli",         wn="rule_bl_high"),
+    # ── 확장 20 (X-5) — 기존 30 이 안 다룬 축 ──────────────────────────────
+    # x3_unbal: 시드 개수 불균형(5:1:1 · 10:3:2 …). 기존 30 은 거의 3:3:3 이라 M1 이 M0 과 갈릴 일이 없었다.
+    dict(pid="x3_unbal_steam10",  steam="ten_jrpg",              tmdb="two_ghibli",          wn="single_sword"),
+    dict(pid="x3_unbal_steam7",   steam="seven_automation",      tmdb="single_interstellar", wn="two_gate"),
+    dict(pid="x3_unbal_tmdb10",   steam="two_cozy_puzzle",       tmdb="ten_scifi",           wn="single_bastian"),
+    dict(pid="x3_unbal_tmdb7",    steam="two_bigaction",         tmdb="seven_korean",        wn="two_murim"),
+    dict(pid="x3_unbal_wn10",     steam="two_rhythm_arcade",     tmdb="two_classic",         wn="ten_mixed"),
+    dict(pid="x3_unbal_wn7",      steam="lowrev_deckbuilder",    tmdb="two_kthriller",       wn="seven_fantasy"),
+    # x3_lowpop: 세 플랫폼 다 저인기·롱테일 시드. 통합에서 인기 편향이 어느 플랫폼에서 나오나.
+    dict(pid="x3_lowpop_1",       steam="lowrev_metroidvania",   tmdb="lowvote_horror",      wn="rule_hp_low"),
+    dict(pid="x3_lowpop_2",       steam="longtail_detective",    tmdb="longtail_thriller",   wn="rule_rf_low"),
+    dict(pid="x3_lowpop_3",       steam="lowrev_towerdefense",   tmdb="lowvote_animation",   wn="rule_fant_none"),
+    dict(pid="x3_lowpop_4",       steam="longtail_puzzle_platformer", tmdb="longtail_music", wn="rule_rom_low"),
+    # x3_korean: 한국 콘텐츠 결(K-스릴러 · 사극 · 무협 · 현판). 임베딩이 언어·문화 결을 잡나.
+    dict(pid="x3_korean_1",       steam="coh_mmo",               tmdb="mix2_kthriller",      wn="rule_hp_high"),
+    dict(pid="x3_korean_2",       steam="coh_jrpg",              tmdb="seven_korean",        wn="rule_mu_high"),
+    dict(pid="x3_korean_3",       steam="mix2_soulslike_narrative", tmdb="two_kthriller",    wn="rule_mu_mid"),
+    # x3_lowcoh: 세 플랫폼 다 저응집(<0.5). D-22 — 통합에서 M2 가 처음으로 의미를 가질 조건.
+    dict(pid="x3_lowcoh_1",       steam="mix2_party_narrative",  tmdb="mix2_arthouse",       wn="two_murim"),
+    dict(pid="x3_lowcoh_2",       steam="mix2_puzzle_survival",  tmdb="twenty_library",      wn="ten_mixed"),
+    dict(pid="x3_lowcoh_3",       steam="ten_mixed_library",     tmdb="seven_tv",            wn="five_toptier"),
+    # x3_bigfan: 대작만. 세 플랫폼 다 최상위 인기 시드 — 통합이 "대작 무한 반복"이 되나.
+    dict(pid="x3_bigfan_1",       steam="twenty_broad",          tmdb="twenty_library",      wn="twenty_library"),
+    dict(pid="x3_bigfan_2",       steam="five_coop_shooter",     tmdb="five_acclaimed",      wn="five_hunter"),
+    # x2 추가: 웹소설+게임 조합이 12 중 4 뿐이었다. 두 개 더.
+    dict(pid="x2_sw_horror",      steam="seven_horror_coop",     tmdb=None,                  wn="rule_ln"),
+    dict(pid="x2_tw_family",      steam=None,                    tmdb="longtail_family",     wn="rule_rom_mid"),
 ]
-assert len(PROFILES) == 30 and len({p["pid"] for p in PROFILES}) == 30
+assert len(PROFILES) == 50 and len({p["pid"] for p in PROFILES}) == 50
