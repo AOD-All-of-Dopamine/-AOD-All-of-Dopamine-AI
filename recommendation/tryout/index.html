@@ -100,6 +100,19 @@ a{color:var(--accent)}
     </div>
   </div>
 
+  <div class="card" id="xcard" style="display:none">
+    <h2>통합 · 프로필 고르기</h2>
+    <p class="sub" style="margin:0 0 10px">세 플랫폼의 <b>기존 프로필을 조합</b>한 30개입니다. 각 플랫폼 랭커는 확정 설정 그대로 돌고,
+      통합 층은 <b>순위만</b> 받아 섞습니다. 시드가 없는 플랫폼은 나오지 않습니다.</p>
+    <div class="row">
+      <select id="xpid" style="flex:1"></select>
+      <select id="xrule"><option value="M0">M0 라운드로빈</option><option value="M1">M1 시드 비례</option><option value="M2">M2 비례+저응집 절반</option></select>
+      <select id="xk"><option value="10" selected>top 10</option><option value="15">top 15</option></select>
+      <button class="btn" id="xrec">통합 추천</button>
+    </div>
+    <div class="chips" id="xseeds"></div>
+  </div>
+
   <div class="card" style="margin-top:20px">
     <h2>3 · 결과 <span id="scope" style="text-transform:none;letter-spacing:0"></span></h2>
     <div id="out"><p class="empty">시드를 담고 <b>추천 받기</b>를 누르세요.</p></div>
@@ -112,7 +125,7 @@ a{color:var(--accent)}
 </div>
 
 <script>
-const PLATFORMS=[["steam","Steam"],["tmdb","TMDB"],["webnovel","웹소설"]];
+const PLATFORMS=[["steam","Steam"],["tmdb","TMDB"],["webnovel","웹소설"],["cross","통합 (크로스 도메인)"]];
 let plat="steam", seeds=[], graded=0, lastSeeds=[];
 
 const $=s=>document.querySelector(s);
@@ -124,20 +137,9 @@ function drawTabs(){
   $("#tabs").querySelectorAll(".tab").forEach(b=>b.onclick=()=>{
     plat=b.dataset.p; seeds=[]; $("#hits").innerHTML=""; $("#q").value="";
     $("#out").innerHTML='<p class="empty">시드를 담고 <b>추천 받기</b>를 누르세요.</p>';
-    $("#scope").textContent=""; async function drawStatus(){
-  const NAMES={steam:"Steam",tmdb:"TMDB",webnovel:"웹소설"};
-  try{
-    const st=await (await fetch("/status")).json();
-    $("#status").innerHTML = Object.entries(NAMES).map(([k,label])=>{
-      const s=st[k]||{};
-      return `<span><i class="dot ${s.ok?"up":"down"}"></i>${label} ${
-        s.ok ? esc((s.n||0).toLocaleString())+"편" : "죽어 있음"}</span>`;
-    }).join("") + '<span style="margin-left:auto">문제가 있으면 터미널에서 <code>recommendation/tryout/run.sh</code></span>';
-  }catch(e){ $("#status").innerHTML='<span><i class="dot down"></i>게이트웨이에 못 닿습니다</span>'; }
-}
-
-drawStatus(); setInterval(drawStatus, 20000);
-drawTabs(); drawChips();
+    $("#scope").textContent=""; drawTabs(); drawChips();
+    document.querySelector(".grid").style.display = plat==="cross" ? "none" : "";
+    document.getElementById("xcard").style.display = plat==="cross" ? "" : "none";
   });
 }
 
@@ -210,6 +212,55 @@ async function recommend(){
   $("#rec").disabled=false;
 }
 
+async function loadCross(){
+  try{
+    const ps=await (await fetch("/api/cross/profiles")).json();
+    $("#xpid").innerHTML=ps.map(p=>{
+      const parts=[p.steam&&`S:${p.steam}`,p.tmdb&&`T:${p.tmdb}`,p.wn&&`W:${p.wn}`].filter(Boolean).join(" + ");
+      return `<option value="${esc(p.pid)}">${esc(p.pid)} — ${esc(parts)}</option>`;}).join("");
+  }catch(e){ $("#xpid").innerHTML=`<option>불러오기 실패: ${esc(e.message)}</option>`; }
+}
+const PL={steam:"Steam",tmdb:"TMDB",webnovel:"웹소설"};
+async function crossRecommend(){
+  const pid=$("#xpid").value, rule=$("#xrule").value, k=$("#xk").value;
+  $("#out").innerHTML='<p class="empty">세 플랫폼에서 받아 섞는 중… (첫 호출은 느립니다)</p>';
+  $("#xrec").disabled=true;
+  try{
+    const r=await fetch(`/api/cross/recommend?pid=${encodeURIComponent(pid)}&rule=${rule}&k=${k}`);
+    const j=await r.json(); if(j.error) throw new Error(j.error);
+    $("#xseeds").innerHTML=Object.entries(j.seeds).map(([p,names])=>
+      `<span class="chip"><b style="margin-right:4px">${PL[p]}</b>${esc(names.join(" / "))}</span>`).join("");
+    $("#scope").textContent=`— ${pid} · ${rule} · ${j.items.length}편`;
+    const rows=j.items;
+    $("#out").innerHTML = rows.map((it,i)=>`
+      <div class="rec">
+        <div class="rk">${i+1}</div>
+        <div class="body">
+          <div class="nm"><span style="font-size:11px;color:var(--dim);border:1px solid var(--line);border-radius:4px;padding:1px 6px;margin-right:6px">${PL[it.plat]} #${it.plat_rank}</span>${it.link?`<a href="${esc(it.link)}" target="_blank" rel="noopener">${esc(it.name)}</a>`:esc(it.name)}</div>
+          <div class="mt">${esc(it.meta)}</div>
+          <div class="st">${esc(it.stat)}</div>
+          <div class="grades" data-i="${i}">
+            ${[3,2,1,0].map(g=>`<button class="gb" data-g="${g}" aria-pressed="false"><span>${g}</span></button>`).join("")}
+          </div>
+        </div>
+      </div>`).join("");
+    $("#out").querySelectorAll(".grades").forEach(box=>{
+      const it=rows[+box.dataset.i];
+      box.querySelectorAll(".gb").forEach(b=>b.onclick=async()=>{
+        box.querySelectorAll(".gb").forEach(x=>x.setAttribute("aria-pressed","false"));
+        b.setAttribute("aria-pressed","true");
+        // platform:"cross" 로 구분해 쌓는다. 은행과 섞이지 않는다. 질문이 다르다 —
+        // "이 조합의 사람에게 이 항목이 맞나". 플랫폼 안 채점과 같은 척도지만 다른 물음이다.
+        await fetch("/grade",{method:"POST",headers:{"Content-Type":"application/json"},
+          body:JSON.stringify({platform:"cross",pid,rule,k:+k,rank:+box.dataset.i+1,
+            item_plat:it.plat,item_plat_rank:it.plat_rank,item_id:it.id,name:it.name,grade:+b.dataset.g})});
+        $("#cnt").textContent = ++graded;
+      });
+    });
+  }catch(e){ $("#out").innerHTML=`<p class="empty">오류: ${esc(e.message)}</p>`; }
+  $("#xrec").disabled=false;
+}
+
 async function drawStatus(){
   const NAMES={steam:"Steam",tmdb:"TMDB",webnovel:"웹소설"};
   try{
@@ -227,6 +278,8 @@ drawTabs(); drawChips();
 $("#go").onclick=search;
 $("#q").addEventListener("keydown",e=>{if(e.key==="Enter")search();});
 $("#rec").onclick=recommend;
+$("#xrec").onclick=crossRecommend;
+loadCross();
 </script>
 </body>
 </html>

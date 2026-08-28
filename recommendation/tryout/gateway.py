@@ -6,7 +6,14 @@
 채점은 `recommendation/eval/user_grades.jsonl` 에 줄단위로 쌓인다 — **내가 매긴 은행과
 섞지 않는다.** 사용자가 매긴 등급은 D-25(채점자=설계자)를 치는 유일한 독립 증거다.
 """
-import argparse, json, time
+import argparse, json, time, sys
+from urllib.parse import parse_qs
+# 크로스 도메인 믹싱 — 세 백엔드의 top-N 카드를 받아 순위만으로 섞는다 (crossdomain/DESIGN.md)
+sys.path.insert(0, str(__import__("pathlib").Path(__file__).resolve().parent.parent / "crossdomain"))
+from profiles import PROFILES as XPROFILES
+from mix import RULES as XRULES
+XSEEDS = json.loads((__import__("pathlib").Path(__file__).resolve().parent.parent / "crossdomain" / "seed_index.json").read_text())
+XPLAT = {"steam": "steam", "tmdb": "tmdb", "wn": "webnovel"}   # 프로필 키 → 백엔드 이름
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from urllib.parse import quote, urlparse
@@ -58,6 +65,10 @@ class H(BaseHTTPRequestHandler):
             return self._json(out)
         if u.path in ("/", "/index.html"):
             return self._bytes((HERE / "index.html").read_bytes(), "text/html; charset=utf-8")
+        if u.path == "/api/cross/profiles":
+            return self._json([dict(pid=p["pid"], steam=p["steam"], tmdb=p["tmdb"], wn=p["wn"]) for p in XPROFILES])
+        if u.path == "/api/cross/recommend":
+            return self._cross(parse_qs(u.query))
         if u.path.startswith("/api/"):
             _, _, plat, *rest = u.path.split("/")
             if plat not in PORTS: return self._json({"error": "unknown platform"}, 404)
@@ -86,6 +97,48 @@ class H(BaseHTTPRequestHandler):
                     return self._json({"error": f"{plat} 백엔드({PORTS[plat]})가 응답하지 않습니다. "
                                                 f"터미널에서 tryout/run.sh 로 다시 띄우세요. ({e})"}, 502)
         self._json({"error": "not found"}, 404)
+
+    def _backend(self, plat, seeds, k):
+        qs = "&".join(f"seed={quote(str(x))}" for x in seeds) + f"&k={k}"
+        with urlopen(f"http://127.0.0.1:{PORTS[plat]}/recommend?{qs}", timeout=180) as r:
+            return json.loads(r.read())
+
+    def _cross(self, q):
+        pid = (q.get("pid") or [""])[0]; rule = (q.get("rule") or ["M0"])[0]; k = int((q.get("k") or ["10"])[0])
+        prof = next((p for p in XPROFILES if p["pid"] == pid), None)
+        if prof is None: return self._json({"error": f"unknown profile {pid}"}, 404)
+        if rule not in XRULES: return self._json({"error": f"unknown rule {rule}"}, 400)
+        lists, seeds, coh, cards = {}, {}, {}, {}
+        for key, plat in XPLAT.items():
+            sub = prof[key]
+            if not sub: continue
+            sid = XSEEDS["seeds"][key][sub]
+            try:
+                rows = self._backend(plat, sid, 50)
+            except HTTPError as e:
+                try: body = json.loads(e.read())
+                except Exception: body = {"error": f"HTTP {e.code}"}
+                return self._json({"error": f"{plat} 백엔드 오류 — {body.get('error')}"}, e.code)
+            except URLError as e:
+                return self._json({"error": f"{plat} 백엔드({PORTS[plat]})가 응답하지 않습니다. ({e})"}, 502)
+            lists[key] = [r["id"] for r in rows]; cards[key] = {str(r["id"]): r for r in rows}
+            seeds[key] = len(sid); coh[key] = XSEEDS["coh"][key][sub]
+        mixed = XRULES[rule](lists, seeds, coh, k=k)
+        out = []
+        for key, item, rank in mixed:
+            c = dict(cards[key][str(item)]); c["plat"] = XPLAT[key]; c["plat_rank"] = rank; out.append(c)
+        # 시드 이름도 같이 — 화면이 "이 조합"이 뭔지 보여줘야 채점이 성립한다
+        seed_names = {}
+        for key, plat in XPLAT.items():
+            if not prof[key]: continue
+            sid = XSEEDS["seeds"][key][prof[key]]
+            try:
+                qs = "&".join(f"id={quote(str(x))}" for x in sid)
+                with urlopen(f"http://127.0.0.1:{PORTS[plat]}/card?{qs}", timeout=30) as r:
+                    seed_names[plat] = [c["name"] for c in json.loads(r.read())]
+            except Exception:
+                seed_names[plat] = [str(x) for x in sid]
+        return self._json({"pid": pid, "rule": rule, "seeds": seed_names, "items": out})
 
     def do_POST(self):
         u = urlparse(self.path)

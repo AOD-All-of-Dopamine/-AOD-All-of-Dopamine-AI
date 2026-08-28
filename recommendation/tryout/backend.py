@@ -187,6 +187,15 @@ def make_handler(eng):
                 if u.path == "/search":
                     s = (q.get("q") or [""])[0].strip()
                     return self._send(eng.search(s, int((q.get("n") or [20])[0])) if s else [])
+                if u.path == "/card":
+                    # 크로스 탭이 시드 이름을 보여주는 데 쓴다 — 시드가 안 보이면 채점이 성립하지 않는다 (D-58)
+                    ids = q.get("id") or []
+                    out = []
+                    for i in ids:
+                        key = eng._native.get(str(i), i) if hasattr(eng, "_native") else int(i)
+                        c = eng._card(key)
+                        if c: out.append(c)
+                    return self._send(out)
                 if u.path == "/recommend":
                     seeds = [s for s in (q.get("seed") or []) if s != ""]
                     if not seeds: return self._send({"error": "시드가 없습니다"}, 400)
