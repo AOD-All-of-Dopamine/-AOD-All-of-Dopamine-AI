@@ -106,4 +106,19 @@ def M6(lists, seeds, coh=None, k=10, wn_min_episodes=20, episodes=None):
     return _take(lists, q, k)
 
 
-RULES = {"M0": M0, "M1": M1, "M2": M2, "M3": M3, "M4": M4, "M5": M5, "M6": M6}
+def _tmdbfilter(lists, votes, th=100):
+    if votes and "tmdb" in lists:
+        lists = dict(lists); lists["tmdb"] = [i for i in lists["tmdb"] if votes.get(i, votes.get(str(i), 0)) >= th]
+    return lists
+
+
+def M7(lists, seeds, coh=None, k=10, wn_min_episodes=20, episodes=None, tmdb_min_votes=100, votes=None):
+    """M6 + **TMDB 후보 투표수 < tmdb_min_votes 제외** (X-11).
+
+    독립 3인 잣대 TMDB 282 슬롯에서 순위 잔차 corr(log투표) +0.258, 투표 <100 슬롯 P 0.54.
+    `votes`: {tmdb_id: vote_count}. 없으면 M6 과 같다.
+    """
+    return M6(_tmdbfilter(lists, votes, tmdb_min_votes), seeds, coh, k, wn_min_episodes, episodes)
+
+
+RULES = {"M0": M0, "M1": M1, "M2": M2, "M3": M3, "M4": M4, "M5": M5, "M6": M6, "M7": M7}
