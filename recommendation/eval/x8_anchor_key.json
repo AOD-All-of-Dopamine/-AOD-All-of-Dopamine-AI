@@ -1,0 +1,542 @@
+[
+{
+"id": "a00",
+"plat": "wn",
+"seed": "W: 게임 속 바바리안으로 살아남기",
+"cand": "모험가",
+"meta": "판타지 · 이계승 | 평점 3.7 · 관심 0 · 128화",
+"bank": 3,
+"today": 0
+},
+{
+"id": "a01",
+"plat": "wn",
+"seed": "W: 녀석이 날 남자로 안다 / 남편이 도망쳤다 / 야수의 목에 사슬을",
+"cand": "아무래도 제자에게 살해당할 듯합니다",
+"meta": "로판 · 배디 | 평점 6.7 · 관심 322,000 · 106화",
+"bank": 3,
+"today": 1
+},
+{
+"id": "a02",
+"plat": "wn",
+"seed": "W: 강에 빠진 샛별을 건져 / 원화랑연의 / 나의 다정한 이방인에게",
+"cand": "배덕한 순정",
+"meta": "로맨스 · 이지온 | 평점 10.0 · 관심 32,000 · 78화",
+"bank": 2,
+"today": 1
+},
+{
+"id": "a03",
+"plat": "wn",
+"seed": "W: 녀석이 날 남자로 안다 / 남편이 도망쳤다 / 야수의 목에 사슬을",
+"cand": "내 남자의 인성이 조금 이상하다",
+"meta": "로판 · 꿀끼 | 평점 7.7 · 관심 16,000 · 167화",
+"bank": 3,
+"today": 1
+},
+{
+"id": "a04",
+"plat": "wn",
+"seed": "W: 집착좀비가 나를 미행한다 / The Last / 너의 가이드가 되고 싶어",
+"cand": "해피 에버 에프터",
+"meta": "BL · 아누 | 평점 10.0 · 관심 1,600 · 49화",
+"bank": 3,
+"today": 1
+},
+{
+"id": "a05",
+"plat": "wn",
+"seed": "W: 절대 검감(絶對 劍感) / 태존비록(怠尊秘錄) / 검신재림(劍神再臨)",
+"cand": "검선재차",
+"meta": "무협 · 난세광도 | 평점 7.1 · 관심 888,000 · 1755화",
+"bank": 2,
+"today": 1
+},
+{
+"id": "a06",
+"plat": "wn",
+"seed": "W: 광공 싸움에 빌런 등 터진다 / 목표는 안전이혼인데요 / 광공들이 미쳤는데 로그아웃이 안 된다",
+"cand": "공포게임에 로그인했습니다",
+"meta": "현판 · 하품 | 평점 7.3 · 관심 178,000 · 164화",
+"bank": 1,
+"today": 2
+},
+{
+"id": "a07",
+"plat": "wn",
+"seed": "W: 천만 배우의 게임 라이프 / 1999년 게임 스타트 / 게임 속 영주가 되었다",
+"cand": "멸망할 세계의 천재 살수",
+"meta": "판타지 · 이락 | 평점 8.8 · 관심 1,141,000 · 200화",
+"bank": 3,
+"today": 1
+},
+{
+"id": "a08",
+"plat": "wn",
+"seed": "W: 매드 독, 황제가 된 백수 / 신창, 망국의 귀족이 되다 / 돈지랄 천재 마검사",
+"cand": "F급 마법사인데 맷집은 S급",
+"meta": "판타지 · 자몽친구감귤 | 평점 8.9 · 관심 11,000 · 55화",
+"bank": 3,
+"today": 1
+},
+{
+"id": "a09",
+"plat": "wn",
+"seed": "W: 여름 휴가 / 결혼이 장난이다 / 존재 자체가 오류",
+"cand": "남주가 없으면 내 성적이 망한다",
+"meta": "로판 · 흐린눈 | 평점 10.0 · 관심 2,400 · 167화",
+"bank": 2,
+"today": 1
+},
+{
+"id": "a10",
+"plat": "wn",
+"seed": "W: 광공 싸움에 빌런 등 터진다 / 목표는 안전이혼인데요 / 광공들이 미쳤는데 로그아웃이 안 된다",
+"cand": "공작의 가짜 첫사랑",
+"meta": "로판 · 성지혜 | 평점 9.9 · 관심 20,000 · 153화",
+"bank": 2,
+"today": 1
+},
+{
+"id": "a11",
+"plat": "wn",
+"seed": "W: 천재 무림 트레이너 / 무한 레벨업 in 무림 / 현질무신",
+"cand": "천재 역술인이 되었다",
+"meta": "현판 · 섬마을김씨 | 평점 9.2 · 관심 210,000 · 211화",
+"bank": 2,
+"today": 0
+},
+{
+"id": "a12",
+"plat": "wn",
+"seed": "W: 이 멋진 세계에 축복을! 1~15권 / 마왕학원의 부적합자 ~사상 최강의 마",
+"cand": "소드마스터가 복학한 이유",
+"meta": "판타지 · 이룬 | 평점 7.4 · 관심 1,590,000 · 256화",
+"bank": 2,
+"today": 1
+},
+{
+"id": "a13",
+"plat": "wn",
+"seed": "W: 천만 배우의 게임 라이프 / 1999년 게임 스타트 / 게임 속 영주가 되었다",
+"cand": "모험가",
+"meta": "판타지 · 이계승 | 평점 3.7 · 관심 0 · 128화",
+"bank": 3,
+"today": 0
+},
+{
+"id": "a14",
+"plat": "wn",
+"seed": "W: 회귀 헌터가 대장장이 능력을 숨김 / 소환하는 헌터 / 미친 귀환자들을 구원하는 방법",
+"cand": "차원을 넘는 레벨제로 헌터",
+"meta": "현판 · 다물랑 | 평점 6.4 · 관심 172,000 · 227화",
+"bank": 3,
+"today": 1
+},
+{
+"id": "a15",
+"plat": "wn",
+"seed": "W: 여름 휴가 / 결혼이 장난이다 / 존재 자체가 오류",
+"cand": "너의 불행에 찬사를",
+"meta": "로맨스 · 클로져 | 평점 9.9 · 관심 28,000 · 106화",
+"bank": 3,
+"today": 1
+},
+{
+"id": "a16",
+"plat": "wn",
+"seed": "W: 집착좀비가 나를 미행한다 / The Last / 너의 가이드가 되고 싶어",
+"cand": "에스피(SP)",
+"meta": "판타지 · CatReading | 평점 없음 · 관심 0 · 150화",
+"bank": 2,
+"today": 1
+},
+{
+"id": "a17",
+"plat": "wn",
+"seed": "W: 여름 휴가 / 결혼이 장난이다 / 존재 자체가 오류",
+"cand": "여주가 내 약혼자와 바람났다",
+"meta": "로판 · 설이린 | 평점 9.4 · 관심 366,000 · 214화",
+"bank": 2,
+"today": 1
+},
+{
+"id": "a18",
+"plat": "wn",
+"seed": "W: 이 멋진 세계에 축복을! 1~15권 / 마왕학원의 부적합자 ~사상 최강의 마",
+"cand": "이세계에 전생했더니 미소녀 성주였다.",
+"meta": "라이트노벨 · 미즈키 미나모 | 평점 없음 · 관심 0 · 20화",
+"bank": 3,
+"today": 1
+},
+{
+"id": "a19",
+"plat": "wn",
+"seed": "W: 매드 독, 황제가 된 백수 / 신창, 망국의 귀족이 되다 / 돈지랄 천재 마검사",
+"cand": "마염의 황제",
+"meta": "판타지 · 전수민 | 평점 5.5 · 관심 0 · 109화",
+"bank": 3,
+"today": 0
+},
+{
+"id": "a20",
+"plat": "tmdb",
+"seed": "T: 사이버 세상에 대한 몽상 / 제로 데이즈",
+"cand": "세상을 구한 남자",
+"meta": "영화 · 다큐멘터리, 역사, 전쟁 | 평점 6.9 · 투표 58",
+"bank": 3,
+"today": 1
+},
+{
+"id": "a21",
+"plat": "tmdb",
+"seed": "T: 쇼생크 탈출 / 포레스트 검프",
+"cand": "라스트 바이킹",
+"meta": "영화 · 코미디, 범죄, 드라마 | 평점 7.3 · 투표 214",
+"bank": 2,
+"today": 1
+},
+{
+"id": "a22",
+"plat": "tmdb",
+"seed": "T: 샤이닝 / 할로윈 / 스크림",
+"cand": "하얀 옷의 여인",
+"meta": "영화 · 미스터리, 공포, 스릴러 | 평점 6.1 · 투표 137",
+"bank": 3,
+"today": 1
+},
+{
+"id": "a23",
+"plat": "tmdb",
+"seed": "T: 샤이닝 / 엑소시스트 / 할로윈 / 스크림 / 28일 후",
+"cand": "데이 룩 라이크 피플",
+"meta": "영화 · 드라마, 공포, 미스터리 | 평점 6.2 · 투표 249",
+"bank": 2,
+"today": 1
+},
+{
+"id": "a24",
+"plat": "tmdb",
+"seed": "T: 임금님 랭킹 / 현실주의 용사의 왕국 재건기 / 빨강머리 백설공주",
+"cand": "늑대왕",
+"meta": "TV · 애니메이션, Action & Adventure, Kids, Sc | 평점 6.8 · 투표 49",
+"bank": 2,
+"today": 1
+},
+{
+"id": "a25",
+"plat": "tmdb",
+"seed": "T: 겟 아웃 / 유전 / 미드소마",
+"cand": "아웃브레이크",
+"meta": "영화 · 공포, 미스터리, 스릴러 | 평점 5.8 · 투표 50",
+"bank": 2,
+"today": 1
+},
+{
+"id": "a26",
+"plat": "tmdb",
+"seed": "T: 쇼생크 탈출 / 포레스트 검프",
+"cand": "피쇼테",
+"meta": "영화 · 범죄, 드라마 | 평점 7.9 · 투표 251",
+"bank": 3,
+"today": 1
+},
+{
+"id": "a27",
+"plat": "tmdb",
+"seed": "T: 인터스텔라",
+"cand": "우주전함 야마토",
+"meta": "영화 · SF, 액션, 모험, 드라마 | 평점 6.4 · 투표 272",
+"bank": 2,
+"today": 1
+},
+{
+"id": "a28",
+"plat": "tmdb",
+"seed": "T: 용사 파티에서 추방된 비스트테이머,  / 최약무패의 신장기룡 / 그래서 나는 H를 할 수 없다 / 란마1/2 / 레전드 퀘스트",
+"cand": "도로헤도로",
+"meta": "TV · 애니메이션, Action & Adventure, 코미디, Sci | 평점 8.4 · 투표 455",
+"bank": 3,
+"today": 1
+},
+{
+"id": "a29",
+"plat": "tmdb",
+"seed": "T: 기생수: 더 그레이 / 기생수 파트2 / 기생수 파트1",
+"cand": "영롱",
+"meta": "TV · 애니메이션, Sci-Fi & Fantasy, Action & A | 평점 8.5 · 투표 114",
+"bank": 2,
+"today": 1
+},
+{
+"id": "a30",
+"plat": "tmdb",
+"seed": "T: 도둑들 / 베테랑 / 극한직업",
+"cand": "예스마담 4: 직격증인",
+"meta": "영화 · 액션, 범죄, 스릴러 | 평점 7.0 · 투표 62",
+"bank": 2,
+"today": 1
+},
+{
+"id": "a31",
+"plat": "tmdb",
+"seed": "T: 너와 나의 이야기 / 신부의 아버지 / 이터너티",
+"cand": "컨트리한 크리스마스",
+"meta": "영화 · 드라마, TV 영화, 로맨스 | 평점 6.3 · 투표 54",
+"bank": 2,
+"today": 1
+},
+{
+"id": "a32",
+"plat": "tmdb",
+"seed": "T: 샤이닝 / 엑소시스트 / 할로윈 / 스크림 / 28일 후",
+"cand": "머시블랙: 저주 받은 아이",
+"meta": "영화 · 공포, 미스터리 | 평점 6.0 · 투표 235",
+"bank": 2,
+"today": 1
+},
+{
+"id": "a33",
+"plat": "tmdb",
+"seed": "T: 너와 나의 이야기 / 신부의 아버지 / 이터너티",
+"cand": "알라이파유테이",
+"meta": "영화 · 로맨스, 드라마 | 평점 7.3 · 투표 48",
+"bank": 2,
+"today": 1
+},
+{
+"id": "a34",
+"plat": "tmdb",
+"seed": "T: 너의 이름은. / 날씨의 아이 / 목소리의 형태",
+"cand": "마을에 부는 산들바람",
+"meta": "영화 · 코미디, 드라마, 로맨스 | 평점 7.0 · 투표 54",
+"bank": 2,
+"today": 1
+},
+{
+"id": "a35",
+"plat": "tmdb",
+"seed": "T: 코코 / 업 / 인사이드 아웃 / 토이 스토리 / 라이온 킹",
+"cand": "멸종은 싫어!",
+"meta": "영화 · 애니메이션, 코미디, 가족, 모험 | 평점 6.2 · 투표 189",
+"bank": 2,
+"today": 1
+},
+{
+"id": "a36",
+"plat": "tmdb",
+"seed": "T: 이터널 선샤인 / 어바웃 타임 / 비포 선라이즈",
+"cand": "라벤더의 연인들",
+"meta": "영화 · 드라마, 로맨스 | 평점 6.4 · 투표 144",
+"bank": 2,
+"today": 1
+},
+{
+"id": "a37",
+"plat": "tmdb",
+"seed": "T: 너와 나의 이야기 / 신부의 아버지 / 이터너티",
+"cand": "콜레라 시대의 사랑",
+"meta": "영화 · 드라마, 로맨스 | 평점 6.7 · 투표 419",
+"bank": 2,
+"today": 1
+},
+{
+"id": "a38",
+"plat": "tmdb",
+"seed": "T: 겟 아웃 / 유전 / 미드소마",
+"cand": "더 팩트",
+"meta": "영화 · 공포, 미스터리, 스릴러 | 평점 5.7 · 투표 538",
+"bank": 2,
+"today": 1
+},
+{
+"id": "a39",
+"plat": "tmdb",
+"seed": "T: 왕좌의 게임 / 브레이킹 배드 / 종이의 집",
+"cand": "CSI: 라스베가스",
+"meta": "TV · 범죄, 드라마, 미스터리 | 평점 7.6 · 투표 1,416",
+"bank": 2,
+"today": 1
+},
+{
+"id": "a40",
+"plat": "steam",
+"seed": "S: Dordogne / A YEAR OF SPRINGS / Botany Manor",
+"cand": "Analogue: A Hate Story",
+"meta": "Visual Novel · Anime · Indie · Sci-fi ·  | 리뷰 1,690",
+"bank": 3,
+"today": 1
+},
+{
+"id": "a41",
+"plat": "steam",
+"seed": "S: DARK SOULS™ III / The Witcher 3: Wild  / The Elder Scrolls V:",
+"cand": "Enclave",
+"meta": "RPG · Action · Fantasy · Third Person ·  | 리뷰 1,845",
+"bank": 1,
+"today": 2
+},
+{
+"id": "a42",
+"plat": "steam",
+"seed": "S: Salt and Sanctuary",
+"cand": "Grim Dawn",
+"meta": "Action RPG · Hack and Slash · Loot · Iso | 리뷰 91,428",
+"bank": 2,
+"today": 1
+},
+{
+"id": "a43",
+"plat": "steam",
+"seed": "S: Hollow Knight / Dead Cells / Celeste",
+"cand": "A Short Hike",
+"meta": "Exploration · Relaxing · Adventure · Ind | 리뷰 19,026",
+"bank": 2,
+"today": 1
+},
+{
+"id": "a44",
+"plat": "steam",
+"seed": "S: Forza Horizon 5 / Hi-Fi RUSH / Street Fighter 6",
+"cand": "Batman: Arkham Asylum Game of the Year Edition",
+"meta": "Action · Stealth · Third Person · Superh | 리뷰 61,098",
+"bank": 1,
+"today": 2
+},
+{
+"id": "a45",
+"plat": "steam",
+"seed": "S: Salt and Sanctuary",
+"cand": "The Witcher 3: Wild Hunt",
+"meta": "Open World · RPG · Story Rich · Atmosphe | 리뷰 825,022",
+"bank": 2,
+"today": 1
+},
+{
+"id": "a46",
+"plat": "steam",
+"seed": "S: Vomitoreum / Tales of Kenzera™: Z / Shantae: Half-Genie ",
+"cand": "INSIDE",
+"meta": "2.5D · Puzzle Platformer · Atmospheric · | 리뷰 69,062",
+"bank": 2,
+"today": 1
+},
+{
+"id": "a47",
+"plat": "steam",
+"seed": "S: Dordogne / A YEAR OF SPRINGS / Botany Manor",
+"cand": "Quern - Undying Thoughts",
+"meta": "Adventure · Puzzle · Mystery · Atmospher | 리뷰 3,774",
+"bank": 1,
+"today": 2
+},
+{
+"id": "a48",
+"plat": "steam",
+"seed": "S: DARK SOULS™ III / The Witcher 3: Wild  / The Elder Scrolls V:",
+"cand": "Disco Elysium - The Final Cut",
+"meta": "RPG · Story Rich · Choices Matter · Dete | 리뷰 116,621",
+"bank": 3,
+"today": 1
+},
+{
+"id": "a49",
+"plat": "steam",
+"seed": "S: Sid Meier’s Civiliza / XCOM® 2 / Stellaris",
+"cand": "Elite Dangerous",
+"meta": "Space Sim · Space · Open World · Explora | 리뷰 81,894",
+"bank": 2,
+"today": 1
+},
+{
+"id": "a50",
+"plat": "steam",
+"seed": "S: Red Dead Redemption  / Cyberpunk 2077 / Marvel’s Spider-Man  / Tomb Raider Game of  / Stray / Days Gone",
+"cand": "The Surge 2",
+"meta": "Souls-like · RPG · Action · Open World · | 리뷰 7,395",
+"bank": 2,
+"today": 1
+},
+{
+"id": "a51",
+"plat": "steam",
+"seed": "S: Islets / Haiku, the Robot / Chants of Sennaar / TUNIC / ANIMAL WELL / A Short Hike / CrossCode",
+"cand": "소닉 매니아",
+"meta": "Great Soundtrack · 2D · Platformer · Ret | 리뷰 24,084",
+"bank": 2,
+"today": 1
+},
+{
+"id": "a52",
+"plat": "steam",
+"seed": "S: Forza Horizon 5 / Hi-Fi RUSH / Street Fighter 6",
+"cand": "Dakar 18",
+"meta": "Racing · Simulation · Sports · Automobil | 리뷰 827",
+"bank": 1,
+"today": 2
+},
+{
+"id": "a53",
+"plat": "steam",
+"seed": "S: Pid / ChromaGun / Deer & Boy",
+"cand": "Rocketbirds: Hardboiled Chicken",
+"meta": "Indie · Platformer · Action · Adventure  | 리뷰 1,918",
+"bank": 2,
+"today": 1
+},
+{
+"id": "a54",
+"plat": "steam",
+"seed": "S: DOOMBLADE / Transiruby / Blast Brigade vs. th",
+"cand": "Planet of Lana",
+"meta": "Action · Puzzle Platformer · Female Prot | 리뷰 9,342",
+"bank": 2,
+"today": 1
+},
+{
+"id": "a55",
+"plat": "steam",
+"seed": "S: 페르소나3 리로드 / 옥토패스 트래블러 / The Legend of Heroes",
+"cand": "Jagged Alliance 3",
+"meta": "Strategy · Turn-Based Tactics · Tactical | 리뷰 10,742",
+"bank": 2,
+"today": 1
+},
+{
+"id": "a56",
+"plat": "steam",
+"seed": "S: The Vanishing of Eth / Gone Home / Oxenfree / Night in the Woods / The Stanley Parable",
+"cand": "The Witness",
+"meta": "Puzzle · Exploration · First-Person · Op | 리뷰 16,985",
+"bank": 2,
+"today": 1
+},
+{
+"id": "a57",
+"plat": "steam",
+"seed": "S: DARK SOULS™ III / The Witcher 3: Wild  / The Elder Scrolls V:",
+"cand": "Darkwood 다크우드",
+"meta": "Horror · Survival Horror · Adventure · P | 리뷰 21,988",
+"bank": 2,
+"today": 1
+},
+{
+"id": "a58",
+"plat": "steam",
+"seed": "S: Garry's Mod / Team Fortress 2 / Left 4 Dead 2",
+"cand": "POSTAL 2",
+"meta": "Violent · Dark Humor · Open World · Firs | 리뷰 116,283",
+"bank": 2,
+"today": 1
+},
+{
+"id": "a59",
+"plat": "steam",
+"seed": "S: The Vanishing of Eth / Gone Home / Oxenfree / Night in the Woods / The Stanley Parable",
+"cand": "Through the Woods",
+"meta": "Adventure · Indie · Horror · Mythology · | 리뷰 1,183",
+"bank": 3,
+"today": 1
+}
+]
