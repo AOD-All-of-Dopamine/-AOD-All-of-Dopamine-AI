@@ -106,7 +106,7 @@ a{color:var(--accent)}
       통합 층은 <b>순위만</b> 받아 섞습니다. 시드가 없는 플랫폼은 나오지 않습니다.</p>
     <div class="row">
       <select id="xpid" style="flex:1"></select>
-      <select id="xrule"><option value="M0">M0 라운드로빈</option><option value="M1">M1 시드 비례</option><option value="M2">M2 비례+저응집 절반</option></select>
+      <select id="xrule"><option value="M3" selected>M3 라운드로빈 + 웹소설 20화↑ (확정)</option><option value="M0">M0 라운드로빈</option><option value="M1">M1 시드 비례</option><option value="M2">M2 비례+저응집 절반</option></select>
       <select id="xk"><option value="10" selected>top 10</option><option value="15">top 15</option></select>
       <button class="btn" id="xrec">통합 추천</button>
     </div>
@@ -152,6 +152,19 @@ function drawChips(){
   $("#rec").disabled = seeds.length===0;
 }
 
+async function postGrade(rec){
+  // 예전에는 응답을 안 보고 카운터를 올렸다 — 저장이 실패해도 화면이 성공처럼 보였다 (D-74).
+  try{
+    const r=await fetch("/grade",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(rec)});
+    const j=await r.json().catch(()=>({}));
+    if(!r.ok||!j.ok) throw new Error(j.error||`HTTP ${r.status}`);
+    $("#bar").innerHTML=`이번 세션에서 매긴 등급 <b id="cnt">${graded+1}</b>개 · 서버 파일 총 <b>${j.total}</b>줄 ✓`;
+    return true;
+  }catch(e){
+    $("#bar").innerHTML=`<span style="color:var(--g0)">⚠ 등급이 저장되지 않았습니다 — ${esc(e.message)}. 게이트웨이(:8000)가 살아 있는지 확인하세요.</span>`;
+    return false;
+  }
+}
 async function api(path){
   const r=await fetch(`/api/${plat}${path}`);
   const j=await r.json();
@@ -202,10 +215,9 @@ async function recommend(){
       box.querySelectorAll(".gb").forEach(b=>b.onclick=async()=>{
         box.querySelectorAll(".gb").forEach(x=>x.setAttribute("aria-pressed","false"));
         b.setAttribute("aria-pressed","true");
-        await fetch("/grade",{method:"POST",headers:{"Content-Type":"application/json"},
-          body:JSON.stringify({platform:plat,seeds:lastSeeds,rank:+box.dataset.i+1,
-            item_id:item.id,name:item.name,grade:+b.dataset.g})});
-        $("#cnt").textContent = ++graded;
+        const ok=await postGrade({platform:plat,seeds:lastSeeds,rank:+box.dataset.i+1,
+            item_id:item.id,name:item.name,grade:+b.dataset.g});
+        if(ok) $("#cnt").textContent = ++graded; else b.setAttribute("aria-pressed","false");
       });
     });
   }catch(e){ $("#out").innerHTML=`<p class="empty">오류: ${esc(e.message)}</p>`; }
@@ -251,10 +263,9 @@ async function crossRecommend(){
         b.setAttribute("aria-pressed","true");
         // platform:"cross" 로 구분해 쌓는다. 은행과 섞이지 않는다. 질문이 다르다 —
         // "이 조합의 사람에게 이 항목이 맞나". 플랫폼 안 채점과 같은 척도지만 다른 물음이다.
-        await fetch("/grade",{method:"POST",headers:{"Content-Type":"application/json"},
-          body:JSON.stringify({platform:"cross",pid,rule,k:+k,rank:+box.dataset.i+1,
-            item_plat:it.plat,item_plat_rank:it.plat_rank,item_id:it.id,name:it.name,grade:+b.dataset.g})});
-        $("#cnt").textContent = ++graded;
+        const ok=await postGrade({platform:"cross",pid,rule,k:+k,rank:+box.dataset.i+1,
+            item_plat:it.plat,item_plat_rank:it.plat_rank,item_id:it.id,name:it.name,grade:+b.dataset.g});
+        if(ok) $("#cnt").textContent = ++graded; else b.setAttribute("aria-pressed","false");
       });
     });
   }catch(e){ $("#out").innerHTML=`<p class="empty">오류: ${esc(e.message)}</p>`; }

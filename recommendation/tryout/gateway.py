@@ -26,7 +26,10 @@ PORTS = {"steam": 8011, "tmdb": 8012, "webnovel": 8013}
 
 
 class H(BaseHTTPRequestHandler):
-    def log_message(self, *a): pass
+    def log_message(self, fmt, *a):
+        # 채점 POST 가 도달했는지 추적할 수 있어야 한다 — 등급이 사라졌는데 확인할 길이 없었다 (D-74)
+        if "POST" in (a[0] if a else "") or "/grade" in fmt % a if a else False:
+            sys.stderr.write(f"[{time.strftime('%H:%M:%S')}] {fmt % a}\n")
 
     def _bytes(self, b, ctype, code=200):
         self.send_response(code)
@@ -123,7 +126,14 @@ class H(BaseHTTPRequestHandler):
                 return self._json({"error": f"{plat} 백엔드({PORTS[plat]})가 응답하지 않습니다. ({e})"}, 502)
             lists[key] = [r["id"] for r in rows]; cards[key] = {str(r["id"]): r for r in rows}
             seeds[key] = len(sid); coh[key] = XSEEDS["coh"][key][sub]
-        mixed = XRULES[rule](lists, seeds, coh, k=k)
+        if rule == "M3":
+            import re
+            eps = {}
+            for _id, c in cards.get("wn", {}).items():
+                mm = re.search(r"(\d+)화", c.get("stat", "")); eps[str(_id)] = int(mm.group(1)) if mm else 0
+            mixed = XRULES["M3"](lists, seeds, coh, k=k, episodes=eps)
+        else:
+            mixed = XRULES[rule](lists, seeds, coh, k=k)
         out = []
         for key, item, rank in mixed:
             c = dict(cards[key][str(item)]); c["plat"] = XPLAT[key]; c["plat_rank"] = rank; out.append(c)

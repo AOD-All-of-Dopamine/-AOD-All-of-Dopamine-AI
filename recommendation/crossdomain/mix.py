@@ -64,4 +64,17 @@ def M2(lists, seeds, coh, k=10):
     return _take(lists, {p: q[p] for p in plats}, k)
 
 
-RULES = {"M0": M0, "M1": M1, "M2": M2}
+def M3(lists, seeds, coh=None, k=10, wn_min_episodes=20, episodes=None):
+    """M0 + 웹소설 후보에서 화수 < wn_min_episodes 제외 (X-2).
+
+    플랫폼 랭커가 아니라 **통합 층**에서 거른다 — 화수는 플랫폼 내 등급 신호가 아니지만
+    (D-62 잔차 −0.038) "게임·영화 옆에 3화짜리를 내미는 게 맞나"라는 통합 물음에서는 신호다.
+    `episodes`: {item_id: episode_count}. 없으면 M0 과 같다.
+    """
+    if episodes and "wn" in lists:
+        lists = dict(lists)
+        lists["wn"] = [i for i in lists["wn"] if episodes.get(i, episodes.get(str(i), 0)) >= wn_min_episodes]
+    return M0(lists, seeds, coh, k)
+
+
+RULES = {"M0": M0, "M1": M1, "M2": M2, "M3": M3}
