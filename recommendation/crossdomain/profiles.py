@@ -67,7 +67,9 @@ PROFILES = [
     dict(pid="x3_bigfan_1",       steam="twenty_broad",          tmdb="twenty_library",      wn="twenty_library"),
     dict(pid="x3_bigfan_2",       steam="five_coop_shooter",     tmdb="five_acclaimed",      wn="five_hunter"),
     # x2 추가: 웹소설+게임 조합이 12 중 4 뿐이었다. 두 개 더.
-    dict(pid="x2_sw_horror",      steam="seven_horror_coop",     tmdb=None,                  wn="rule_ln"),
+    # x2_sw_horror(seven_horror_coop + rule_ln) 은 X-6 에서 뺐다 — 라이트노벨 코퍼스가 178건,
+    # 20화 이상 & 관심>0 이 15건뿐이라 시드 자체가 서 있을 곳이 없다(D-23 류). 내가 만든 억지 조합.
+    dict(pid="x2_sw_horror2",     steam="seven_horror_coop",     tmdb=None,                  wn="rule_hp_mid"),
     dict(pid="x2_tw_family",      steam=None,                    tmdb="longtail_family",     wn="rule_rom_mid"),
 ]
 assert len(PROFILES) == 50 and len({p["pid"] for p in PROFILES}) == 50
