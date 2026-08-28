@@ -126,12 +126,12 @@ class H(BaseHTTPRequestHandler):
                 return self._json({"error": f"{plat} 백엔드({PORTS[plat]})가 응답하지 않습니다. ({e})"}, 502)
             lists[key] = [r["id"] for r in rows]; cards[key] = {str(r["id"]): r for r in rows}
             seeds[key] = len(sid); coh[key] = XSEEDS["coh"][key][sub]
-        if rule == "M3":
+        if rule in ("M3", "M4", "M5", "M6"):
             import re
             eps = {}
             for _id, c in cards.get("wn", {}).items():
                 mm = re.search(r"(\d+)화", c.get("stat", "")); eps[str(_id)] = int(mm.group(1)) if mm else 0
-            mixed = XRULES["M3"](lists, seeds, coh, k=k, episodes=eps)
+            mixed = XRULES[rule](lists, seeds, coh, k=k, episodes=eps)
         else:
             mixed = XRULES[rule](lists, seeds, coh, k=k)
         out = []

@@ -91,4 +91,19 @@ def M5(lists, seeds, coh, k=10, wn_min_episodes=20, episodes=None):
     return M2(_wnfilter(lists, episodes, wn_min_episodes), seeds, coh, k)
 
 
-RULES = {"M0": M0, "M1": M1, "M2": M2, "M3": M3, "M4": M4, "M5": M5}
+def M6(lists, seeds, coh=None, k=10, wn_min_episodes=20, episodes=None):
+    """M3 + **시드가 1개뿐인 플랫폼의 쿼터를 절반**으로 (X-10).
+
+    독립 3인 잣대(§59) 600 슬롯에서 플랫폼 시드 1개인 슬롯 P 0.42 vs 나머지 0.84.
+    좋아한 작품 하나는 약한 증거다. 그 플랫폼 쿼터를 반으로 줄이고 나머지는 시드 있는
+    다른 플랫폼에 라운드로빈으로 돌린다 (뺏은 자리를 비우지 않는다 — D-23 의 "바닥남"과 다르다).
+    응집도 ≥0.7 인 다중 시드는 P 가 0.25~1.00 으로 갈려 신호가 아니라 제외.
+    """
+    lists = _wnfilter(lists, episodes, wn_min_episodes)
+    plats = _platform_order(seeds)
+    w = {p: (0.5 if seeds[p] == 1 else 1.0) for p in plats}
+    q = _quota({p: 1 for p in plats}, k, weights=w)
+    return _take(lists, q, k)
+
+
+RULES = {"M0": M0, "M1": M1, "M2": M2, "M3": M3, "M4": M4, "M5": M5, "M6": M6}
