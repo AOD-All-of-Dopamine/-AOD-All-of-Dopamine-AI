@@ -1,0 +1,2206 @@
+[
+{
+"pid": "p01_soulslike",
+"desc": "소울라이크·다크판타지 20대 남성",
+"seeds": {
+"steam": [
+1245620,
+374320,
+814380,
+1627720,
+367520
+],
+"tmdb": [
+53048,
+55771,
+51330,
+17364,
+54456
+],
+"wn": [
+"5798189",
+"4252997",
+"8554743",
+"4834852",
+"6020546"
+]
+},
+"names": {
+"steam": [
+"ELDEN RING",
+"DARK SOULS™ III",
+"Sekiro™: Shadows Die Twice - GOTY Edition",
+"P의 거짓 (Lies of P)",
+"Hollow Knight"
+],
+"tmdb": [
+"왕좌의 게임",
+"위쳐",
+"검풍전기 베르세르크",
+"반지의 제왕: 반지 원정대",
+"기묘한 이야기"
+],
+"wn": [
+"검신재림(劍神再臨)",
+"절대 검감(絶對 劍感)",
+"회귀무신",
+"나 혼자 만렙 귀환자",
+"전지적 독자 시점"
+]
+},
+"meta": {
+"steam": [
+"Souls-like · Open World · Dark Fantasy · RPG · Difficult",
+"Souls-like · Dark Fantasy · Difficult · RPG · Atmospheric",
+"Souls-like · Difficult · Action · Singleplayer · Ninja",
+"Souls-like · Dark Fantasy · Action · Singleplayer · Story Rich",
+"Metroidvania · Platformer · Souls-like · Difficult · Great Soundtrack"
+],
+"tmdb": [
+"TV · Sci-Fi & Fantasy, 드라마, Action & Adventure",
+"TV · Sci-Fi & Fantasy, 드라마, Action & Adventure",
+"TV · Action & Adventure, Sci-Fi & Fantasy, 애니메이션",
+"영화 · 모험, 판타지, 액션",
+"TV · Action & Adventure, 미스터리, Sci-Fi & Fantasy"
+],
+"wn": [
+"무협 · 윤신현",
+"무협 · 한중월야",
+"무협 · 한얼23",
+"현판 · 허니",
+"현판 · 싱숑"
+]
+}
+},
+{
+"pid": "p02_cozy_woman",
+"desc": "코지 라이프 20대 여성",
+"seeds": {
+"steam": [
+413150,
+1135690,
+972660,
+1055540,
+1158160
+],
+"tmdb": [
+38428,
+52769,
+21661,
+11387,
+31635
+],
+"wn": [
+"8440715",
+"11596127",
+"8736799",
+"9217824",
+"12204585"
+]
+},
+"names": {
+"steam": [
+"Stardew Valley",
+"Unpacking 언패킹",
+"Spiritfarer®: 작별 인사 에디션",
+"A Short Hike",
+"Coral Island"
+],
+"tmdb": [
+"리틀 포레스트",
+"심야식당",
+"카모메 식당",
+"이웃집 토토로",
+"마녀 배달부 키키"
+],
+"wn": [
+"힐링식당",
+"킹냥이와 시골에서 힐링합니다",
+"회귀자의 행복 식당",
+"서바이벌 속 나만의 힐링 생활",
+"캠핑으로 힐링하는 무림 생활"
+]
+},
+"meta": {
+"steam": [
+"Farming Sim · Pixel Graphics · Multiplayer · Life Sim · RPG",
+"Relaxing · Cute · Casual · Pixel Graphics · Organizing",
+"Emotional · Story Rich · Indie · Management · Relaxing",
+"Exploration · Relaxing · Adventure · Indie · Cute",
+"Farming Sim · Life Sim · Dating Sim · Relaxing · Simulation"
+],
+"tmdb": [
+"영화 · 드라마",
+"TV · 드라마, 코미디",
+"영화 · 드라마, 코미디",
+"영화 · 판타지, 애니메이션, 가족",
+"영화 · 판타지, 모험, 코미디"
+],
+"wn": [
+"현판 · 알랜더",
+"현판 · 윈난성",
+"현판 · 용발차기",
+"판타지 · 백아",
+"무협 · 그리즐리곰"
+]
+}
+},
+{
+"pid": "p03_kthriller",
+"desc": "한국 범죄 스릴러 + 추리 게임",
+"seeds": {
+"steam": [
+632470,
+239030,
+942970,
+1677770,
+739630
+],
+"tmdb": [
+18682,
+23186,
+34192,
+11448,
+29480
+],
+"wn": [
+"1958857",
+"6858953",
+"2024075",
+"13155310",
+"6396416"
+]
+},
+"names": {
+"steam": [
+"Disco Elysium - The Final Cut",
+"Papers, Please",
+"Unheard",
+"The Case of the Golden Idol",
+"Phasmophobia"
+],
+"tmdb": [
+"살인의 추억",
+"추격자",
+"곡성",
+"범죄와의 전쟁",
+"신세계"
+],
+"wn": [
+"천초 문순득의 수사일지",
+"수사 기록실",
+"천기누설 살인사건",
+"에이스 형사로 오해받는 중입니다",
+"전직 검사 임정호"
+]
+},
+"meta": {
+"steam": [
+"RPG · Story Rich · Choices Matter · Detective · Isometric",
+"Indie · Simulation · Point & Click · Pixel Graphics · Singleplayer",
+"Thriller · Mystery · Detective · Crime · Short",
+"Mystery · Detective · Investigation · Puzzle · Conspiracy",
+"Horror · Online Co-Op · Multiplayer · Psychological Horror · Co-op"
+],
+"tmdb": [
+"영화 · 범죄, 드라마, 스릴러",
+"영화 · 범죄, 스릴러, 액션",
+"영화 · 공포, 미스터리",
+"영화 · 액션, 범죄, 드라마, 스릴러",
+"영화 · 스릴러, 범죄, 드라마"
+],
+"wn": [
+"미스터리 · 강지운",
+"미스터리 · 수소수",
+"미스터리 · 이승영",
+"현판 · LUCA",
+"현판 · 하이인시"
+]
+}
+},
+{
+"pid": "p04_romfan",
+"desc": "로맨스판타지 헤비 독자",
+"seeds": {
+"steam": [
+413150,
+1222670,
+1158160,
+2142790,
+1210320
+],
+"tmdb": [
+56298,
+55805,
+54460,
+20177,
+55425
+],
+"wn": [
+"11387582",
+"9779829",
+"6448249",
+"9333794",
+"14331941"
+]
+},
+"names": {
+"steam": [
+"Stardew Valley",
+"The Sims™ 4",
+"Coral Island",
+"Fields of Mistria",
+"Potion Craft: Alchemist Simulator"
+],
+"tmdb": [
+"브리저튼",
+"사랑의 불시착",
+"도깨비",
+"오만과 편견",
+"미스터 션샤인"
+],
+"wn": [
+"대역 황후",
+"악녀의 시집살이는 즐겁다",
+"그 악녀 인생, 제가 한번 살아 볼게요",
+"악녀는 사랑을 원치 않아요",
+"뒤바뀐 첫날밤"
+]
+},
+"meta": {
+"steam": [
+"Farming Sim · Pixel Graphics · Multiplayer · Life Sim · RPG",
+"Life Sim · Free to Play · Character Customization · Building · Simulation",
+"Farming Sim · Life Sim · Dating Sim · Relaxing · Simulation",
+"Farming Sim · Dating Sim · RPG · Life Sim · Pixel Graphics",
+"Crafting · Singleplayer · Relaxing · Simulation · Medieval"
+],
+"tmdb": [
+"TV · 드라마",
+"TV · 드라마, 코미디",
+"TV · 드라마, Sci-Fi & Fantasy, 코미디",
+"영화 · 드라마, 로맨스",
+"TV · 드라마"
+],
+"wn": [
+"로판 · 루시",
+"로판 · 준예",
+"로판 · 민트베리",
+"로판 · 태온",
+"로맨스 · 진시하"
+]
+}
+},
+{
+"pid": "p05_murim",
+"desc": "무협 40대 남성",
+"seeds": {
+"steam": [
+814380,
+2215430,
+1448440,
+1325200,
+628070
+],
+"tmdb": [
+16807,
+29394,
+33125,
+29910,
+31123
+],
+"wn": [
+"11225280",
+"5798189",
+"11064472",
+"1673231",
+"4252997"
+]
+},
+"names": {
+"steam": [
+"Sekiro™: Shadows Die Twice - GOTY Edition",
+"Ghost of Tsushima 디렉터스 컷",
+"Wo Long: Fallen Dynasty",
+"Nioh 2 – The Complete Edition",
+"Romance of the Three Kingdoms XI with Power Up Kit"
+],
+"tmdb": [
+"와호장룡",
+"일대종사",
+"협녀, 칼의 기억",
+"관상",
+"명량"
+],
+"wn": [
+"화산수호",
+"검신재림(劍神再臨)",
+"마도제일검",
+"흑객",
+"절대 검감(絶對 劍感)"
+]
+},
+"meta": {
+"steam": [
+"Souls-like · Difficult · Action · Singleplayer · Ninja",
+"Open World · Action · Story Rich · Singleplayer · Adventure",
+"Action · Souls-like · RPG · Difficult · Action RPG",
+"Action · RPG · Character Customization · Souls-like · Difficult",
+"Turn-Based Tactics · Wargame · Immersive Sim · War · Military"
+],
+"tmdb": [
+"영화 · 모험, 드라마, 액션, 로맨스, 판타지",
+"영화 · 액션, 드라마, 역사",
+"영화 · 드라마, 역사, 액션",
+"영화 · 드라마, 역사",
+"영화 · 전쟁, 액션, 드라마, 역사"
+],
+"wn": [
+"무협 · 이동규",
+"무협 · 윤신현",
+"무협 · 조돈형",
+"무협 · 만상조",
+"무협 · 한중월야"
+]
+}
+},
+{
+"pid": "p06_otaku",
+"desc": "서브컬처 애니 오타쿠",
+"seeds": {
+"steam": [
+2161700,
+367520,
+504230,
+1145360,
+391540
+],
+"tmdb": [
+34084,
+53536,
+55770,
+57502,
+56296
+],
+"wn": [
+"2627952",
+"13720522",
+"4661068",
+"8049854",
+"8881358"
+]
+},
+"names": {
+"steam": [
+"페르소나3 리로드",
+"Hollow Knight",
+"Celeste",
+"Hades",
+"Undertale"
+],
+"tmdb": [
+"너의 이름은.",
+"진격의 거인",
+"귀멸의 칼날",
+"스파이 패밀리",
+"주술회전"
+],
+"wn": [
+"이 멋진 세계에 축복을! 1~15권",
+"소드 아트 온라인 마테리얼 에디션 : 리믹스",
+"이세계에서 깽판치는 용사중 나만 슬라임",
+"마왕으로 살아남는 법",
+"이세계 편돌이"
+]
+},
+"meta": {
+"steam": [
+"JRPG · Anime · RPG · Party-Based RPG · Turn-Based Strategy",
+"Metroidvania · Platformer · Souls-like · Difficult · Great Soundtrack",
+"Precision Platformer · Difficult · Pixel Graphics · Great Soundtrack · Indie",
+"Action Roguelike · Roguelite · Hack and Slash · Indie · Mythology",
+"Great Soundtrack · Story Rich · Choices Matter · Multiple Endings · Pixel Graphics"
+],
+"tmdb": [
+"영화 · 애니메이션, 로맨스, 드라마",
+"TV · 애니메이션, Sci-Fi & Fantasy, Action & Adventure",
+"TV · 애니메이션, Action & Adventure, Sci-Fi & Fantasy",
+"TV · 애니메이션, Action & Adventure, 코미디",
+"TV · 애니메이션, Action & Adventure, Sci-Fi & Fantasy"
+],
+"wn": [
+"라이트노벨 · 아카츠키 나츠메",
+"라이트노벨 · Reki Kawahara",
+"판타지 · 제니멀",
+"판타지 · 구유",
+"판타지 · 슬픈방울뱀"
+]
+}
+},
+{
+"pid": "p07_fps",
+"desc": "하드코어 FPS/배틀로얄",
+"seeds": {
+"steam": [
+730,
+578080,
+1172470,
+359550,
+594650
+],
+"tmdb": [
+30736,
+26563,
+41620,
+32383,
+27904
+],
+"wn": [
+"4834852",
+"1787051",
+"13865313",
+"5006002",
+"6020546"
+]
+},
+"names": {
+"steam": [
+"Counter-Strike 2",
+"PUBG: BATTLEGROUNDS",
+"Apex 레전드™",
+"톰 클랜시의 레인보우식스 시즈",
+"Hunt: Showdown 1896"
+],
+"tmdb": [
+"존 윅",
+"미션 임파서블: 고스트 프로토콜",
+"익스트랙션",
+"시카리오:  암살자의 도시",
+"제로 다크 서티"
+],
+"wn": [
+"나 혼자 만렙 귀환자",
+"템빨",
+"회귀 후 초월급 헌터",
+"SSS급 죽어야 사는 헌터",
+"전지적 독자 시점"
+]
+},
+"meta": {
+"steam": [
+"FPS · Shooter · Multiplayer · Competitive · Action",
+"Survival · Shooter · Battle Royale · Multiplayer · FPS",
+"Free to Play · Multiplayer · Battle Royale · FPS · Shooter",
+"FPS · PvP · Multiplayer · Shooter · Tactical",
+"Multiplayer · FPS · PvP · Team-Based · Tactical"
+],
+"tmdb": [
+"영화 · 액션, 스릴러",
+"영화 · 액션, 스릴러, 모험",
+"영화 · 액션, 스릴러",
+"영화 · 액션, 범죄, 스릴러",
+"영화 · 스릴러, 드라마"
+],
+"wn": [
+"현판 · 허니",
+"판타지 · 박새날",
+"현판 · 동구이",
+"판타지 · 신노아",
+"현판 · 싱숑"
+]
+}
+},
+{
+"pid": "p08_history",
+"desc": "전략·역사 덕후",
+"seeds": {
+"steam": [
+289070,
+1158310,
+236850,
+1466860,
+394360
+],
+"tmdb": [
+20186,
+16777,
+36532,
+31123,
+51627
+],
+"wn": [
+"13673995",
+"11532616",
+"11220877",
+"13920249",
+"8726288"
+]
+},
+"names": {
+"steam": [
+"Sid Meier’s Civilization® VI",
+"Crusader Kings III",
+"Europa Universalis IV",
+"Age of Empires IV: Anniversary Edition",
+"Hearts of Iron IV"
+],
+"tmdb": [
+"킹덤 오브 헤븐",
+"글래디에이터",
+"남한산성",
+"명량",
+"밴드 오브 브라더스"
+],
+"wn": [
+"조선제국 막내 황자는 평화롭게 살고 싶다",
+"망나니 세자 정치질로 부국강병",
+"사도세자는 편하게 살고 싶다",
+"1865년, ROKA 조선에 표류하다",
+"조선 수군이 되었다."
+]
+},
+"meta": {
+"steam": [
+"Strategy · Turn-Based Strategy · Multiplayer · Historical · Grand Strategy",
+"Strategy · Medieval · Grand Strategy · Simulation · RPG",
+"Grand Strategy · Strategy · Historical · Simulation · 4X",
+"Strategy · RTS · Base Building · Multiplayer · War",
+"Strategy · World War II · Grand Strategy · War · Historical"
+],
+"tmdb": [
+"영화 · 드라마, 액션, 모험, 역사, 전쟁",
+"영화 · 액션, 드라마, 모험",
+"영화 · 전쟁, 드라마, 역사, 액션",
+"영화 · 전쟁, 액션, 드라마, 역사",
+"TV · 드라마, War & Politics"
+],
+"wn": [
+"판타지 · 연암",
+"판타지 · 뚱보고양이",
+"판타지 · 까다롭스키",
+"판타지 · 설중정인",
+"판타지 · 케이도깨비"
+]
+}
+},
+{
+"pid": "p09_horror",
+"desc": "호러 매니아 (웹소설 없음)",
+"seeds": {
+"steam": [
+2050650,
+238320,
+1944430,
+739630,
+1693980
+],
+"tmdb": [
+29227,
+37778,
+35856,
+34192,
+37958
+]
+},
+"names": {
+"steam": [
+"BIOHAZARD RE:4",
+"Outlast",
+"Amnesia: The Bunker",
+"Phasmophobia",
+"Dead Space"
+],
+"tmdb": [
+"컨저링",
+"유전",
+"겟 아웃",
+"곡성",
+"곤지암"
+]
+},
+"meta": {
+"steam": [
+"Horror · Action · Survival Horror · Third-Person Shooter · Singleplayer",
+"Horror · First-Person · Survival Horror · Atmospheric · Psychological Horror",
+"Horror · Survival Horror · Atmospheric · Immersive Sim · Stealth",
+"Horror · Online Co-Op · Multiplayer · Psychological Horror · Co-op",
+"Horror · Third-Person Shooter · Survival Horror · Space · Sci-fi"
+],
+"tmdb": [
+"영화 · 공포, 스릴러",
+"영화 · 공포, 미스터리, 스릴러",
+"영화 · 미스터리, 스릴러, 공포",
+"영화 · 공포, 미스터리",
+"영화 · 공포, 미스터리"
+]
+}
+},
+{
+"pid": "p10_family",
+"desc": "힐링 애니·가족 게임",
+"seeds": {
+"steam": [
+413150,
+433340,
+728880,
+1426210,
+837470
+],
+"tmdb": [
+35852,
+24177,
+32364,
+11387,
+41610
+],
+"wn": [
+"12204585",
+"8736799",
+"8440715",
+"14125852",
+"9217824"
+]
+},
+"names": {
+"steam": [
+"Stardew Valley",
+"Slime Rancher",
+"Overcooked! 2",
+"It Takes Two",
+"Untitled Goose Game"
+],
+"tmdb": [
+"코코",
+"업",
+"인사이드 아웃",
+"이웃집 토토로",
+"소울"
+],
+"wn": [
+"캠핑으로 힐링하는 무림 생활",
+"회귀자의 행복 식당",
+"힐링식당",
+"농장 재벌도 육아합니다",
+"서바이벌 속 나만의 힐링 생활"
+]
+},
+"meta": {
+"steam": [
+"Farming Sim · Pixel Graphics · Multiplayer · Life Sim · RPG",
+"Cute · Exploration · Adventure · Singleplayer · Open World",
+"Multiplayer · Local Co-Op · Online Co-Op · Co-op · Cooking",
+"Co-op · Multiplayer · Split Screen · Local Co-Op · Online Co-Op",
+"Funny · Villain Protagonist · Multiplayer · Co-op · Cute"
+],
+"tmdb": [
+"영화 · 가족, 애니메이션, 음악, 모험",
+"영화 · 애니메이션, 코미디, 가족, 모험",
+"영화 · 애니메이션, 가족, 모험, 드라마, 코미디",
+"영화 · 판타지, 애니메이션, 가족",
+"영화 · 애니메이션, 가족, 드라마, 음악, 판타지"
+],
+"wn": [
+"무협 · 그리즐리곰",
+"현판 · 용발차기",
+"현판 · 알랜더",
+"판타지 · 베어구미스",
+"판타지 · 백아"
+]
+}
+},
+{
+"pid": "p11_apocalypse",
+"desc": "종말·아포칼립스 (좀비 아님)",
+"seeds": {
+"steam": [
+282070,
+377160,
+1850570
+],
+"tmdb": [
+29233,
+8403,
+24214,
+21030,
+58143
+],
+"wn": [
+"9118559",
+"9165917",
+"11877394",
+"9090069",
+"8147164"
+]
+},
+"names": {
+"steam": [
+"This War of Mine",
+"Fallout 4",
+"DEATH STRANDING DIRECTOR'S CUT"
+],
+"tmdb": [
+"설국열차",
+"매드 맥스",
+"더 로드",
+"칠드런 오브 맨",
+"더 라스트 오브 어스"
+],
+"wn": [
+"멸망한 세계의 취사병",
+"감염병 생존기",
+"빙하시대의 아포칼립스",
+"반려 쉘터 키우기",
+"멸망 이후의 세계"
+]
+},
+"meta": {
+"steam": [
+"Survival · War · Atmospheric · Singleplayer · Strategy",
+"Open World · Post-apocalyptic · Singleplayer · Exploration · RPG",
+"Story Rich · Open World · Walking Simulator · Atmospheric · Great Soundtrack"
+],
+"tmdb": [
+"영화 · 액션, SF, 드라마",
+"영화 · 액션, 스릴러, SF",
+"영화 · 모험, 드라마",
+"영화 · SF, 스릴러, 액션",
+"TV · 드라마"
+],
+"wn": [
+"현판 · 마일드커피",
+"현판 · 티미",
+"현판 · 금재",
+"판타지 · 흙색",
+"현판 · 싱숑"
+]
+}
+},
+{
+"pid": "p12_aaa",
+"desc": "오픈월드 AAA + 히트작",
+"seeds": {
+"steam": [
+292030,
+1174180,
+3240220,
+1091500,
+1151640
+],
+"tmdb": [
+30736,
+23082,
+25369,
+8403,
+43110
+],
+"wn": [
+"6020546",
+"4834852",
+"8517278",
+"11225280",
+"1787051"
+]
+},
+"names": {
+"steam": [
+"The Witcher 3: Wild Hunt",
+"Red Dead Redemption 2",
+"Grand Theft Auto V 인핸스드",
+"Cyberpunk 2077",
+"Horizon Zero Dawn™ Complete Edition"
+],
+"tmdb": [
+"존 윅",
+"다크 나이트",
+"인셉션",
+"매드 맥스",
+"듄"
+],
+"wn": [
+"전지적 독자 시점",
+"나 혼자 만렙 귀환자",
+"재벌집 기둥서방이 되었다.",
+"화산수호",
+"템빨"
+]
+},
+"meta": {
+"steam": [
+"Open World · RPG · Story Rich · Atmospheric · Fantasy",
+"Open World · Story Rich · Western · Multiplayer · Adventure",
+"Open World · Sexual Content · Action · Multiplayer · Crime",
+"Cyberpunk · Open World · Nudity · RPG · Singleplayer",
+"Open World · Adventure · Female Protagonist · Singleplayer · Story Rich"
+],
+"tmdb": [
+"영화 · 액션, 스릴러",
+"영화 · 액션, 범죄, 스릴러",
+"영화 · 액션, SF, 모험",
+"영화 · 액션, 스릴러, SF",
+"영화 · SF, 모험"
+],
+"wn": [
+"현판 · 싱숑",
+"현판 · 허니",
+"현판 · 구글다스",
+"무협 · 이동규",
+"판타지 · 박새날"
+]
+}
+},
+{
+"pid": "p13_bl",
+"desc": "BL 독자 (게임 없음)",
+"seeds": {
+"tmdb": [
+57744,
+35514,
+57509,
+56917,
+35868
+],
+"wn": [
+"8001229",
+"8897226",
+"8065300",
+"10139084",
+"8917476"
+]
+},
+"names": {
+"tmdb": [
+"시맨틱 에러",
+"연애담",
+"하트스토퍼",
+"영 로열스",
+"콜 미 바이 유어 네임"
+],
+"wn": [
+"결혼과 부부생활",
+"12월",
+"사랑은 우연을 타고",
+"악연이라면 악연",
+"대충 가이드합니다"
+]
+},
+"meta": {
+"tmdb": [
+"TV · 드라마",
+"영화 · 드라마, 로맨스",
+"TV · 드라마",
+"TV · 드라마",
+"영화 · 로맨스, 드라마"
+],
+"wn": [
+"BL · NAPUL",
+"BL · samk",
+"BL · MayBee",
+"BL · 이림",
+"BL · 김곶감"
+]
+}
+},
+{
+"pid": "p14_indie_narr",
+"desc": "인디 내러티브·아트하우스 (웹소설은 순문학풍 로맨스로 대체)",
+"seeds": {
+"steam": [
+632470,
+501300,
+383870,
+753640,
+231200
+],
+"tmdb": [
+44621,
+34102,
+35878,
+34193,
+43189
+],
+"wn": [
+"12928532",
+"11590178",
+"14118417",
+"12421460",
+"14351484"
+]
+},
+"names": {
+"steam": [
+"Disco Elysium - The Final Cut",
+"What Remains of Edith Finch",
+"Firewatch",
+"Outer Wilds",
+"Kentucky Route Zero: PC Edition"
+],
+"tmdb": [
+"에브리씽 에브리웨어 올 앳 원스",
+"문라이트",
+"레이디 버드",
+"패터슨",
+"미나리"
+],
+"wn": [
+"어느새 구원의 계절에",
+"다정한 거짓말",
+"너의 불행에 찬사를",
+"느린 봄",
+"저질스러운 순정"
+]
+},
+"meta": {
+"steam": [
+"RPG · Story Rich · Choices Matter · Detective · Isometric",
+"Story Rich · Atmospheric · Walking Simulator · Mystery · First-Person",
+"Adventure · Atmospheric · Story Rich · Walking Simulator · Mystery",
+"Exploration · Space · Mystery · Story Rich · Adventure",
+"Adventure · Atmospheric · Point & Click · Indie · Surreal"
+],
+"tmdb": [
+"영화 · 액션, 모험, SF",
+"영화 · 드라마",
+"영화 · 드라마, 코미디",
+"영화 · 드라마, 코미디, 로맨스",
+"영화 · 드라마"
+],
+"wn": [
+"로맨스 · 유홍초",
+"로맨스 · 겟섬팍",
+"로맨스 · 클로져",
+"로맨스 · 플루토a",
+"로맨스 · 김노라"
+]
+}
+},
+{
+"pid": "p15_zombie",
+"desc": "좀비",
+"seeds": {
+"steam": [
+108600,
+239140,
+550,
+251570,
+495420
+],
+"tmdb": [
+34093,
+52842,
+57490,
+18017,
+19418
+],
+"wn": [
+"8147164",
+"6168301",
+"4969101",
+"9118559",
+"12664955"
+]
+},
+"names": {
+"steam": [
+"Project Zomboid",
+"Dying Light",
+"Left 4 Dead 2",
+"7 Days to Die",
+"State of Decay 2: Juggernaut Edition"
+],
+"tmdb": [
+"부산행",
+"워킹 데드",
+"지금 우리 학교는",
+"28일 후",
+"새벽의 저주"
+],
+"wn": [
+"멸망 이후의 세계",
+"전역인 줄 알았는데 종말이었다",
+"종말에서 회귀한 플레이어",
+"멸망한 세계의 취사병",
+"좀비물이라도 사랑은 하고 싶어!"
+]
+},
+"meta": {
+"steam": [
+"Survival · Zombies · Open World · Multiplayer · Open World Survival Craft",
+"Zombies · Survival Horror · Horror · Online Co-Op · Open World",
+"Zombies · Co-op · FPS · Multiplayer · Shooter",
+"Survival · Zombies · Multiplayer · Open World · Open World Survival Craft",
+"Survival · Open World · Zombies · Base Building · Multiplayer"
+],
+"tmdb": [
+"영화 · 액션, 공포, 스릴러",
+"TV · Action & Adventure, 드라마, Sci-Fi & Fantasy",
+"TV · Action & Adventure, 드라마, Sci-Fi & Fantasy",
+"영화 · 공포, 스릴러, SF",
+"영화 · 공포, SF, 액션"
+],
+"wn": [
+"현판 · 싱숑",
+"판타지 · A팀",
+"판타지 · 정체불명1호",
+"현판 · 마일드커피",
+"로판 · 후라이드치킨"
+]
+}
+},
+{
+"pid": "p16_mmorpg",
+"desc": "MMORPG·게임 판타지",
+"seeds": {
+"steam": [
+1284210,
+1063730,
+2429640,
+230410,
+761890
+],
+"tmdb": [
+53300,
+56905,
+46252,
+37764,
+54180
+],
+"wn": [
+"1787051",
+"4834852",
+"3533535",
+"4076695",
+"4292383"
+]
+},
+"names": {
+"steam": [
+"Guild Wars 2®",
+"New World: Aeternum",
+"Throne and Liberty",
+"Warframe",
+"알비온 온라인"
+],
+"tmdb": [
+"소드 아트 온라인",
+"무직전생 ~이세계에 갔으면 최선을 다한다~",
+"던전 앤 드래곤: 도적들의 명예",
+"레디 플레이어 원",
+"던전에서 만남을 추구하면 안 되는 걸까"
+],
+"wn": [
+"템빨",
+"나 혼자 만렙 귀환자",
+"레벨업 못하는 플레이어",
+"무패의 랭커",
+"뭐든지 만드는 랭커 플레이어"
+]
+},
+"meta": {
+"steam": [
+"MMORPG · Adventure · RPG · Free to Play · Character Customization",
+"Open World · Massively Multiplayer · MMORPG · RPG · Adventure",
+"MMORPG · Open World · Free to Play · Massively Multiplayer · RPG",
+"Free to Play · Looter Shooter · Action RPG · Third-Person Shooter · Action",
+"MMORPG · Free to Play · Open World · Massively Multiplayer · Sandbox"
+],
+"tmdb": [
+"TV · 애니메이션, Sci-Fi & Fantasy, Action & Adventure",
+"TV · Action & Adventure, 애니메이션, Sci-Fi & Fantasy",
+"영화 · 모험, 판타지, 코미디",
+"영화 · 모험, 액션, SF",
+"TV · 애니메이션, Sci-Fi & Fantasy, 코미디, Action & Adventure"
+],
+"wn": [
+"판타지 · 박새날",
+"현판 · 허니",
+"판타지 · 가빈지",
+"현판 · 메슬로우",
+"판타지 · 취력"
+]
+}
+},
+{
+"pid": "p17_sports",
+"desc": "스포츠·레이싱",
+"seeds": {
+"steam": [
+2669320,
+2878980,
+1551360,
+2488620,
+3551340
+],
+"tmdb": [
+26587,
+29243,
+39679,
+56163,
+44817
+],
+"wn": [
+"13621450",
+"11790464",
+"11478443",
+"6441095",
+"5811544"
+]
+},
+"names": {
+"steam": [
+"EA SPORTS FC™ 25",
+"NBA 2K25",
+"Forza Horizon 5",
+"F1® 24",
+"Football Manager 26"
+],
+"tmdb": [
+"머니볼",
+"러시: 더 라이벌",
+"포드 V 페라리",
+"스토브리그",
+"더 퍼스트 슬램덩크"
+],
+"wn": [
+"사라진 천재 투수가 돌아왔다",
+"빅클럽 안 가는 축구 천재",
+"다시 태어난 축구천재",
+"사상 최강의 양손 투수",
+"왕따가 격투기를 너무 잘함"
+]
+},
+"meta": {
+"steam": [
+"Sports · Football (Soccer) · Controller · Multiplayer · Simulation",
+"Sports · Basketball · Simulation · eSports · 3D",
+"Racing · Open World · Driving · Multiplayer · Automobile Sim",
+"Racing · Driving · Sports · Multiplayer · Automobile Sim",
+"Sports · Simulation · Strategy · Football (Soccer) · Management"
+],
+"tmdb": [
+"영화 · 드라마",
+"영화 · 드라마, 액션",
+"영화 · 드라마, 역사, 액션",
+"TV · 드라마",
+"영화 · 애니메이션, 코미디, 드라마"
+],
+"wn": [
+"현판 · 강유성",
+"현판 · 그울림",
+"현판 · 무민",
+"현판 · RAS",
+"현판 · 아몬드빵"
+]
+}
+},
+{
+"pid": "p18_psych",
+"desc": "심리 스릴러·미스터리 여성",
+"seeds": {
+"steam": [
+368370,
+1350200,
+1222140,
+2172010,
+319630
+],
+"tmdb": [
+30738,
+25370,
+46269,
+25375,
+39661
+],
+"wn": [
+"9845472",
+"11860184",
+"13918938",
+"8003807",
+"2197794"
+]
+},
+"names": {
+"steam": [
+"Her Story",
+"IMMORTALITY",
+"Detroit: Become Human",
+"Until Dawn™",
+"Life is Strange - Episode 1"
+],
+"tmdb": [
+"나를 찾아줘",
+"셔터 아일랜드",
+"추락의 해부",
+"블랙 스완",
+"기생충"
+],
+"wn": [
+"악녀의 죽음을 밝혀줘",
+"죽음을 바라는 당신에게",
+"남편이 바뀌었다",
+"별자리 살인마 : 너를 추억한다",
+"스릴러를 위한 스릴러"
+]
+},
+"meta": {
+"steam": [
+"Investigation · Typing · Interactive Fiction · Detective · Choose Your Own Adventure",
+"Hidden Object · Choose Your Own Adventure · Realistic · Story Rich · Horror",
+"Choices Matter · Story Rich · Multiple Endings · Cinematic · Singleplayer",
+"Choices Matter · Horror · Multiple Endings · Adventure · Choose Your Own Adventure",
+"Story Rich · Choices Matter · Great Soundtrack · Female Protagonist · Time Travel"
+],
+"tmdb": [
+"영화 · 미스터리, 스릴러, 드라마",
+"영화 · 드라마, 스릴러, 미스터리",
+"영화 · 스릴러, 미스터리, 범죄",
+"영화 · 드라마, 스릴러, 공포",
+"영화 · 코미디, 스릴러, 드라마"
+],
+"wn": [
+"로판 · 링스포인트",
+"로판 · 리디케이",
+"로판 · 한겨울",
+"미스터리 · 징구빙구",
+"미스터리 · Someday"
+]
+}
+},
+{
+"pid": "p19_casual",
+"desc": "캐주얼 파티 게임 + 일상·힐링 현판",
+"seeds": {
+"steam": [
+728880,
+431240,
+477160,
+265930,
+945360
+],
+"tmdb": [
+40035,
+24236,
+24179,
+25373,
+52069
+],
+"wn": [
+"11334971",
+"8551028",
+"8440715",
+"11596127",
+"6694704"
+]
+},
+"names": {
+"steam": [
+"Overcooked! 2",
+"Golf With Your Friends",
+"Human Fall Flat",
+"Goat Simulator",
+"Among Us"
+],
+"tmdb": [
+"극한직업",
+"세 얼간이",
+"행오버",
+"슈퍼배드",
+"오피스"
+],
+"wn": [
+"귀환자 피시방에 어서 오세요",
+"회귀한 공자는 쉬고 싶다",
+"힐링식당",
+"킹냥이와 시골에서 힐링합니다",
+"치킨으로 무림재벌"
+]
+},
+"meta": {
+"steam": [
+"Multiplayer · Local Co-Op · Online Co-Op · Co-op · Cooking",
+"Multiplayer · Casual · Mini Golf · Sports · Golf",
+"Co-op · Funny · Puzzle · Multiplayer · Adventure",
+"Simulation · Funny · Comedy · Open World · Sandbox",
+"Multiplayer · Social Deduction · Online Co-Op · Space · Survival"
+],
+"tmdb": [
+"영화 · 액션, 코미디, 범죄",
+"영화 · 드라마, 코미디",
+"영화 · 코미디",
+"영화 · 애니메이션, 코미디, 범죄, SF, 가족",
+"TV · 코미디"
+],
+"wn": [
+"현판 · 케밀",
+"판타지 · 김연우",
+"현판 · 알랜더",
+"현판 · 윈난성",
+"무협 · 탄마"
+]
+}
+},
+{
+"pid": "p20_builder",
+"desc": "자동화·경영 빌더",
+"seeds": {
+"steam": [
+427520,
+526870,
+1366540,
+294100,
+949230
+],
+"tmdb": [
+32366,
+30734,
+14290,
+29220,
+24200
+],
+"wn": [
+"12178391",
+"10328950",
+"3803742",
+"9180558",
+"5753143"
+]
+},
+"names": {
+"steam": [
+"Factorio",
+"Satisfactory",
+"Dyson Sphere Program",
+"RimWorld",
+"Cities: Skylines II"
+],
+"tmdb": [
+"마션",
+"인터스텔라",
+"아폴로 13",
+"그래비티",
+"더 문"
+],
+"wn": [
+"백수를 지망하는 황자의 영지 운영기",
+"황금 영주",
+"오늘부터 중원에서 사업하겠습니다",
+"재벌집 침술명의가 되었다",
+"영업 천재가 되었다"
+]
+},
+"meta": {
+"steam": [
+"Automation · Base Building · Resource Management · Sandbox · Crafting",
+"Base Building · Automation · Open World · Crafting · Multiplayer",
+"Automation · Space · Base Building · Building · Resource Management",
+"Colony Sim · Base Building · Survival · Strategy · Management",
+"City Builder · Simulation · Building · Sandbox · Management"
+],
+"tmdb": [
+"영화 · SF, 드라마, 모험",
+"영화 · 모험, 드라마, SF",
+"영화 · 드라마, 역사",
+"영화 · SF, 스릴러, 드라마",
+"영화 · SF, 드라마"
+],
+"wn": [
+"판타지 · 한제희",
+"판타지 · 휘선",
+"무협 · 산경(山景)",
+"현판 · 주문향",
+"현판 · 댄킴"
+]
+}
+},
+{
+"pid": "p21_boomer",
+"desc": "50대 — 한국 대중 영화·역사",
+"seeds": {
+"steam": [
+1290000,
+1248130,
+1250410,
+227300,
+3710840
+],
+"tmdb": [
+31123,
+31392,
+36024,
+54199,
+55417
+],
+"wn": [
+"6256156",
+"8517278",
+"9199153",
+"13673995",
+"8396404"
+]
+},
+"names": {
+"steam": [
+"PowerWash Simulator",
+"Farming Simulator 22",
+"Microsoft Flight Simulator (2020) 40th Anniversary Edition",
+"Euro Truck Simulator 2",
+"House Flipper Remastered Collection"
+],
+"tmdb": [
+"명량",
+"국제시장",
+"택시운전사",
+"응답하라 1988",
+"나의 아저씨"
+],
+"wn": [
+"회귀 1988",
+"재벌집 기둥서방이 되었다.",
+"회사원, 재벌 되다",
+"조선제국 막내 황자는 평화롭게 살고 싶다",
+"장침 먹는 깡촌 명의"
+]
+},
+"meta": {
+"steam": [
+"Casual · Cleaning · Relaxing · Simulation · Multiplayer",
+"Simulation · Farming Sim · Co-op · Multiplayer · Agriculture",
+"Simulation · Flight · Realistic · Open World · Multiplayer",
+"Driving · Transportation · Simulation · Open World · Automobile Sim",
+"Simulation · Design & Illustration · Decorating · Cleaning · Building"
+],
+"tmdb": [
+"영화 · 전쟁, 액션, 드라마, 역사",
+"영화 · 드라마",
+"영화 · 액션, 드라마, 역사",
+"TV · 코미디",
+"TV · 드라마"
+],
+"wn": [
+"현판 · 박재학",
+"현판 · 구글다스",
+"현판 · 극찬",
+"판타지 · 연암",
+"현판 · 가프"
+]
+}
+},
+{
+"pid": "p22_woman20s",
+"desc": "20대 여성 통합 (코지+로판+지브리)",
+"seeds": {
+"steam": [
+413150,
+1158160,
+972660,
+1458100,
+1135690
+],
+"tmdb": [
+19389,
+17367,
+56298,
+55805,
+29238
+],
+"wn": [
+"11387582",
+"9333794",
+"6448249",
+"8359540",
+"13117784"
+]
+},
+"names": {
+"steam": [
+"Stardew Valley",
+"Coral Island",
+"Spiritfarer®: 작별 인사 에디션",
+"Cozy Grove",
+"Unpacking 언패킹"
+],
+"tmdb": [
+"하울의 움직이는 성",
+"센과 치히로의 행방불명",
+"브리저튼",
+"사랑의 불시착",
+"어바웃 타임"
+],
+"wn": [
+"대역 황후",
+"악녀는 사랑을 원치 않아요",
+"그 악녀 인생, 제가 한번 살아 볼게요",
+"아기 황후님",
+"첫날밤에는 베일을 벗어 주세요"
+]
+},
+"meta": {
+"steam": [
+"Farming Sim · Pixel Graphics · Multiplayer · Life Sim · RPG",
+"Farming Sim · Life Sim · Dating Sim · Relaxing · Simulation",
+"Emotional · Story Rich · Indie · Management · Relaxing",
+"Relaxing · Cute · Cozy · Story Rich · Collectathon",
+"Relaxing · Cute · Casual · Pixel Graphics · Organizing"
+],
+"tmdb": [
+"영화 · 판타지, 애니메이션, 모험",
+"영화 · 애니메이션, 가족, 판타지",
+"TV · 드라마",
+"TV · 드라마, 코미디",
+"영화 · 드라마, 로맨스, 판타지"
+],
+"wn": [
+"로판 · 루시",
+"로판 · 태온",
+"로판 · 민트베리",
+"로판 · 유소이",
+"로판 · 로피아나"
+]
+}
+},
+{
+"pid": "p23_military",
+"desc": "밀리터리 (웹소설 없음)",
+"seeds": {
+"steam": [
+686810,
+393380,
+107410,
+236390,
+581320
+],
+"tmdb": [
+51627,
+15690,
+39666,
+19515,
+52539
+]
+},
+"names": {
+"steam": [
+"Hell Let Loose",
+"Squad",
+"Arma 3",
+"War Thunder",
+"Insurgency: Sandstorm"
+],
+"tmdb": [
+"밴드 오브 브라더스",
+"라이언 일병 구하기",
+"1917",
+"태극기 휘날리며",
+"제너레이션 킬"
+]
+},
+"meta": {
+"steam": [
+"Shooter · Realistic · World War II · Multiplayer · Singleplayer",
+"Military · Realistic · FPS · Multiplayer · PvP",
+"Military · Action · Multiplayer · Shooter · Simulation",
+"Free to Play · Vehicular Combat · Action · Simulation · Combat",
+"FPS · Realistic · Shooter · Military · Tactical"
+],
+"tmdb": [
+"TV · 드라마, War & Politics",
+"영화 · 전쟁, 드라마, 역사",
+"영화 · 전쟁, 드라마, 역사",
+"영화 · 액션, 모험, 드라마, 역사, 전쟁",
+"TV · War & Politics, 드라마, Action & Adventure"
+]
+}
+},
+{
+"pid": "p24_retro_pixel",
+"desc": "레트로·픽셀 인디 + 게임빙의",
+"seeds": {
+"steam": [
+504230,
+391540,
+413150,
+105600,
+250760
+],
+"tmdb": [
+25383,
+27871,
+43118,
+37764,
+56890
+],
+"wn": [
+"6037518",
+"10039079",
+"11932741",
+"8109893",
+"11578846"
+]
+},
+"names": {
+"steam": [
+"Celeste",
+"Undertale",
+"Stardew Valley",
+"Terraria",
+"Shovel Knight: Treasure Trove"
+],
+"tmdb": [
+"스콧 필그림",
+"주먹왕 랄프",
+"프리 가이",
+"레디 플레이어 원",
+"아케인"
+],
+"wn": [
+"게임 속 바바리안으로 살아남기",
+"망겜에서 1성따리로 살아남기",
+"무료 게임에 환생했다",
+"갓겜의 제국 1998",
+"게임 속 폭군이 되었다"
+]
+},
+"meta": {
+"steam": [
+"Precision Platformer · Difficult · Pixel Graphics · Great Soundtrack · Indie",
+"Great Soundtrack · Story Rich · Choices Matter · Multiple Endings · Pixel Graphics",
+"Farming Sim · Pixel Graphics · Multiplayer · Life Sim · RPG",
+"Open World Survival Craft · Sandbox · Survival · 2D · Multiplayer",
+"Platformer · Pixel Graphics · Retro · Great Soundtrack · Indie"
+],
+"tmdb": [
+"영화 · 액션, 코미디, 로맨스",
+"영화 · 가족, 애니메이션, 코미디, 모험",
+"영화 · 코미디, 모험, SF",
+"영화 · 모험, 액션, SF",
+"TV · 애니메이션, Action & Adventure, Sci-Fi & Fantasy"
+],
+"wn": [
+"판타지 · 정윤강",
+"판타지 · 킁컹",
+"판타지 · 타자씨",
+"현판 · Guybrush",
+"판타지 · 류승현"
+]
+}
+},
+{
+"pid": "p25_tycoon",
+"desc": "재벌·성공 현판 + 경영 시뮬",
+"seeds": {
+"steam": [
+3551340,
+535930,
+1342330,
+1331550,
+255710
+],
+"tmdb": [
+25378,
+32380,
+29213,
+55303,
+26650
+],
+"wn": [
+"10760365",
+"5334689",
+"12105514",
+"9180558",
+"4099874"
+]
+},
+"names": {
+"steam": [
+"Football Manager 26",
+"Two Point Hospital",
+"Mad Games Tycoon 2",
+"Big Ambitions",
+"Cities: Skylines"
+],
+"tmdb": [
+"소셜 네트워크",
+"빅쇼트",
+"더 울프 오브 월 스트리트",
+"석세션",
+"마진 콜: 24시간, 조작된 진실"
+],
+"wn": [
+"재벌집 히든 손자",
+"재벌가 범생이",
+"회귀 후 몰빵투자로 재벌 되기",
+"재벌집 침술명의가 되었다",
+"이번 생은 재벌이다!"
+]
+},
+"meta": {
+"steam": [
+"Sports · Simulation · Strategy · Football (Soccer) · Management",
+"Simulation · Management · Medical Sim · Building · Funny",
+"Management · Economy · Simulation · Game Development · Strategy",
+"Management · Economy · Simulation · Capitalism · Life Sim",
+"City Builder · Simulation · Building · Management · Strategy"
+],
+"tmdb": [
+"영화 · 드라마",
+"영화 · 코미디, 드라마",
+"영화 · 범죄, 드라마, 코미디",
+"TV · 드라마, 코미디",
+"영화 · 스릴러, 드라마"
+],
+"wn": [
+"현판 · 부팅",
+"현판 · 벼랑끝",
+"현판 · 와이번스",
+"현판 · 주문향",
+"현판 · 알랜더"
+]
+}
+},
+{
+"pid": "p26_romance",
+"desc": "현대 로맨스 + 로코 영화",
+"seeds": {
+"steam": [
+413150,
+2142790,
+1458100,
+1210320,
+1158160
+],
+"tmdb": [
+16225,
+18672,
+29238,
+57096,
+55805
+],
+"wn": [
+"14018891",
+"13355463",
+"11590178",
+"13735187",
+"12272368"
+]
+},
+"names": {
+"steam": [
+"Stardew Valley",
+"Fields of Mistria",
+"Cozy Grove",
+"Potion Craft: Alchemist Simulator",
+"Coral Island"
+],
+"tmdb": [
+"노팅 힐",
+"러브 액츄얼리",
+"어바웃 타임",
+"그 해 우리는",
+"사랑의 불시착"
+],
+"wn": [
+"매리지 레슨",
+"내게만 다정한 상사님",
+"다정한 거짓말",
+"그 선을 넘으면",
+"반드시 로맨틱"
+]
+},
+"meta": {
+"steam": [
+"Farming Sim · Pixel Graphics · Multiplayer · Life Sim · RPG",
+"Farming Sim · Dating Sim · RPG · Life Sim · Pixel Graphics",
+"Relaxing · Cute · Cozy · Story Rich · Collectathon",
+"Crafting · Singleplayer · Relaxing · Simulation · Medieval",
+"Farming Sim · Life Sim · Dating Sim · Relaxing · Simulation"
+],
+"tmdb": [
+"영화 · 로맨스, 코미디",
+"영화 · 코미디, 로맨스, 드라마",
+"영화 · 드라마, 로맨스, 판타지",
+"TV · 코미디, 드라마",
+"TV · 드라마, 코미디"
+],
+"wn": [
+"로맨스 · 오대리",
+"로맨스 · 아슈크림",
+"로맨스 · 겟섬팍",
+"로맨스 · 임여리",
+"로맨스 · 최송지"
+]
+}
+},
+{
+"pid": "p27_food",
+"desc": "요리·식당 슬로우라이프",
+"seeds": {
+"steam": [
+247020,
+728880,
+641320,
+413150,
+1210320
+],
+"tmdb": [
+30807,
+24258,
+13954,
+52769,
+38428
+],
+"wn": [
+"8736799",
+"8440715",
+"4460300",
+"9723965",
+"6665740"
+]
+},
+"names": {
+"steam": [
+"Cook, Serve, Delicious!",
+"Overcooked! 2",
+"Cooking Simulator",
+"Stardew Valley",
+"Potion Craft: Alchemist Simulator"
+],
+"tmdb": [
+"아메리칸 셰프",
+"줄리 & 줄리아",
+"음식남녀",
+"심야식당",
+"리틀 포레스트"
+],
+"wn": [
+"회귀자의 행복 식당",
+"힐링식당",
+"갓 셰프",
+"이세계 기사식당",
+"천재 해군 조리병이 되었다"
+]
+},
+"meta": {
+"steam": [
+"Indie · Time Management · Typing · Difficult · Cooking",
+"Multiplayer · Local Co-Op · Online Co-Op · Co-op · Cooking",
+"Simulation · Cooking · Singleplayer · Realistic · Sandbox",
+"Farming Sim · Pixel Graphics · Multiplayer · Life Sim · RPG",
+"Crafting · Singleplayer · Relaxing · Simulation · Medieval"
+],
+"tmdb": [
+"영화 · 코미디",
+"영화 · 로맨스, 드라마",
+"영화 · 코미디, 드라마, 로맨스",
+"TV · 드라마, 코미디",
+"영화 · 드라마"
+],
+"wn": [
+"현판 · 용발차기",
+"현판 · 알랜더",
+"현판 · 재미핥기",
+"판타지 · 납자루",
+"현판 · 엔도르핀"
+]
+}
+},
+{
+"pid": "p28_noir",
+"desc": "마피아·느와르 (웹소설 없음)",
+"seeds": {
+"steam": [
+360430,
+3240220,
+1659040,
+110800,
+1388590
+],
+"tmdb": [
+6508,
+12242,
+29480,
+11448,
+41616
+]
+},
+"names": {
+"steam": [
+"Mafia III: Definitive Edition",
+"Grand Theft Auto V 인핸스드",
+"HITMAN World of Assassination",
+"L.A. Noire",
+"Yakuza 6: The Song of Life"
+],
+"tmdb": [
+"대부",
+"좋은 친구들",
+"신세계",
+"범죄와의 전쟁",
+"나쁜 녀석들: 포에버"
+]
+},
+"meta": {
+"steam": [
+"Crime · Open World · Action · Story Rich · Singleplayer",
+"Open World · Sexual Content · Action · Multiplayer · Crime",
+"Stealth · Assassins · Singleplayer · VR · Action",
+"Detective · Crime · Open World · Noir · Adventure",
+"Action · Adventure · Open World · Beat 'em up · RPG"
+],
+"tmdb": [
+"영화 · 드라마, 범죄",
+"영화 · 드라마, 범죄",
+"영화 · 스릴러, 범죄, 드라마",
+"영화 · 액션, 범죄, 드라마, 스릴러",
+"영화 · 스릴러, 액션, 범죄"
+]
+}
+},
+{
+"pid": "p29_revenge",
+"desc": "복수 로판 + 막장 드라마 (게임 없음)",
+"seeds": {
+"tmdb": [
+57519,
+18661,
+18666,
+56677,
+56467
+],
+"wn": [
+"8839022",
+"5788724",
+"10912930",
+"11579408",
+"9779829"
+]
+},
+"names": {
+"tmdb": [
+"더 글로리",
+"킬 빌: 1부",
+"올드보이",
+"부부의 세계",
+"펜트하우스"
+],
+"wn": [
+"내 남편의 정부에게",
+"전남편의 미친개를 길들였다",
+"남편의 아내가 돌아왔다",
+"언니가 내 남편의 아이를 낳았다",
+"악녀의 시집살이는 즐겁다"
+]
+},
+"meta": {
+"tmdb": [
+"TV · 드라마",
+"영화 · 액션, 범죄",
+"영화 · 스릴러, 미스터리",
+"TV · 드라마",
+"TV · 드라마, 미스터리"
+],
+"wn": [
+"로판 · 라치크",
+"로판 · 재겸",
+"로판 · 킴레테",
+"로판 · 문다해",
+"로판 · 준예"
+]
+}
+},
+{
+"pid": "p30_esports",
+"desc": "10대 e스포츠·스포츠 애니",
+"seeds": {
+"steam": [
+730,
+570,
+1172470,
+359550,
+578080
+],
+"tmdb": [
+56890,
+57507,
+53826,
+57532,
+44817
+],
+"wn": [
+"4631576",
+"11398465",
+"5024617",
+"4076695",
+"3777351"
+]
+},
+"names": {
+"steam": [
+"Counter-Strike 2",
+"Dota 2",
+"Apex 레전드™",
+"톰 클랜시의 레인보우식스 시즈",
+"PUBG: BATTLEGROUNDS"
+],
+"tmdb": [
+"아케인",
+"사이버펑크: 엣지러너",
+"하이큐!!",
+"블루 록",
+"더 퍼스트 슬램덩크"
+],
+"wn": [
+"탑신병자 프로게이머 되다",
+"2회차, 빌런 프로게이머",
+"역대급 트롤러의 게임 먹방",
+"무패의 랭커",
+"내가 키운 S급들"
+]
+},
+"meta": {
+"steam": [
+"FPS · Shooter · Multiplayer · Competitive · Action",
+"Free to Play · MOBA · Multiplayer · Strategy · eSports",
+"Free to Play · Multiplayer · Battle Royale · FPS · Shooter",
+"FPS · PvP · Multiplayer · Shooter · Tactical",
+"Survival · Shooter · Battle Royale · Multiplayer · FPS"
+],
+"tmdb": [
+"TV · 애니메이션, Action & Adventure, Sci-Fi & Fantasy",
+"TV · 애니메이션, Action & Adventure, Sci-Fi & Fantasy, 범죄",
+"TV · 애니메이션, 코미디, 드라마",
+"TV · 애니메이션, Action & Adventure, 드라마",
+"영화 · 애니메이션, 코미디, 드라마"
+],
+"wn": [
+"현판 · 러데",
+"현판 · 나는소보루",
+"현판 · 작가G",
+"현판 · 메슬로우",
+"판타지 · 근서"
+]
+}
+},
+{
+"pid": "p31_medical",
+"desc": "의료 드라마 + 병원 경영",
+"seeds": {
+"steam": [
+535930,
+868360,
+246620,
+233720,
+1649080
+],
+"tmdb": [
+56533,
+54618,
+51936,
+52065,
+54876
+],
+"wn": [
+"9042293",
+"6853878",
+"8396404",
+"9180558",
+"11244116"
+]
+},
+"names": {
+"steam": [
+"Two Point Hospital",
+"Project Hospital",
+"Plague Inc: Evolved",
+"Surgeon Simulator",
+"Two Point Campus"
+],
+"tmdb": [
+"슬기로운 의사생활",
+"낭만닥터 김사부",
+"하우스",
+"그레이 아나토미",
+"굿 닥터"
+],
+"wn": [
+"전지적 의사 시점",
+"Dr. 신선한 : 미래를 보는 의사",
+"장침 먹는 깡촌 명의",
+"재벌집 침술명의가 되었다",
+"시장통 맛침명의 재벌처가 씹어먹다"
+]
+},
+"meta": {
+"steam": [
+"Simulation · Management · Medical Sim · Building · Funny",
+"Management · Medical Sim · City Builder · Job Simulator · Simulation",
+"Strategy · Simulation · Outbreak Sim · Indie · Singleplayer",
+"Simulation · Funny · Physics · Comedy · Medical Sim",
+"Management · Simulation · Building · Strategy · City Builder"
+],
+"tmdb": [
+"TV · 드라마, 코미디",
+"TV · 드라마",
+"TV · 드라마",
+"TV · 드라마",
+"TV · 드라마"
+],
+"wn": [
+"현판 · 장원박",
+"현판 · 전작가 & 윤D",
+"현판 · 가프",
+"현판 · 주문향",
+"현판 · 가프"
+]
+}
+},
+{
+"pid": "p32_entertainer",
+"desc": "연예·배우 성장물 (게임 없음)",
+"seeds": {
+"tmdb": [
+34077,
+37771,
+37761,
+44648,
+30742
+],
+"wn": [
+"8328612",
+"8030111",
+"6053399",
+"12516020",
+"4187468"
+]
+},
+"names": {
+"tmdb": [
+"라라랜드",
+"스타 이즈 본",
+"보헤미안 랩소디",
+"엘비스",
+"위플래쉬"
+],
+"wn": [
+"연기 재능이 깡패임",
+"환생한 천재는 배우가 되고 싶다",
+"전천후 연예생활백서",
+"데뷔 멤버는 제 손으로 뽑겠습니다",
+"천만 배우의 게임 라이프"
+]
+},
+"meta": {
+"tmdb": [
+"영화 · 코미디, 드라마, 로맨스",
+"영화 · 음악, 드라마, 로맨스",
+"영화 · 음악, 드라마",
+"영화 · 음악, 역사, 드라마",
+"영화 · 드라마, 음악, 스릴러"
+],
+"wn": [
+"현판 · 서핑보이",
+"현판 · 밀크티",
+"현판 · 자경(蔗境)",
+"현판 · 슈바인",
+"판타지 · 김불록"
+]
+}
+}
+]
