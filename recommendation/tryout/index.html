@@ -55,7 +55,14 @@ ul{list-style:none;margin:12px 0 0;padding:0}
 .rk{width:26px;flex:0 0 26px;color:var(--dim);font-variant-numeric:tabular-nums;font-size:13px;padding-top:2px}
 .rec .body{flex:1;min-width:0}
 .st{font-size:12.5px;color:var(--dim);margin-top:3px;font-variant-numeric:tabular-nums}
-.grades{display:flex;gap:5px;margin-top:8px;flex-wrap:wrap}
+.grades{display:grid;grid-template-columns:52px 1fr;gap:6px 10px;margin-top:10px;align-items:center}
+.grades .ql{font-size:11.5px;color:var(--dim);letter-spacing:.02em}
+.grades .qr{display:flex;gap:5px;flex-wrap:wrap;align-items:center}
+.grades .qr input{flex:1;min-width:140px;border:1px solid var(--line);background:transparent;color:inherit;border-radius:6px;padding:4px 8px;font-size:12.5px}
+.gb.k{color:var(--dim)} .gb.w{color:var(--dim)}
+.gb.k[aria-pressed=true],.gb.w[aria-pressed=true]{color:var(--accent)}
+.rater{display:flex;gap:8px;align-items:center;margin-top:8px;font-size:12.5px;color:var(--dim)}
+.rater input{border:1px solid var(--line);background:transparent;color:inherit;border-radius:6px;padding:4px 8px;font-size:12.5px;width:160px}
 .gb{border:1px solid var(--line);background:transparent;border-radius:6px;padding:4px 10px;
   cursor:pointer;font-size:12.5px;color:var(--dim)}
 .gb:hover{border-color:currentColor}
@@ -116,12 +123,15 @@ a{color:var(--accent)}
   <div class="card" style="margin-top:20px">
     <h2>3 · 결과 <span id="scope" style="text-transform:none;letter-spacing:0"></span></h2>
     <div id="out"><p class="empty">시드를 담고 <b>추천 받기</b>를 누르세요.</p></div>
-    <p class="note">각 항목의 등급은 <b>3 아주 잘 맞음 · 2 맞음 · 1 애매 · 0 안 맞음</b>입니다. 평가와 같은 척도이고,
-      <b>적합 = 2 이상</b>으로 셉니다. 여기서 매긴 등급은 제가 매긴 은행과 <b>섞지 않고</b> 따로 쌓입니다 —
-      채점자와 설계자가 같다는 결함(D-25)을 칠 수 있는 유일한 독립 증거라서요.</p>
+    <p class="note">항목마다 세 가지를 묻습니다. <b>알고 있나</b>(모름 / 알지만 안 봄 / 이미 봄) ·
+      <b>볼 의향</b>(3 꼭 본다 · 2 볼 만하다 · 1 글쎄 · 0 안 본다) · <b>이유</b>(선택, 메모 가능).
+      "볼 의향"이 핵심 지표이고 <b>2 이상 = 적합</b>으로 셉니다 — LLM 채점과 같은 척도라 바로 비교됩니다.
+      "이미 봄"이 많으면 정확하지만 쓸모없는 추천이고, 이유는 실패 유형을 가르는 데 씁니다.
+      답을 바꾸면 그 항목이 다시 저장됩니다(마지막 답이 유효). 여기 쌓이는 답은 LLM 채점 은행과 <b>섞지 않습니다</b>.</p>
+    <div class="rater">채점자 <input id="rater" placeholder="이름 또는 별명" autocomplete="off"> <span id="raterhint">— 먼저 적어 주세요. 채점자별로 따로 봅니다.</span></div>
   </div>
 
-  <div class="bar" id="bar">이번 세션에서 매긴 등급 <b id="cnt">0</b>개</div>
+  <div class="bar" id="bar">이번 세션에서 답한 항목 <b id="cnt">0</b>개</div>
 </div>
 
 <script>
@@ -165,6 +175,41 @@ async function postGrade(rec){
     return false;
   }
 }
+
+// ---- 사람 채점: 항목당 세 질문 ---------------------------------------------
+// Q1 known  : unknown / known_unseen / seen        (발견성)
+// Q2 grade  : 3 꼭 본다 · 2 볼 만 · 1 글쎄 · 0 안 본다  (핵심 지표, 적합 = 2 이상)
+// Q3 why    : 선택 하나 + note (실패 유형)
+const KNOWN=[["unknown","모름"],["known_unseen","알지만 안 봄"],["seen","이미 봄·해봄"]];
+const WHY=[["taste","취향에 맞음"],["genre_only","장르만 비슷"],["obvious","너무 뻔함"],["off_genre","관심 없는 장르"],["redundant","비슷한 게 이미 많음"],["low_quality","질이 낮아 보임"],["other","기타"]];
+function gradeBox(i){
+  return `<div class="grades" data-i="${i}">
+    <span class="ql">알고 있나</span><span class="qr">${KNOWN.map(([v,l])=>`<button class="gb k" data-q="known" data-v="${v}" aria-pressed="false"><span>${l}</span></button>`).join("")}</span>
+    <span class="ql">볼 의향</span><span class="qr">${[3,2,1,0].map(g=>`<button class="gb" data-q="grade" data-g="${g}" data-v="${g}" aria-pressed="false"><span>${g}</span></button>`).join("")}<span style="font-size:11.5px;color:var(--dim)">3 꼭 · 2 볼 만 · 1 글쎄 · 0 안 봄</span></span>
+    <span class="ql">이유</span><span class="qr">${WHY.map(([v,l])=>`<button class="gb w" data-q="why" data-v="${v}" aria-pressed="false"><span>${l}</span></button>`).join("")}<input data-q="note" placeholder="메모 (선택)" maxlength="200"></span>
+  </div>`;
+}
+function raterName(){ return ($("#rater").value||"").trim(); }
+function wireGrades(rows, mkRec){
+  $("#out").querySelectorAll(".grades").forEach(box=>{
+    const item=rows[+box.dataset.i], i=+box.dataset.i;
+    const ans={known:null,grade:null,why:null,note:""}; let counted=false;
+    const save=async()=>{
+      if(ans.grade===null) return;                 // 볼 의향이 있어야 한 줄이 된다
+      if(!raterName()){ $("#raterhint").innerHTML='<b style="color:var(--g0)">채점자 이름을 먼저 적어 주세요.</b>'; $("#rater").focus(); return; }
+      const ok=await postGrade(mkRec(item,i,{v:2,rater:raterName(),...ans}));
+      if(ok&&!counted){ counted=true; $("#cnt").textContent=++graded; }
+    };
+    box.querySelectorAll(".gb").forEach(b=>b.onclick=()=>{
+      const q=b.dataset.q, on=b.getAttribute("aria-pressed")==="true";
+      box.querySelectorAll(`.gb[data-q="${q}"]`).forEach(x=>x.setAttribute("aria-pressed","false"));
+      if(on&&q!=="grade"){ ans[q]=null; } else { b.setAttribute("aria-pressed","true"); ans[q]= q==="grade"? +b.dataset.v : b.dataset.v; }
+      save();
+    });
+    const note=box.querySelector('input[data-q="note"]');
+    note.addEventListener("change",()=>{ ans.note=note.value.trim(); save(); });
+  });
+}
 async function api(path){
   const r=await fetch(`/api/${plat}${path}`);
   const j=await r.json();
@@ -205,21 +250,10 @@ async function recommend(){
           <div class="nm">${r.link?`<a href="${esc(r.link)}" target="_blank" rel="noopener">${esc(r.name)}</a>`:esc(r.name)}</div>
           <div class="mt">${esc(r.meta)}</div>
           <div class="st">${esc(r.stat)}</div>
-          <div class="grades" data-i="${i}">
-            ${[3,2,1,0].map(g=>`<button class="gb" data-g="${g}" aria-pressed="false"><span>${g}</span></button>`).join("")}
-          </div>
+          ${gradeBox(i)}
         </div>
       </div>`).join("");
-    $("#out").querySelectorAll(".grades").forEach(box=>{
-      const item=rows[+box.dataset.i];
-      box.querySelectorAll(".gb").forEach(b=>b.onclick=async()=>{
-        box.querySelectorAll(".gb").forEach(x=>x.setAttribute("aria-pressed","false"));
-        b.setAttribute("aria-pressed","true");
-        const ok=await postGrade({platform:plat,seeds:lastSeeds,rank:+box.dataset.i+1,
-            item_id:item.id,name:item.name,grade:+b.dataset.g});
-        if(ok) $("#cnt").textContent = ++graded; else b.setAttribute("aria-pressed","false");
-      });
-    });
+    wireGrades(rows,(item,i,a)=>({platform:plat,seeds:lastSeeds,rank:i+1,item_id:item.id,name:item.name,...a}));
   }catch(e){ $("#out").innerHTML=`<p class="empty">오류: ${esc(e.message)}</p>`; }
   $("#rec").disabled=false;
 }
@@ -251,23 +285,12 @@ async function crossRecommend(){
           <div class="nm"><span style="font-size:11px;color:var(--dim);border:1px solid var(--line);border-radius:4px;padding:1px 6px;margin-right:6px">${PL[it.plat]} #${it.plat_rank}</span>${it.link?`<a href="${esc(it.link)}" target="_blank" rel="noopener">${esc(it.name)}</a>`:esc(it.name)}</div>
           <div class="mt">${esc(it.meta)}</div>
           <div class="st">${esc(it.stat)}</div>
-          <div class="grades" data-i="${i}">
-            ${[3,2,1,0].map(g=>`<button class="gb" data-g="${g}" aria-pressed="false"><span>${g}</span></button>`).join("")}
-          </div>
+          ${gradeBox(i)}
         </div>
       </div>`).join("");
-    $("#out").querySelectorAll(".grades").forEach(box=>{
-      const it=rows[+box.dataset.i];
-      box.querySelectorAll(".gb").forEach(b=>b.onclick=async()=>{
-        box.querySelectorAll(".gb").forEach(x=>x.setAttribute("aria-pressed","false"));
-        b.setAttribute("aria-pressed","true");
-        // platform:"cross" 로 구분해 쌓는다. 은행과 섞이지 않는다. 질문이 다르다 —
-        // "이 조합의 사람에게 이 항목이 맞나". 플랫폼 안 채점과 같은 척도지만 다른 물음이다.
-        const ok=await postGrade({platform:"cross",pid,rule,k:+k,rank:+box.dataset.i+1,
-            item_plat:it.plat,item_plat_rank:it.plat_rank,item_id:it.id,name:it.name,grade:+b.dataset.g});
-        if(ok) $("#cnt").textContent = ++graded; else b.setAttribute("aria-pressed","false");
-      });
-    });
+    // platform:"cross" 로 구분해 쌓는다. 은행과 섞이지 않는다.
+    wireGrades(rows,(it,i,a)=>({platform:"cross",pid,rule,k:+k,rank:i+1,
+        item_plat:it.plat,item_plat_rank:it.plat_rank,item_id:it.id,name:it.name,...a}));
   }catch(e){ $("#out").innerHTML=`<p class="empty">오류: ${esc(e.message)}</p>`; }
   $("#xrec").disabled=false;
 }
@@ -284,6 +307,9 @@ async function drawStatus(){
   }catch(e){ $("#status").innerHTML='<span><i class="dot down"></i>게이트웨이에 못 닿습니다</span>'; }
 }
 
+try{ $("#rater").value=localStorage.getItem("aod_rater")||""; }catch(e){}
+$("#rater").addEventListener("change",()=>{ try{localStorage.setItem("aod_rater",$("#rater").value.trim());}catch(e){} $("#raterhint").textContent=""; });
+if($("#rater").value) $("#raterhint").textContent="";
 drawStatus(); setInterval(drawStatus, 20000);
 drawTabs(); drawChips();
 $("#go").onclick=search;

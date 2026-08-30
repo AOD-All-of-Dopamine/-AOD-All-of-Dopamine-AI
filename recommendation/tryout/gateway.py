@@ -156,6 +156,7 @@ class H(BaseHTTPRequestHandler):
         n = int(self.headers.get("Content-Length") or 0)
         rec = json.loads(self.rfile.read(n) or b"{}")
         rec["ts"] = time.strftime("%Y-%m-%dT%H:%M:%S")
+        rec.setdefault("v", 1)   # v1 = 등급 하나, v2 = 세 질문(known/grade/why/note) + rater. 항목 재답은 새 줄로 쌓이고 마지막 줄이 유효.
         GRADES.parent.mkdir(parents=True, exist_ok=True)
         with GRADES.open("a", encoding="utf-8") as f:
             f.write(json.dumps(rec, ensure_ascii=False) + "\n")
