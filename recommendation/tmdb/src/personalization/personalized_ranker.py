@@ -45,7 +45,7 @@ from src.config import artifact_dir
 class PersonalizedRanker:
     def __init__(self, artifacts=None, rating_boost: float = 0.0, align_w: float = 0.0,
                  vote_boost: float = 0.0, media_w: float = 0.0,
-                 genre_w: float = 0.0, vote_w: float = 0.0):
+                 genre_w: float = 0.0, vote_w: float = 0.0, kw_w: float = 0.0):
         d = artifact_dir(artifacts)
         idx = pd.read_parquet(d / "corpus_index.parquet").sort_values("embedding_row")
         ds = pd.read_parquet(d / "dataset.parquet").set_index("item_id")
@@ -66,6 +66,12 @@ class PersonalizedRanker:
         self.genre_w = genre_w         # D-44. 시드 개별 최대 피복률로 장르 정합을 밀어준다
         self._genres = [frozenset(g.tolist() if hasattr(g, "tolist") else (g or []))
                         for g in self.dataset["genres"]] if genre_w else None
+        # X-18. 장르피복과 같은 형태의 키워드 피복. 장르는 중앙 2개라 거칠고
+        # 키워드는 중앙 5개라 더 곱다. 장르피복을 통제한 뒤에도 잔차상관 +0.078
+        # (프로필 부호일치 42/52)로 독립 정보를 갖는다.
+        self.kw_w = kw_w
+        self._kw = [frozenset(k.tolist() if hasattr(k, "tolist") else (k or []))
+                    for k in self.dataset["keywords"]] if kw_w else None
         vc = self.dataset["vote_count"].astype(float)
         self.vote_pct = vc.rank(pct=True).to_numpy()          # 결측 없음 → 눕힐 것이 없다
         self.vote_q = np.clip(np.log10(1.0 + vc.to_numpy()) / 5.0, 0.0, 1.0)   # D-60
@@ -75,7 +81,7 @@ class PersonalizedRanker:
     def rank(self, scored: pd.DataFrame, exclude_rows=None, top_n: int = 300,
              servable_mask: np.ndarray | None = None,
              seed_pct: float | None = None, seed_medias=None,
-             seed_genres=None) -> pd.DataFrame:
+             seed_genres=None, seed_kws=None) -> pd.DataFrame:
         """`seed_pct` — 시드 인기 백분위 중앙. 없으면 정합 항을 끈다.
 
         `seed_medias` — 시드의 media 집합 (D-42). `media_w > 0` 이고 후보 media 가
@@ -102,6 +108,12 @@ class PersonalizedRanker:
                                for sg in seed_genres)
                            for i in r], dtype=np.float32)
             base = base * (1.0 + self.genre_w * gf)
+        if self.kw_w and seed_kws:
+            # 장르피복과 동일: 시드 **개별** 최대 피복률, 분모에 후보를 넣지 않는다(자카드 금지).
+            kf = np.array([max((len(self._kw[i] & sk) / len(sk) if sk else 0.0)
+                               for sk in seed_kws)
+                           for i in r], dtype=np.float32)
+            base = base * (1.0 + self.kw_w * kf)
         if self.media_w and seed_medias:
             mis = ~np.isin(self._media[r], list(seed_medias))
             base = base * (1.0 - self.media_w * mis)

@@ -16,13 +16,14 @@ from src.config import PRODUCTION_POSTPROCESS
 def build_components(artifacts=None, hub_lambda: float | None = None,
                      vote_boost: float = 0.0, rating_boost: float = 0.0,
                      align_w: float = 0.0, min_overview_len: int = 0,
-                     media_w: float = 0.0, genre_w: float = 0.0, vote_w: float = 0.0):
+                     media_w: float = 0.0, genre_w: float = 0.0, vote_w: float = 0.0,
+                     kw_w: float = 0.0):
     ret = CandidateRetriever(artifacts, min_overview_len=min_overview_len)
     if hub_lambda is not None: ret.hub_lambda = hub_lambda
     return (SeedLoader(artifacts), ret, ScoreAggregator(),
             PersonalizedRanker(artifacts, vote_boost=vote_boost,
                                rating_boost=rating_boost, align_w=align_w,
-                               media_w=media_w, genre_w=genre_w, vote_w=vote_w))
+                               media_w=media_w, genre_w=genre_w, vote_w=vote_w, kw_w=kw_w))
 
 
 def recommend(seed_rows, components=None, strategy: str = "top2_mean", top_n: int = 50,
@@ -45,7 +46,13 @@ def recommend(seed_rows, components=None, strategy: str = "top2_mean", top_n: in
         for rr in seed_rows:
             g = ranker.dataset.iloc[int(rr)]["genres"]
             seed_genres.append(frozenset(g.tolist() if hasattr(g, "tolist") else (g or [])))
-    ranked = ranker.rank(scored, exclude_rows=excl, top_n=rank_n,
+    seed_kws = None
+    if ranker.kw_w:
+        seed_kws = []
+        for rr in seed_rows:
+            kk = ranker.dataset.iloc[int(rr)]["keywords"]
+            seed_kws.append(frozenset(kk.tolist() if hasattr(kk, "tolist") else (kk or [])))
+    ranked = ranker.rank(scored, exclude_rows=excl, top_n=rank_n, seed_kws=seed_kws,
                          servable_mask=retriever.servable, seed_pct=seed_pct,
                          seed_medias=seed_medias, seed_genres=seed_genres)
     if postprocess_on:
