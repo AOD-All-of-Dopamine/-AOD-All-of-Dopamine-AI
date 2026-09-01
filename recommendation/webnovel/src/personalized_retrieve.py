@@ -110,7 +110,8 @@ def next_page(
     liked_ids: list[int],
     seen_ids: set[int] | list[int] | None = None,
     page_size: int = 10,
-    strategy: str = "max",
+    strategy: str = PRODUCTION["strategy"],   # X-20a. 예전에는 "max" 로 갈라져 있었다 —
+                                             # 확정값은 top2_mean 이고 D-55 와 같은 종류의 미적용이었다.
     pop_boost: float = REFRESH_POP_BOOST,
     components: tuple | None = None,
     postprocess: bool = True,

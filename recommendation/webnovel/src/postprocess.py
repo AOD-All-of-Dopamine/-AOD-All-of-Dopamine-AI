@@ -108,8 +108,6 @@ def drop_seed_series(df: pd.DataFrame, dataset: pd.DataFrame, seed_ids) -> pd.Da
         r = meta.loc[int(i)]
         return series_group(str(r.get("name", "")), str(r.get("publisher", "")))
     seed_groups = {grp(i) for i in seed_ids}
-    seeds = {int(i) for i in seed_ids}
-    keep = [int(i) in seeds or grp(i) not in seed_groups for i in df["item_id"]]
     # 시드 자체는 상위에서 이미 제외되므로 여기서는 시리즈 동료만 거른다
     keep = [g not in seed_groups for g in (grp(i) for i in df["item_id"])]
     return df[pd.Series(keep, index=df.index)].reset_index(drop=True)
