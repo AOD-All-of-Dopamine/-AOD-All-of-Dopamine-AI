@@ -1,0 +1,13 @@
+{
+ "games": 20,
+ "reviews": 2000,
+ "unique_steamids": 1980,
+ "probed": 300,
+ "public": 132,
+ "public_rate": 0.44,
+ "owned_median": 38.5,
+ "owned_p90": 180,
+ "played1h_median": 20.5,
+ "sec_per_game_reviews": 0.8,
+ "sec_per_profile": 0.71
+}

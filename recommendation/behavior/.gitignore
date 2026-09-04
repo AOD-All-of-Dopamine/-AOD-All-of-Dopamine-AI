@@ -1,0 +1,5 @@
+data/reviews.jsonl
+data/owned.jsonl
+data/pilot_reviews.jsonl
+data/pilot_owned.jsonl
+data/*.log
