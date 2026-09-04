@@ -34,6 +34,7 @@ def main() -> int:
     ap.add_argument("--out", default=None)
     ap.add_argument("--rep", default="v2", choices=["v1", "v2"])
     ap.add_argument("--batch", type=int, default=16)
+    ap.add_argument("--max-seq", dest="max_seq", type=int, default=512)
     a = ap.parse_args()
     out = ensure_artifacts_dir(a.out)
 
@@ -44,6 +45,12 @@ def main() -> int:
 
     from sentence_transformers import SentenceTransformer
     model = SentenceTransformer(MODEL, device="cpu")
+    # **반드시 줄인다.** Qwen3-Embedding 의 기본 max_seq_length 는 32768 이라
+    # 짧은 웹툰 텍스트(중앙 187자)에도 거대한 할당을 만들어 CPU 인코딩이 사실상 멈춘다.
+    # 실측: 미설정으로 돌렸더니 7분에 배치 1개도 못 끝냈다. 512 면 관측 최대치를 덮는다.
+    if model.max_seq_length > a.max_seq:
+        print(f"max_seq_length {model.max_seq_length} → {a.max_seq}", flush=True)
+        model.max_seq_length = a.max_seq
     emb = encode_with_backoff(model, df["semantic_text"].tolist(), a.batch).astype("float32")
 
     np.save(out / "corpus_embeddings.npy", emb)

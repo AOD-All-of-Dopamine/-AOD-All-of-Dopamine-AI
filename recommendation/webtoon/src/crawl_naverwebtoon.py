@@ -113,7 +113,7 @@ def main() -> int:
     if a.limit: todo = todo[:a.limit]
     print(f"받을 작품 {len(todo)}편 (rps {a.rps})", flush=True)
 
-    delay = 1.0 / a.rps; ok = fail = 0
+    delay = 1.0 / a.rps; ok = fail = 0; skipped: list[int] = []
     with out.open("a", encoding="utf-8") as f:
         for i, tid in enumerate(todo, 1):
             try:
@@ -121,15 +121,24 @@ def main() -> int:
                 f.write(json.dumps(rec, ensure_ascii=False) + "\n"); f.flush()
                 ok += 1; delay = max(1.0 / a.rps, delay * 0.9)          # 성공하면 조금 빨리
             except urllib.error.HTTPError as e:
-                fail += 1; delay = min(5.0, delay * 2.0)                 # 막히면 물러선다
-                print(f"  HTTP {e.code} titleId={tid} → delay {delay:.2f}s", flush=True)
+                fail += 1
+                if e.code in (401, 403, 404):
+                    # **영구 조건이다** — 성인 웹툰은 로그인이 있어야 상세가 열린다.
+                    # 레이트 제한이 아니므로 물러서지 않는다. (초기 판에서 이걸 백오프로
+                    # 잘못 다뤄, 성인물이 몰려 있는 구간에서 지연이 5초까지 올라 처리량이 무너졌다.)
+                    skipped.append(tid)
+                else:
+                    delay = min(5.0, delay * 2.0)                        # 진짜로 막힌 경우만
+                    print(f"  HTTP {e.code} titleId={tid} → delay {delay:.2f}s", flush=True)
             except Exception as e:
                 fail += 1
                 print(f"  실패 titleId={tid}: {type(e).__name__}", flush=True)
             if i % 200 == 0:
                 print(f"  {i}/{len(todo)} · 성공 {ok} 실패 {fail}", flush=True)
             time.sleep(delay)
-    print(f"완료: 성공 {ok} · 실패 {fail} → {out}", flush=True)
+    print(f"완료: 성공 {ok} · 실패 {fail} (그 중 접근불가 {len(skipped)}) → {out}", flush=True)
+    if skipped:
+        out.with_suffix(".skipped.json").write_text(json.dumps(sorted(skipped)), encoding="utf-8")
     return 0
 
 

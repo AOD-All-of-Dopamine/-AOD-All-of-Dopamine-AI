@@ -14,8 +14,15 @@
 from __future__ import annotations
 import pandas as pd
 
-# 태그에서 뺄 것: 의미가 아니라 유통·홍보 라벨
-_TAG_STOP = {"명작", "인기", "완결", "신작", "웹툰", "네이버웹툰"}
+# 태그에서 뺄 것: 의미가 아니라 **유통·홍보 라벨**.
+#
+# 실측(3,687편 · 태그 어휘 311종 / 23,664개)에서 `완결로맨스`(751) `완결드라마`(585)
+# `완결무료`(533) `완결판타지`(393) … **`완결*` 접두 라벨만 전체의 13%** 였다.
+# 이것들은 장르를 한 번 더 쓰면서 **연재 상태(완결 여부)를 인코딩**한다. 그대로 두면
+# 임베딩이 내용이 아니라 "완결이냐 아니냐"로 뭉친다 — 취향 신호가 아니다.
+# `완결` 여부는 랭커·후처리가 쓸 수 있게 컬럼(`finished`)으로 이미 갖고 있다.
+_TAG_STOP = {"명작", "인기", "신작", "웹툰", "네이버웹툰", "무료", "완결", "연재"}
+_TAG_STOP_PREFIX = ("완결",)          # 완결로맨스 · 완결드라마 · 완결무료 …
 
 
 def _lst(v) -> list[str]:
@@ -30,7 +37,9 @@ def build_semantic_text(name, genres, synopsis, tags=None, with_tags: bool = Tru
     g = _lst(genres)
     if g: parts.append(f"장르: {', '.join(g)}")
     if with_tags:
-        t = [x for x in _lst(tags) if x not in set(g) and x not in _TAG_STOP]
+        t = [x for x in _lst(tags)
+             if x not in set(g) and x not in _TAG_STOP
+             and not x.startswith(_TAG_STOP_PREFIX)]
         if t: parts.append(f"태그: {', '.join(t[:12])}")
     if synopsis: parts.append(f"줄거리: {synopsis}")
     return "\n".join(parts)
