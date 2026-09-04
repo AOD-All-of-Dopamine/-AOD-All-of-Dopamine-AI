@@ -27,7 +27,8 @@ class CandidateRetriever:
     #: 허브니스 보정 계수. **측정 전까지 0.0.** 위 docstring 참조.
     hub_lambda: float = 0.0
 
-    def __init__(self, artifacts=None, min_overview_len: int = 0):
+    def __init__(self, artifacts=None, min_overview_len: int = 0,
+                 require_korean: bool = True):
         d = artifact_dir(artifacts)
         self.artifacts = d
         self.embeddings = np.load(d / "corpus_embeddings.npy", mmap_mode="r")
@@ -35,9 +36,26 @@ class CandidateRetriever:
         ds = pd.read_parquet(d / "dataset.parquet").set_index("item_id")
         self.dataset = ds.loc[idx["item_id"].to_numpy()].reset_index()
         self.dataset["row"] = np.arange(len(self.dataset))
-        # 서빙 가능 풀 — 한국어 줄거리. 영어 줄거리 26,052건은 TMDB 에 한국어 번역이
+        # 서빙 가능 풀 — 한국어 줄거리. 영어 줄거리 26,051건은 TMDB 에 한국어 번역이
         # 없어서(크롤이 ko-KR 우선 · en-US 보완) 크롤로 늘릴 수 없다.
-        ko = self.dataset["overview"].fillna("").str.contains(r"[가-힣]").to_numpy()
+        #
+        # **이건 표현의 한계가 아니라 UI 언어 정책이다** (2026-09-04 2차 검수).
+        # 제외된 26,051건은 전부 줄거리가 **있고**(빈 줄거리 0건) 이미 임베딩돼 있어
+        # 검색에는 잘 잡힌다 — 마스크를 끄면 실제로 상위에 올라온다. 없는 것은 **한글 표시문**뿐이다.
+        #
+        # 그리고 이 필터의 비용은 취향에 따라 완전히 다르다. 52프로필 실측
+        # (마스크를 끈 top-50 중 '서빙 불가' 비율):
+        #     lowvote_romance 60% · longtail_family 42% · two_doc 38% · longtail_music 24%
+        #     coh_marvel 0% · coh_nolan 0% · coh_sageuk 0% · five_animation 0%
+        #     → 중앙 4.0%, **20% 이상 손해 보는 프로필이 52개 중 7개**
+        # 즉 이 필터는 사실상 **"유명작만 서빙"** 으로 작동한다. 롱테일·다큐·저투표 취향만
+        # 대가를 치른다. Steam 의 `require_known_reviews` 와 같은 모양이다.
+        #
+        # 그래서 숨은 하드코딩이 아니라 **이름 붙인 정책**으로 둔다. 기본값은 바꾸지 않는다
+        # (원어 줄거리를 보여줄지는 제품 결정이고, 바꾸면 사용자가 보는 화면이 달라진다).
+        ko = (self.dataset["overview"].fillna("").str.contains(r"[가-힣]").to_numpy()
+              if require_korean else np.ones(len(self.dataset), dtype=bool))
+        self.require_korean = require_korean
         self.servable = ko & (self.dataset["overview_len"].to_numpy() >= min_overview_len)
 
     def corpus_centroid(self) -> np.ndarray:

@@ -41,6 +41,9 @@ def build_components(rec_boost: float | None = None, artifacts=None, trend_weigh
     )
 
 
+POOL_FLOOR = 250   # = 평가 경로의 풀 깊이(k=50 × 5). 서빙이 이보다 얕아지지 않게 한다.
+
+
 def run_multi(
     liked_appids: list[int],
     strategies: list[str] | None = None,
@@ -97,7 +100,13 @@ def run_multi(
             fr["seed_similarity"] = fr["seed_similarity"] - dislike_penalty
 
     excluded = set(liked_appids) | set(exclude_appids or ()) | set(disliked_appids or ())
-    rank_n = top_n * 5 if postprocess else top_n
+    # **후보 풀 깊이를 요청한 k 에 묶지 않는다.** 후처리(시리즈 상한·시드 교차)가 풀 전체를
+    # 보고 재배치하므로, 풀이 얕으면 같은 시드라도 상위 목록이 달라진다. 실측(2026-09-04
+    # 2차 검수): 서빙 top-20(k=20 → 풀 100) vs 평가 top-20(k=50 → 풀 250) 이 15프로필 중
+    # **7개에서 달랐다**(최소 겹침 85%). 즉 우리가 잰 목록과 사용자가 본 목록이 달랐다.
+    # 하한을 **평가 깊이(50×5=250)** 로 잡는다 — 평가 숫자는 그대로 재현되고(하한이
+    # 걸리지 않는다) 서빙만 평가 쪽으로 수렴한다.
+    rank_n = max(POOL_FLOOR, top_n * 5) if postprocess else top_n
     results = {}
     for strategy in strategies:
         ranked = ranker.rank(
@@ -136,7 +145,7 @@ from src.config import PRODUCTION as _P
 REFRESH_REC_BOOST = _P["rec_boost"]
 
 #: D-37 신설 · D-38 확정. 근거는 PersonalizedRanker._build_quality docstring.
-REFRESH_QUALITY_W = 0.50
+REFRESH_QUALITY_W = _P["quality_w"]   # 리터럴 두 벌을 두지 않는다 (2차 검수)
 
 # 전체 코퍼스(173,691)로 넓히면서 필요해진 품질 하한. 근거는 apply_hard_filters docstring.
 # 2026-08-12: 300 → 0. 하한은 얕은 페이지에서만 도움이 됐고 깊이에서는 오히려 해로웠다.
@@ -260,7 +269,7 @@ def next_page(
     liked_appids: list[int],
     seen_appids: set[int] | list[int] | None = None,
     page_size: int = 10,
-    strategy: str = "top2_mean",
+    strategy: str = _P["strategy"],
     rec_boost: float = REFRESH_REC_BOOST,
     components: tuple | None = None,
     postprocess: bool = True,
@@ -277,6 +286,24 @@ def next_page(
     호출자는 반환된 `steam_appid` 를 `seen_appids` 에 누적해서 다음 호출에 넘겨야 한다.
     그 누적을 어디에 저장할지가 서빙의 과제다(`aod_ai.rec_impression`).
 
+    **정정 (2026-09-04 2차 검수) — 아래 서술은 현재 동작이 아니라 옛 제안이다.**
+    X-20 이 이 경로를 평가하면서 값을 확정값으로 통일했고, 그때 이 독스트링이 따라오지 않았다.
+    **지금 코드의 실제 기본값은 이렇다:**
+
+      · `rec_boost` = `_P["rec_boost"]` = **0.03** (아래 "0.15" 아님)
+      · `min_reviews` = `REFRESH_MIN_REVIEWS` = **0** (아래 "300" 아님)
+      · `require_known_reviews` = **False** (아래 "True" 아님)
+      · `strategy` = `_P["strategy"]` = top2_mean (이건 아래 서술과 같다)
+
+    그리고 아래 "`rec_boost=0.15` — 기본 0.03 은 유사도 스프레드보다 작아 정렬을 거의 못
+    바꾼다"는 **틀렸다.** 2차 검수 실측: Steam 은 10위→50위 유사도 낙차가 **0.019**(상대 2.7%)
+    뿐이라 3% 배율이면 그 구간을 통째로 다시 정렬한다. 실제로 보정 항 전체를 끄면
+    **top-50 의 84% 가 바뀐다.** 웹소설에서도 같은 주장이 반증됐다(0.03 만으로 관심 수
+    중앙 16,000 → 40,500).
+
+    아래 표와 서술은 **그 시점의 실험 기록으로** 남긴다. 현재 값의 근거가 아니다.
+
+    ─────────────────────────────────────────────────────────────────────────
     **기본값이 run_multi 와 다른 이유** — 깊은 페이지가 무너지는 것을 막기 위해서다.
     원인은 관련성 붕괴가 아니라 품질 붕괴였다: 유사도는 1→5페이지에서 0.75→0.71 로 거의
     안 변하는데 리뷰 수 중앙값이 2,831 → 434 로 무너진다. 유사도가 평평한 구간에서는
