@@ -1,0 +1,1146 @@
+[
+ {
+  "pid": "g_witcher",
+  "kind": "game",
+  "label": "위쳐 IP 팬",
+  "steam": [
+   292030,
+   20900,
+   20920
+  ],
+  "tmdb": [
+   "tv_71912",
+   "movie_666243",
+   "tv_106541"
+  ],
+  "wn": [],
+  "seed_names": {
+   "steam": [
+    "The Witcher 3: Wild Hunt",
+    "The Witcher: Enhanced Edition Director's",
+    "The Witcher 2: Assassins of Kings Enhanc"
+   ],
+   "tmdb": [
+    "위쳐",
+    "위쳐: 늑대의 악몽",
+    "위쳐: 블러드 오리진"
+   ]
+  }
+ },
+ {
+  "pid": "g_fallout",
+  "kind": "game",
+  "label": "폴아웃 IP 팬",
+  "steam": [
+   377160,
+   22380,
+   1151340
+  ],
+  "tmdb": [
+   "tv_106379"
+  ],
+  "wn": [],
+  "seed_names": {
+   "steam": [
+    "Fallout 4",
+    "Fallout: New Vegas",
+    "Fallout 76"
+   ],
+   "tmdb": [
+    "폴아웃"
+   ]
+  }
+ },
+ {
+  "pid": "g_resident_evil",
+  "kind": "game",
+  "label": "레지던트 이블 IP 팬",
+  "steam": [
+   2050650,
+   883710,
+   1196590
+  ],
+  "tmdb": [
+   "movie_1576",
+   "movie_1577",
+   "movie_7737"
+  ],
+  "wn": [],
+  "seed_names": {
+   "steam": [
+    "BIOHAZARD RE:4",
+    "BIOHAZARD RE:2",
+    "Biohazard Village"
+   ],
+   "tmdb": [
+    "레지던트 이블",
+    "레지던트 이블 2",
+    "레지던트 이블 3: 인류의 멸망"
+   ]
+  }
+ },
+ {
+  "pid": "g_assassins_creed",
+  "kind": "game",
+  "label": "어쌔신 크리드 IP 팬",
+  "steam": [
+   812140,
+   242050,
+   33230
+  ],
+  "tmdb": [
+   "movie_121856",
+   "tv_40137"
+  ],
+  "wn": [],
+  "seed_names": {
+   "steam": [
+    "Assassin's Creed® Odyssey",
+    "Assassin’s Creed® IV Black Flag™",
+    "Assassin's Creed 2"
+   ],
+   "tmdb": [
+    "어쌔신 크리드",
+    "어쌔신 크리드: 리니지"
+   ]
+  }
+ },
+ {
+  "pid": "g_halo",
+  "kind": "game",
+  "label": "헤일로 IP 팬",
+  "steam": [
+   976730,
+   1240440,
+   459220
+  ],
+  "tmdb": [
+   "tv_52814",
+   "tv_56295",
+   "tv_77184"
+  ],
+  "wn": [],
+  "seed_names": {
+   "steam": [
+    "Halo: The Master Chief Collection",
+    "Halo Infinite",
+    "Halo Wars: Definitive Edition"
+   ],
+   "tmdb": [
+    "헤일로",
+    "헤일로: 슈퍼 솔저",
+    "헤일로 : 리치 행성의 함락"
+   ]
+  }
+ },
+ {
+  "pid": "g_sonic",
+  "kind": "game",
+  "label": "소닉 IP 팬",
+  "steam": [
+   213610,
+   71340,
+   71250
+  ],
+  "tmdb": [
+   "movie_454626",
+   "movie_675353",
+   "movie_939243"
+  ],
+  "wn": [],
+  "seed_names": {
+   "steam": [
+    "Sonic Adventure 2",
+    "Sonic Generations Collection",
+    "Sonic Adventure DX"
+   ],
+   "tmdb": [
+    "수퍼 소닉",
+    "수퍼 소닉 2",
+    "수퍼 소닉 3"
+   ]
+  }
+ },
+ {
+  "pid": "g_fnaf",
+  "kind": "game",
+  "label": "프레디의 피자가게 IP 팬",
+  "steam": [
+   747660,
+   319510,
+   332800
+  ],
+  "tmdb": [
+   "movie_507089",
+   "movie_1228246"
+  ],
+  "wn": [],
+  "seed_names": {
+   "steam": [
+    "Five Nights at Freddy's: Security Breach",
+    "Five Nights at Freddy's",
+    "Five Nights at Freddy's 2"
+   ],
+   "tmdb": [
+    "프레디의 피자가게",
+    "프레디의 피자가게 2"
+   ]
+  }
+ },
+ {
+  "pid": "g_doom",
+  "kind": "game",
+  "label": "둠 IP 팬",
+  "steam": [
+   782330,
+   379720,
+   3017860
+  ],
+  "tmdb": [
+   "movie_8814",
+   "movie_520901"
+  ],
+  "wn": [],
+  "seed_names": {
+   "steam": [
+    "DOOM Eternal",
+    "DOOM",
+    "DOOM: The Dark Ages"
+   ],
+   "tmdb": [
+    "둠",
+    "둠: 파멸의 게이트"
+   ]
+  }
+ },
+ {
+  "pid": "g_tekken",
+  "kind": "game",
+  "label": "철권 IP 팬",
+  "steam": [
+   389730
+  ],
+  "tmdb": [
+   "movie_42194",
+   "movie_17830"
+  ],
+  "wn": [],
+  "seed_names": {
+   "steam": [
+    "TEKKEN 7"
+   ],
+   "tmdb": [
+    "철권",
+    "철권"
+   ]
+  }
+ },
+ {
+  "pid": "g_street_fighter",
+  "kind": "game",
+  "label": "스트리트 파이터 IP 팬",
+  "steam": [
+   1364780,
+   310950,
+   45760
+  ],
+  "tmdb": [
+   "movie_11667",
+   "movie_15268",
+   "movie_12613"
+  ],
+  "wn": [],
+  "seed_names": {
+   "steam": [
+    "Street Fighter 6",
+    "Street Fighter V",
+    "Ultra Street Fighter® IV"
+   ],
+   "tmdb": [
+    "스트리트 파이터",
+    "스트리트 파이터: 춘리의 전설",
+    "스트리트 파이터 II 극장판"
+   ]
+  }
+ },
+ {
+  "pid": "g_nfs",
+  "kind": "game",
+  "label": "니드 포 스피드 IP 팬",
+  "steam": [
+   1222680,
+   1846380,
+   1262580
+  ],
+  "tmdb": [
+   "movie_136797"
+  ],
+  "wn": [],
+  "seed_names": {
+   "steam": [
+    "Need for Speed™ Heat",
+    "Need for Speed™ Unbound",
+    "Need for Speed™ Payback"
+   ],
+   "tmdb": [
+    "니드 포 스피드"
+   ]
+  }
+ },
+ {
+  "pid": "g_monster_hunter",
+  "kind": "game",
+  "label": "몬스터 헌터 IP 팬",
+  "steam": [
+   582010,
+   2246340,
+   1446780
+  ],
+  "tmdb": [
+   "movie_458576",
+   "movie_851281",
+   "tv_68098"
+  ],
+  "wn": [],
+  "seed_names": {
+   "steam": [
+    "Monster Hunter: World",
+    "Monster Hunter Wilds",
+    "MONSTER HUNTER RISE"
+   ],
+   "tmdb": [
+    "몬스터 헌터",
+    "몬스터 헌터: 길드의 전설",
+    "몬스터 헌터 스토리즈: 라이드 온"
+   ]
+  }
+ },
+ {
+  "pid": "g_tomb_raider",
+  "kind": "game",
+  "label": "툼 레이더 IP 팬",
+  "steam": [
+   203160,
+   391220,
+   750920
+  ],
+  "tmdb": [
+   "movie_338970",
+   "movie_1995",
+   "movie_1996"
+  ],
+  "wn": [],
+  "seed_names": {
+   "steam": [
+    "Tomb Raider Game of the Year",
+    "Rise of the Tomb Raider™",
+    "Shadow of the Tomb Raider: Definitive Ed"
+   ],
+   "tmdb": [
+    "툼 레이더",
+    "툼 레이더",
+    "툼 레이더 2: 판도라의 상자"
+   ]
+  }
+ },
+ {
+  "pid": "g_last_of_us",
+  "kind": "game",
+  "label": "라스트 오브 어스 IP 팬",
+  "steam": [
+   1888930,
+   2531310
+  ],
+  "tmdb": [
+   "tv_100088"
+  ],
+  "wn": [],
+  "seed_names": {
+   "steam": [
+    "The Last of Us™ Part I",
+    "The Last of Us™ Part II Remastered"
+   ],
+   "tmdb": [
+    "더 라스트 오브 어스"
+   ]
+  }
+ },
+ {
+  "pid": "g_hitman",
+  "kind": "game",
+  "label": "히트맨 IP 팬",
+  "steam": [
+   1659040,
+   203140,
+   6860
+  ],
+  "tmdb": [
+   "movie_1620",
+   "movie_249070",
+   "movie_118737"
+  ],
+  "wn": [],
+  "seed_names": {
+   "steam": [
+    "HITMAN World of Assassination",
+    "Hitman: Absolution™",
+    "Hitman: Blood Money"
+   ],
+   "tmdb": [
+    "히트맨",
+    "히트맨: 에이전트 47",
+    "히트맨 No.2 : 살인면허"
+   ]
+  }
+ },
+ {
+  "pid": "g_max_payne",
+  "kind": "game",
+  "label": "맥스 페인 IP 팬",
+  "steam": [
+   204100,
+   12150
+  ],
+  "tmdb": [
+   "movie_13051"
+  ],
+  "wn": [],
+  "seed_names": {
+   "steam": [
+    "Max Payne 3",
+    "Max Payne 2: The Fall of Max Payne"
+   ],
+   "tmdb": [
+    "맥스 페인"
+   ]
+  }
+ },
+ {
+  "pid": "g_prince_persia",
+  "kind": "game",
+  "label": "페르시아의 왕자 IP 팬",
+  "steam": [
+   13600,
+   13500,
+   19980
+  ],
+  "tmdb": [
+   "movie_9543"
+  ],
+  "wn": [],
+  "seed_names": {
+   "steam": [
+    "Prince of Persia®: The Sands of Time",
+    "Prince of Persia: Warrior Within™",
+    "Prince of Persia®"
+   ],
+   "tmdb": [
+    "페르시아의 왕자: 시간의 모래"
+   ]
+  }
+ },
+ {
+  "pid": "g_castlevania",
+  "kind": "game",
+  "label": "캐슬바니아 IP 팬",
+  "steam": [
+   2369900,
+   1552550,
+   1018010
+  ],
+  "tmdb": [
+   "tv_71024",
+   "tv_123548"
+  ],
+  "wn": [],
+  "seed_names": {
+   "steam": [
+    "Castlevania Dominus Collection",
+    "Castlevania Advance Collection",
+    "Castlevania Anniversary Collection"
+   ],
+   "tmdb": [
+    "캐슬바니아",
+    "캐슬바니아: 녹턴"
+   ]
+  }
+ },
+ {
+  "pid": "g_devil_may_cry",
+  "kind": "game",
+  "label": "데빌 메이 크라이 IP 팬",
+  "steam": [
+   601150,
+   220440,
+   631510
+  ],
+  "tmdb": [
+   "tv_235930",
+   "tv_12577"
+  ],
+  "wn": [],
+  "seed_names": {
+   "steam": [
+    "Devil May Cry 5",
+    "DmC: Devil May Cry",
+    "Devil May Cry HD Collection"
+   ],
+   "tmdb": [
+    "Devil May Cry 데빌 메이 크라이",
+    "데빌 메이 크라이"
+   ]
+  }
+ },
+ {
+  "pid": "g_mortal_kombat",
+  "kind": "game",
+  "label": "모탈 컴뱃 IP 팬",
+  "steam": [
+   1971870,
+   3454980
+  ],
+  "tmdb": [
+   "movie_460465",
+   "movie_9312",
+   "movie_931285"
+  ],
+  "wn": [],
+  "seed_names": {
+   "steam": [
+    "Mortal Kombat 1",
+    "Mortal Kombat: Legacy Kollection"
+   ],
+   "tmdb": [
+    "모탈 컴뱃",
+    "모탈 컴뱃",
+    "모탈 컴뱃 2"
+   ]
+  }
+ },
+ {
+  "pid": "g_borderlands",
+  "kind": "game",
+  "label": "보더랜드 IP 팬",
+  "steam": [
+   49520,
+   261640,
+   729040
+  ],
+  "tmdb": [
+   "movie_365177"
+  ],
+  "wn": [],
+  "seed_names": {
+   "steam": [
+    "Borderlands 2",
+    "Borderlands: The Pre-Sequel",
+    "Borderlands Game of the Year Enhanced"
+   ],
+   "tmdb": [
+    "보더랜드"
+   ]
+  }
+ },
+ {
+  "pid": "g_minecraft",
+  "kind": "game",
+  "label": "마인크래프트 IP 팬",
+  "steam": [
+   1672970,
+   1928870
+  ],
+  "tmdb": [
+   "movie_950387",
+   "movie_151870",
+   "tv_98545"
+  ],
+  "wn": [],
+  "seed_names": {
+   "steam": [
+    "Minecraft Dungeons",
+    "Minecraft Legends"
+   ],
+   "tmdb": [
+    "A MINECRAFT MOVIE 마인크래프트 무비",
+    "마인크래프트: 더 스토리 오브 모장",
+    "마인크래프트: 스토리 모드"
+   ]
+  }
+ },
+ {
+  "pid": "g_silent_hill",
+  "kind": "game",
+  "label": "사일런트 힐 IP 팬",
+  "steam": [
+   2124490,
+   2947440
+  ],
+  "tmdb": [
+   "movie_588",
+   "movie_61012",
+   "movie_680493"
+  ],
+  "wn": [],
+  "seed_names": {
+   "steam": [
+    "SILENT HILL 2",
+    "SILENT HILL f"
+   ],
+   "tmdb": [
+    "사일런트 힐",
+    "사일런트 힐: 레버레이션",
+    "리턴 투 사일런트 힐"
+   ]
+  }
+ },
+ {
+  "pid": "g_postal",
+  "kind": "game",
+  "label": "포스탈 IP 팬",
+  "steam": [
+   223470,
+   707030,
+   1359980
+  ],
+  "tmdb": [
+   "movie_2728"
+  ],
+  "wn": [],
+  "seed_names": {
+   "steam": [
+    "POSTAL 2",
+    "POSTAL 4: No Regerts",
+    "POSTAL: Brain Damaged"
+   ],
+   "tmdb": [
+    "포스탈"
+   ]
+  }
+ },
+ {
+  "pid": "g_uncharted",
+  "kind": "game",
+  "label": "언차티드 IP 팬",
+  "steam": [
+   1659420
+  ],
+  "tmdb": [
+   "movie_335787"
+  ],
+  "wn": [],
+  "seed_names": {
+   "steam": [
+    "UNCHARTED™: 레거시 오브 시브즈 컬렉션"
+   ],
+   "tmdb": [
+    "언차티드"
+   ]
+  }
+ },
+ {
+  "pid": "g_cuphead",
+  "kind": "game",
+  "label": "컵헤드 IP 팬",
+  "steam": [
+   268910
+  ],
+  "tmdb": [
+   "tv_103786"
+  ],
+  "wn": [],
+  "seed_names": {
+   "steam": [
+    "Cuphead"
+   ],
+   "tmdb": [
+    "컵헤드 쇼!"
+   ]
+  }
+ },
+ {
+  "pid": "g_angry_birds",
+  "kind": "game",
+  "label": "앵그리버드 IP 팬",
+  "steam": [
+   1001140
+  ],
+  "tmdb": [
+   "movie_153518",
+   "movie_454640",
+   "tv_154647"
+  ],
+  "wn": [],
+  "seed_names": {
+   "steam": [
+    "Angry Birds VR: Isle of Pigs"
+   ],
+   "tmdb": [
+    "앵그리버드 더 무비",
+    "앵그리 버드 2: 독수리 왕국의 침공",
+    "앵그리버드: 여름 캠프 대소동"
+   ]
+  }
+ },
+ {
+  "pid": "g_dota",
+  "kind": "game",
+  "label": "도타 IP 팬",
+  "steam": [
+   570
+  ],
+  "tmdb": [
+   "tv_118956"
+  ],
+  "wn": [],
+  "seed_names": {
+   "steam": [
+    "Dota 2"
+   ],
+   "tmdb": [
+    "도타: 용의 피"
+   ]
+  }
+ },
+ {
+  "pid": "g_cyberpunk",
+  "kind": "game",
+  "label": "사이버펑크 IP 팬",
+  "steam": [
+   1091500
+  ],
+  "tmdb": [
+   "tv_105248"
+  ],
+  "wn": [],
+  "seed_names": {
+   "steam": [
+    "Cyberpunk 2077"
+   ],
+   "tmdb": [
+    "사이버펑크: 엣지러너"
+   ]
+  }
+ },
+ {
+  "pid": "n_tv_97617",
+  "kind": "novel",
+  "label": "마왕학원의 부적합자 ~사상 최강의 마왕인 시 원작 팬",
+  "steam": [],
+  "tmdb": [
+   "tv_97617"
+  ],
+  "wn": [
+   5010475
+  ],
+  "seed_names": {
+   "wn": [
+    "마왕학원의 부적합자 ~사상 최강의 마왕인 시조, 전생해서 자손들의 학교에"
+   ],
+   "tmdb": [
+    "마왕학원의 부적합자 ~사상 최강의 마왕인 시조, 전생해서 자손들의 학교에"
+   ]
+  }
+ },
+ {
+  "pid": "n_tv_46439",
+  "kind": "novel",
+  "label": "비탄의 아리아 원작 팬",
+  "steam": [],
+  "tmdb": [
+   "tv_46439"
+  ],
+  "wn": [
+   473298
+  ],
+  "seed_names": {
+   "wn": [
+    "비탄의 아리아"
+   ],
+   "tmdb": [
+    "비탄의 아리아"
+   ]
+  }
+ },
+ {
+  "pid": "n_tv_39379",
+  "kind": "novel",
+  "label": "풀 메탈 패닉! 원작 팬",
+  "steam": [],
+  "tmdb": [
+   "tv_39379"
+  ],
+  "wn": [
+   44653
+  ],
+  "seed_names": {
+   "wn": [
+    "풀 메탈 패닉!"
+   ],
+   "tmdb": [
+    "풀 메탈 패닉!"
+   ]
+  }
+ },
+ {
+  "pid": "n_tv_236144",
+  "kind": "novel",
+  "label": "즉사 치트가 너무 최강이라 이세계 녀석들이  원작 팬",
+  "steam": [],
+  "tmdb": [
+   "tv_236144"
+  ],
+  "wn": [
+   2936214
+  ],
+  "seed_names": {
+   "wn": [
+    "즉사 치트가 너무 최강이라 이세계 녀석들이 전혀 상대가 되지 않습니다만."
+   ],
+   "tmdb": [
+    "즉사 치트가 너무 최강이라, 이세계 녀석들이 전혀 상대가 되지 않습니다만"
+   ]
+  }
+ },
+ {
+  "pid": "n_tv_42410",
+  "kind": "novel",
+  "label": "듀라라라!! 원작 팬",
+  "steam": [],
+  "tmdb": [
+   "tv_42410"
+  ],
+  "wn": [
+   2175972
+  ],
+  "seed_names": {
+   "wn": [
+    "듀라라라!!"
+   ],
+   "tmdb": [
+    "듀라라라!!"
+   ]
+  }
+ },
+ {
+  "pid": "n_tv_67154",
+  "kind": "novel",
+  "label": "낙제 기사의 영웅담 원작 팬",
+  "steam": [],
+  "tmdb": [
+   "tv_67154"
+  ],
+  "wn": [
+   2147498,
+   10314759
+  ],
+  "seed_names": {
+   "wn": [
+    "낙제 기사의 영웅담",
+    "낙제 기사의 영웅담 13~19권"
+   ],
+   "tmdb": [
+    "낙제 기사의 영웅담"
+   ]
+  }
+ },
+ {
+  "pid": "n_tv_113808",
+  "kind": "novel",
+  "label": "정령환상기 원작 팬",
+  "steam": [],
+  "tmdb": [
+   "tv_113808"
+  ],
+  "wn": [
+   3895853
+  ],
+  "seed_names": {
+   "wn": [
+    "정령환상기"
+   ],
+   "tmdb": [
+    "정령환상기"
+   ]
+  }
+ },
+ {
+  "pid": "n_tv_91547",
+  "kind": "novel",
+  "label": "저, 능력은 평균치로 해달라고 말했잖아요! 원작 팬",
+  "steam": [],
+  "tmdb": [
+   "tv_91547"
+  ],
+  "wn": [
+   2926397
+  ],
+  "seed_names": {
+   "wn": [
+    "저, 능력은 평균치로 해달라고 말했잖아요!"
+   ],
+   "tmdb": [
+    "저, 능력은 평균치로 해달라고 말했잖아요!"
+   ]
+  }
+ },
+ {
+  "pid": "n_tv_78483",
+  "kind": "novel",
+  "label": "카쿠리요의 여관밥 원작 팬",
+  "steam": [],
+  "tmdb": [
+   "tv_78483"
+  ],
+  "wn": [
+   3519923
+  ],
+  "seed_names": {
+   "wn": [
+    "카쿠리요의 여관밥"
+   ],
+   "tmdb": [
+    "카쿠리요의 여관밥"
+   ]
+  }
+ },
+ {
+  "pid": "n_tv_91764",
+  "kind": "novel",
+  "label": "마술사 오펜 뜻밖의 여행 원작 팬",
+  "steam": [],
+  "tmdb": [
+   "tv_91764"
+  ],
+  "wn": [
+   3416249
+  ],
+  "seed_names": {
+   "wn": [
+    "마술사 오펜 뜻밖의 여행"
+   ],
+   "tmdb": [
+    "마술사 오펜: 뜻밖의 여행"
+   ]
+  }
+ },
+ {
+  "pid": "n_tv_65931",
+  "kind": "novel",
+  "label": "문호 스트레이독스 원작 팬",
+  "steam": [],
+  "tmdb": [
+   "tv_65931"
+  ],
+  "wn": [
+   3700540
+  ],
+  "seed_names": {
+   "wn": [
+    "문호 스트레이독스"
+   ],
+   "tmdb": [
+    "문호 스트레이독스"
+   ]
+  }
+ },
+ {
+  "pid": "n_tv_102086",
+  "kind": "novel",
+  "label": "신들에게 주워진 남자 원작 팬",
+  "steam": [],
+  "tmdb": [
+   "tv_102086"
+  ],
+  "wn": [
+   4521381
+  ],
+  "seed_names": {
+   "wn": [
+    "신들에게 주워진 남자"
+   ],
+   "tmdb": [
+    "신들에게 주워진 남자"
+   ]
+  }
+ },
+ {
+  "pid": "n_tv_263330",
+  "kind": "novel",
+  "label": "사망 유희로 밥을 먹는다. 원작 팬",
+  "steam": [],
+  "tmdb": [
+   "tv_263330"
+  ],
+  "wn": [
+   12966592
+  ],
+  "seed_names": {
+   "wn": [
+    "사망 유희로 밥을 먹는다."
+   ],
+   "tmdb": [
+    "사망 유희로 밥을 먹는다."
+   ]
+  }
+ },
+ {
+  "pid": "n_tv_214651",
+  "kind": "novel",
+  "label": "꿈꾸는 남자는 현실주의자 원작 팬",
+  "steam": [],
+  "tmdb": [
+   "tv_214651"
+  ],
+  "wn": [
+   10384633
+  ],
+  "seed_names": {
+   "wn": [
+    "꿈꾸는 남자는 현실주의자"
+   ],
+   "tmdb": [
+    "꿈꾸는 남자는 현실주의자"
+   ]
+  }
+ },
+ {
+  "pid": "n_tv_99624",
+  "kind": "novel",
+  "label": "팔남이라니, 그건 아니지! 원작 팬",
+  "steam": [],
+  "tmdb": [
+   "tv_99624"
+  ],
+  "wn": [
+   2643603
+  ],
+  "seed_names": {
+   "wn": [
+    "팔남이라니, 그건 아니지!"
+   ],
+   "tmdb": [
+    "팔남이라니,  그건 아니지"
+   ]
+  }
+ },
+ {
+  "pid": "n_tv_131366",
+  "kind": "novel",
+  "label": "인간 불신 모험가들이 세계를 구하는 듯합니다 원작 팬",
+  "steam": [],
+  "tmdb": [
+   "tv_131366"
+  ],
+  "wn": [
+   8499918
+  ],
+  "seed_names": {
+   "wn": [
+    "인간 불신 모험가들이 세계를 구하는 듯합니다"
+   ],
+   "tmdb": [
+    "인간 불신 모험가들이 세계를 구하는 듯합니다"
+   ]
+  }
+ },
+ {
+  "pid": "n_tv_120142",
+  "kind": "novel",
+  "label": "녹을 먹는 비스코 원작 팬",
+  "steam": [],
+  "tmdb": [
+   "tv_120142"
+  ],
+  "wn": [
+   8162554
+  ],
+  "seed_names": {
+   "wn": [
+    "녹을 먹는 비스코"
+   ],
+   "tmdb": [
+    "녹을 먹는 비스코"
+   ]
+  }
+ },
+ {
+  "pid": "n_tv_203040",
+  "kind": "novel",
+  "label": "이 멋진 세계에 폭염을! 원작 팬",
+  "steam": [],
+  "tmdb": [
+   "tv_203040"
+  ],
+  "wn": [
+   2627999
+  ],
+  "seed_names": {
+   "wn": [
+    "이 멋진 세계에 폭염을!"
+   ],
+   "tmdb": [
+    "이 멋진 세계에 폭염을!"
+   ]
+  }
+ },
+ {
+  "pid": "n_movie_916192",
+  "kind": "novel",
+  "label": "여름을 향한 터널, 이별의 출구 원작 팬",
+  "steam": [],
+  "tmdb": [
+   "movie_916192"
+  ],
+  "wn": [
+   12815941
+  ],
+  "seed_names": {
+   "wn": [
+    "여름을 향한 터널, 이별의 출구"
+   ],
+   "tmdb": [
+    "여름을 향한 터널, 이별의 출구"
+   ]
+  }
+ },
+ {
+  "pid": "n_movie_1012201",
+  "kind": "novel",
+  "label": "극장판 하이큐!! 쓰레기장의 결전 원작 팬",
+  "steam": [],
+  "tmdb": [
+   "movie_1012201"
+  ],
+  "wn": [
+   11235165
+  ],
+  "seed_names": {
+   "wn": [
+    "극장판 하이큐!! 쓰레기장의 결전"
+   ],
+   "tmdb": [
+    "극장판 하이큐!! 쓰레기장의 결전"
+   ]
+  }
+ },
+ {
+  "pid": "n_movie_1131759",
+  "kind": "novel",
+  "label": "전지적 독자 시점 원작 팬",
+  "steam": [],
+  "tmdb": [
+   "movie_1131759"
+  ],
+  "wn": [
+   6020546
+  ],
+  "seed_names": {
+   "wn": [
+    "전지적 독자 시점"
+   ],
+   "tmdb": [
+    "전지적 독자 시점"
+   ]
+  }
+ }
+]
