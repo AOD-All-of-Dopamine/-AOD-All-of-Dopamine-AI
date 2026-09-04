@@ -82,6 +82,11 @@ def ensure_artifacts_dir() -> Path:
 #:
 #: 스윕하는 코드는 명시적으로 덮어쓴다. 그 외에는 건드리지 않는다.
 PRODUCTION = {
+    # **접기 전략의 단일 출처.** 예전에는 이 값이 config 에 없고 `s_eval.variant_recs` 와
+    # `tryout/backend.py` 에 리터럴 "top2_mean" 으로 두 벌 살아 있었다. 값이 우연히 같아서
+    # 사고는 안 났지만, 확정값이 코드 리터럴로만 존재하면 바꿀 때 한쪽만 바뀐다 —
+    # TMDB 가 정확히 그 방식으로 "mean" 확정과 "top2_mean" 리터럴이 어긋나 있었다.
+    "strategy": "top2_mean",
     "rec_boost": 0.03,      # p1.yaml
     "quality_w": 0.50,      # D-37 신설 · D-38 확정 · D-50(위)·D-51(아래) 양방향 최적 확인
     "quality_cap": 5.0,

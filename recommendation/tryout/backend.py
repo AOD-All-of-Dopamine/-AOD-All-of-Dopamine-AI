@@ -52,7 +52,9 @@ class Steam:
         import os; os.environ.setdefault("AOD_ARTIFACTS", "artifacts/tags_full")
         os.chdir(AOD / "steam")
         from src.personalized_retrieve import build_components, run_multi
+        from src.config import PRODUCTION as STEAM_PROD
         self._run = run_multi
+        self._strategy = STEAM_PROD["strategy"]   # 리터럴 두 벌을 두지 않는다
         self.comps = build_components()   # 인자 없음 = config.PRODUCTION 확정값 (D-55)
         self.ds = pd.read_parquet(AOD / "steam/artifacts/tags_full/dataset.parquet")
         self.by_id = self.ds.set_index("steam_appid")
@@ -77,7 +79,7 @@ class Steam:
         return [c for c in (self._card(a) for a in hit["steam_appid"]) if c]
 
     def recommend(self, seeds, k=20):
-        res = self._run([int(s) for s in seeds], strategies=["top2_mean"], top_n=k,
+        res = self._run([int(s) for s in seeds], strategies=[self._strategy], top_n=k,
                         components=self.comps, postprocess=True)
         df = list(res.values())[0]
         if isinstance(df, dict): df = pd.DataFrame(df.get("recommendations", df))

@@ -8,6 +8,8 @@ from src.config import artifact_dir, PRODUCTION, POSTPROCESS
 from src.personalization.personalized_ranker import PersonalizedRanker
 from src.postprocess import postprocess
 
+POOL_FLOOR = 400   # 후보 풀 고정 하한 (k 와 무관하게 같은 정렬을 보장)
+
 
 class Engine:
     def __init__(self, artifacts=None):
@@ -60,7 +62,13 @@ class Engine:
             tag_w=PRODUCTION["tag_w"] if tag_w is None else tag_w,
         )
         ex = set(seed_ids) | set(int(x) for x in (exclude or []))
-        ranked = r.rank(folded, exclude_ids=ex, seed_tags=seed_tags, top_n=k * 8, dominant=dominant)
+        # **후보 풀 깊이를 k 에 묶지 않는다.** 세 플랫폼은 전부 `rank_n = k × 상수` 라
+        # 같은 시드라도 요청한 k 에 따라 상위 목록이 달라진다 — 후처리(시리즈 상한·시드
+        # 교차)가 풀 전체를 보고 재배치하기 때문이다. 실측(2026-09-04 검수): Steam 에서
+        # 서빙(k=20)과 평가(k=50)의 top-20 이 15프로필 중 7개에서 갈렸다(최소 겹침 85%).
+        # 여기서는 고정 하한을 둬서 k 가 결과를 바꾸지 못하게 한다.
+        ranked = r.rank(folded, exclude_ids=ex, seed_tags=seed_tags,
+                        top_n=max(POOL_FLOOR, k * 8), dominant=dominant)
         opts = {**POSTPROCESS, **pp}
         return postprocess(ranked, self.ds, top_n=k, seed_ids=seed_ids,
                            series_max=opts["series_max"], artist_max=opts["artist_max"],

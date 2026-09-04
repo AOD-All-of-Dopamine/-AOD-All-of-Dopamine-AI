@@ -15,6 +15,7 @@ import numpy as np, pandas as pd
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from src.personalized_retrieve import build_components, run_multi  # noqa: E402
+from src.config import PRODUCTION  # noqa: E402
 
 P1 = Path(__file__).resolve().parents[1] / "artifacts" / "p1"
 
@@ -52,7 +53,7 @@ def _appid_col(df: pd.DataFrame) -> str:
 
 def variant_recs(variant: dict, k: int, profiles: pd.DataFrame, comps=None) -> dict:
     """`comps` 를 주지 않으면 variant 의 quality_w 로 새로 만든다."""
-    strat = variant.get("strategy", "top2_mean")
+    strat = variant.get("strategy", PRODUCTION["strategy"])
     if comps is None:
         # 지정하지 않은 축은 **확정값**(config.PRODUCTION)이 들어간다 (D-55).
         # 예전에는 0.0 이 기본이라 "한 축만 스윕"이 실은 "나머지 축을 전부 끈" 측정이었다.

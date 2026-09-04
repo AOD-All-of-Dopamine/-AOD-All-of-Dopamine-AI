@@ -40,21 +40,32 @@ def variant_recs(variant: dict, k: int, profiles: pd.DataFrame, components=None)
     변형이 명시한 키만 덮어쓴다.
     """
     from src.personalized_retrieve import build_components, recommend
-    from src.config import PRODUCTION_POSTPROCESS
+    from src.config import PRODUCTION, PRODUCTION_POSTPROCESS
+    # **미지정 축은 확정값이 들어간다** — 예전에는 여기 기본이 리터럴 "top2_mean" 이라
+    # 확정값 "mean" 과 어긋났다. `--variant "{}"` 로 부르면(eval_product·export_eval 의
+    # 기본값이다) 하네스가 서빙과 **다른 접기**로 재게 된다. 웹소설이 D-66 에서 고친 것과
+    # 같은 종류이고, TMDB 에만 남아 있었다.
+    # **정렬 축도 마찬가지다.** 위 독스트링이 인용한 D-55·D-46·D-43 의 교훈이
+    # 후처리에만 적용되고 여기 정렬 축에는 적용되지 않은 채로 남아 있었다 —
+    # 기본이 전부 0.0 이라 `variant_recs({"genre_w": 0.5})` 같은 부분 변형은
+    # **나머지 확정 축(hub_lambda 0.35 · rating_boost 0.15 · media_w 0.20 · genre_w 0.40)을
+    # 전부 끈 채로** 재고 있었다. Steam 은 D-55, 웹소설은 D-66 에서 고쳤고 TMDB 만 남아 있었다.
+    def _ax(key, fallback=0.0):
+        return variant.get(key, PRODUCTION.get(key, fallback))
     comp = components or build_components(
-        hub_lambda=variant.get("hub_lambda", 0.0),
-        vote_boost=variant.get("vote_boost", 0.0),
-        rating_boost=variant.get("rating_boost", 0.0),
-        align_w=variant.get("align_w", 0.0),
-        min_overview_len=variant.get("min_overview_len", 0),
-        media_w=variant.get("media_w", 0.0),
-        genre_w=variant.get("genre_w", 0.0),
-        vote_w=variant.get("vote_w", 0.0))
+        hub_lambda=_ax("hub_lambda"),
+        vote_boost=_ax("vote_boost"),
+        rating_boost=_ax("rating_boost"),
+        align_w=_ax("align_w"),
+        min_overview_len=_ax("min_overview_len", 0),
+        media_w=_ax("media_w"),
+        genre_w=_ax("genre_w"),
+        vote_w=_ax("vote_w"))
     out = {}
     for r in profiles.itertuples(index=False):
         out[r.profile_id] = recommend(
             list(r.seed_rows), components=comp, top_n=k,
-            strategy=variant.get("strategy", "top2_mean"),
+            strategy=variant.get("strategy", PRODUCTION["strategy"]),
             postprocess_on=variant.get("postprocess", True),
             postprocess_kwargs={
                 **PRODUCTION_POSTPROCESS,
