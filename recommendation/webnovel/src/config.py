@@ -68,9 +68,16 @@ def artifact_dir(path: str | Path | None = None) -> Path:
     return p if p.is_absolute() else PROJECT_ROOT / p
 
 
-def ensure_artifacts_dir() -> Path:
-    ARTIFACTS_DIR.mkdir(parents=True, exist_ok=True)
-    return ARTIFACTS_DIR
+def ensure_artifacts_dir(path: str | Path | None = None) -> Path:
+    """`artifact_dir()` 와 **같은 우선순위**(인자 > AOD_ARTIFACTS > wn_v1)로 만든다.
+
+    2026-09-04 정정: 예전엔 `ARTIFACTS_DIR`(wn_v1) 로 고정돼 있어서 `AOD_ARTIFACTS=wn_v6`
+    으로 data_loader 를 돌려도 결과가 **wn_v1 을 덮어썼다.** 읽는 쪽(`artifact_dir`)과 쓰는 쪽이
+    다른 규칙을 쓰면 "어디에 썼는지 모르는" 사고가 난다 — 그래서 하나로 맞춘다.
+    """
+    d = artifact_dir(path)
+    d.mkdir(parents=True, exist_ok=True)
+    return d
 
 
 # ── 확정 설정 ────────────────────────────────────────────────────────────────
