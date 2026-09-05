@@ -57,7 +57,9 @@ class Engine:
         sim = self.similarity(seed_ids, hub_lambda)
         folded = self.fold(sim, strategy)
         dominant = [seed_ids[i] for i in sim.argmax(axis=0)]
-        seed_tags = [self._tags[self.row[s]] for s in seed_ids] if (tag_w or PRODUCTION["tag_w"]) else None
+        # 명시적 0 은 0 이다 — `or` 는 0.0 을 설정 기본값으로 바꿔 버린다 (TMDB 하네스 D-55 와 같은 함정).
+        tag_w = PRODUCTION["tag_w"] if tag_w is None else tag_w
+        seed_tags = [self._tags[self.row[s]] for s in seed_ids] if tag_w else None
         r = PersonalizedRanker(
             self.ds,
             pop_boost=PRODUCTION["pop_boost"] if pop_boost is None else pop_boost,
