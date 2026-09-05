@@ -25,7 +25,7 @@ def ensure_artifacts_dir(path: str | Path | None = None) -> Path:
 # 웹툰에서 따로 사전등록·판정한다. 값 옆에 T-번호가 없다는 것은 "이 도메인에서 측정된 적 없음"이다.
 REPRESENTATION = "rep_v2"   # T-1
 PRODUCTION = {
-    "strategy": "top2_mean",   # 미측정 — 웹소설에서 이식
+    "strategy": "top2_mean",   # **T-4 확정**: mean −0.033(mix −0.067, 중심점이 빈 곳을 가리킴) · max −0.008(넓지만 적합률 못 삼)
     "pop_boost": 0.0,          # **T-2 확정 (0 유지)**: 0.03 −0.012 · 0.10 +0.009, 저관심 −0.030. 배율은 적합률 대신 관심수 중앙만 2.4배로 밀었다
     "hub_lambda": 0.0,         # 미측정 — 웹소설과 같게 끔
     "star_boost": 0.0,         # 미측정 — 웹소설은 평점 신호가 없었다(D-62)
