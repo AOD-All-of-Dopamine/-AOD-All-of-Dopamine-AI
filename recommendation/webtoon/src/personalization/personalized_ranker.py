@@ -21,8 +21,13 @@ class PersonalizedRanker:
         self.pop_pct = fav.rank(pct=True).to_numpy(dtype=np.float32)
         star = pd.to_numeric(self.ds.get("star_score"), errors="coerce").fillna(0.0)
         self.star_pct = star.rank(pct=True).to_numpy(dtype=np.float32)
-        self._tags = [frozenset(t if t is not None and not isinstance(t, str) else ([t] if t else []))
-                      for t in self.ds.get("tags", pd.Series([None] * len(self.ds)))]
+        # 태그 피복은 **표현과 같은 정지어 규칙**을 쓴다. `완결로맨스` 같은 라벨을 세면
+        # 피복률이 "같은 장르 + 같은 연재 상태"를 재게 된다 — 취향 신호가 아니다 (T-3 전에 고침).
+        from src.text_builder import _TAG_STOP, _TAG_STOP_PREFIX
+        def _clean(t):
+            xs = t if t is not None and not isinstance(t, str) else ([t] if t else [])
+            return frozenset(x for x in xs if x not in _TAG_STOP and not str(x).startswith(_TAG_STOP_PREFIX))
+        self._tags = [_clean(t) for t in self.ds.get("tags", pd.Series([None] * len(self.ds)))]
 
     def rank(self, sim: np.ndarray, *, exclude_ids=None, seed_tags=None, top_n=200,
              dominant=None) -> pd.DataFrame:

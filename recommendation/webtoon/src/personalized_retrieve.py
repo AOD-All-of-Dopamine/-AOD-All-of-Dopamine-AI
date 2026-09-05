@@ -20,8 +20,11 @@ class Engine:
         self.row = {int(v): i for i, v in enumerate(self.ds["item_id"])}
         self.centroid = self.emb.mean(axis=0)
         self.centroid /= (np.linalg.norm(self.centroid) + 1e-9)
-        self._tags = [frozenset(t if t is not None and not isinstance(t, str) else ([t] if t else []))
-                      for t in self.ds.get("tags", pd.Series([None] * len(self.ds)))]
+        from src.text_builder import _TAG_STOP, _TAG_STOP_PREFIX   # 랭커와 같은 정지어 규칙
+        def _clean(t):
+            xs = t if t is not None and not isinstance(t, str) else ([t] if t else [])
+            return frozenset(x for x in xs if x not in _TAG_STOP and not str(x).startswith(_TAG_STOP_PREFIX))
+        self._tags = [_clean(t) for t in self.ds.get("tags", pd.Series([None] * len(self.ds)))]
 
     # ── 검색 ──
     def similarity(self, seed_ids, hub_lambda=None) -> np.ndarray:
