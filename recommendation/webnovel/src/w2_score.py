@@ -15,6 +15,7 @@ print(f"신규 판정 {len(maj)}/{len(todo)} · 만장일치 {unan/max(len(maj),
 pair = {(key[i]["pid"], key[i]["item"]): m for i, m in maj.items()}
 miss = 0
 for r in rows:
+    if "maj" in r: continue          # 빌드 때 은행에서 채운 슬롯 (W-1 판정)
     k = (r["pid"], r["item"])
     if k in pair: r["maj"] = pair[k]
     else: miss += 1
