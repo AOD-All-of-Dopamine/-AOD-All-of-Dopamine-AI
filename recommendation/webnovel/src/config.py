@@ -93,7 +93,8 @@ def ensure_artifacts_dir(path: str | Path | None = None) -> Path:
 #: §25 가 기록한 "top-10 겹침 8.5/10"은 구현 차이가 아니라 이 상수 차이였다.
 PRODUCTION = {
     "strategy": "top2_mean",
-    "pop_boost": 0.03,      # D-66 확정. k=20·k=50 양쪽 미채점 0 에서 판정
+    "pop_boost": 0.0,       # **W-1 확정 (D-66 철회)**: 전체 코퍼스 wn_v6 에서 0.03 은 +0.0115 (문턱 +0.02 미달, LOO 0/52).
+                            # D-66 의 0.03 은 파일럿 코퍼스(7,062편)의 결론이었다. 관심수 중앙만 56k→155k 로 민다.
     "rating_boost": 0.0,    # 신호 없음 (D-62: 평점 잔차 −0.034 · 베이지안 −0.045)
     "hub_lambda": 0.0,
     "mmr_lambda": 1.0,      # **기각된 축** (D-53 전역 · D-54 시드묶음). 1.0 = 끔
