@@ -1,0 +1,13 @@
+{
+  "experiment_id": "steam_s1_qwen_v2",
+  "model": "Qwen/Qwen3-Embedding-0.6B",
+  "representation": "short_description_genres",
+  "query_instruction": "Given a Steam game, retrieve other Steam games that a player who likes this game would likely find relevant.\n",
+  "normalize_embeddings": true,
+  "retrieval": "exact_dot_product",
+  "candidate_k": 100,
+  "device": "cpu",
+  "batch_size": 4,
+  "corpus_rows": 19476,
+  "embedding_dim": 1024
+}

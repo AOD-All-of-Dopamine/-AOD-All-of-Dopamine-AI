@@ -1,0 +1,1322 @@
+[
+ {
+  "seed": 0,
+  "cand": null,
+  "name": "재벌 매니지먼트",
+  "id": "W147"
+ },
+ {
+  "seed": 0,
+  "cand": 0,
+  "name": "Business War: ERP 샌드박스 시뮬레이션",
+  "id": "G049"
+ },
+ {
+  "seed": 0,
+  "cand": 1,
+  "name": "Last Train Home",
+  "id": "G184"
+ },
+ {
+  "seed": 0,
+  "cand": 2,
+  "name": "봄이 오면 꽃이 피고",
+  "id": "G140"
+ },
+ {
+  "seed": 0,
+  "cand": 3,
+  "name": "Elite MMA Manager",
+  "id": "G145"
+ },
+ {
+  "seed": 0,
+  "cand": 4,
+  "name": "After University: Doner Simulator",
+  "id": "G217"
+ },
+ {
+  "seed": 0,
+  "cand": 5,
+  "name": "Rush Hour Relay",
+  "id": "G126"
+ },
+ {
+  "seed": 0,
+  "cand": 6,
+  "name": "War Hospital",
+  "id": "G122"
+ },
+ {
+  "seed": 0,
+  "cand": 7,
+  "name": "극 서원 연의",
+  "id": "G034"
+ },
+ {
+  "seed": 0,
+  "cand": 8,
+  "name": "Hairdresser Simulator",
+  "id": "G103"
+ },
+ {
+  "seed": 0,
+  "cand": 9,
+  "name": "One Military Camp",
+  "id": "G072"
+ },
+ {
+  "seed": 1,
+  "cand": null,
+  "name": "글러먹은 빙의",
+  "id": "W035"
+ },
+ {
+  "seed": 1,
+  "cand": 0,
+  "name": "원혼: 복수의 영혼",
+  "id": "G048"
+ },
+ {
+  "seed": 1,
+  "cand": 1,
+  "name": "산역",
+  "id": "G150"
+ },
+ {
+  "seed": 1,
+  "cand": 2,
+  "name": "어서오세요 신성재판에",
+  "id": "G130"
+ },
+ {
+  "seed": 1,
+  "cand": 3,
+  "name": "딸기맛 Sci-Fi",
+  "id": "G107"
+ },
+ {
+  "seed": 1,
+  "cand": 4,
+  "name": "봄이 오면 꽃이 피고",
+  "id": "G182"
+ },
+ {
+  "seed": 1,
+  "cand": 5,
+  "name": "Sinister City",
+  "id": "G163"
+ },
+ {
+  "seed": 1,
+  "cand": 6,
+  "name": "Slitterhead",
+  "id": "G074"
+ },
+ {
+  "seed": 1,
+  "cand": 7,
+  "name": "흑서유",
+  "id": "G179"
+ },
+ {
+  "seed": 1,
+  "cand": 8,
+  "name": "Zero Escape: The Nonary Games",
+  "id": "G213"
+ },
+ {
+  "seed": 1,
+  "cand": 9,
+  "name": "Aurora Adventure: A Sunglade Planet Tale",
+  "id": "G086"
+ },
+ {
+  "seed": 2,
+  "cand": null,
+  "name": "불상을 조각하는 성기사님!",
+  "id": "W183"
+ },
+ {
+  "seed": 2,
+  "cand": 0,
+  "name": "The Inquisitor",
+  "id": "G193"
+ },
+ {
+  "seed": 2,
+  "cand": 1,
+  "name": "봄이 오면 꽃이 피고",
+  "id": "G040"
+ },
+ {
+  "seed": 2,
+  "cand": 2,
+  "name": "Kung Fu Time Travel",
+  "id": "G065"
+ },
+ {
+  "seed": 2,
+  "cand": 3,
+  "name": "Bogeys, Ghosts & Gods",
+  "id": "G092"
+ },
+ {
+  "seed": 2,
+  "cand": 4,
+  "name": "Worn By The Forgotten",
+  "id": "G080"
+ },
+ {
+  "seed": 2,
+  "cand": 5,
+  "name": "희생의 아파트",
+  "id": "G188"
+ },
+ {
+  "seed": 2,
+  "cand": 6,
+  "name": "Revive",
+  "id": "G069"
+ },
+ {
+  "seed": 2,
+  "cand": 7,
+  "name": "Vampire Hunter: Nightrise",
+  "id": "G160"
+ },
+ {
+  "seed": 2,
+  "cand": 8,
+  "name": "Sakura Mirror",
+  "id": "G200"
+ },
+ {
+  "seed": 2,
+  "cand": 9,
+  "name": "어서오세요 신성재판에",
+  "id": "G101"
+ },
+ {
+  "seed": 3,
+  "cand": null,
+  "name": "내 인공지능이 마왕이 되었다",
+  "id": "W055"
+ },
+ {
+  "seed": 3,
+  "cand": 0,
+  "name": "AI Digital Human Lab",
+  "id": "G153"
+ },
+ {
+  "seed": 3,
+  "cand": 1,
+  "name": "Black Submarine: deep seek",
+  "id": "G077"
+ },
+ {
+  "seed": 3,
+  "cand": 2,
+  "name": "Revive",
+  "id": "G017"
+ },
+ {
+  "seed": 3,
+  "cand": 3,
+  "name": "Demonarch",
+  "id": "G131"
+ },
+ {
+  "seed": 3,
+  "cand": 4,
+  "name": "Agence",
+  "id": "G063"
+ },
+ {
+  "seed": 3,
+  "cand": 5,
+  "name": "The Birth of an Artificial Intelligence",
+  "id": "G105"
+ },
+ {
+  "seed": 3,
+  "cand": 6,
+  "name": "Lost Lands: Dark Overlord Collector's Edition",
+  "id": "G172"
+ },
+ {
+  "seed": 3,
+  "cand": 7,
+  "name": "AI Confidential",
+  "id": "G144"
+ },
+ {
+  "seed": 3,
+  "cand": 8,
+  "name": "★Fallalypse ★ Disconnect ❄",
+  "id": "G176"
+ },
+ {
+  "seed": 3,
+  "cand": 9,
+  "name": "Whispers from the Star",
+  "id": "G082"
+ },
+ {
+  "seed": 4,
+  "cand": null,
+  "name": "십파일방",
+  "id": "W020"
+ },
+ {
+  "seed": 4,
+  "cand": 0,
+  "name": "Chill with You : Lo-Fi Story",
+  "id": "G196"
+ },
+ {
+  "seed": 4,
+  "cand": 1,
+  "name": "연무",
+  "id": "G026"
+ },
+ {
+  "seed": 4,
+  "cand": 2,
+  "name": "LOOM™",
+  "id": "G102"
+ },
+ {
+  "seed": 4,
+  "cand": 3,
+  "name": "해동비사 (海東秘史)",
+  "id": "G085"
+ },
+ {
+  "seed": 4,
+  "cand": 4,
+  "name": "它说山雨欲来",
+  "id": "G214"
+ },
+ {
+  "seed": 4,
+  "cand": 5,
+  "name": "뱀과 새",
+  "id": "G149"
+ },
+ {
+  "seed": 4,
+  "cand": 6,
+  "name": "Come to my party!",
+  "id": "G053"
+ },
+ {
+  "seed": 4,
+  "cand": 7,
+  "name": "달의 딸",
+  "id": "G019"
+ },
+ {
+  "seed": 4,
+  "cand": 8,
+  "name": "Weirdo",
+  "id": "G141"
+ },
+ {
+  "seed": 4,
+  "cand": 9,
+  "name": "스위트 클락워크",
+  "id": "G091"
+ },
+ {
+  "seed": 5,
+  "cand": null,
+  "name": "하트 스토커",
+  "id": "W197"
+ },
+ {
+  "seed": 5,
+  "cand": 0,
+  "name": "Uncharted Tides: Port Royal",
+  "id": "G198"
+ },
+ {
+  "seed": 5,
+  "cand": 1,
+  "name": "술도, 사랑도 어려운 아가씨",
+  "id": "G013"
+ },
+ {
+  "seed": 5,
+  "cand": 2,
+  "name": "두근두근 하우스: 연애 리얼리티 쇼・홍콩",
+  "id": "G129"
+ },
+ {
+  "seed": 5,
+  "cand": 3,
+  "name": "我和美女有个约会",
+  "id": "G023"
+ },
+ {
+  "seed": 5,
+  "cand": 4,
+  "name": "Holdem God - MindBuster",
+  "id": "G127"
+ },
+ {
+  "seed": 5,
+  "cand": 5,
+  "name": "태엽시계의 왕좌 - 리마스터",
+  "id": "G037"
+ },
+ {
+  "seed": 5,
+  "cand": 6,
+  "name": "Come to my party!",
+  "id": "G120"
+ },
+ {
+  "seed": 5,
+  "cand": 7,
+  "name": "Spirit Whisperer Conversation With Akari",
+  "id": "G218"
+ },
+ {
+  "seed": 5,
+  "cand": 8,
+  "name": "My Little Prince - a jigsaw puzzle tale",
+  "id": "G138"
+ },
+ {
+  "seed": 5,
+  "cand": 9,
+  "name": "Royal Signal : The Prince’s 5 Days",
+  "id": "G170"
+ },
+ {
+  "seed": 6,
+  "cand": null,
+  "name": "사채왕의 손자",
+  "id": "W094"
+ },
+ {
+  "seed": 6,
+  "cand": 0,
+  "name": "봄이 오면 꽃이 피고",
+  "id": "G125"
+ },
+ {
+  "seed": 6,
+  "cand": 1,
+  "name": "Revive",
+  "id": "G043"
+ },
+ {
+  "seed": 6,
+  "cand": 2,
+  "name": "Kung Fu Time Travel",
+  "id": "G002"
+ },
+ {
+  "seed": 6,
+  "cand": 3,
+  "name": "The Sickle Upon Sekigahara",
+  "id": "G042"
+ },
+ {
+  "seed": 6,
+  "cand": 4,
+  "name": "커피여우 김삼월",
+  "id": "G211"
+ },
+ {
+  "seed": 6,
+  "cand": 5,
+  "name": "Witch Story",
+  "id": "G209"
+ },
+ {
+  "seed": 6,
+  "cand": 6,
+  "name": "Warehuman -ウェアヒューマン-",
+  "id": "G121"
+ },
+ {
+  "seed": 6,
+  "cand": 7,
+  "name": "극 서원 연의",
+  "id": "G056"
+ },
+ {
+  "seed": 6,
+  "cand": 8,
+  "name": "Builder Bros",
+  "id": "G062"
+ },
+ {
+  "seed": 6,
+  "cand": 9,
+  "name": "Queen's Revolution ~ the romance in upheavals ~",
+  "id": "G041"
+ },
+ {
+  "seed": 7,
+  "cand": null,
+  "name": "테미안",
+  "id": "W199"
+ },
+ {
+  "seed": 7,
+  "cand": 0,
+  "name": "Last Light",
+  "id": "G005"
+ },
+ {
+  "seed": 7,
+  "cand": 1,
+  "name": "Rage in Peace",
+  "id": "G118"
+ },
+ {
+  "seed": 7,
+  "cand": 2,
+  "name": "NEVERLANDER: An Awfully Big Adventure",
+  "id": "G168"
+ },
+ {
+  "seed": 7,
+  "cand": 3,
+  "name": "Endless Fables 4: Shadow Within",
+  "id": "G216"
+ },
+ {
+  "seed": 7,
+  "cand": 4,
+  "name": "Testament: The Order of High Human",
+  "id": "G000"
+ },
+ {
+  "seed": 7,
+  "cand": 5,
+  "name": "로드 오브 로드: 왕의 여명",
+  "id": "G015"
+ },
+ {
+  "seed": 7,
+  "cand": 6,
+  "name": "Terminal 81R",
+  "id": "G114"
+ },
+ {
+  "seed": 7,
+  "cand": 7,
+  "name": "Corpse Party II: Darkness Distortion",
+  "id": "G135"
+ },
+ {
+  "seed": 7,
+  "cand": 8,
+  "name": "Calm Down, Will",
+  "id": "G095"
+ },
+ {
+  "seed": 7,
+  "cand": 9,
+  "name": "Tandem: A Tale of Shadows",
+  "id": "G058"
+ },
+ {
+  "seed": 8,
+  "cand": null,
+  "name": "일방적 짝사랑",
+  "id": "W167"
+ },
+ {
+  "seed": 8,
+  "cand": 0,
+  "name": "프렌치커넥션",
+  "id": "G027"
+ },
+ {
+  "seed": 8,
+  "cand": 1,
+  "name": "あの夜からキミに恋してた for Steam",
+  "id": "G051"
+ },
+ {
+  "seed": 8,
+  "cand": 2,
+  "name": "봄이 오면 꽃이 피고",
+  "id": "G052"
+ },
+ {
+  "seed": 8,
+  "cand": 3,
+  "name": "가면을 벗는 방법 REMASTERED",
+  "id": "G190"
+ },
+ {
+  "seed": 8,
+  "cand": 4,
+  "name": "러브, 샘",
+  "id": "G059"
+ },
+ {
+  "seed": 8,
+  "cand": 5,
+  "name": "拜托！请你先告白",
+  "id": "G185"
+ },
+ {
+  "seed": 8,
+  "cand": 6,
+  "name": "Velvet Bite: Softly, with Teeth",
+  "id": "G064"
+ },
+ {
+  "seed": 8,
+  "cand": 7,
+  "name": "うっかり婚～目覚めたら、ワケあり上司の妻でした～",
+  "id": "G039"
+ },
+ {
+  "seed": 8,
+  "cand": 8,
+  "name": "Trap Yuri Tempest",
+  "id": "G089"
+ },
+ {
+  "seed": 8,
+  "cand": 9,
+  "name": "我和美女有个约会",
+  "id": "G208"
+ },
+ {
+  "seed": 9,
+  "cand": null,
+  "name": "폐하, 이 회귀 좀 멈춰 주세요",
+  "id": "W022"
+ },
+ {
+  "seed": 9,
+  "cand": 0,
+  "name": "봄이 오면 꽃이 피고",
+  "id": "G033"
+ },
+ {
+  "seed": 9,
+  "cand": 1,
+  "name": "Revive",
+  "id": "G067"
+ },
+ {
+  "seed": 9,
+  "cand": 2,
+  "name": "Derail: Sacrifice",
+  "id": "G109"
+ },
+ {
+  "seed": 9,
+  "cand": 3,
+  "name": "The Meridian Under the Heaven: Valhalla",
+  "id": "G018"
+ },
+ {
+  "seed": 9,
+  "cand": 4,
+  "name": "칼리굴라2",
+  "id": "G010"
+ },
+ {
+  "seed": 9,
+  "cand": 5,
+  "name": "荷莱Horae",
+  "id": "G171"
+ },
+ {
+  "seed": 9,
+  "cand": 6,
+  "name": "Lost Lands: Dark Overlord Collector's Edition",
+  "id": "G081"
+ },
+ {
+  "seed": 9,
+  "cand": 7,
+  "name": "The Inquisitor",
+  "id": "G030"
+ },
+ {
+  "seed": 9,
+  "cand": 8,
+  "name": "On the Q.T.",
+  "id": "G157"
+ },
+ {
+  "seed": 9,
+  "cand": 9,
+  "name": "The Caligula Effect: Overdose",
+  "id": "G152"
+ },
+ {
+  "seed": 10,
+  "cand": null,
+  "name": "언니, 이 백화점은 내 거야",
+  "id": "W083"
+ },
+ {
+  "seed": 10,
+  "cand": 0,
+  "name": "Come to my party!",
+  "id": "G123"
+ },
+ {
+  "seed": 10,
+  "cand": 1,
+  "name": "On the Q.T.",
+  "id": "G031"
+ },
+ {
+  "seed": 10,
+  "cand": 2,
+  "name": "Blood of Inquisition",
+  "id": "G119"
+ },
+ {
+  "seed": 10,
+  "cand": 3,
+  "name": "Unmoor",
+  "id": "G191"
+ },
+ {
+  "seed": 10,
+  "cand": 4,
+  "name": "Pinkybites",
+  "id": "G106"
+ },
+ {
+  "seed": 10,
+  "cand": 5,
+  "name": "백의성 애정 의존증",
+  "id": "G159"
+ },
+ {
+  "seed": 10,
+  "cand": 6,
+  "name": "러브 플루트",
+  "id": "G203"
+ },
+ {
+  "seed": 10,
+  "cand": 7,
+  "name": "Miss Lisette's Assassin Maid",
+  "id": "G162"
+ },
+ {
+  "seed": 10,
+  "cand": 8,
+  "name": "Recettear: An Item Shop's Tale",
+  "id": "G192"
+ },
+ {
+  "seed": 10,
+  "cand": 9,
+  "name": "L'Agence - The Hearts of Paris",
+  "id": "G014"
+ },
+ {
+  "seed": 11,
+  "cand": null,
+  "name": "내가 유변이라니",
+  "id": "W181"
+ },
+ {
+  "seed": 11,
+  "cand": 0,
+  "name": "연무",
+  "id": "G061"
+ },
+ {
+  "seed": 11,
+  "cand": 1,
+  "name": "Call of Senpai: Waifu Warfare 2",
+  "id": "G165"
+ },
+ {
+  "seed": 11,
+  "cand": 2,
+  "name": "Warehuman -ウェアヒューマン-",
+  "id": "G060"
+ },
+ {
+  "seed": 11,
+  "cand": 3,
+  "name": "The Meridian Under the Heaven: Valhalla",
+  "id": "G003"
+ },
+ {
+  "seed": 11,
+  "cand": 4,
+  "name": "It Came From Above Us",
+  "id": "G189"
+ },
+ {
+  "seed": 11,
+  "cand": 5,
+  "name": "역전검사 1&2 미츠루기 셀렉션",
+  "id": "G202"
+ },
+ {
+  "seed": 11,
+  "cand": 6,
+  "name": "청구야담: 팔도견문록",
+  "id": "G158"
+ },
+ {
+  "seed": 11,
+  "cand": 7,
+  "name": "거짓말쟁이 왕을 속이는 방법 REMASTERED",
+  "id": "G186"
+ },
+ {
+  "seed": 11,
+  "cand": 8,
+  "name": "봄이 오면 꽃이 피고",
+  "id": "G099"
+ },
+ {
+  "seed": 11,
+  "cand": 9,
+  "name": "Animal Mystery Crew",
+  "id": "G134"
+ },
+ {
+  "seed": 12,
+  "cand": null,
+  "name": "신화를 계승중입니다",
+  "id": "W090"
+ },
+ {
+  "seed": 12,
+  "cand": 0,
+  "name": "Pick My Heart Chapter 2",
+  "id": "G108"
+ },
+ {
+  "seed": 12,
+  "cand": 1,
+  "name": "봄이 오면 꽃이 피고",
+  "id": "G137"
+ },
+ {
+  "seed": 12,
+  "cand": 2,
+  "name": "~在魔界当女仆~恶魔天使与勇者的秘密喫茶店",
+  "id": "G166"
+ },
+ {
+  "seed": 12,
+  "cand": 3,
+  "name": "- Mischief Dungeon Life - 異世界転生した俺のイタズラダンジョンライフ",
+  "id": "G204"
+ },
+ {
+  "seed": 12,
+  "cand": 4,
+  "name": "Princess Maker 2 Refine",
+  "id": "G045"
+ },
+ {
+  "seed": 12,
+  "cand": 5,
+  "name": "Jeux bleu",
+  "id": "G206"
+ },
+ {
+  "seed": 12,
+  "cand": 6,
+  "name": "Revive",
+  "id": "G161"
+ },
+ {
+  "seed": 12,
+  "cand": 7,
+  "name": "트리 오브 세이비어",
+  "id": "G148"
+ },
+ {
+  "seed": 12,
+  "cand": 8,
+  "name": "불개",
+  "id": "G054"
+ },
+ {
+  "seed": 12,
+  "cand": 9,
+  "name": "ALL ADRIFT",
+  "id": "G100"
+ },
+ {
+  "seed": 13,
+  "cand": null,
+  "name": "아빠의 축구",
+  "id": "W117"
+ },
+ {
+  "seed": 13,
+  "cand": 0,
+  "name": "World of Football",
+  "id": "G001"
+ },
+ {
+  "seed": 13,
+  "cand": 1,
+  "name": "프린세스 메이커 2 리제네레이션",
+  "id": "G028"
+ },
+ {
+  "seed": 13,
+  "cand": 2,
+  "name": "Football Star Life 23/24",
+  "id": "G050"
+ },
+ {
+  "seed": 13,
+  "cand": 3,
+  "name": "Football Manager 26",
+  "id": "G004"
+ },
+ {
+  "seed": 13,
+  "cand": 4,
+  "name": "Father Forgets",
+  "id": "G212"
+ },
+ {
+  "seed": 13,
+  "cand": 5,
+  "name": "Backyard Soccer '98",
+  "id": "G029"
+ },
+ {
+  "seed": 13,
+  "cand": 6,
+  "name": "Football Streaker Simulator",
+  "id": "G175"
+ },
+ {
+  "seed": 13,
+  "cand": 7,
+  "name": "축구장의 대부",
+  "id": "G076"
+ },
+ {
+  "seed": 13,
+  "cand": 8,
+  "name": "EA SPORTS™ College Football 27",
+  "id": "G025"
+ },
+ {
+  "seed": 13,
+  "cand": 9,
+  "name": "Football Stars Legend 24",
+  "id": "G036"
+ },
+ {
+  "seed": 14,
+  "cand": null,
+  "name": "무림여학원 - 시드노벨 Seed Novel",
+  "id": "W194"
+ },
+ {
+  "seed": 14,
+  "cand": 0,
+  "name": "命运之轮（序章）/Journey of Destiny(dependent origination)",
+  "id": "G128"
+ },
+ {
+  "seed": 14,
+  "cand": 1,
+  "name": "ZEROSEGI",
+  "id": "G073"
+ },
+ {
+  "seed": 14,
+  "cand": 2,
+  "name": "봄의 소리는 마치 너와 닮아서",
+  "id": "G113"
+ },
+ {
+  "seed": 14,
+  "cand": 3,
+  "name": "검협:풍진연곡",
+  "id": "G088"
+ },
+ {
+  "seed": 14,
+  "cand": 4,
+  "name": "Concealed",
+  "id": "G139"
+ },
+ {
+  "seed": 14,
+  "cand": 5,
+  "name": "7'scarlet",
+  "id": "G097"
+ },
+ {
+  "seed": 14,
+  "cand": 6,
+  "name": "이하나시의 마녀",
+  "id": "G201"
+ },
+ {
+  "seed": 14,
+  "cand": 7,
+  "name": "さくらいろテトラプリズム",
+  "id": "G012"
+ },
+ {
+  "seed": 14,
+  "cand": 8,
+  "name": "극 서원 연의",
+  "id": "G180"
+ },
+ {
+  "seed": 14,
+  "cand": 9,
+  "name": "みすずの国",
+  "id": "G007"
+ },
+ {
+  "seed": 15,
+  "cand": null,
+  "name": "차원이 다른 아이돌 1~9권",
+  "id": "W173"
+ },
+ {
+  "seed": 15,
+  "cand": 0,
+  "name": "역전재판 456 오도로키 셀렉션",
+  "id": "G174"
+ },
+ {
+  "seed": 15,
+  "cand": 1,
+  "name": "Cats of the Tang Dynasty",
+  "id": "G124"
+ },
+ {
+  "seed": 15,
+  "cand": 2,
+  "name": "칼리굴라2",
+  "id": "G070"
+ },
+ {
+  "seed": 15,
+  "cand": 3,
+  "name": "Next Star",
+  "id": "G133"
+ },
+ {
+  "seed": 15,
+  "cand": 4,
+  "name": "로스트 저지먼트: 심판받지 않은 기억",
+  "id": "G038"
+ },
+ {
+  "seed": 15,
+  "cand": 5,
+  "name": "CHILDREN OF SATURN",
+  "id": "G071"
+ },
+ {
+  "seed": 15,
+  "cand": 6,
+  "name": "The Gray-Crowned Reincarnate",
+  "id": "G111"
+ },
+ {
+  "seed": 15,
+  "cand": 7,
+  "name": "LOOM™",
+  "id": "G078"
+ },
+ {
+  "seed": 15,
+  "cand": 8,
+  "name": "Come to my party!",
+  "id": "G096"
+ },
+ {
+  "seed": 15,
+  "cand": 9,
+  "name": "극 서원 연의",
+  "id": "G156"
+ },
+ {
+  "seed": 16,
+  "cand": null,
+  "name": "생사신",
+  "id": "W044"
+ },
+ {
+  "seed": 16,
+  "cand": 0,
+  "name": "검협:풍진연곡",
+  "id": "G132"
+ },
+ {
+  "seed": 16,
+  "cand": 1,
+  "name": "뱀과 새",
+  "id": "G207"
+ },
+ {
+  "seed": 16,
+  "cand": 2,
+  "name": "Suhoshin",
+  "id": "G032"
+ },
+ {
+  "seed": 16,
+  "cand": 3,
+  "name": "해동비사 (海東秘史)",
+  "id": "G024"
+ },
+ {
+  "seed": 16,
+  "cand": 4,
+  "name": "Yellowcreek Stories - The Cabin Watcher",
+  "id": "G068"
+ },
+ {
+  "seed": 16,
+  "cand": 5,
+  "name": "绝世好武功 The Matchless KungFu",
+  "id": "G112"
+ },
+ {
+  "seed": 16,
+  "cand": 6,
+  "name": "Loving Life",
+  "id": "G116"
+ },
+ {
+  "seed": 16,
+  "cand": 7,
+  "name": "Kung Fu Time Travel",
+  "id": "G046"
+ },
+ {
+  "seed": 16,
+  "cand": 8,
+  "name": "Survival Exorcist",
+  "id": "G087"
+ },
+ {
+  "seed": 16,
+  "cand": 9,
+  "name": "커피여우 김삼월",
+  "id": "G084"
+ },
+ {
+  "seed": 17,
+  "cand": null,
+  "name": "염왕화조",
+  "id": "W098"
+ },
+ {
+  "seed": 17,
+  "cand": 0,
+  "name": "Revive",
+  "id": "G079"
+ },
+ {
+  "seed": 17,
+  "cand": 1,
+  "name": "Kung Fu Time Travel",
+  "id": "G195"
+ },
+ {
+  "seed": 17,
+  "cand": 2,
+  "name": "妖闻录 STRANGE",
+  "id": "G136"
+ },
+ {
+  "seed": 17,
+  "cand": 3,
+  "name": "Queen's Revolution ~ the romance in upheavals ~",
+  "id": "G066"
+ },
+ {
+  "seed": 17,
+  "cand": 4,
+  "name": "검협:풍진연곡",
+  "id": "G115"
+ },
+ {
+  "seed": 17,
+  "cand": 5,
+  "name": "命运之轮（序章）/Journey of Destiny(dependent origination)",
+  "id": "G210"
+ },
+ {
+  "seed": 17,
+  "cand": 6,
+  "name": "Howl",
+  "id": "G006"
+ },
+ {
+  "seed": 17,
+  "cand": 7,
+  "name": "Somnus",
+  "id": "G110"
+ },
+ {
+  "seed": 17,
+  "cand": 8,
+  "name": "Unearthing Mars 2: The Ancient War",
+  "id": "G011"
+ },
+ {
+  "seed": 17,
+  "cand": 9,
+  "name": "Fantasy Quest",
+  "id": "G075"
+ },
+ {
+  "seed": 18,
+  "cand": null,
+  "name": "너를 위해서라면 나는 악역이라도",
+  "id": "W187"
+ },
+ {
+  "seed": 18,
+  "cand": 0,
+  "name": "Come to my party!",
+  "id": "G219"
+ },
+ {
+  "seed": 18,
+  "cand": 1,
+  "name": "Uncharted Tides: Port Royal",
+  "id": "G057"
+ },
+ {
+  "seed": 18,
+  "cand": 2,
+  "name": "The Meridian Under the Heaven: Valhalla",
+  "id": "G142"
+ },
+ {
+  "seed": 18,
+  "cand": 3,
+  "name": "가면을 벗는 방법 REMASTERED",
+  "id": "G021"
+ },
+ {
+  "seed": 18,
+  "cand": 4,
+  "name": "봄의 소리는 마치 너와 닮아서",
+  "id": "G169"
+ },
+ {
+  "seed": 18,
+  "cand": 5,
+  "name": "스위트 클락워크",
+  "id": "G008"
+ },
+ {
+  "seed": 18,
+  "cand": 6,
+  "name": "Miss Lisette's Assassin Maid",
+  "id": "G151"
+ },
+ {
+  "seed": 18,
+  "cand": 7,
+  "name": "Lilith-M",
+  "id": "G146"
+ },
+ {
+  "seed": 18,
+  "cand": 8,
+  "name": "Poor Samantha",
+  "id": "G093"
+ },
+ {
+  "seed": 18,
+  "cand": 9,
+  "name": "For My Darling",
+  "id": "G104"
+ },
+ {
+  "seed": 19,
+  "cand": null,
+  "name": "그 남자가 내 몸에 들어왔다",
+  "id": "W154"
+ },
+ {
+  "seed": 19,
+  "cand": 0,
+  "name": "This Bed We Made",
+  "id": "G016"
+ },
+ {
+  "seed": 19,
+  "cand": 1,
+  "name": "While Sleeping",
+  "id": "G177"
+ },
+ {
+  "seed": 19,
+  "cand": 2,
+  "name": "The Man in the Fields",
+  "id": "G178"
+ },
+ {
+  "seed": 19,
+  "cand": 3,
+  "name": "Suicide Guy: Sleepin' Deeply",
+  "id": "G164"
+ },
+ {
+  "seed": 19,
+  "cand": 4,
+  "name": "Lost Lands: Dark Overlord Collector's Edition",
+  "id": "G143"
+ },
+ {
+  "seed": 19,
+  "cand": 5,
+  "name": "Grinnel",
+  "id": "G009"
+ },
+ {
+  "seed": 19,
+  "cand": 6,
+  "name": "Lucifer Within Us",
+  "id": "G215"
+ },
+ {
+  "seed": 19,
+  "cand": 7,
+  "name": "Take me, Vitaly",
+  "id": "G155"
+ },
+ {
+  "seed": 19,
+  "cand": 8,
+  "name": "OutRUN",
+  "id": "G205"
+ },
+ {
+  "seed": 19,
+  "cand": 9,
+  "name": "Wagon Gloom",
+  "id": "G047"
+ }
+]

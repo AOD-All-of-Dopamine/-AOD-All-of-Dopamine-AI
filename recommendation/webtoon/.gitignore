@@ -1,0 +1,4 @@
+artifacts/*/corpus_embeddings.npy
+data/*.log
+__pycache__/
+*.pyc

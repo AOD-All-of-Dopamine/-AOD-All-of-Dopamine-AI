@@ -1,0 +1,7 @@
+{
+ "model": "Qwen/Qwen3-Embedding-0.6B",
+ "dim": 1024,
+ "rows": 3687,
+ "rep": "v1",
+ "normalized": true
+}

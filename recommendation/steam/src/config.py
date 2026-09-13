@@ -1,0 +1,101 @@
+# src/config.py
+import os
+from pathlib import Path
+
+import yaml
+
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+# **확정값과 같은 코퍼스를 가리켜야 한다.** 예전 기본값은 `s1_v2`(파일럿 19,476행)였는데
+# `PRODUCTION["tag_w"]=0.40`(D-49)이 `dataset["tags"]` 를 요구한다 — s1_v2 엔 그 열이 없다.
+# 그래서 `recommend_page()` 를 기본 설정으로 부르면 KeyError: 'tags' 로 죽었다.
+# 시험대(`tryout/backend.py`)가 AOD_ARTIFACTS 를 tags_full 로 setdefault 하고 있어서
+# 화면으로는 멀쩡해 보였고, 라이브러리를 직접 부르는 경로만 터졌다.
+ARTIFACTS_DIR = PROJECT_ROOT / "artifacts" / "tags_full"   # 173,691행 + tags
+
+DEFAULT_CONFIG = PROJECT_ROOT / "configs" / "s1_v2.yaml"
+ENV_FILE = PROJECT_ROOT / ".env"
+
+
+def _load_env_file() -> None:
+    """`.env` 를 환경변수로 올린다(이미 설정된 값은 덮어쓰지 않는다)."""
+    if not ENV_FILE.exists():
+        return
+    for line in ENV_FILE.read_text(encoding="utf-8").splitlines():
+        line = line.strip()
+        if not line or line.startswith("#") or "=" not in line:
+            continue
+        key, value = line.split("=", 1)
+        os.environ.setdefault(key.strip(), value.strip())
+
+
+def resolve_path(raw: str | Path) -> Path:
+    """`${AOD_BACK_ROOT}/steam_games.jsonl` 형태를 실제 경로로 푼다.
+
+    예전에는 설정과 소스에 `/home/jiho/projects/...` 가 하드코딩돼 있어 다른 머신에서
+    파이프라인이 전혀 돌지 않았다. 미설정 변수는 조용히 빈 문자열이 되지 않고 실패한다.
+    """
+    _load_env_file()
+    text = str(raw)
+    expanded = os.path.expandvars(text)
+    if "$" in expanded:
+        missing = {
+            token.strip("${}")
+            for token in expanded.replace("}", "} ").split()
+            if token.startswith("$")
+        }
+        raise SystemExit(
+            f"경로에 미설정 환경변수가 있습니다: {sorted(missing)}\n"
+            f"  원본: {text}\n"
+            f"  {ENV_FILE} 또는 셸 환경에 설정하세요 (.env.example 참고)."
+        )
+    return Path(expanded).expanduser()
+
+
+def load_config(path: str | Path | None = None) -> dict:
+    """설정 로드 우선순위: 인자 > AOD_CONFIG 환경변수 > configs/s1_v2.yaml."""
+    _load_env_file()
+    cfg_path = Path(path or os.environ.get("AOD_CONFIG") or DEFAULT_CONFIG)
+    if not cfg_path.is_absolute():
+        cfg_path = PROJECT_ROOT / cfg_path
+    if not cfg_path.exists():
+        raise SystemExit(f"설정 파일이 없습니다: {cfg_path}")
+    with open(cfg_path, encoding="utf-8") as f:
+        return yaml.safe_load(f)
+
+
+def artifact_dir(path: str | Path | None = None) -> Path:
+    """추천 파이프라인이 읽을 아티팩트 디렉터리.
+
+    표현을 바꿔 실험하려면 임베딩/데이터셋 경로를 갈아끼울 수 있어야 한다.
+    우선순위: 인자 > AOD_ARTIFACTS 환경변수 > artifacts/s1_v2.
+    """
+    p = Path(path or os.environ.get("AOD_ARTIFACTS") or ARTIFACTS_DIR)
+    return p if p.is_absolute() else PROJECT_ROOT / p
+
+
+def ensure_artifacts_dir() -> Path:
+    ARTIFACTS_DIR.mkdir(parents=True, exist_ok=True)
+    return ARTIFACTS_DIR
+
+
+#: 확증된 랭킹 설정 — **여기가 유일한 출처다** (D-55).
+#:
+#: `configs/p1.yaml` 에 근거가 적혀 있고, 이 딕셔너리가 코드의 기본값이다.
+#: 예전에는 `build_components` 호출부 8곳이 각자 기본값을 들고 있었고,
+#: 그중 확정값을 쓰는 곳은 2곳뿐이었다 — 나머지는 D-38·D-49 **이전** 추천기를
+#: 돌리고 있었다. TMDB 에서 같은 사고가 두 번 났다(`align_w` 미전달 · D-46 미반영).
+#:
+#: 스윕하는 코드는 명시적으로 덮어쓴다. 그 외에는 건드리지 않는다.
+PRODUCTION = {
+    # **접기 전략의 단일 출처.** 예전에는 이 값이 config 에 없고 `s_eval.variant_recs` 와
+    # `tryout/backend.py` 에 리터럴 "top2_mean" 으로 두 벌 살아 있었다. 값이 우연히 같아서
+    # 사고는 안 났지만, 확정값이 코드 리터럴로만 존재하면 바꿀 때 한쪽만 바뀐다 —
+    # TMDB 가 정확히 그 방식으로 "mean" 확정과 "top2_mean" 리터럴이 어긋나 있었다.
+    "strategy": "top2_mean",
+    "rec_boost": 0.03,      # p1.yaml
+    "quality_w": 0.50,      # D-37 신설 · D-38 확정 · D-50(위)·D-51(아래) 양방향 최적 확인
+    "quality_cap": 5.0,
+    "quality_src": "dataset",
+    "tag_w": 0.40,          # D-49 확정
+    "mc_w": 0.20,           # D-56 확정. has_metacritic (점수가 아니라 **보유 여부**)
+}

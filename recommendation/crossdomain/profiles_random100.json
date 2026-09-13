@@ -1,0 +1,602 @@
+[
+{
+"pid": "r3_000",
+"steam": "mix2_crpg_sandbox",
+"tmdb": "mix2_romance_time",
+"wn": "rule_fant_low"
+},
+{
+"pid": "r3_001",
+"steam": "coh_classic_multi",
+"tmdb": "seven_korean",
+"wn": "single_barbarian"
+},
+{
+"pid": "r3_002",
+"steam": "two_cozy_puzzle",
+"tmdb": "seven_longtail",
+"wn": "rule_rom_low"
+},
+{
+"pid": "r3_003",
+"steam": "coh_strategy",
+"tmdb": "niche_doc",
+"wn": "coh_romfan_revenge"
+},
+{
+"pid": "r3_004",
+"steam": "coh_openworld_survival",
+"tmdb": "five_animation",
+"wn": "rule_hp_none"
+},
+{
+"pid": "r3_005",
+"steam": "coh_classic_multi",
+"tmdb": "mix2_arthouse",
+"wn": "coh_murim_modern"
+},
+{
+"pid": "r3_006",
+"steam": "longtail_deckbuilder",
+"tmdb": "mix2_kthriller",
+"wn": "rule_rf_low"
+},
+{
+"pid": "r3_007",
+"steam": "seven_lowrev_indie",
+"tmdb": "niche_tv_drama",
+"wn": "coh_murim"
+},
+{
+"pid": "r3_008",
+"steam": "lowrev_metroidvania",
+"tmdb": "five_tv_lowvote",
+"wn": "rule_hp_low"
+},
+{
+"pid": "r3_009",
+"steam": "mix2_puzzle_survival",
+"tmdb": "coh_sageuk",
+"wn": "coh_romfan_revenge"
+},
+{
+"pid": "r3_010",
+"steam": "lowrev_towerdefense",
+"tmdb": "two_doc",
+"wn": "rule_mu_high"
+},
+{
+"pid": "r3_011",
+"steam": "lowrev_deckbuilder",
+"tmdb": "single_parasite",
+"wn": "rule_bl_mid"
+},
+{
+"pid": "r3_012",
+"steam": "mix2_coop_horror",
+"tmdb": "coh_slasher",
+"wn": "rule_rf_high"
+},
+{
+"pid": "r3_013",
+"steam": "six_action_adv",
+"tmdb": "two_western",
+"wn": "twenty_library"
+},
+{
+"pid": "r3_014",
+"steam": "coh_indie_platformer",
+"tmdb": "coh_prestige_tv",
+"wn": "rule_bl_high"
+},
+{
+"pid": "r3_015",
+"steam": "lowrev_cozy_narrative",
+"tmdb": "lowvote_animation",
+"wn": "rule_mu_low"
+},
+{
+"pid": "r3_016",
+"steam": "lowrev_towerdefense",
+"tmdb": "single_parasite",
+"wn": "rule_rom_low"
+},
+{
+"pid": "r3_017",
+"steam": "five_coop_shooter",
+"tmdb": "five_horror",
+"wn": "coh_regression"
+},
+{
+"pid": "r3_018",
+"steam": "mix2_builder_sim",
+"tmdb": "coh_romcom",
+"wn": "rule_bl_mid"
+},
+{
+"pid": "r3_019",
+"steam": "coh_openworld_survival",
+"tmdb": "five_animation",
+"wn": "rule_myst"
+},
+{
+"pid": "r3_020",
+"steam": "longtail_metroidvania",
+"tmdb": "lowvote_action",
+"wn": "coh_hunter"
+},
+{
+"pid": "r3_021",
+"steam": "coh_jrpg",
+"tmdb": "coh_crime_classic",
+"wn": "five_hunter"
+},
+{
+"pid": "r3_022",
+"steam": "coh_cozy",
+"tmdb": "five_animation",
+"wn": "rule_fant_mid"
+},
+{
+"pid": "r3_023",
+"steam": "ten_cozy",
+"tmdb": "five_lowvote_mix",
+"wn": "coh_modern_success"
+},
+{
+"pid": "r3_024",
+"steam": "ten_cozy",
+"tmdb": "twenty_library",
+"wn": "single_barbarian"
+},
+{
+"pid": "r3_025",
+"steam": "coh_fps",
+"tmdb": "coh_prestige_tv",
+"wn": "rule_myst"
+},
+{
+"pid": "r3_026",
+"steam": "mix2_colony_cozy",
+"tmdb": "longtail_family",
+"wn": "rule_rom_low"
+},
+{
+"pid": "r3_027",
+"steam": "ten_cozy",
+"tmdb": "seven_tv",
+"wn": "rule_myst"
+},
+{
+"pid": "r3_028",
+"steam": "seven_horror_coop",
+"tmdb": "lowvote_romance",
+"wn": "coh_romance_adult"
+},
+{
+"pid": "r3_029",
+"steam": "seven_automation",
+"tmdb": "niche_mystery",
+"wn": "rule_bl_low"
+},
+{
+"pid": "r3_030",
+"steam": "niche_cozy_casual",
+"tmdb": "mix2_kaction",
+"wn": "rule_mu_low"
+},
+{
+"pid": "r3_031",
+"steam": "two_bigaction",
+"tmdb": "mix2_kthriller",
+"wn": "rule_mu_high"
+},
+{
+"pid": "r3_032",
+"steam": "mix2_survival_farm",
+"tmdb": "coh_pixar",
+"wn": "mix2_lightnovel"
+},
+{
+"pid": "r3_033",
+"steam": "coh_sports",
+"tmdb": "niche_fantasy",
+"wn": "mix2_lightnovel"
+},
+{
+"pid": "r3_034",
+"steam": "coh_survival_craft",
+"tmdb": "niche_doc",
+"wn": "rule_bl_low"
+},
+{
+"pid": "r3_035",
+"steam": "coh_mmo",
+"tmdb": "coh_zombie",
+"wn": "rule_rom_mid"
+},
+{
+"pid": "r3_036",
+"steam": "longtail_puzzle_platformer",
+"tmdb": "single_parasite",
+"wn": "five_hunter"
+},
+{
+"pid": "r3_037",
+"steam": "coh_jrpg",
+"tmdb": "longtail_family",
+"wn": "single_bastian"
+},
+{
+"pid": "r3_038",
+"steam": "coh_strategy",
+"tmdb": "lowvote_action",
+"wn": "rule_rom_low"
+},
+{
+"pid": "r3_039",
+"steam": "coh_openworld_survival",
+"tmdb": "longtail_family",
+"wn": "rule_rf_high"
+},
+{
+"pid": "r3_040",
+"steam": "two_bigaction",
+"tmdb": "coh_zombie",
+"wn": "ten_mixed"
+},
+{
+"pid": "r3_041",
+"steam": "mix2_arcade_action",
+"tmdb": "longtail_family",
+"wn": "mix2_mystery"
+},
+{
+"pid": "r3_042",
+"steam": "niche_cozy_casual",
+"tmdb": "coh_romcom",
+"wn": "two_gate"
+},
+{
+"pid": "r3_043",
+"steam": "lowrev_towerdefense",
+"tmdb": "niche_doc",
+"wn": "single_sword"
+},
+{
+"pid": "r3_044",
+"steam": "five_walking_sim",
+"tmdb": "mix2_elevated_horror",
+"wn": "rule_hp_none"
+},
+{
+"pid": "r3_045",
+"steam": "coh_survival_craft",
+"tmdb": "coh_prestige_tv",
+"wn": "rule_bl_low"
+},
+{
+"pid": "r3_046",
+"steam": "seven_lowrev_indie",
+"tmdb": "coh_marvel",
+"wn": "mix2_romfan_bl"
+},
+{
+"pid": "r3_047",
+"steam": "mix2_colony_cozy",
+"tmdb": "twenty_library",
+"wn": "twenty_library"
+},
+{
+"pid": "r3_048",
+"steam": "longtail_puzzle_platformer",
+"tmdb": "single_interstellar",
+"wn": "rule_mu_none"
+},
+{
+"pid": "r3_049",
+"steam": "five_walking_sim",
+"tmdb": "mix2_kthriller",
+"wn": "five_toptier"
+},
+{
+"pid": "r3_050",
+"steam": "longtail_deckbuilder",
+"tmdb": "single_lowvote",
+"wn": "rule_mu_mid"
+},
+{
+"pid": "r3_051",
+"steam": "coh_sports",
+"tmdb": "longtail_thriller",
+"wn": "five_toptier"
+},
+{
+"pid": "r3_052",
+"steam": "coh_survival_craft",
+"tmdb": "lowvote_horror",
+"wn": "rule_hp_low"
+},
+{
+"pid": "r3_053",
+"steam": "coh_strategy",
+"tmdb": "longtail_music",
+"wn": "coh_regression"
+},
+{
+"pid": "r3_054",
+"steam": "mix2_builder_sim",
+"tmdb": "mix2_kaction",
+"wn": "rule_mu_high"
+},
+{
+"pid": "r3_055",
+"steam": "lowrev_cozy_narrative",
+"tmdb": "coh_ghibli",
+"wn": "rule_ln"
+},
+{
+"pid": "r3_056",
+"steam": "niche_soulslike_solo",
+"tmdb": "five_horror",
+"wn": "seven_fantasy"
+},
+{
+"pid": "r3_057",
+"steam": "ten_jrpg",
+"tmdb": "lowvote_horror",
+"wn": "coh_talent"
+},
+{
+"pid": "r3_058",
+"steam": "coh_vehicle_sim",
+"tmdb": "coh_nolan",
+"wn": "coh_murim_modern"
+},
+{
+"pid": "r3_059",
+"steam": "coh_grand_strategy",
+"tmdb": "lowvote_horror",
+"wn": "mix2_romfan_bl"
+},
+{
+"pid": "r3_060",
+"steam": "niche_roguelite",
+"tmdb": "two_ghibli",
+"wn": "two_murim"
+},
+{
+"pid": "r3_061",
+"steam": "coh_strategy",
+"tmdb": "coh_slasher",
+"wn": "rule_rf_none"
+},
+{
+"pid": "r3_062",
+"steam": "five_mixed_acclaimed",
+"tmdb": "coh_romcom",
+"wn": "rule_fant_none"
+},
+{
+"pid": "r3_063",
+"steam": "niche_tactics",
+"tmdb": "ten_lowvote_broad",
+"wn": "rule_fant_mid"
+},
+{
+"pid": "r3_064",
+"steam": "niche_puzzle_solo",
+"tmdb": "coh_crime_classic",
+"wn": "two_murim"
+},
+{
+"pid": "r3_065",
+"steam": "niche_puzzle_solo",
+"tmdb": "lowvote_horror",
+"wn": "coh_talent"
+},
+{
+"pid": "r3_066",
+"steam": "niche_roguelite",
+"tmdb": "coh_crime_classic",
+"wn": "five_toptier"
+},
+{
+"pid": "r3_067",
+"steam": "coh_jrpg",
+"tmdb": "lowvote_action",
+"wn": "mix2_fantasy_murim"
+},
+{
+"pid": "r3_068",
+"steam": "coh_sports",
+"tmdb": "longtail_war",
+"wn": "coh_hunter"
+},
+{
+"pid": "r3_069",
+"steam": "mix2_puzzle_survival",
+"tmdb": "lowvote_horror",
+"wn": "five_hunter"
+},
+{
+"pid": "r2_st_00",
+"steam": "coh_arpg",
+"tmdb": "lowvote_animation",
+"wn": null
+},
+{
+"pid": "r2_st_01",
+"steam": "five_walking_sim",
+"tmdb": "two_classic",
+"wn": null
+},
+{
+"pid": "r2_st_02",
+"steam": "niche_sim",
+"tmdb": "single_interstellar",
+"wn": null
+},
+{
+"pid": "r2_st_03",
+"steam": "niche_soulslike_solo",
+"tmdb": "single_parasite",
+"wn": null
+},
+{
+"pid": "r2_st_04",
+"steam": "mix2_arcade_action",
+"tmdb": "two_doc",
+"wn": null
+},
+{
+"pid": "r2_st_05",
+"steam": "ten_mixed_library",
+"tmdb": "seven_korean",
+"wn": null
+},
+{
+"pid": "r2_st_06",
+"steam": "coh_strategy",
+"tmdb": "coh_slasher",
+"wn": null
+},
+{
+"pid": "r2_st_07",
+"steam": "lowrev_metroidvania",
+"tmdb": "mix2_anime_film",
+"wn": null
+},
+{
+"pid": "r2_st_08",
+"steam": "lowrev_cozy_narrative",
+"tmdb": "mix2_elevated_horror",
+"wn": null
+},
+{
+"pid": "r2_st_09",
+"steam": "coh_classic_multi",
+"tmdb": "five_horror",
+"wn": null
+},
+{
+"pid": "r2_tw_00",
+"steam": null,
+"tmdb": "coh_prestige_tv",
+"wn": "coh_regression"
+},
+{
+"pid": "r2_tw_01",
+"steam": null,
+"tmdb": "lowvote_drama",
+"wn": "rule_hp_none"
+},
+{
+"pid": "r2_tw_02",
+"steam": null,
+"tmdb": "single_parasite",
+"wn": "coh_romance_adult"
+},
+{
+"pid": "r2_tw_03",
+"steam": null,
+"tmdb": "lowvote_romance",
+"wn": "rule_mu_mid"
+},
+{
+"pid": "r2_tw_04",
+"steam": null,
+"tmdb": "seven_longtail",
+"wn": "single_barbarian"
+},
+{
+"pid": "r2_tw_05",
+"steam": null,
+"tmdb": "niche_mystery",
+"wn": "rule_rf_mid"
+},
+{
+"pid": "r2_tw_06",
+"steam": null,
+"tmdb": "coh_sageuk",
+"wn": "rule_rom_low"
+},
+{
+"pid": "r2_tw_07",
+"steam": null,
+"tmdb": "coh_ghibli",
+"wn": "rule_hp_none"
+},
+{
+"pid": "r2_tw_08",
+"steam": null,
+"tmdb": "coh_marvel",
+"wn": "rule_mu_mid"
+},
+{
+"pid": "r2_tw_09",
+"steam": null,
+"tmdb": "mix2_romance_time",
+"wn": "seven_fantasy"
+},
+{
+"pid": "r2_sw_00",
+"steam": "coh_sports",
+"tmdb": null,
+"wn": "mix2_fantasy_murim"
+},
+{
+"pid": "r2_sw_01",
+"steam": "mix2_crpg_sandbox",
+"tmdb": null,
+"wn": "coh_romance_adult"
+},
+{
+"pid": "r2_sw_02",
+"steam": "coh_sports",
+"tmdb": null,
+"wn": "rule_rf_high"
+},
+{
+"pid": "r2_sw_03",
+"steam": "six_action_adv",
+"tmdb": null,
+"wn": "coh_modern_success"
+},
+{
+"pid": "r2_sw_04",
+"steam": "two_bigaction",
+"tmdb": null,
+"wn": "single_barbarian"
+},
+{
+"pid": "r2_sw_05",
+"steam": "niche_cozy_casual",
+"tmdb": null,
+"wn": "coh_bl_marriage"
+},
+{
+"pid": "r2_sw_06",
+"steam": "coh_vehicle_sim",
+"tmdb": null,
+"wn": "rule_hp_mid"
+},
+{
+"pid": "r2_sw_07",
+"steam": "lowrev_deckbuilder",
+"tmdb": null,
+"wn": "two_murim"
+},
+{
+"pid": "r2_sw_08",
+"steam": "coh_fps",
+"tmdb": null,
+"wn": "coh_talent"
+},
+{
+"pid": "r2_sw_09",
+"steam": "longtail_metroidvania",
+"tmdb": null,
+"wn": "mix2_lightnovel"
+}
+]

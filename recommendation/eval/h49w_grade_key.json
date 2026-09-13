@@ -1,0 +1,1402 @@
+[
+ {
+  "pid": "W039",
+  "seed": 6,
+  "cand": 5,
+  "seed_name": "사채왕의 손자",
+  "cand_name": "금강불괴 대채주"
+ },
+ {
+  "pid": "W107",
+  "seed": 7,
+  "cand": 7,
+  "seed_name": "테미안",
+  "cand_name": "기사아카데미의 기사단 소환사"
+ },
+ {
+  "pid": "W068",
+  "seed": 1,
+  "cand": 9,
+  "seed_name": "글러먹은 빙의",
+  "cand_name": "리그너스 대륙전기"
+ },
+ {
+  "pid": "W095",
+  "seed": 16,
+  "cand": 5,
+  "seed_name": "생사신",
+  "cand_name": "생사도"
+ },
+ {
+  "pid": "W161",
+  "seed": 6,
+  "cand": 9,
+  "seed_name": "사채왕의 손자",
+  "cand_name": "그리고 용사는 행복하게 살았습니다?"
+ },
+ {
+  "pid": "W078",
+  "seed": 1,
+  "cand": 2,
+  "seed_name": "글러먹은 빙의",
+  "cand_name": "빙의자의 아티펙트 레스토랑"
+ },
+ {
+  "pid": "W062",
+  "seed": 15,
+  "cand": 6,
+  "seed_name": "차원이 다른 아이돌 1~9권",
+  "cand_name": "제국 서열 1위가 내게 목줄을 쥐여준다"
+ },
+ {
+  "pid": "W030",
+  "seed": 7,
+  "cand": 9,
+  "seed_name": "테미안",
+  "cand_name": "아카데미는 이사장의 것이다"
+ },
+ {
+  "pid": "W159",
+  "seed": 8,
+  "cand": 1,
+  "seed_name": "일방적 짝사랑",
+  "cand_name": "그건 정말 오해라니까요"
+ },
+ {
+  "pid": "W026",
+  "seed": 10,
+  "cand": 0,
+  "seed_name": "언니, 이 백화점은 내 거야",
+  "cand_name": "언니가 내 남편의 아이를 낳았다"
+ },
+ {
+  "pid": "W103",
+  "seed": 12,
+  "cand": 1,
+  "seed_name": "신화를 계승중입니다",
+  "cand_name": "신화 속 대마법사의 재림"
+ },
+ {
+  "pid": "W004",
+  "seed": 7,
+  "cand": 2,
+  "seed_name": "테미안",
+  "cand_name": "블루멘크란츠"
+ },
+ {
+  "pid": "W129",
+  "seed": 10,
+  "cand": 4,
+  "seed_name": "언니, 이 백화점은 내 거야",
+  "cand_name": "언니 우리 이혼길만 걸어요!"
+ },
+ {
+  "pid": "W094",
+  "seed": 19,
+  "cand": 0,
+  "seed_name": "그 남자가 내 몸에 들어왔다",
+  "cand_name": "사기"
+ },
+ {
+  "pid": "W153",
+  "seed": 9,
+  "cand": 3,
+  "seed_name": "폐하, 이 회귀 좀 멈춰 주세요",
+  "cand_name": "혹시 다들 회귀하셨나요?"
+ },
+ {
+  "pid": "W117",
+  "seed": 8,
+  "cand": 7,
+  "seed_name": "일방적 짝사랑",
+  "cand_name": "그 짐승의 각인 사정"
+ },
+ {
+  "pid": "W023",
+  "seed": 18,
+  "cand": 8,
+  "seed_name": "너를 위해서라면 나는 악역이라도",
+  "cand_name": "언니가 내 남편의 아이를 낳았다"
+ },
+ {
+  "pid": "W181",
+  "seed": 17,
+  "cand": 3,
+  "seed_name": "염왕화조",
+  "cand_name": "팔황신화"
+ },
+ {
+  "pid": "W146",
+  "seed": 19,
+  "cand": 5,
+  "seed_name": "그 남자가 내 몸에 들어왔다",
+  "cand_name": "세계를 속인 남자"
+ },
+ {
+  "pid": "W134",
+  "seed": 18,
+  "cand": 9,
+  "seed_name": "너를 위해서라면 나는 악역이라도",
+  "cand_name": "성녀인데요 빌런입니다"
+ },
+ {
+  "pid": "W033",
+  "seed": 18,
+  "cand": 0,
+  "seed_name": "너를 위해서라면 나는 악역이라도",
+  "cand_name": "가장 완벽한 악역이 되려 합니다"
+ },
+ {
+  "pid": "W191",
+  "seed": 1,
+  "cand": 6,
+  "seed_name": "글러먹은 빙의",
+  "cand_name": "유성검가의 망나니로 살아남는 법"
+ },
+ {
+  "pid": "W178",
+  "seed": 7,
+  "cand": 6,
+  "seed_name": "테미안",
+  "cand_name": "남의 재능으로 살아남기"
+ },
+ {
+  "pid": "W179",
+  "seed": 12,
+  "cand": 4,
+  "seed_name": "신화를 계승중입니다",
+  "cand_name": "멸망한 세계의 유일한 상속자"
+ },
+ {
+  "pid": "W110",
+  "seed": 19,
+  "cand": 7,
+  "seed_name": "그 남자가 내 몸에 들어왔다",
+  "cand_name": "세 개의 칼날"
+ },
+ {
+  "pid": "W105",
+  "seed": 4,
+  "cand": 5,
+  "seed_name": "십파일방",
+  "cand_name": "신협"
+ },
+ {
+  "pid": "W196",
+  "seed": 16,
+  "cand": 8,
+  "seed_name": "생사신",
+  "cand_name": "취생몽사"
+ },
+ {
+  "pid": "W076",
+  "seed": 19,
+  "cand": 2,
+  "seed_name": "그 남자가 내 몸에 들어왔다",
+  "cand_name": "사이트정신에 맞는 글"
+ },
+ {
+  "pid": "W193",
+  "seed": 6,
+  "cand": 6,
+  "seed_name": "사채왕의 손자",
+  "cand_name": "저작권의 왕"
+ },
+ {
+  "pid": "W036",
+  "seed": 7,
+  "cand": 1,
+  "seed_name": "테미안",
+  "cand_name": "천재 황자의 슬기로운 아카데미 생활"
+ },
+ {
+  "pid": "W080",
+  "seed": 0,
+  "cand": 1,
+  "seed_name": "재벌 매니지먼트",
+  "cand_name": "당신의 매니저"
+ },
+ {
+  "pid": "W151",
+  "seed": 11,
+  "cand": 6,
+  "seed_name": "내가 유변이라니",
+  "cand_name": "삼구삼진"
+ },
+ {
+  "pid": "W097",
+  "seed": 3,
+  "cand": 3,
+  "seed_name": "내 인공지능이 마왕이 되었다",
+  "cand_name": "환룡의 전승자"
+ },
+ {
+  "pid": "W104",
+  "seed": 16,
+  "cand": 6,
+  "seed_name": "생사신",
+  "cand_name": "신규무사"
+ },
+ {
+  "pid": "W106",
+  "seed": 8,
+  "cand": 3,
+  "seed_name": "일방적 짝사랑",
+  "cand_name": "황태자는 내 소꿉친구"
+ },
+ {
+  "pid": "W061",
+  "seed": 2,
+  "cand": 2,
+  "seed_name": "불상을 조각하는 성기사님!",
+  "cand_name": "불사자, 고려에서 깨어나다"
+ },
+ {
+  "pid": "W170",
+  "seed": 16,
+  "cand": 1,
+  "seed_name": "생사신",
+  "cand_name": "환생무신, 무림학관을 제패하다"
+ },
+ {
+  "pid": "W187",
+  "seed": 17,
+  "cand": 2,
+  "seed_name": "염왕화조",
+  "cand_name": "화산마왕"
+ },
+ {
+  "pid": "W002",
+  "seed": 6,
+  "cand": 1,
+  "seed_name": "사채왕의 손자",
+  "cand_name": "재벌집 천재 손자"
+ },
+ {
+  "pid": "W122",
+  "seed": 6,
+  "cand": 2,
+  "seed_name": "사채왕의 손자",
+  "cand_name": "사후천자"
+ },
+ {
+  "pid": "W166",
+  "seed": 7,
+  "cand": 0,
+  "seed_name": "테미안",
+  "cand_name": "템빨"
+ },
+ {
+  "pid": "W188",
+  "seed": 4,
+  "cand": 4,
+  "seed_name": "십파일방",
+  "cand_name": "절대무사"
+ },
+ {
+  "pid": "W053",
+  "seed": 10,
+  "cand": 8,
+  "seed_name": "언니, 이 백화점은 내 거야",
+  "cand_name": "전남편의 아들과 결혼했다"
+ },
+ {
+  "pid": "W064",
+  "seed": 17,
+  "cand": 6,
+  "seed_name": "염왕화조",
+  "cand_name": "와룡성수"
+ },
+ {
+  "pid": "W154",
+  "seed": 3,
+  "cand": 1,
+  "seed_name": "내 인공지능이 마왕이 되었다",
+  "cand_name": "환생마왕은 갱생이 어렵다"
+ },
+ {
+  "pid": "W176",
+  "seed": 15,
+  "cand": 2,
+  "seed_name": "차원이 다른 아이돌 1~9권",
+  "cand_name": "황제, 세상을 삼키다"
+ },
+ {
+  "pid": "W072",
+  "seed": 17,
+  "cand": 9,
+  "seed_name": "염왕화조",
+  "cand_name": "염력왕"
+ },
+ {
+  "pid": "W055",
+  "seed": 0,
+  "cand": 0,
+  "seed_name": "재벌 매니지먼트",
+  "cand_name": "회귀한 재벌의 경제 정벌기"
+ },
+ {
+  "pid": "W177",
+  "seed": 5,
+  "cand": 1,
+  "seed_name": "하트 스토커",
+  "cand_name": "심술"
+ },
+ {
+  "pid": "W066",
+  "seed": 11,
+  "cand": 4,
+  "seed_name": "내가 유변이라니",
+  "cand_name": "삼국지 위인전"
+ },
+ {
+  "pid": "W098",
+  "seed": 15,
+  "cand": 0,
+  "seed_name": "차원이 다른 아이돌 1~9권",
+  "cand_name": "다시, 아이돌"
+ },
+ {
+  "pid": "W019",
+  "seed": 18,
+  "cand": 1,
+  "seed_name": "너를 위해서라면 나는 악역이라도",
+  "cand_name": "곧 떠날 악역에게 집착하지 마세요"
+ },
+ {
+  "pid": "W024",
+  "seed": 6,
+  "cand": 7,
+  "seed_name": "사채왕의 손자",
+  "cand_name": "사는 게 너무 힘들어 11권"
+ },
+ {
+  "pid": "W130",
+  "seed": 10,
+  "cand": 7,
+  "seed_name": "언니, 이 백화점은 내 거야",
+  "cand_name": "공작가의 막내동생이 되었습니다"
+ },
+ {
+  "pid": "W109",
+  "seed": 0,
+  "cand": 7,
+  "seed_name": "재벌 매니지먼트",
+  "cand_name": "코칭매니지먼트 각성하다"
+ },
+ {
+  "pid": "W185",
+  "seed": 1,
+  "cand": 3,
+  "seed_name": "글러먹은 빙의",
+  "cand_name": "노르드 월드에서 힐러로 살아가고 있습니다."
+ },
+ {
+  "pid": "W149",
+  "seed": 19,
+  "cand": 6,
+  "seed_name": "그 남자가 내 몸에 들어왔다",
+  "cand_name": "부재의 시간"
+ },
+ {
+  "pid": "W194",
+  "seed": 14,
+  "cand": 2,
+  "seed_name": "무림여학원 - 시드노벨 Seed Novel",
+  "cand_name": "몬스터 프린세스 - 시드노벨 Seed Novel"
+ },
+ {
+  "pid": "W133",
+  "seed": 13,
+  "cand": 9,
+  "seed_name": "아빠의 축구",
+  "cand_name": "투수, 미치다"
+ },
+ {
+  "pid": "W093",
+  "seed": 2,
+  "cand": 8,
+  "seed_name": "불상을 조각하는 성기사님!",
+  "cand_name": "사는 게 너무 힘들어"
+ },
+ {
+  "pid": "W108",
+  "seed": 1,
+  "cand": 5,
+  "seed_name": "글러먹은 빙의",
+  "cand_name": "노르드 월드에서 힐러로 살아가고 있습니다."
+ },
+ {
+  "pid": "W118",
+  "seed": 10,
+  "cand": 6,
+  "seed_name": "언니, 이 백화점은 내 거야",
+  "cand_name": "언니가 도망갔다"
+ },
+ {
+  "pid": "W056",
+  "seed": 16,
+  "cand": 0,
+  "seed_name": "생사신",
+  "cand_name": "생사흔 생사기"
+ },
+ {
+  "pid": "W160",
+  "seed": 13,
+  "cand": 8,
+  "seed_name": "아빠의 축구",
+  "cand_name": "극단적으로 축구하는 놈 1~6권"
+ },
+ {
+  "pid": "W087",
+  "seed": 19,
+  "cand": 3,
+  "seed_name": "그 남자가 내 몸에 들어왔다",
+  "cand_name": "감염된 세상"
+ },
+ {
+  "pid": "W195",
+  "seed": 11,
+  "cand": 5,
+  "seed_name": "내가 유변이라니",
+  "cand_name": "대상인"
+ },
+ {
+  "pid": "W140",
+  "seed": 15,
+  "cand": 4,
+  "seed_name": "차원이 다른 아이돌 1~9권",
+  "cand_name": "망한 아이돌 재설계합니다"
+ },
+ {
+  "pid": "W124",
+  "seed": 2,
+  "cand": 3,
+  "seed_name": "불상을 조각하는 성기사님!",
+  "cand_name": "성스러운 의사생활"
+ },
+ {
+  "pid": "W014",
+  "seed": 12,
+  "cand": 0,
+  "seed_name": "신화를 계승중입니다",
+  "cand_name": "신화를 뜯어고치는 중입니다"
+ },
+ {
+  "pid": "W198",
+  "seed": 9,
+  "cand": 1,
+  "seed_name": "폐하, 이 회귀 좀 멈춰 주세요",
+  "cand_name": "필스타인가 가주의 회귀"
+ },
+ {
+  "pid": "W141",
+  "seed": 3,
+  "cand": 6,
+  "seed_name": "내 인공지능이 마왕이 되었다",
+  "cand_name": "AI로 세계권력급 거물이 되었다"
+ },
+ {
+  "pid": "W152",
+  "seed": 4,
+  "cand": 2,
+  "seed_name": "십파일방",
+  "cand_name": "무협을 모릅니다"
+ },
+ {
+  "pid": "W148",
+  "seed": 4,
+  "cand": 7,
+  "seed_name": "십파일방",
+  "cand_name": "강소일문"
+ },
+ {
+  "pid": "W005",
+  "seed": 11,
+  "cand": 1,
+  "seed_name": "내가 유변이라니",
+  "cand_name": "삼국지 장비전"
+ },
+ {
+  "pid": "W027",
+  "seed": 4,
+  "cand": 1,
+  "seed_name": "십파일방",
+  "cand_name": "문파"
+ },
+ {
+  "pid": "W006",
+  "seed": 10,
+  "cand": 5,
+  "seed_name": "언니, 이 백화점은 내 거야",
+  "cand_name": "악녀 언니가 재력을 숨김"
+ },
+ {
+  "pid": "W186",
+  "seed": 4,
+  "cand": 9,
+  "seed_name": "십파일방",
+  "cand_name": "숭인문"
+ },
+ {
+  "pid": "W100",
+  "seed": 14,
+  "cand": 9,
+  "seed_name": "무림여학원 - 시드노벨 Seed Novel",
+  "cand_name": "고요한 호수의 달빛을 품은 그대."
+ },
+ {
+  "pid": "W173",
+  "seed": 6,
+  "cand": 3,
+  "seed_name": "사채왕의 손자",
+  "cand_name": "야망의 대지"
+ },
+ {
+  "pid": "W165",
+  "seed": 10,
+  "cand": 1,
+  "seed_name": "언니, 이 백화점은 내 거야",
+  "cand_name": "원수였던 언니가 나를 아낀다"
+ },
+ {
+  "pid": "W138",
+  "seed": 16,
+  "cand": 7,
+  "seed_name": "생사신",
+  "cand_name": "환생무신"
+ },
+ {
+  "pid": "W071",
+  "seed": 16,
+  "cand": 2,
+  "seed_name": "생사신",
+  "cand_name": "전생무신"
+ },
+ {
+  "pid": "W035",
+  "seed": 7,
+  "cand": 5,
+  "seed_name": "테미안",
+  "cand_name": "하이마스터"
+ },
+ {
+  "pid": "W008",
+  "seed": 0,
+  "cand": 5,
+  "seed_name": "재벌 매니지먼트",
+  "cand_name": "회귀 매니저의 한류 점령기"
+ },
+ {
+  "pid": "W114",
+  "seed": 16,
+  "cand": 4,
+  "seed_name": "생사신",
+  "cand_name": "질풍강호 생사주"
+ },
+ {
+  "pid": "W145",
+  "seed": 1,
+  "cand": 4,
+  "seed_name": "글러먹은 빙의",
+  "cand_name": "이 세계가 게임이란 사실은 나만이 알고 있다"
+ },
+ {
+  "pid": "W081",
+  "seed": 8,
+  "cand": 5,
+  "seed_name": "일방적 짝사랑",
+  "cand_name": "황태자가 내게 집착한다"
+ },
+ {
+  "pid": "W040",
+  "seed": 0,
+  "cand": 2,
+  "seed_name": "재벌 매니지먼트",
+  "cand_name": "재벌전쟁"
+ },
+ {
+  "pid": "W180",
+  "seed": 13,
+  "cand": 2,
+  "seed_name": "아빠의 축구",
+  "cand_name": "축구 능력 다운로드 중입니다"
+ },
+ {
+  "pid": "W156",
+  "seed": 16,
+  "cand": 3,
+  "seed_name": "생사신",
+  "cand_name": "구대마왕"
+ },
+ {
+  "pid": "W070",
+  "seed": 11,
+  "cand": 2,
+  "seed_name": "내가 유변이라니",
+  "cand_name": "문답무용 - 삼국지 유비의 모사가 되었다"
+ },
+ {
+  "pid": "W168",
+  "seed": 18,
+  "cand": 3,
+  "seed_name": "너를 위해서라면 나는 악역이라도",
+  "cand_name": "남주의 집착이 악녀에게 향할 때"
+ },
+ {
+  "pid": "W077",
+  "seed": 18,
+  "cand": 4,
+  "seed_name": "너를 위해서라면 나는 악역이라도",
+  "cand_name": "악녀는 서러워"
+ },
+ {
+  "pid": "W044",
+  "seed": 11,
+  "cand": 0,
+  "seed_name": "내가 유변이라니",
+  "cand_name": "귀 큰 놈이 되었다"
+ },
+ {
+  "pid": "W090",
+  "seed": 2,
+  "cand": 5,
+  "seed_name": "불상을 조각하는 성기사님!",
+  "cand_name": "스킬 마스터"
+ },
+ {
+  "pid": "W043",
+  "seed": 12,
+  "cand": 3,
+  "seed_name": "신화를 계승중입니다",
+  "cand_name": "신화급 대마법사로 회귀"
+ },
+ {
+  "pid": "W057",
+  "seed": 11,
+  "cand": 9,
+  "seed_name": "내가 유변이라니",
+  "cand_name": "내 안에 특종 있다"
+ },
+ {
+  "pid": "W015",
+  "seed": 1,
+  "cand": 8,
+  "seed_name": "글러먹은 빙의",
+  "cand_name": "나만 힐러다"
+ },
+ {
+  "pid": "W123",
+  "seed": 19,
+  "cand": 4,
+  "seed_name": "그 남자가 내 몸에 들어왔다",
+  "cand_name": "목격자"
+ },
+ {
+  "pid": "W079",
+  "seed": 5,
+  "cand": 5,
+  "seed_name": "하트 스토커",
+  "cand_name": "비명에도 음계가 있다"
+ },
+ {
+  "pid": "W021",
+  "seed": 14,
+  "cand": 4,
+  "seed_name": "무림여학원 - 시드노벨 Seed Novel",
+  "cand_name": "허공 말뚝이 시리즈 - 시드노벨 Seed Novel"
+ },
+ {
+  "pid": "W047",
+  "seed": 3,
+  "cand": 0,
+  "seed_name": "내 인공지능이 마왕이 되었다",
+  "cand_name": "인조, 명군이 되다"
+ },
+ {
+  "pid": "W113",
+  "seed": 15,
+  "cand": 5,
+  "seed_name": "차원이 다른 아이돌 1~9권",
+  "cand_name": "천재 아이돌의 1군 가이드"
+ },
+ {
+  "pid": "W075",
+  "seed": 9,
+  "cand": 9,
+  "seed_name": "폐하, 이 회귀 좀 멈춰 주세요",
+  "cand_name": "회귀한 악녀는 순결서약 합니다"
+ },
+ {
+  "pid": "W120",
+  "seed": 15,
+  "cand": 7,
+  "seed_name": "차원이 다른 아이돌 1~9권",
+  "cand_name": "천재 프로듀서 아이돌 되다"
+ },
+ {
+  "pid": "W052",
+  "seed": 9,
+  "cand": 6,
+  "seed_name": "폐하, 이 회귀 좀 멈춰 주세요",
+  "cand_name": "그런 병이란 말은 없었잖아요, 폐하!"
+ },
+ {
+  "pid": "W001",
+  "seed": 10,
+  "cand": 9,
+  "seed_name": "언니, 이 백화점은 내 거야",
+  "cand_name": "남주 아빠가 파혼을 거부한다"
+ },
+ {
+  "pid": "W007",
+  "seed": 11,
+  "cand": 3,
+  "seed_name": "내가 유변이라니",
+  "cand_name": "삼국지-태평비술전"
+ },
+ {
+  "pid": "W091",
+  "seed": 14,
+  "cand": 6,
+  "seed_name": "무림여학원 - 시드노벨 Seed Novel",
+  "cand_name": "마교육제"
+ },
+ {
+  "pid": "W169",
+  "seed": 9,
+  "cand": 8,
+  "seed_name": "폐하, 이 회귀 좀 멈춰 주세요",
+  "cand_name": "미친 것과 함께 회귀하고 있다"
+ },
+ {
+  "pid": "W050",
+  "seed": 3,
+  "cand": 9,
+  "seed_name": "내 인공지능이 마왕이 되었다",
+  "cand_name": "마왕의 아들로 산다는 것"
+ },
+ {
+  "pid": "W051",
+  "seed": 18,
+  "cand": 7,
+  "seed_name": "너를 위해서라면 나는 악역이라도",
+  "cand_name": "악녀는 사랑을 원치 않아요"
+ },
+ {
+  "pid": "W158",
+  "seed": 7,
+  "cand": 8,
+  "seed_name": "테미안",
+  "cand_name": "아카데미 병약캐는 꿀 빨고 싶다"
+ },
+ {
+  "pid": "W132",
+  "seed": 17,
+  "cand": 8,
+  "seed_name": "염왕화조",
+  "cand_name": "권왕 과보"
+ },
+ {
+  "pid": "W045",
+  "seed": 2,
+  "cand": 9,
+  "seed_name": "불상을 조각하는 성기사님!",
+  "cand_name": "악신의 총애를 받는 성직자가 되었다"
+ },
+ {
+  "pid": "W074",
+  "seed": 8,
+  "cand": 8,
+  "seed_name": "일방적 짝사랑",
+  "cand_name": "첫사랑으로 오해받고 있습니다"
+ },
+ {
+  "pid": "W038",
+  "seed": 5,
+  "cand": 4,
+  "seed_name": "하트 스토커",
+  "cand_name": "쇼스타코비치 왈츠 2번"
+ },
+ {
+  "pid": "W034",
+  "seed": 15,
+  "cand": 8,
+  "seed_name": "차원이 다른 아이돌 1~9권",
+  "cand_name": "적국의 황자를 길들여버렸다"
+ },
+ {
+  "pid": "W089",
+  "seed": 11,
+  "cand": 8,
+  "seed_name": "내가 유변이라니",
+  "cand_name": "경력직 천재 막내가 너무 유능함"
+ },
+ {
+  "pid": "W012",
+  "seed": 11,
+  "cand": 7,
+  "seed_name": "내가 유변이라니",
+  "cand_name": "멋지지 아니한가"
+ },
+ {
+  "pid": "W190",
+  "seed": 2,
+  "cand": 0,
+  "seed_name": "불상을 조각하는 성기사님!",
+  "cand_name": "다 포기했더니 소드마스터"
+ },
+ {
+  "pid": "W174",
+  "seed": 10,
+  "cand": 2,
+  "seed_name": "언니, 이 백화점은 내 거야",
+  "cand_name": "언니가 주인공인데요"
+ },
+ {
+  "pid": "W025",
+  "seed": 17,
+  "cand": 5,
+  "seed_name": "염왕화조",
+  "cand_name": "파왕소람"
+ },
+ {
+  "pid": "W183",
+  "seed": 19,
+  "cand": 1,
+  "seed_name": "그 남자가 내 몸에 들어왔다",
+  "cand_name": "그들이 있었다"
+ },
+ {
+  "pid": "W016",
+  "seed": 12,
+  "cand": 6,
+  "seed_name": "신화를 계승중입니다",
+  "cand_name": "내 몸은 무한재생"
+ },
+ {
+  "pid": "W116",
+  "seed": 15,
+  "cand": 9,
+  "seed_name": "차원이 다른 아이돌 1~9권",
+  "cand_name": "다재다능 만능아이돌"
+ },
+ {
+  "pid": "W013",
+  "seed": 8,
+  "cand": 0,
+  "seed_name": "일방적 짝사랑",
+  "cand_name": "짝사랑에도 끝이 있다면"
+ },
+ {
+  "pid": "W037",
+  "seed": 13,
+  "cand": 6,
+  "seed_name": "아빠의 축구",
+  "cand_name": "아빠의 게임"
+ },
+ {
+  "pid": "W131",
+  "seed": 13,
+  "cand": 1,
+  "seed_name": "아빠의 축구",
+  "cand_name": "축구를 못하면 죽습니다"
+ },
+ {
+  "pid": "W073",
+  "seed": 14,
+  "cand": 5,
+  "seed_name": "무림여학원 - 시드노벨 Seed Novel",
+  "cand_name": "숨덕부 - 시드노벨 Seed Novel"
+ },
+ {
+  "pid": "W041",
+  "seed": 7,
+  "cand": 4,
+  "seed_name": "테미안",
+  "cand_name": "탐정은 죽지 않는다"
+ },
+ {
+  "pid": "W065",
+  "seed": 5,
+  "cand": 0,
+  "seed_name": "하트 스토커",
+  "cand_name": "스토커 아내"
+ },
+ {
+  "pid": "W059",
+  "seed": 0,
+  "cand": 9,
+  "seed_name": "재벌 매니지먼트",
+  "cand_name": "이세계 매니지먼트"
+ },
+ {
+  "pid": "W022",
+  "seed": 5,
+  "cand": 8,
+  "seed_name": "하트 스토커",
+  "cand_name": "풀 카운트"
+ },
+ {
+  "pid": "W042",
+  "seed": 8,
+  "cand": 4,
+  "seed_name": "일방적 짝사랑",
+  "cand_name": "짝사랑의 연애를 응원했을 뿐인데"
+ },
+ {
+  "pid": "W199",
+  "seed": 18,
+  "cand": 2,
+  "seed_name": "너를 위해서라면 나는 악역이라도",
+  "cand_name": "악역의 메리트"
+ },
+ {
+  "pid": "W060",
+  "seed": 13,
+  "cand": 5,
+  "seed_name": "아빠의 축구",
+  "cand_name": "접니다, 애 아빠"
+ },
+ {
+  "pid": "W018",
+  "seed": 9,
+  "cand": 2,
+  "seed_name": "폐하, 이 회귀 좀 멈춰 주세요",
+  "cand_name": "황태자가 내게 집착한다"
+ },
+ {
+  "pid": "W172",
+  "seed": 17,
+  "cand": 0,
+  "seed_name": "염왕화조",
+  "cand_name": "염왕"
+ },
+ {
+  "pid": "W063",
+  "seed": 5,
+  "cand": 3,
+  "seed_name": "하트 스토커",
+  "cand_name": "톱스타, 그 자체"
+ },
+ {
+  "pid": "W058",
+  "seed": 3,
+  "cand": 7,
+  "seed_name": "내 인공지능이 마왕이 되었다",
+  "cand_name": "귀환한 마왕의 현대 건국기"
+ },
+ {
+  "pid": "W029",
+  "seed": 4,
+  "cand": 6,
+  "seed_name": "십파일방",
+  "cand_name": "십병귀"
+ },
+ {
+  "pid": "W046",
+  "seed": 7,
+  "cand": 3,
+  "seed_name": "테미안",
+  "cand_name": "테피른 대륙기"
+ },
+ {
+  "pid": "W164",
+  "seed": 12,
+  "cand": 9,
+  "seed_name": "신화를 계승중입니다",
+  "cand_name": "회귀로 지존이 된다"
+ },
+ {
+  "pid": "W099",
+  "seed": 5,
+  "cand": 7,
+  "seed_name": "하트 스토커",
+  "cand_name": "함부로 남주를 줍지 마세요"
+ },
+ {
+  "pid": "W112",
+  "seed": 6,
+  "cand": 0,
+  "seed_name": "사채왕의 손자",
+  "cand_name": "왕의 전설"
+ },
+ {
+  "pid": "W084",
+  "seed": 6,
+  "cand": 4,
+  "seed_name": "사채왕의 손자",
+  "cand_name": "내 글을 써야 산다"
+ },
+ {
+  "pid": "W028",
+  "seed": 4,
+  "cand": 8,
+  "seed_name": "십파일방",
+  "cand_name": "십색전기"
+ },
+ {
+  "pid": "W127",
+  "seed": 0,
+  "cand": 3,
+  "seed_name": "재벌 매니지먼트",
+  "cand_name": "회귀 후 천재 매니저"
+ },
+ {
+  "pid": "W150",
+  "seed": 5,
+  "cand": 2,
+  "seed_name": "하트 스토커",
+  "cand_name": "톱스타 되고 싶으면 연락해"
+ },
+ {
+  "pid": "W125",
+  "seed": 3,
+  "cand": 2,
+  "seed_name": "내 인공지능이 마왕이 되었다",
+  "cand_name": "시스템이 저를 마왕이라 부릅니다"
+ },
+ {
+  "pid": "W184",
+  "seed": 2,
+  "cand": 1,
+  "seed_name": "불상을 조각하는 성기사님!",
+  "cand_name": "신의 조각을 품은 남자"
+ },
+ {
+  "pid": "W017",
+  "seed": 4,
+  "cand": 3,
+  "seed_name": "십파일방",
+  "cand_name": "십대천왕 제1부"
+ },
+ {
+  "pid": "W048",
+  "seed": 9,
+  "cand": 5,
+  "seed_name": "폐하, 이 회귀 좀 멈춰 주세요",
+  "cand_name": "회귀하는 아가씨의 전속 하녀입니다"
+ },
+ {
+  "pid": "W101",
+  "seed": 1,
+  "cand": 7,
+  "seed_name": "글러먹은 빙의",
+  "cand_name": "길거리 화가의 게임 라이프"
+ },
+ {
+  "pid": "W119",
+  "seed": 0,
+  "cand": 6,
+  "seed_name": "재벌 매니지먼트",
+  "cand_name": "미래를 보는 천재 매니저"
+ },
+ {
+  "pid": "W020",
+  "seed": 17,
+  "cand": 1,
+  "seed_name": "염왕화조",
+  "cand_name": "광화사"
+ },
+ {
+  "pid": "W111",
+  "seed": 13,
+  "cand": 4,
+  "seed_name": "아빠의 축구",
+  "cand_name": "축구의 신, 필드에 강림하다"
+ },
+ {
+  "pid": "W009",
+  "seed": 3,
+  "cand": 4,
+  "seed_name": "내 인공지능이 마왕이 되었다",
+  "cand_name": "내가 주인공이 아니었다"
+ },
+ {
+  "pid": "W171",
+  "seed": 2,
+  "cand": 4,
+  "seed_name": "불상을 조각하는 성기사님!",
+  "cand_name": "불사자의 제자"
+ },
+ {
+  "pid": "W143",
+  "seed": 13,
+  "cand": 3,
+  "seed_name": "아빠의 축구",
+  "cand_name": "월클 형제들보다 축구를 잘함"
+ },
+ {
+  "pid": "W197",
+  "seed": 1,
+  "cand": 1,
+  "seed_name": "글러먹은 빙의",
+  "cand_name": "6,421번 빙의하고 귀환했다"
+ },
+ {
+  "pid": "W092",
+  "seed": 8,
+  "cand": 6,
+  "seed_name": "일방적 짝사랑",
+  "cand_name": "짝사랑 맞선"
+ },
+ {
+  "pid": "W135",
+  "seed": 1,
+  "cand": 0,
+  "seed_name": "글러먹은 빙의",
+  "cand_name": "너는 최강의 빙의자님!"
+ },
+ {
+  "pid": "W011",
+  "seed": 8,
+  "cand": 9,
+  "seed_name": "일방적 짝사랑",
+  "cand_name": "첫사랑을 찾습니다"
+ },
+ {
+  "pid": "W155",
+  "seed": 0,
+  "cand": 8,
+  "seed_name": "재벌 매니지먼트",
+  "cand_name": "펫 매니지먼트"
+ },
+ {
+  "pid": "W082",
+  "seed": 14,
+  "cand": 1,
+  "seed_name": "무림여학원 - 시드노벨 Seed Novel",
+  "cand_name": "운디네 스트라이크 - 시드노벨 Seed Novel"
+ },
+ {
+  "pid": "W167",
+  "seed": 14,
+  "cand": 0,
+  "seed_name": "무림여학원 - 시드노벨 Seed Novel",
+  "cand_name": "드래곤X프린세스X블레이드 - 시드노벨 Seed Novel"
+ },
+ {
+  "pid": "W189",
+  "seed": 16,
+  "cand": 9,
+  "seed_name": "생사신",
+  "cand_name": "환생무적"
+ },
+ {
+  "pid": "W083",
+  "seed": 15,
+  "cand": 1,
+  "seed_name": "차원이 다른 아이돌 1~9권",
+  "cand_name": "어쩌다 아이돌"
+ },
+ {
+  "pid": "W069",
+  "seed": 9,
+  "cand": 7,
+  "seed_name": "폐하, 이 회귀 좀 멈춰 주세요",
+  "cand_name": "라인하트 자작가 차남의 회귀"
+ },
+ {
+  "pid": "W137",
+  "seed": 9,
+  "cand": 4,
+  "seed_name": "폐하, 이 회귀 좀 멈춰 주세요",
+  "cand_name": "폭군으로 몰렸던 황제가 회귀했다"
+ },
+ {
+  "pid": "W136",
+  "seed": 18,
+  "cand": 5,
+  "seed_name": "너를 위해서라면 나는 악역이라도",
+  "cand_name": "내 친구의 약혼자가 된 당신에게"
+ },
+ {
+  "pid": "W086",
+  "seed": 6,
+  "cand": 8,
+  "seed_name": "사채왕의 손자",
+  "cand_name": "구대마왕"
+ },
+ {
+  "pid": "W049",
+  "seed": 4,
+  "cand": 0,
+  "seed_name": "십파일방",
+  "cand_name": "십전무판자"
+ },
+ {
+  "pid": "W102",
+  "seed": 10,
+  "cand": 3,
+  "seed_name": "언니, 이 백화점은 내 거야",
+  "cand_name": "악당들에게서 언니를 지키는 법"
+ },
+ {
+  "pid": "W115",
+  "seed": 13,
+  "cand": 0,
+  "seed_name": "아빠의 축구",
+  "cand_name": "축구가 너무 쉬움!"
+ },
+ {
+  "pid": "W054",
+  "seed": 12,
+  "cand": 5,
+  "seed_name": "신화를 계승중입니다",
+  "cand_name": "내가 만든 세상에서 살아남기"
+ },
+ {
+  "pid": "W163",
+  "seed": 2,
+  "cand": 6,
+  "seed_name": "불상을 조각하는 성기사님!",
+  "cand_name": "신성모독의 외신 사제가 되었다"
+ },
+ {
+  "pid": "W000",
+  "seed": 19,
+  "cand": 8,
+  "seed_name": "그 남자가 내 몸에 들어왔다",
+  "cand_name": "어둠이 밀려오면"
+ },
+ {
+  "pid": "W003",
+  "seed": 5,
+  "cand": 9,
+  "seed_name": "하트 스토커",
+  "cand_name": "대표님, 벨트 채우세요"
+ },
+ {
+  "pid": "W126",
+  "seed": 19,
+  "cand": 9,
+  "seed_name": "그 남자가 내 몸에 들어왔다",
+  "cand_name": "흡혈귀"
+ },
+ {
+  "pid": "W175",
+  "seed": 12,
+  "cand": 2,
+  "seed_name": "신화를 계승중입니다",
+  "cand_name": "신화급 제작자의 역전 플랜"
+ },
+ {
+  "pid": "W162",
+  "seed": 15,
+  "cand": 3,
+  "seed_name": "차원이 다른 아이돌 1~9권",
+  "cand_name": "달이 뜨지 않는 밤"
+ },
+ {
+  "pid": "W067",
+  "seed": 14,
+  "cand": 3,
+  "seed_name": "무림여학원 - 시드노벨 Seed Novel",
+  "cand_name": "장의사와 트라이앵글 - 시드노벨 Seed Novel"
+ },
+ {
+  "pid": "W088",
+  "seed": 17,
+  "cand": 4,
+  "seed_name": "염왕화조",
+  "cand_name": "풍림화산"
+ },
+ {
+  "pid": "W032",
+  "seed": 17,
+  "cand": 7,
+  "seed_name": "염왕화조",
+  "cand_name": "검화행"
+ },
+ {
+  "pid": "W142",
+  "seed": 3,
+  "cand": 5,
+  "seed_name": "내 인공지능이 마왕이 되었다",
+  "cand_name": "아기가 된 마왕님을 주웠다"
+ },
+ {
+  "pid": "W085",
+  "seed": 12,
+  "cand": 7,
+  "seed_name": "신화를 계승중입니다",
+  "cand_name": "노예부터 왕까지"
+ },
+ {
+  "pid": "W010",
+  "seed": 9,
+  "cand": 0,
+  "seed_name": "폐하, 이 회귀 좀 멈춰 주세요",
+  "cand_name": "이런 회귀는 바라지 않았다"
+ },
+ {
+  "pid": "W096",
+  "seed": 8,
+  "cand": 2,
+  "seed_name": "일방적 짝사랑",
+  "cand_name": "이런 신혼여행은 원하지 않았다"
+ },
+ {
+  "pid": "W121",
+  "seed": 0,
+  "cand": 4,
+  "seed_name": "재벌 매니지먼트",
+  "cand_name": "천재 매니저는 시끄럽게 살기로 했다"
+ },
+ {
+  "pid": "W147",
+  "seed": 12,
+  "cand": 8,
+  "seed_name": "신화를 계승중입니다",
+  "cand_name": "오늘부터 플레이어"
+ },
+ {
+  "pid": "W128",
+  "seed": 13,
+  "cand": 7,
+  "seed_name": "아빠의 축구",
+  "cand_name": "농구의 신, 다시 태어나다"
+ },
+ {
+  "pid": "W192",
+  "seed": 14,
+  "cand": 7,
+  "seed_name": "무림여학원 - 시드노벨 Seed Novel",
+  "cand_name": "은둔마왕과 검의 공주 - 시드노벨 Seed Novel"
+ },
+ {
+  "pid": "W182",
+  "seed": 18,
+  "cand": 6,
+  "seed_name": "너를 위해서라면 나는 악역이라도",
+  "cand_name": "원작의 주인공들이 내게 집착한다"
+ },
+ {
+  "pid": "W144",
+  "seed": 2,
+  "cand": 7,
+  "seed_name": "불상을 조각하는 성기사님!",
+  "cand_name": "용사 파티에서 꿀 빠는 방법"
+ },
+ {
+  "pid": "W139",
+  "seed": 3,
+  "cand": 8,
+  "seed_name": "내 인공지능이 마왕이 되었다",
+  "cand_name": "마왕 알테어"
+ },
+ {
+  "pid": "W157",
+  "seed": 14,
+  "cand": 8,
+  "seed_name": "무림여학원 - 시드노벨 Seed Novel",
+  "cand_name": "악마공작 아즐란 - 시드노벨 Seed Novel"
+ },
+ {
+  "pid": "W031",
+  "seed": 5,
+  "cand": 6,
+  "seed_name": "하트 스토커",
+  "cand_name": "오만한 참견"
+ }
+]

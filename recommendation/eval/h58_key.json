@@ -1,0 +1,757 @@
+[
+ {
+  "id": "T062",
+  "dom": "wn",
+  "name": "화주"
+ },
+ {
+  "id": "T095",
+  "dom": "tmdb",
+  "name": "수지 웡의 세계"
+ },
+ {
+  "id": "T082",
+  "dom": "wn",
+  "name": "금옥장교 - 황후의 운명을 허하라"
+ },
+ {
+  "id": "T105",
+  "dom": "wn",
+  "name": "도화연가"
+ },
+ {
+  "id": "T073",
+  "dom": "wn",
+  "name": "아화시부성혼료"
+ },
+ {
+  "id": "T089",
+  "dom": "steam",
+  "name": "총웨이: 너의 전기 남편"
+ },
+ {
+  "id": "T124",
+  "dom": "steam",
+  "name": "1000왕자님들: 너를 사랑하기 위해 태어났다"
+ },
+ {
+  "id": "T000",
+  "dom": "tmdb",
+  "name": "차이니즈 박스"
+ },
+ {
+  "id": "T035",
+  "dom": "tmdb",
+  "name": "사랑 뒤의 사랑"
+ },
+ {
+  "id": "T122",
+  "dom": "tmdb",
+  "name": "해상화"
+ },
+ {
+  "id": "T094",
+  "dom": "wn",
+  "name": "구미호에 남자가 없을리가"
+ },
+ {
+  "id": "T129",
+  "dom": "wn",
+  "name": "범하고 싶어"
+ },
+ {
+  "id": "T022",
+  "dom": "wn",
+  "name": "사랑받는 랭킹1위 괴물 문주님"
+ },
+ {
+  "id": "T076",
+  "dom": "steam",
+  "name": "광화 (狂花)"
+ },
+ {
+  "id": "T024",
+  "dom": "steam",
+  "name": "구운몽"
+ },
+ {
+  "id": "T098",
+  "dom": "steam",
+  "name": "탐정뎐"
+ },
+ {
+  "id": "T058",
+  "dom": "tmdb",
+  "name": "마신자: 빨간 옷 소녀의 저주"
+ },
+ {
+  "id": "T135",
+  "dom": "tmdb",
+  "name": "구르미 그린 달빛"
+ },
+ {
+  "id": "T142",
+  "dom": "tmdb",
+  "name": "나선 계단"
+ },
+ {
+  "id": "T106",
+  "dom": "wn",
+  "name": "영주님은 엑스트라"
+ },
+ {
+  "id": "T016",
+  "dom": "tmdb",
+  "name": "엑스맨: 다크 피닉스"
+ },
+ {
+  "id": "T055",
+  "dom": "wn",
+  "name": "주인공 없는 세계의 엑스트라"
+ },
+ {
+  "id": "T005",
+  "dom": "wn",
+  "name": "아카데미의 EX급 엑스트라"
+ },
+ {
+  "id": "T110",
+  "dom": "wn",
+  "name": "프롤로그 엑스트라"
+ },
+ {
+  "id": "T021",
+  "dom": "steam",
+  "name": "Fantasy Miner: Idle Depths"
+ },
+ {
+  "id": "T078",
+  "dom": "steam",
+  "name": "Chest & Blade"
+ },
+ {
+  "id": "T109",
+  "dom": "steam",
+  "name": "The Mightiest Sword is Mine!"
+ },
+ {
+  "id": "T100",
+  "dom": "tmdb",
+  "name": "엑스맨: 최후의 전쟁"
+ },
+ {
+  "id": "T044",
+  "dom": "tmdb",
+  "name": "엑스맨"
+ },
+ {
+  "id": "T013",
+  "dom": "tmdb",
+  "name": "다크맨 2"
+ },
+ {
+  "id": "T017",
+  "dom": "wn",
+  "name": "기간트 아카데미의 천재가 되었다"
+ },
+ {
+  "id": "T048",
+  "dom": "wn",
+  "name": "다크판타지의 엑스트라"
+ },
+ {
+  "id": "T019",
+  "dom": "steam",
+  "name": "한밤중에 깨다(Get Up In The Night)"
+ },
+ {
+  "id": "T067",
+  "dom": "steam",
+  "name": "Expiare"
+ },
+ {
+  "id": "T112",
+  "dom": "steam",
+  "name": "PANLINE"
+ },
+ {
+  "id": "T061",
+  "dom": "tmdb",
+  "name": "팔콘과 윈터 솔져"
+ },
+ {
+  "id": "T125",
+  "dom": "tmdb",
+  "name": "시티 오브 엠버: 빛의 도시를 찾아서"
+ },
+ {
+  "id": "T119",
+  "dom": "wn",
+  "name": "당신의 매니저"
+ },
+ {
+  "id": "T079",
+  "dom": "steam",
+  "name": "메이드 카페 시뮬레이터"
+ },
+ {
+  "id": "T126",
+  "dom": "tmdb",
+  "name": "카스바"
+ },
+ {
+  "id": "T113",
+  "dom": "wn",
+  "name": "매니저는 다시 산다"
+ },
+ {
+  "id": "T028",
+  "dom": "wn",
+  "name": "연예계 씹어먹는 매니저가 되었다"
+ },
+ {
+  "id": "T045",
+  "dom": "wn",
+  "name": "회귀 후 천재 매니저"
+ },
+ {
+  "id": "T059",
+  "dom": "steam",
+  "name": "카페 사장 시뮬레이터"
+ },
+ {
+  "id": "T057",
+  "dom": "steam",
+  "name": "폭풍의 메이드"
+ },
+ {
+  "id": "T020",
+  "dom": "tmdb",
+  "name": "컨트리 스트롱"
+ },
+ {
+  "id": "T039",
+  "dom": "tmdb",
+  "name": "노래로 쏘아 올린 기적"
+ },
+ {
+  "id": "T072",
+  "dom": "tmdb",
+  "name": "글리: 콘서트 무비"
+ },
+ {
+  "id": "T004",
+  "dom": "wn",
+  "name": "망돌에서 벗어나 살아남는 방법"
+ },
+ {
+  "id": "T140",
+  "dom": "wn",
+  "name": "슬기로운 셰프생활"
+ },
+ {
+  "id": "T051",
+  "dom": "steam",
+  "name": "视讯判官：水军指挥官"
+ },
+ {
+  "id": "T091",
+  "dom": "tmdb",
+  "name": "더티 파이터 2"
+ },
+ {
+  "id": "T099",
+  "dom": "tmdb",
+  "name": "와플 스트리트"
+ },
+ {
+  "id": "T023",
+  "dom": "tmdb",
+  "name": "여동생의 비밀"
+ },
+ {
+  "id": "T056",
+  "dom": "wn",
+  "name": "폐하, 연모하니 죽음을 주세요"
+ },
+ {
+  "id": "T111",
+  "dom": "steam",
+  "name": "Corpse Party II: Darkness Distortion"
+ },
+ {
+  "id": "T081",
+  "dom": "wn",
+  "name": "나를 죽여주세요"
+ },
+ {
+  "id": "T029",
+  "dom": "wn",
+  "name": "죽음을 바라는 당신에게"
+ },
+ {
+  "id": "T047",
+  "dom": "wn",
+  "name": "위험한 연하의 유혹을 받고 있습니다"
+ },
+ {
+  "id": "T032",
+  "dom": "steam",
+  "name": "Saraab: Beyond The Veil"
+ },
+ {
+  "id": "T068",
+  "dom": "steam",
+  "name": "I Did Not Buy This Ticket"
+ },
+ {
+  "id": "T002",
+  "dom": "steam",
+  "name": "Please, Explode Me, Senpai!"
+ },
+ {
+  "id": "T074",
+  "dom": "tmdb",
+  "name": "리미테"
+ },
+ {
+  "id": "T148",
+  "dom": "tmdb",
+  "name": "씨 인사이드"
+ },
+ {
+  "id": "T086",
+  "dom": "tmdb",
+  "name": "데드 위크: 인생마감 7일전"
+ },
+ {
+  "id": "T049",
+  "dom": "wn",
+  "name": "여주의 해피엔딩을 빼앗아보려 한다"
+ },
+ {
+  "id": "T075",
+  "dom": "wn",
+  "name": "물건을 아껴주세요!"
+ },
+ {
+  "id": "T009",
+  "dom": "wn",
+  "name": "퇴장한 악녀의 브런치 카페"
+ },
+ {
+  "id": "T001",
+  "dom": "steam",
+  "name": "ひとりだるま | HITORI DARUMA Alone Rite"
+ },
+ {
+  "id": "T077",
+  "dom": "tmdb",
+  "name": "포기브 어스 올"
+ },
+ {
+  "id": "T080",
+  "dom": "tmdb",
+  "name": "라이딩 더 불릿"
+ },
+ {
+  "id": "T033",
+  "dom": "tmdb",
+  "name": "맨디"
+ },
+ {
+  "id": "T052",
+  "dom": "wn",
+  "name": "시작부터 무쌍"
+ },
+ {
+  "id": "T038",
+  "dom": "tmdb",
+  "name": "전,란"
+ },
+ {
+  "id": "T007",
+  "dom": "wn",
+  "name": "킬방원, 조선을 개벽시키다"
+ },
+ {
+  "id": "T101",
+  "dom": "wn",
+  "name": "조선이 망해야 내가 산다"
+ },
+ {
+  "id": "T084",
+  "dom": "steam",
+  "name": "천서"
+ },
+ {
+  "id": "T054",
+  "dom": "steam",
+  "name": "활협전"
+ },
+ {
+  "id": "T118",
+  "dom": "steam",
+  "name": "The Life and Suffering of Sir Brante"
+ },
+ {
+  "id": "T128",
+  "dom": "tmdb",
+  "name": "불꽃처럼 나비처럼"
+ },
+ {
+  "id": "T071",
+  "dom": "tmdb",
+  "name": "창궐"
+ },
+ {
+  "id": "T083",
+  "dom": "wn",
+  "name": "혼천대성"
+ },
+ {
+  "id": "T036",
+  "dom": "wn",
+  "name": "1865년, ROKA 조선에 표류하다"
+ },
+ {
+  "id": "T064",
+  "dom": "wn",
+  "name": "검신검귀(劍神劍鬼)"
+ },
+ {
+  "id": "T133",
+  "dom": "steam",
+  "name": "삼국지: 신의 한 수"
+ },
+ {
+  "id": "T138",
+  "dom": "steam",
+  "name": "남조의 호화 폭군록"
+ },
+ {
+  "id": "T090",
+  "dom": "tmdb",
+  "name": "마스 레드"
+ },
+ {
+  "id": "T116",
+  "dom": "tmdb",
+  "name": "오리엔트"
+ },
+ {
+  "id": "T018",
+  "dom": "tmdb",
+  "name": "눈먼 자들의 도시"
+ },
+ {
+  "id": "T093",
+  "dom": "wn",
+  "name": "내 인생 최고의 사건"
+ },
+ {
+  "id": "T065",
+  "dom": "wn",
+  "name": "나혼자 현대인"
+ },
+ {
+  "id": "T030",
+  "dom": "wn",
+  "name": "귀환한 군주님의 현대 라이프"
+ },
+ {
+  "id": "T015",
+  "dom": "steam",
+  "name": "Yet Another Killing Game"
+ },
+ {
+  "id": "T063",
+  "dom": "steam",
+  "name": "Born for the Light ~Wavelength Radiant Collapse~"
+ },
+ {
+  "id": "T041",
+  "dom": "steam",
+  "name": "楽園樹海"
+ },
+ {
+  "id": "T117",
+  "dom": "tmdb",
+  "name": "디 아이"
+ },
+ {
+  "id": "T012",
+  "dom": "tmdb",
+  "name": "인시던트"
+ },
+ {
+  "id": "T060",
+  "dom": "tmdb",
+  "name": "우리가 빛이라 상상하는 모든 것"
+ },
+ {
+  "id": "T014",
+  "dom": "wn",
+  "name": "좀비가 날 물지 않아"
+ },
+ {
+  "id": "T144",
+  "dom": "wn",
+  "name": "어둠이 밀려오면"
+ },
+ {
+  "id": "T037",
+  "dom": "steam",
+  "name": "미래세계의 맹인"
+ },
+ {
+  "id": "T120",
+  "dom": "steam",
+  "name": "별똥별이 내리는 마을: 과거에서 온 유령"
+ },
+ {
+  "id": "T003",
+  "dom": "tmdb",
+  "name": "괴물"
+ },
+ {
+  "id": "T132",
+  "dom": "tmdb",
+  "name": "초자연 현상의 목격자들: 라틴아메리카"
+ },
+ {
+  "id": "T136",
+  "dom": "tmdb",
+  "name": "블라인드 바이샤"
+ },
+ {
+  "id": "T008",
+  "dom": "wn",
+  "name": "천위문"
+ },
+ {
+  "id": "T141",
+  "dom": "wn",
+  "name": "천해문"
+ },
+ {
+  "id": "T115",
+  "dom": "wn",
+  "name": "사후천자"
+ },
+ {
+  "id": "T026",
+  "dom": "tmdb",
+  "name": "드래곤볼 Z 극장판 2: 세상에서 제일 강한 자!"
+ },
+ {
+  "id": "T127",
+  "dom": "tmdb",
+  "name": "이것은 좀비입니까?"
+ },
+ {
+  "id": "T147",
+  "dom": "wn",
+  "name": "천마와 무적호위"
+ },
+ {
+  "id": "T066",
+  "dom": "wn",
+  "name": "무신역천검"
+ },
+ {
+  "id": "T010",
+  "dom": "tmdb",
+  "name": "풍운"
+ },
+ {
+  "id": "T096",
+  "dom": "tmdb",
+  "name": "풍운 2"
+ },
+ {
+  "id": "T092",
+  "dom": "wn",
+  "name": "레이디는 해머로 세상을 구한다"
+ },
+ {
+  "id": "T104",
+  "dom": "steam",
+  "name": "RAID: Shadow Legends"
+ },
+ {
+  "id": "T053",
+  "dom": "tmdb",
+  "name": "사랑의 목소리"
+ },
+ {
+  "id": "T145",
+  "dom": "wn",
+  "name": "천벌 내리는 레이디"
+ },
+ {
+  "id": "T123",
+  "dom": "wn",
+  "name": "천마 레이디"
+ },
+ {
+  "id": "T107",
+  "dom": "steam",
+  "name": "RaidTitans"
+ },
+ {
+  "id": "T085",
+  "dom": "steam",
+  "name": "Void Hunters"
+ },
+ {
+  "id": "T050",
+  "dom": "steam",
+  "name": "원정 길드"
+ },
+ {
+  "id": "T137",
+  "dom": "tmdb",
+  "name": "사무엘 잭슨의 블랙 스네이크"
+ },
+ {
+  "id": "T040",
+  "dom": "tmdb",
+  "name": "베어풋"
+ },
+ {
+  "id": "T114",
+  "dom": "tmdb",
+  "name": "더 레이싱 : 이너셜 드리프트"
+ },
+ {
+  "id": "T027",
+  "dom": "wn",
+  "name": "1위 길드의 D급 길드장님"
+ },
+ {
+  "id": "T034",
+  "dom": "steam",
+  "name": "Raver Simulator"
+ },
+ {
+  "id": "T150",
+  "dom": "steam",
+  "name": "별1개의나와최강의던전"
+ },
+ {
+  "id": "T043",
+  "dom": "steam",
+  "name": "觅光：第一章 - Seeking Light : Chapter 1"
+ },
+ {
+  "id": "T046",
+  "dom": "tmdb",
+  "name": "언더월드: 라이칸의 반란"
+ },
+ {
+  "id": "T006",
+  "dom": "tmdb",
+  "name": "로도스도 전기"
+ },
+ {
+  "id": "T108",
+  "dom": "tmdb",
+  "name": "프리러너"
+ },
+ {
+  "id": "T134",
+  "dom": "wn",
+  "name": "붕성"
+ },
+ {
+  "id": "T042",
+  "dom": "wn",
+  "name": "붕정행"
+ },
+ {
+  "id": "T069",
+  "dom": "wn",
+  "name": "천인혈무록"
+ },
+ {
+  "id": "T143",
+  "dom": "tmdb",
+  "name": "소림사"
+ },
+ {
+  "id": "T102",
+  "dom": "wn",
+  "name": "혈우성풍"
+ },
+ {
+  "id": "T011",
+  "dom": "wn",
+  "name": "변씨 부인 스캔들"
+ },
+ {
+  "id": "T025",
+  "dom": "tmdb",
+  "name": "스캔들: 조선남녀상열지사"
+ },
+ {
+  "id": "T103",
+  "dom": "wn",
+  "name": "춘장"
+ },
+ {
+  "id": "T097",
+  "dom": "wn",
+  "name": "부인세무쌍"
+ },
+ {
+  "id": "T130",
+  "dom": "wn",
+  "name": "내 남편의 스캔들"
+ },
+ {
+  "id": "T070",
+  "dom": "steam",
+  "name": "雪落情书时"
+ },
+ {
+  "id": "T031",
+  "dom": "steam",
+  "name": "天呐！找不到真爱就扑街！"
+ },
+ {
+  "id": "T139",
+  "dom": "steam",
+  "name": "연오와 세오"
+ },
+ {
+  "id": "T087",
+  "dom": "tmdb",
+  "name": "엽기적인 그녀"
+ },
+ {
+  "id": "T131",
+  "dom": "tmdb",
+  "name": "성균관 스캔들"
+ },
+ {
+  "id": "T149",
+  "dom": "wn",
+  "name": "규방로맨스"
+ },
+ {
+  "id": "T088",
+  "dom": "wn",
+  "name": "후궁의 딸"
+ },
+ {
+  "id": "T146",
+  "dom": "tmdb",
+  "name": "방자전"
+ },
+ {
+  "id": "T121",
+  "dom": "tmdb",
+  "name": "조선로코-녹두전"
+ }
+]

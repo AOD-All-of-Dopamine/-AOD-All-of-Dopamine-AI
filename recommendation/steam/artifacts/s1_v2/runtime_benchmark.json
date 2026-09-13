@@ -1,0 +1,8 @@
+{
+  "device": "cpu",
+  "batch_size": 4,
+  "benchmark_items": 500,
+  "elapsed_seconds": 232.71,
+  "items_per_second": 2.15,
+  "estimated_total_seconds": 9064.5
+}

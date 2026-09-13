@@ -1,0 +1,1367 @@
+[
+ {
+  "pid": "R146",
+  "rdom": "wn",
+  "rname": "화주",
+  "dom": "wn",
+  "cand": "황제를 죽이는 방법"
+ },
+ {
+  "pid": "R093",
+  "rdom": "steam",
+  "rname": "봄이 오면 꽃이 피고",
+  "dom": "wn",
+  "cand": "황제를 죽이는 방법"
+ },
+ {
+  "pid": "R041",
+  "rdom": "tmdb",
+  "rname": "야연",
+  "dom": "wn",
+  "cand": "황제를 죽이는 방법"
+ },
+ {
+  "pid": "R087",
+  "rdom": "wn",
+  "rname": "화주",
+  "dom": "wn",
+  "cand": "황제는 나의 죽음을 원했다"
+ },
+ {
+  "pid": "R116",
+  "rdom": "steam",
+  "rname": "봄이 오면 꽃이 피고",
+  "dom": "wn",
+  "cand": "황제는 나의 죽음을 원했다"
+ },
+ {
+  "pid": "R090",
+  "rdom": "tmdb",
+  "rname": "야연",
+  "dom": "wn",
+  "cand": "황제는 나의 죽음을 원했다"
+ },
+ {
+  "pid": "R079",
+  "rdom": "wn",
+  "rname": "화주",
+  "dom": "wn",
+  "cand": "황제는 죽어야만 한다"
+ },
+ {
+  "pid": "R186",
+  "rdom": "steam",
+  "rname": "봄이 오면 꽃이 피고",
+  "dom": "wn",
+  "cand": "황제는 죽어야만 한다"
+ },
+ {
+  "pid": "R191",
+  "rdom": "tmdb",
+  "rname": "야연",
+  "dom": "wn",
+  "cand": "황제는 죽어야만 한다"
+ },
+ {
+  "pid": "R086",
+  "rdom": "wn",
+  "rname": "화주",
+  "dom": "steam",
+  "cand": "King's Angel: Otome"
+ },
+ {
+  "pid": "R077",
+  "rdom": "steam",
+  "rname": "봄이 오면 꽃이 피고",
+  "dom": "steam",
+  "cand": "King's Angel: Otome"
+ },
+ {
+  "pid": "R015",
+  "rdom": "tmdb",
+  "rname": "야연",
+  "dom": "steam",
+  "cand": "King's Angel: Otome"
+ },
+ {
+  "pid": "R088",
+  "rdom": "wn",
+  "rname": "화주",
+  "dom": "steam",
+  "cand": "风物恋歌（The Memory of Mallet)"
+ },
+ {
+  "pid": "R033",
+  "rdom": "steam",
+  "rname": "봄이 오면 꽃이 피고",
+  "dom": "steam",
+  "cand": "风物恋歌（The Memory of Mallet)"
+ },
+ {
+  "pid": "R026",
+  "rdom": "tmdb",
+  "rname": "야연",
+  "dom": "steam",
+  "cand": "风物恋歌（The Memory of Mallet)"
+ },
+ {
+  "pid": "R179",
+  "rdom": "wn",
+  "rname": "화주",
+  "dom": "steam",
+  "cand": "운명 게임2"
+ },
+ {
+  "pid": "R134",
+  "rdom": "steam",
+  "rname": "봄이 오면 꽃이 피고",
+  "dom": "steam",
+  "cand": "운명 게임2"
+ },
+ {
+  "pid": "R011",
+  "rdom": "tmdb",
+  "rname": "야연",
+  "dom": "steam",
+  "cand": "운명 게임2"
+ },
+ {
+  "pid": "R105",
+  "rdom": "wn",
+  "rname": "화주",
+  "dom": "tmdb",
+  "cand": "연의 황후"
+ },
+ {
+  "pid": "R125",
+  "rdom": "steam",
+  "rname": "봄이 오면 꽃이 피고",
+  "dom": "tmdb",
+  "cand": "연의 황후"
+ },
+ {
+  "pid": "R164",
+  "rdom": "tmdb",
+  "rname": "야연",
+  "dom": "tmdb",
+  "cand": "연의 황후"
+ },
+ {
+  "pid": "R167",
+  "rdom": "wn",
+  "rname": "화주",
+  "dom": "tmdb",
+  "cand": "당신, 거기 있어줄래요"
+ },
+ {
+  "pid": "R063",
+  "rdom": "steam",
+  "rname": "봄이 오면 꽃이 피고",
+  "dom": "tmdb",
+  "cand": "당신, 거기 있어줄래요"
+ },
+ {
+  "pid": "R017",
+  "rdom": "tmdb",
+  "rname": "야연",
+  "dom": "tmdb",
+  "cand": "당신, 거기 있어줄래요"
+ },
+ {
+  "pid": "R189",
+  "rdom": "wn",
+  "rname": "화주",
+  "dom": "tmdb",
+  "cand": "상하이 나이츠"
+ },
+ {
+  "pid": "R099",
+  "rdom": "steam",
+  "rname": "봄이 오면 꽃이 피고",
+  "dom": "tmdb",
+  "cand": "상하이 나이츠"
+ },
+ {
+  "pid": "R042",
+  "rdom": "tmdb",
+  "rname": "야연",
+  "dom": "tmdb",
+  "cand": "상하이 나이츠"
+ },
+ {
+  "pid": "R084",
+  "rdom": "tmdb",
+  "rname": "나니아 연대기: 새벽 출정호의 항해",
+  "dom": "wn",
+  "cand": "주인공 없는 세계의 엑스트라"
+ },
+ {
+  "pid": "R108",
+  "rdom": "tmdb",
+  "rname": "나니아 연대기: 새벽 출정호의 항해",
+  "dom": "wn",
+  "cand": "아카데미의 EX급 엑스트라"
+ },
+ {
+  "pid": "R132",
+  "rdom": "tmdb",
+  "rname": "나니아 연대기: 새벽 출정호의 항해",
+  "dom": "wn",
+  "cand": "프롤로그 엑스트라"
+ },
+ {
+  "pid": "R061",
+  "rdom": "tmdb",
+  "rname": "나니아 연대기: 새벽 출정호의 항해",
+  "dom": "steam",
+  "cand": "Fantasy Miner: Idle Depths"
+ },
+ {
+  "pid": "R100",
+  "rdom": "tmdb",
+  "rname": "나니아 연대기: 새벽 출정호의 항해",
+  "dom": "steam",
+  "cand": "Chest & Blade"
+ },
+ {
+  "pid": "R010",
+  "rdom": "tmdb",
+  "rname": "나니아 연대기: 새벽 출정호의 항해",
+  "dom": "steam",
+  "cand": "The Mightiest Sword is Mine!"
+ },
+ {
+  "pid": "R147",
+  "rdom": "wn",
+  "rname": "영주님은 엑스트라",
+  "dom": "tmdb",
+  "cand": "나니아 연대기: 사자, 마녀 그리고 옷장"
+ },
+ {
+  "pid": "R131",
+  "rdom": "steam",
+  "rname": "Slay the GoblinZ",
+  "dom": "tmdb",
+  "cand": "나니아 연대기: 사자, 마녀 그리고 옷장"
+ },
+ {
+  "pid": "R039",
+  "rdom": "wn",
+  "rname": "영주님은 엑스트라",
+  "dom": "tmdb",
+  "cand": "나니아 연대기: 캐스피언 왕자"
+ },
+ {
+  "pid": "R050",
+  "rdom": "steam",
+  "rname": "Slay the GoblinZ",
+  "dom": "tmdb",
+  "cand": "나니아 연대기: 캐스피언 왕자"
+ },
+ {
+  "pid": "R014",
+  "rdom": "wn",
+  "rname": "영주님은 엑스트라",
+  "dom": "tmdb",
+  "cand": "님프, 피의 요정"
+ },
+ {
+  "pid": "R023",
+  "rdom": "steam",
+  "rname": "Slay the GoblinZ",
+  "dom": "tmdb",
+  "cand": "님프, 피의 요정"
+ },
+ {
+  "pid": "R091",
+  "rdom": "steam",
+  "rname": "Princess Maker ~Faery Tales Come True~ (HD Remake)",
+  "dom": "wn",
+  "cand": "매니저는 다시 산다"
+ },
+ {
+  "pid": "R030",
+  "rdom": "tmdb",
+  "rname": "나의 PS 파트너",
+  "dom": "wn",
+  "cand": "매니저는 다시 산다"
+ },
+ {
+  "pid": "R062",
+  "rdom": "steam",
+  "rname": "Princess Maker ~Faery Tales Come True~ (HD Remake)",
+  "dom": "wn",
+  "cand": "연예계 씹어먹는 매니저가 되었다"
+ },
+ {
+  "pid": "R074",
+  "rdom": "tmdb",
+  "rname": "나의 PS 파트너",
+  "dom": "wn",
+  "cand": "연예계 씹어먹는 매니저가 되었다"
+ },
+ {
+  "pid": "R148",
+  "rdom": "steam",
+  "rname": "Princess Maker ~Faery Tales Come True~ (HD Remake)",
+  "dom": "wn",
+  "cand": "회귀 후 천재 매니저"
+ },
+ {
+  "pid": "R183",
+  "rdom": "tmdb",
+  "rname": "나의 PS 파트너",
+  "dom": "wn",
+  "cand": "회귀 후 천재 매니저"
+ },
+ {
+  "pid": "R055",
+  "rdom": "wn",
+  "rname": "당신의 매니저",
+  "dom": "steam",
+  "cand": "프린세스 메이커 : 예언의 아이들"
+ },
+ {
+  "pid": "R053",
+  "rdom": "tmdb",
+  "rname": "나의 PS 파트너",
+  "dom": "steam",
+  "cand": "프린세스 메이커 : 예언의 아이들"
+ },
+ {
+  "pid": "R173",
+  "rdom": "wn",
+  "rname": "당신의 매니저",
+  "dom": "steam",
+  "cand": "프린세스 메이커 리파인"
+ },
+ {
+  "pid": "R070",
+  "rdom": "tmdb",
+  "rname": "나의 PS 파트너",
+  "dom": "steam",
+  "cand": "프린세스 메이커 리파인"
+ },
+ {
+  "pid": "R107",
+  "rdom": "wn",
+  "rname": "당신의 매니저",
+  "dom": "steam",
+  "cand": "프린세스 메이커 2 리제네레이션"
+ },
+ {
+  "pid": "R162",
+  "rdom": "tmdb",
+  "rname": "나의 PS 파트너",
+  "dom": "steam",
+  "cand": "프린세스 메이커 2 리제네레이션"
+ },
+ {
+  "pid": "R031",
+  "rdom": "wn",
+  "rname": "당신의 매니저",
+  "dom": "tmdb",
+  "cand": "맛있는 비행"
+ },
+ {
+  "pid": "R180",
+  "rdom": "steam",
+  "rname": "Princess Maker ~Faery Tales Come True~ (HD Remake)",
+  "dom": "tmdb",
+  "cand": "맛있는 비행"
+ },
+ {
+  "pid": "R151",
+  "rdom": "wn",
+  "rname": "당신의 매니저",
+  "dom": "tmdb",
+  "cand": "리치 인 러브"
+ },
+ {
+  "pid": "R129",
+  "rdom": "steam",
+  "rname": "Princess Maker ~Faery Tales Come True~ (HD Remake)",
+  "dom": "tmdb",
+  "cand": "리치 인 러브"
+ },
+ {
+  "pid": "R098",
+  "rdom": "wn",
+  "rname": "당신의 매니저",
+  "dom": "tmdb",
+  "cand": "트루 젠틀맨"
+ },
+ {
+  "pid": "R161",
+  "rdom": "steam",
+  "rname": "Princess Maker ~Faery Tales Come True~ (HD Remake)",
+  "dom": "tmdb",
+  "cand": "트루 젠틀맨"
+ },
+ {
+  "pid": "R052",
+  "rdom": "wn",
+  "rname": "당신의 매니저",
+  "dom": "steam",
+  "cand": "카페 레볼루션 | Cafe Revolution"
+ },
+ {
+  "pid": "R005",
+  "rdom": "steam",
+  "rname": "메이드 카페 시뮬레이터",
+  "dom": "steam",
+  "cand": "카페 레볼루션 | Cafe Revolution"
+ },
+ {
+  "pid": "R036",
+  "rdom": "tmdb",
+  "rname": "카스바",
+  "dom": "steam",
+  "cand": "카페 레볼루션 | Cafe Revolution"
+ },
+ {
+  "pid": "R089",
+  "rdom": "wn",
+  "rname": "당신의 매니저",
+  "dom": "steam",
+  "cand": "Gaming Cafe Simulator"
+ },
+ {
+  "pid": "R169",
+  "rdom": "steam",
+  "rname": "메이드 카페 시뮬레이터",
+  "dom": "steam",
+  "cand": "Gaming Cafe Simulator"
+ },
+ {
+  "pid": "R126",
+  "rdom": "tmdb",
+  "rname": "카스바",
+  "dom": "steam",
+  "cand": "Gaming Cafe Simulator"
+ },
+ {
+  "pid": "R071",
+  "rdom": "steam",
+  "rname": "Uncharted Tides: Port Royal",
+  "dom": "wn",
+  "cand": "나를 죽여주세요"
+ },
+ {
+  "pid": "R137",
+  "rdom": "tmdb",
+  "rname": "신과함께-죄와 벌",
+  "dom": "wn",
+  "cand": "나를 죽여주세요"
+ },
+ {
+  "pid": "R135",
+  "rdom": "steam",
+  "rname": "Uncharted Tides: Port Royal",
+  "dom": "wn",
+  "cand": "죽음을 바라는 당신에게"
+ },
+ {
+  "pid": "R153",
+  "rdom": "tmdb",
+  "rname": "신과함께-죄와 벌",
+  "dom": "wn",
+  "cand": "죽음을 바라는 당신에게"
+ },
+ {
+  "pid": "R117",
+  "rdom": "steam",
+  "rname": "Uncharted Tides: Port Royal",
+  "dom": "wn",
+  "cand": "위험한 연하의 유혹을 받고 있습니다"
+ },
+ {
+  "pid": "R171",
+  "rdom": "tmdb",
+  "rname": "신과함께-죄와 벌",
+  "dom": "wn",
+  "cand": "위험한 연하의 유혹을 받고 있습니다"
+ },
+ {
+  "pid": "R143",
+  "rdom": "wn",
+  "rname": "폐하, 연모하니 죽음을 주세요",
+  "dom": "steam",
+  "cand": "Left in the Dark: No One on Board"
+ },
+ {
+  "pid": "R078",
+  "rdom": "steam",
+  "rname": "Uncharted Tides: Port Royal",
+  "dom": "steam",
+  "cand": "Left in the Dark: No One on Board"
+ },
+ {
+  "pid": "R028",
+  "rdom": "tmdb",
+  "rname": "신과함께-죄와 벌",
+  "dom": "steam",
+  "cand": "Left in the Dark: No One on Board"
+ },
+ {
+  "pid": "R009",
+  "rdom": "wn",
+  "rname": "폐하, 연모하니 죽음을 주세요",
+  "dom": "steam",
+  "cand": "Danse Macabre: Deadly Deception Collector's Edition"
+ },
+ {
+  "pid": "R003",
+  "rdom": "steam",
+  "rname": "Uncharted Tides: Port Royal",
+  "dom": "steam",
+  "cand": "Danse Macabre: Deadly Deception Collector's Edition"
+ },
+ {
+  "pid": "R029",
+  "rdom": "tmdb",
+  "rname": "신과함께-죄와 벌",
+  "dom": "steam",
+  "cand": "Danse Macabre: Deadly Deception Collector's Edition"
+ },
+ {
+  "pid": "R133",
+  "rdom": "wn",
+  "rname": "폐하, 연모하니 죽음을 주세요",
+  "dom": "steam",
+  "cand": "봄이 오면 꽃이 피고"
+ },
+ {
+  "pid": "R140",
+  "rdom": "steam",
+  "rname": "Uncharted Tides: Port Royal",
+  "dom": "steam",
+  "cand": "봄이 오면 꽃이 피고"
+ },
+ {
+  "pid": "R112",
+  "rdom": "tmdb",
+  "rname": "신과함께-죄와 벌",
+  "dom": "steam",
+  "cand": "봄이 오면 꽃이 피고"
+ },
+ {
+  "pid": "R114",
+  "rdom": "wn",
+  "rname": "폐하, 연모하니 죽음을 주세요",
+  "dom": "tmdb",
+  "cand": "신과함께-인과 연"
+ },
+ {
+  "pid": "R066",
+  "rdom": "steam",
+  "rname": "Uncharted Tides: Port Royal",
+  "dom": "tmdb",
+  "cand": "신과함께-인과 연"
+ },
+ {
+  "pid": "R177",
+  "rdom": "tmdb",
+  "rname": "신과함께-죄와 벌",
+  "dom": "tmdb",
+  "cand": "신과함께-인과 연"
+ },
+ {
+  "pid": "R193",
+  "rdom": "wn",
+  "rname": "폐하, 연모하니 죽음을 주세요",
+  "dom": "tmdb",
+  "cand": "내일"
+ },
+ {
+  "pid": "R081",
+  "rdom": "steam",
+  "rname": "Uncharted Tides: Port Royal",
+  "dom": "tmdb",
+  "cand": "내일"
+ },
+ {
+  "pid": "R109",
+  "rdom": "tmdb",
+  "rname": "신과함께-죄와 벌",
+  "dom": "tmdb",
+  "cand": "내일"
+ },
+ {
+  "pid": "R022",
+  "rdom": "wn",
+  "rname": "폐하, 연모하니 죽음을 주세요",
+  "dom": "tmdb",
+  "cand": "블랙"
+ },
+ {
+  "pid": "R075",
+  "rdom": "steam",
+  "rname": "Uncharted Tides: Port Royal",
+  "dom": "tmdb",
+  "cand": "블랙"
+ },
+ {
+  "pid": "R054",
+  "rdom": "tmdb",
+  "rname": "신과함께-죄와 벌",
+  "dom": "tmdb",
+  "cand": "블랙"
+ },
+ {
+  "pid": "R110",
+  "rdom": "tmdb",
+  "rname": "퐁당퐁당 Love",
+  "dom": "wn",
+  "cand": "조선이 망해야 내가 산다"
+ },
+ {
+  "pid": "R103",
+  "rdom": "wn",
+  "rname": "시작부터 무쌍",
+  "dom": "wn",
+  "cand": "효명세자와 함께하는 조선 생활"
+ },
+ {
+  "pid": "R124",
+  "rdom": "steam",
+  "rname": "해동비사 (海東秘史)",
+  "dom": "wn",
+  "cand": "효명세자와 함께하는 조선 생활"
+ },
+ {
+  "pid": "R072",
+  "rdom": "tmdb",
+  "rname": "퐁당퐁당 Love",
+  "dom": "wn",
+  "cand": "효명세자와 함께하는 조선 생활"
+ },
+ {
+  "pid": "R032",
+  "rdom": "wn",
+  "rname": "시작부터 무쌍",
+  "dom": "wn",
+  "cand": "영웅 같은 소리하고 있네!"
+ },
+ {
+  "pid": "R158",
+  "rdom": "steam",
+  "rname": "해동비사 (海東秘史)",
+  "dom": "wn",
+  "cand": "영웅 같은 소리하고 있네!"
+ },
+ {
+  "pid": "R047",
+  "rdom": "tmdb",
+  "rname": "퐁당퐁당 Love",
+  "dom": "wn",
+  "cand": "영웅 같은 소리하고 있네!"
+ },
+ {
+  "pid": "R138",
+  "rdom": "tmdb",
+  "rname": "퐁당퐁당 Love",
+  "dom": "steam",
+  "cand": "봄이 오면 꽃이 피고"
+ },
+ {
+  "pid": "R104",
+  "rdom": "tmdb",
+  "rname": "퐁당퐁당 Love",
+  "dom": "steam",
+  "cand": "천서"
+ },
+ {
+  "pid": "R076",
+  "rdom": "tmdb",
+  "rname": "퐁당퐁당 Love",
+  "dom": "steam",
+  "cand": "활협전"
+ },
+ {
+  "pid": "R156",
+  "rdom": "wn",
+  "rname": "시작부터 무쌍",
+  "dom": "tmdb",
+  "cand": "엽기적인 그녀"
+ },
+ {
+  "pid": "R150",
+  "rdom": "steam",
+  "rname": "해동비사 (海東秘史)",
+  "dom": "tmdb",
+  "cand": "엽기적인 그녀"
+ },
+ {
+  "pid": "R166",
+  "rdom": "tmdb",
+  "rname": "퐁당퐁당 Love",
+  "dom": "tmdb",
+  "cand": "엽기적인 그녀"
+ },
+ {
+  "pid": "R111",
+  "rdom": "wn",
+  "rname": "시작부터 무쌍",
+  "dom": "tmdb",
+  "cand": "조선로코-녹두전"
+ },
+ {
+  "pid": "R190",
+  "rdom": "steam",
+  "rname": "해동비사 (海東秘史)",
+  "dom": "tmdb",
+  "cand": "조선로코-녹두전"
+ },
+ {
+  "pid": "R155",
+  "rdom": "tmdb",
+  "rname": "퐁당퐁당 Love",
+  "dom": "tmdb",
+  "cand": "조선로코-녹두전"
+ },
+ {
+  "pid": "R013",
+  "rdom": "wn",
+  "rname": "시작부터 무쌍",
+  "dom": "tmdb",
+  "cand": "구르미 그린 달빛"
+ },
+ {
+  "pid": "R019",
+  "rdom": "steam",
+  "rname": "해동비사 (海東秘史)",
+  "dom": "tmdb",
+  "cand": "구르미 그린 달빛"
+ },
+ {
+  "pid": "R073",
+  "rdom": "tmdb",
+  "rname": "퐁당퐁당 Love",
+  "dom": "tmdb",
+  "cand": "구르미 그린 달빛"
+ },
+ {
+  "pid": "R007",
+  "rdom": "tmdb",
+  "rname": "전,란",
+  "dom": "wn",
+  "cand": "영웅 같은 소리하고 있네!"
+ },
+ {
+  "pid": "R082",
+  "rdom": "wn",
+  "rname": "눈 떠 보니 현대 라이프",
+  "dom": "wn",
+  "cand": "전생 현자의 이세계 라이프"
+ },
+ {
+  "pid": "R101",
+  "rdom": "steam",
+  "rname": "봄이 오면 꽃이 피고",
+  "dom": "wn",
+  "cand": "전생 현자의 이세계 라이프"
+ },
+ {
+  "pid": "R154",
+  "rdom": "tmdb",
+  "rname": "최강 음양사의 이세계 전생기",
+  "dom": "wn",
+  "cand": "전생 현자의 이세계 라이프"
+ },
+ {
+  "pid": "R182",
+  "rdom": "wn",
+  "rname": "눈 떠 보니 현대 라이프",
+  "dom": "wn",
+  "cand": "전생했더니 고유스킬이 두 배"
+ },
+ {
+  "pid": "R002",
+  "rdom": "steam",
+  "rname": "봄이 오면 꽃이 피고",
+  "dom": "wn",
+  "cand": "전생했더니 고유스킬이 두 배"
+ },
+ {
+  "pid": "R127",
+  "rdom": "tmdb",
+  "rname": "최강 음양사의 이세계 전생기",
+  "dom": "wn",
+  "cand": "전생했더니 고유스킬이 두 배"
+ },
+ {
+  "pid": "R046",
+  "rdom": "steam",
+  "rname": "봄이 오면 꽃이 피고",
+  "dom": "wn",
+  "cand": "내 인생 최고의 사건"
+ },
+ {
+  "pid": "R069",
+  "rdom": "tmdb",
+  "rname": "최강 음양사의 이세계 전생기",
+  "dom": "wn",
+  "cand": "내 인생 최고의 사건"
+ },
+ {
+  "pid": "R188",
+  "rdom": "wn",
+  "rname": "눈 떠 보니 현대 라이프",
+  "dom": "steam",
+  "cand": "King's Angel: Otome"
+ },
+ {
+  "pid": "R194",
+  "rdom": "tmdb",
+  "rname": "최강 음양사의 이세계 전생기",
+  "dom": "steam",
+  "cand": "King's Angel: Otome"
+ },
+ {
+  "pid": "R128",
+  "rdom": "wn",
+  "rname": "눈 떠 보니 현대 라이프",
+  "dom": "steam",
+  "cand": "风物恋歌（The Memory of Mallet)"
+ },
+ {
+  "pid": "R060",
+  "rdom": "tmdb",
+  "rname": "최강 음양사의 이세계 전생기",
+  "dom": "steam",
+  "cand": "风物恋歌（The Memory of Mallet)"
+ },
+ {
+  "pid": "R176",
+  "rdom": "wn",
+  "rname": "눈 떠 보니 현대 라이프",
+  "dom": "steam",
+  "cand": "운명 게임2"
+ },
+ {
+  "pid": "R037",
+  "rdom": "tmdb",
+  "rname": "최강 음양사의 이세계 전생기",
+  "dom": "steam",
+  "cand": "운명 게임2"
+ },
+ {
+  "pid": "R139",
+  "rdom": "wn",
+  "rname": "눈 떠 보니 현대 라이프",
+  "dom": "tmdb",
+  "cand": "전생귀족의 이세계 모험록 ~자중할 줄 모르는 신들의 사도~"
+ },
+ {
+  "pid": "R157",
+  "rdom": "steam",
+  "rname": "봄이 오면 꽃이 피고",
+  "dom": "tmdb",
+  "cand": "전생귀족의 이세계 모험록 ~자중할 줄 모르는 신들의 사도~"
+ },
+ {
+  "pid": "R187",
+  "rdom": "tmdb",
+  "rname": "최강 음양사의 이세계 전생기",
+  "dom": "tmdb",
+  "cand": "전생귀족의 이세계 모험록 ~자중할 줄 모르는 신들의 사도~"
+ },
+ {
+  "pid": "R049",
+  "rdom": "wn",
+  "rname": "눈 떠 보니 현대 라이프",
+  "dom": "tmdb",
+  "cand": "데드 마운트 데스 플레이"
+ },
+ {
+  "pid": "R095",
+  "rdom": "steam",
+  "rname": "봄이 오면 꽃이 피고",
+  "dom": "tmdb",
+  "cand": "데드 마운트 데스 플레이"
+ },
+ {
+  "pid": "R152",
+  "rdom": "tmdb",
+  "rname": "최강 음양사의 이세계 전생기",
+  "dom": "tmdb",
+  "cand": "데드 마운트 데스 플레이"
+ },
+ {
+  "pid": "R102",
+  "rdom": "wn",
+  "rname": "눈 떠 보니 현대 라이프",
+  "dom": "tmdb",
+  "cand": "나이츠 & 매직"
+ },
+ {
+  "pid": "R122",
+  "rdom": "steam",
+  "rname": "봄이 오면 꽃이 피고",
+  "dom": "tmdb",
+  "cand": "나이츠 & 매직"
+ },
+ {
+  "pid": "R159",
+  "rdom": "tmdb",
+  "rname": "최강 음양사의 이세계 전생기",
+  "dom": "tmdb",
+  "cand": "나이츠 & 매직"
+ },
+ {
+  "pid": "R020",
+  "rdom": "tmdb",
+  "rname": "용호문",
+  "dom": "wn",
+  "cand": "천해문"
+ },
+ {
+  "pid": "R168",
+  "rdom": "tmdb",
+  "rname": "용호문",
+  "dom": "wn",
+  "cand": "사후천자"
+ },
+ {
+  "pid": "R119",
+  "rdom": "tmdb",
+  "rname": "용호문",
+  "dom": "steam",
+  "cand": "해동비사 (海東秘史)"
+ },
+ {
+  "pid": "R113",
+  "rdom": "tmdb",
+  "rname": "용호문",
+  "dom": "steam",
+  "cand": "만세검총"
+ },
+ {
+  "pid": "R012",
+  "rdom": "wn",
+  "rname": "천위문",
+  "dom": "steam",
+  "cand": "义闻录：轮回"
+ },
+ {
+  "pid": "R000",
+  "rdom": "tmdb",
+  "rname": "용호문",
+  "dom": "steam",
+  "cand": "义闻录：轮回"
+ },
+ {
+  "pid": "R008",
+  "rdom": "wn",
+  "rname": "천위문",
+  "dom": "tmdb",
+  "cand": "소림오조"
+ },
+ {
+  "pid": "R123",
+  "rdom": "steam",
+  "rname": "검협:풍진연곡",
+  "dom": "tmdb",
+  "cand": "소림오조"
+ },
+ {
+  "pid": "R106",
+  "rdom": "tmdb",
+  "rname": "용호문",
+  "dom": "tmdb",
+  "cand": "소림오조"
+ },
+ {
+  "pid": "R097",
+  "rdom": "tmdb",
+  "rname": "용호문",
+  "dom": "tmdb",
+  "cand": "풍운 2"
+ },
+ {
+  "pid": "R130",
+  "rdom": "wn",
+  "rname": "천위문",
+  "dom": "tmdb",
+  "cand": "신정무문"
+ },
+ {
+  "pid": "R172",
+  "rdom": "steam",
+  "rname": "검협:풍진연곡",
+  "dom": "tmdb",
+  "cand": "신정무문"
+ },
+ {
+  "pid": "R165",
+  "rdom": "tmdb",
+  "rname": "용호문",
+  "dom": "tmdb",
+  "cand": "신정무문"
+ },
+ {
+  "pid": "R149",
+  "rdom": "steam",
+  "rname": "산역",
+  "dom": "wn",
+  "cand": "당신의 레이디"
+ },
+ {
+  "pid": "R057",
+  "rdom": "tmdb",
+  "rname": "아바스 포제션스",
+  "dom": "wn",
+  "cand": "당신의 레이디"
+ },
+ {
+  "pid": "R006",
+  "rdom": "steam",
+  "rname": "산역",
+  "dom": "wn",
+  "cand": "천벌 내리는 레이디"
+ },
+ {
+  "pid": "R092",
+  "rdom": "tmdb",
+  "rname": "아바스 포제션스",
+  "dom": "wn",
+  "cand": "천벌 내리는 레이디"
+ },
+ {
+  "pid": "R185",
+  "rdom": "steam",
+  "rname": "산역",
+  "dom": "wn",
+  "cand": "천마 레이디"
+ },
+ {
+  "pid": "R145",
+  "rdom": "tmdb",
+  "rname": "아바스 포제션스",
+  "dom": "wn",
+  "cand": "천마 레이디"
+ },
+ {
+  "pid": "R045",
+  "rdom": "wn",
+  "rname": "레이디는 해머로 세상을 구한다",
+  "dom": "steam",
+  "cand": "余影(Lingering Shadow）"
+ },
+ {
+  "pid": "R178",
+  "rdom": "steam",
+  "rname": "산역",
+  "dom": "steam",
+  "cand": "余影(Lingering Shadow）"
+ },
+ {
+  "pid": "R021",
+  "rdom": "tmdb",
+  "rname": "아바스 포제션스",
+  "dom": "steam",
+  "cand": "余影(Lingering Shadow）"
+ },
+ {
+  "pid": "R048",
+  "rdom": "wn",
+  "rname": "레이디는 해머로 세상을 구한다",
+  "dom": "steam",
+  "cand": "MeiQi 2022"
+ },
+ {
+  "pid": "R094",
+  "rdom": "steam",
+  "rname": "산역",
+  "dom": "steam",
+  "cand": "MeiQi 2022"
+ },
+ {
+  "pid": "R024",
+  "rdom": "tmdb",
+  "rname": "아바스 포제션스",
+  "dom": "steam",
+  "cand": "MeiQi 2022"
+ },
+ {
+  "pid": "R044",
+  "rdom": "wn",
+  "rname": "레이디는 해머로 세상을 구한다",
+  "dom": "steam",
+  "cand": "Enigma of Fear"
+ },
+ {
+  "pid": "R118",
+  "rdom": "steam",
+  "rname": "산역",
+  "dom": "steam",
+  "cand": "Enigma of Fear"
+ },
+ {
+  "pid": "R001",
+  "rdom": "tmdb",
+  "rname": "아바스 포제션스",
+  "dom": "steam",
+  "cand": "Enigma of Fear"
+ },
+ {
+  "pid": "R056",
+  "rdom": "wn",
+  "rname": "레이디는 해머로 세상을 구한다",
+  "dom": "tmdb",
+  "cand": "화이트 노이즈 2"
+ },
+ {
+  "pid": "R051",
+  "rdom": "steam",
+  "rname": "산역",
+  "dom": "tmdb",
+  "cand": "화이트 노이즈 2"
+ },
+ {
+  "pid": "R038",
+  "rdom": "tmdb",
+  "rname": "아바스 포제션스",
+  "dom": "tmdb",
+  "cand": "화이트 노이즈 2"
+ },
+ {
+  "pid": "R035",
+  "rdom": "wn",
+  "rname": "레이디는 해머로 세상을 구한다",
+  "dom": "tmdb",
+  "cand": "잔혹한 사춘기"
+ },
+ {
+  "pid": "R067",
+  "rdom": "steam",
+  "rname": "산역",
+  "dom": "tmdb",
+  "cand": "잔혹한 사춘기"
+ },
+ {
+  "pid": "R115",
+  "rdom": "tmdb",
+  "rname": "아바스 포제션스",
+  "dom": "tmdb",
+  "cand": "잔혹한 사춘기"
+ },
+ {
+  "pid": "R141",
+  "rdom": "wn",
+  "rname": "레이디는 해머로 세상을 구한다",
+  "dom": "tmdb",
+  "cand": "엘비라"
+ },
+ {
+  "pid": "R043",
+  "rdom": "steam",
+  "rname": "산역",
+  "dom": "tmdb",
+  "cand": "엘비라"
+ },
+ {
+  "pid": "R018",
+  "rdom": "tmdb",
+  "rname": "아바스 포제션스",
+  "dom": "tmdb",
+  "cand": "엘비라"
+ },
+ {
+  "pid": "R142",
+  "rdom": "tmdb",
+  "rname": "호협",
+  "dom": "wn",
+  "cand": "혈우성풍"
+ },
+ {
+  "pid": "R025",
+  "rdom": "wn",
+  "rname": "붕성",
+  "dom": "wn",
+  "cand": "무신역천검"
+ },
+ {
+  "pid": "R064",
+  "rdom": "tmdb",
+  "rname": "호협",
+  "dom": "wn",
+  "cand": "무신역천검"
+ },
+ {
+  "pid": "R192",
+  "rdom": "tmdb",
+  "rname": "호협",
+  "dom": "wn",
+  "cand": "붕정행"
+ },
+ {
+  "pid": "R016",
+  "rdom": "tmdb",
+  "rname": "호협",
+  "dom": "steam",
+  "cand": "义闻录：轮回"
+ },
+ {
+  "pid": "R096",
+  "rdom": "tmdb",
+  "rname": "호협",
+  "dom": "steam",
+  "cand": "해동비사 (海東秘史)"
+ },
+ {
+  "pid": "R068",
+  "rdom": "tmdb",
+  "rname": "호협",
+  "dom": "steam",
+  "cand": "만세검총"
+ },
+ {
+  "pid": "R163",
+  "rdom": "wn",
+  "rname": "붕성",
+  "dom": "tmdb",
+  "cand": "풍운 2"
+ },
+ {
+  "pid": "R065",
+  "rdom": "tmdb",
+  "rname": "호협",
+  "dom": "tmdb",
+  "cand": "풍운 2"
+ },
+ {
+  "pid": "R184",
+  "rdom": "wn",
+  "rname": "붕성",
+  "dom": "tmdb",
+  "cand": "아프로 사무라이"
+ },
+ {
+  "pid": "R059",
+  "rdom": "steam",
+  "rname": "검협:풍진연곡",
+  "dom": "tmdb",
+  "cand": "아프로 사무라이"
+ },
+ {
+  "pid": "R034",
+  "rdom": "tmdb",
+  "rname": "호협",
+  "dom": "tmdb",
+  "cand": "아프로 사무라이"
+ },
+ {
+  "pid": "R085",
+  "rdom": "wn",
+  "rname": "붕성",
+  "dom": "tmdb",
+  "cand": "연화루"
+ },
+ {
+  "pid": "R120",
+  "rdom": "steam",
+  "rname": "검협:풍진연곡",
+  "dom": "tmdb",
+  "cand": "연화루"
+ },
+ {
+  "pid": "R058",
+  "rdom": "tmdb",
+  "rname": "호협",
+  "dom": "tmdb",
+  "cand": "연화루"
+ },
+ {
+  "pid": "R170",
+  "rdom": "tmdb",
+  "rname": "신입사관 구해령",
+  "dom": "wn",
+  "cand": "춘장"
+ },
+ {
+  "pid": "R040",
+  "rdom": "tmdb",
+  "rname": "신입사관 구해령",
+  "dom": "wn",
+  "cand": "부인세무쌍"
+ },
+ {
+  "pid": "R174",
+  "rdom": "tmdb",
+  "rname": "신입사관 구해령",
+  "dom": "wn",
+  "cand": "내 남편의 스캔들"
+ },
+ {
+  "pid": "R004",
+  "rdom": "tmdb",
+  "rname": "신입사관 구해령",
+  "dom": "steam",
+  "cand": "雪落情书时"
+ },
+ {
+  "pid": "R144",
+  "rdom": "tmdb",
+  "rname": "신입사관 구해령",
+  "dom": "steam",
+  "cand": "天呐！找不到真爱就扑街！"
+ },
+ {
+  "pid": "R083",
+  "rdom": "tmdb",
+  "rname": "신입사관 구해령",
+  "dom": "steam",
+  "cand": "연오와 세오"
+ },
+ {
+  "pid": "R175",
+  "rdom": "tmdb",
+  "rname": "신입사관 구해령",
+  "dom": "tmdb",
+  "cand": "엽기적인 그녀"
+ },
+ {
+  "pid": "R136",
+  "rdom": "wn",
+  "rname": "변씨 부인 스캔들",
+  "dom": "tmdb",
+  "cand": "구르미 그린 달빛"
+ },
+ {
+  "pid": "R121",
+  "rdom": "steam",
+  "rname": "청춘향전 Cheongchunhyang Jeon",
+  "dom": "tmdb",
+  "cand": "구르미 그린 달빛"
+ },
+ {
+  "pid": "R027",
+  "rdom": "tmdb",
+  "rname": "신입사관 구해령",
+  "dom": "tmdb",
+  "cand": "구르미 그린 달빛"
+ },
+ {
+  "pid": "R080",
+  "rdom": "wn",
+  "rname": "변씨 부인 스캔들",
+  "dom": "tmdb",
+  "cand": "스캔들: 조선남녀상열지사"
+ },
+ {
+  "pid": "R160",
+  "rdom": "steam",
+  "rname": "청춘향전 Cheongchunhyang Jeon",
+  "dom": "tmdb",
+  "cand": "스캔들: 조선남녀상열지사"
+ },
+ {
+  "pid": "R181",
+  "rdom": "tmdb",
+  "rname": "신입사관 구해령",
+  "dom": "tmdb",
+  "cand": "스캔들: 조선남녀상열지사"
+ }
+]

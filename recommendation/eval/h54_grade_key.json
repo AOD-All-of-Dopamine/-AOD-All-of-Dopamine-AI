@@ -1,0 +1,4133 @@
+[
+ {
+  "pid": "Z095",
+  "seed": 0,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "No More Future",
+  "dom": "steam",
+  "cand": "Fallstreak: Requiem for my Homeland"
+ },
+ {
+  "pid": "Z049",
+  "seed": 0,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "러브 인 베를린",
+  "dom": "steam",
+  "cand": "Fallstreak: Requiem for my Homeland"
+ },
+ {
+  "pid": "Z293",
+  "seed": 0,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "No More Future",
+  "dom": "steam",
+  "cand": "도색 함정"
+ },
+ {
+  "pid": "Z313",
+  "seed": 0,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "러브 인 베를린",
+  "dom": "steam",
+  "cand": "도색 함정"
+ },
+ {
+  "pid": "Z088",
+  "seed": 0,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "No More Future",
+  "dom": "steam",
+  "cand": "심장에 해로워"
+ },
+ {
+  "pid": "Z181",
+  "seed": 0,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "러브 인 베를린",
+  "dom": "steam",
+  "cand": "심장에 해로워"
+ },
+ {
+  "pid": "Z266",
+  "seed": 0,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "No More Future",
+  "dom": "steam",
+  "cand": "Last Resort"
+ },
+ {
+  "pid": "Z455",
+  "seed": 0,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "러브 인 베를린",
+  "dom": "steam",
+  "cand": "Last Resort"
+ },
+ {
+  "pid": "Z398",
+  "seed": 0,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "No More Future",
+  "dom": "steam",
+  "cand": "メルト・アウェイ"
+ },
+ {
+  "pid": "Z184",
+  "seed": 0,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "러브 인 베를린",
+  "dom": "steam",
+  "cand": "メルト・アウェイ"
+ },
+ {
+  "pid": "Z070",
+  "seed": 0,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "No More Future",
+  "dom": "steam",
+  "cand": "Kunado Chronicles"
+ },
+ {
+  "pid": "Z351",
+  "seed": 0,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "러브 인 베를린",
+  "dom": "steam",
+  "cand": "Kunado Chronicles"
+ },
+ {
+  "pid": "Z409",
+  "seed": 0,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "No More Future",
+  "dom": "steam",
+  "cand": "Re:Fragment ~Absolute Ambition~"
+ },
+ {
+  "pid": "Z015",
+  "seed": 0,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "러브 인 베를린",
+  "dom": "steam",
+  "cand": "Re:Fragment ~Absolute Ambition~"
+ },
+ {
+  "pid": "Z232",
+  "seed": 0,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "No More Future",
+  "dom": "steam",
+  "cand": "OMNIMUS"
+ },
+ {
+  "pid": "Z180",
+  "seed": 0,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "러브 인 베를린",
+  "dom": "steam",
+  "cand": "OMNIMUS"
+ },
+ {
+  "pid": "Z014",
+  "seed": 0,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "No More Future",
+  "dom": "steam",
+  "cand": "Himawari - The Sunflower -"
+ },
+ {
+  "pid": "Z304",
+  "seed": 0,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "러브 인 베를린",
+  "dom": "steam",
+  "cand": "Himawari - The Sunflower -"
+ },
+ {
+  "pid": "Z005",
+  "seed": 0,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "No More Future",
+  "dom": "steam",
+  "cand": "52 / 0 = ∞"
+ },
+ {
+  "pid": "Z279",
+  "seed": 0,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "러브 인 베를린",
+  "dom": "steam",
+  "cand": "52 / 0 = ∞"
+ },
+ {
+  "pid": "Z187",
+  "seed": 0,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "No More Future",
+  "dom": "tmdb",
+  "cand": "해롤드와 모드"
+ },
+ {
+  "pid": "Z111",
+  "seed": 0,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "러브 인 베를린",
+  "dom": "tmdb",
+  "cand": "해롤드와 모드"
+ },
+ {
+  "pid": "Z218",
+  "seed": 0,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "No More Future",
+  "dom": "tmdb",
+  "cand": "수어사이드 쇼"
+ },
+ {
+  "pid": "Z108",
+  "seed": 0,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "러브 인 베를린",
+  "dom": "tmdb",
+  "cand": "수어사이드 쇼"
+ },
+ {
+  "pid": "Z340",
+  "seed": 0,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "No More Future",
+  "dom": "tmdb",
+  "cand": "저승까지 파티피플!"
+ },
+ {
+  "pid": "Z068",
+  "seed": 0,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "러브 인 베를린",
+  "dom": "tmdb",
+  "cand": "저승까지 파티피플!"
+ },
+ {
+  "pid": "Z134",
+  "seed": 0,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "No More Future",
+  "dom": "tmdb",
+  "cand": "'백조의 노래' - Swan Song"
+ },
+ {
+  "pid": "Z105",
+  "seed": 0,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "러브 인 베를린",
+  "dom": "tmdb",
+  "cand": "'백조의 노래' - Swan Song"
+ },
+ {
+  "pid": "Z405",
+  "seed": 0,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "인생, 다시 한 번!",
+  "dom": "steam",
+  "cand": "봄이 오면 꽃이 피고"
+ },
+ {
+  "pid": "Z420",
+  "seed": 0,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "다시 태어난 반 고흐",
+  "dom": "steam",
+  "cand": "봄이 오면 꽃이 피고"
+ },
+ {
+  "pid": "Z211",
+  "seed": 0,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "인생, 다시 한 번!",
+  "dom": "steam",
+  "cand": "Suicide Guy: Sleepin' Deeply"
+ },
+ {
+  "pid": "Z186",
+  "seed": 0,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "다시 태어난 반 고흐",
+  "dom": "steam",
+  "cand": "Suicide Guy: Sleepin' Deeply"
+ },
+ {
+  "pid": "Z394",
+  "seed": 0,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "인생, 다시 한 번!",
+  "dom": "tmdb",
+  "cand": "디스커버리"
+ },
+ {
+  "pid": "Z317",
+  "seed": 0,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "다시 태어난 반 고흐",
+  "dom": "tmdb",
+  "cand": "디스커버리"
+ },
+ {
+  "pid": "Z121",
+  "seed": 0,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "인생, 다시 한 번!",
+  "dom": "tmdb",
+  "cand": "저승까지 파티피플!"
+ },
+ {
+  "pid": "Z206",
+  "seed": 0,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "다시 태어난 반 고흐",
+  "dom": "tmdb",
+  "cand": "저승까지 파티피플!"
+ },
+ {
+  "pid": "Z120",
+  "seed": 0,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "인생, 다시 한 번!",
+  "dom": "tmdb",
+  "cand": "고흐, 영원의 문에서"
+ },
+ {
+  "pid": "Z319",
+  "seed": 0,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "다시 태어난 반 고흐",
+  "dom": "tmdb",
+  "cand": "고흐, 영원의 문에서"
+ },
+ {
+  "pid": "Z118",
+  "seed": 1,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "Poor Samantha",
+  "dom": "steam",
+  "cand": "Concealed"
+ },
+ {
+  "pid": "Z265",
+  "seed": 1,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "전생했더니 검이었습니다",
+  "dom": "steam",
+  "cand": "Concealed"
+ },
+ {
+  "pid": "Z274",
+  "seed": 1,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "Poor Samantha",
+  "dom": "steam",
+  "cand": "Dread Weight"
+ },
+ {
+  "pid": "Z141",
+  "seed": 1,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "전생했더니 검이었습니다",
+  "dom": "steam",
+  "cand": "Dread Weight"
+ },
+ {
+  "pid": "Z053",
+  "seed": 1,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "Poor Samantha",
+  "dom": "steam",
+  "cand": "derealization"
+ },
+ {
+  "pid": "Z216",
+  "seed": 1,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "전생했더니 검이었습니다",
+  "dom": "steam",
+  "cand": "derealization"
+ },
+ {
+  "pid": "Z438",
+  "seed": 1,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "Poor Samantha",
+  "dom": "steam",
+  "cand": "Outdoor Adventures With Marisa Kirisame"
+ },
+ {
+  "pid": "Z357",
+  "seed": 1,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "전생했더니 검이었습니다",
+  "dom": "steam",
+  "cand": "Outdoor Adventures With Marisa Kirisame"
+ },
+ {
+  "pid": "Z453",
+  "seed": 1,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "Poor Samantha",
+  "dom": "steam",
+  "cand": "Death Becomes You: Yuri Onsen Vacation"
+ },
+ {
+  "pid": "Z066",
+  "seed": 1,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "전생했더니 검이었습니다",
+  "dom": "steam",
+  "cand": "Death Becomes You: Yuri Onsen Vacation"
+ },
+ {
+  "pid": "Z166",
+  "seed": 1,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "Poor Samantha",
+  "dom": "steam",
+  "cand": "神祇Pantheon"
+ },
+ {
+  "pid": "Z045",
+  "seed": 1,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "전생했더니 검이었습니다",
+  "dom": "steam",
+  "cand": "神祇Pantheon"
+ },
+ {
+  "pid": "Z234",
+  "seed": 1,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "Poor Samantha",
+  "dom": "steam",
+  "cand": "Shadow of the Moonlight"
+ },
+ {
+  "pid": "Z119",
+  "seed": 1,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "전생했더니 검이었습니다",
+  "dom": "steam",
+  "cand": "Shadow of the Moonlight"
+ },
+ {
+  "pid": "Z286",
+  "seed": 1,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "Poor Samantha",
+  "dom": "steam",
+  "cand": "일레븐지스"
+ },
+ {
+  "pid": "Z084",
+  "seed": 1,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "전생했더니 검이었습니다",
+  "dom": "steam",
+  "cand": "일레븐지스"
+ },
+ {
+  "pid": "Z291",
+  "seed": 1,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "Poor Samantha",
+  "dom": "tmdb",
+  "cand": "성검학원의 마검사"
+ },
+ {
+  "pid": "Z379",
+  "seed": 1,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "전생했더니 검이었습니다",
+  "dom": "tmdb",
+  "cand": "성검학원의 마검사"
+ },
+ {
+  "pid": "Z300",
+  "seed": 1,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "정마검",
+  "dom": "steam",
+  "cand": "성검전설 Legend of Mana"
+ },
+ {
+  "pid": "Z242",
+  "seed": 1,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "남궁검존",
+  "dom": "steam",
+  "cand": "성검전설 Legend of Mana"
+ },
+ {
+  "pid": "Z059",
+  "seed": 1,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "정마검",
+  "dom": "steam",
+  "cand": "역전검사 1&2 미츠루기 셀렉션"
+ },
+ {
+  "pid": "Z301",
+  "seed": 1,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "남궁검존",
+  "dom": "steam",
+  "cand": "역전검사 1&2 미츠루기 셀렉션"
+ },
+ {
+  "pid": "Z308",
+  "seed": 1,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "정마검",
+  "dom": "steam",
+  "cand": "연무"
+ },
+ {
+  "pid": "Z039",
+  "seed": 1,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "남궁검존",
+  "dom": "steam",
+  "cand": "연무"
+ },
+ {
+  "pid": "Z435",
+  "seed": 1,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "정마검",
+  "dom": "steam",
+  "cand": "Shadow of the Moonlight"
+ },
+ {
+  "pid": "Z312",
+  "seed": 1,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "남궁검존",
+  "dom": "steam",
+  "cand": "Shadow of the Moonlight"
+ },
+ {
+  "pid": "Z272",
+  "seed": 1,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "정마검",
+  "dom": "steam",
+  "cand": "Dear Nobody"
+ },
+ {
+  "pid": "Z034",
+  "seed": 1,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "남궁검존",
+  "dom": "steam",
+  "cand": "Dear Nobody"
+ },
+ {
+  "pid": "Z221",
+  "seed": 2,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "The Counter Gambit",
+  "dom": "wn",
+  "cand": "신선 한번 해 보려고 귀환했다"
+ },
+ {
+  "pid": "Z131",
+  "seed": 2,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "하백의 신부",
+  "dom": "wn",
+  "cand": "신선 한번 해 보려고 귀환했다"
+ },
+ {
+  "pid": "Z315",
+  "seed": 2,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "The Counter Gambit",
+  "dom": "wn",
+  "cand": "마법의 신이 되다"
+ },
+ {
+  "pid": "Z444",
+  "seed": 2,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "하백의 신부",
+  "dom": "wn",
+  "cand": "마법의 신이 되다"
+ },
+ {
+  "pid": "Z412",
+  "seed": 2,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "The Counter Gambit",
+  "dom": "wn",
+  "cand": "신의 조각을 품은 남자"
+ },
+ {
+  "pid": "Z271",
+  "seed": 2,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "하백의 신부",
+  "dom": "wn",
+  "cand": "신의 조각을 품은 남자"
+ },
+ {
+  "pid": "Z072",
+  "seed": 2,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "The Counter Gambit",
+  "dom": "wn",
+  "cand": "일그러진 밤의 신"
+ },
+ {
+  "pid": "Z268",
+  "seed": 2,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "하백의 신부",
+  "dom": "wn",
+  "cand": "일그러진 밤의 신"
+ },
+ {
+  "pid": "Z083",
+  "seed": 2,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "The Counter Gambit",
+  "dom": "wn",
+  "cand": "신의 피를 품은 자들"
+ },
+ {
+  "pid": "Z227",
+  "seed": 2,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "하백의 신부",
+  "dom": "wn",
+  "cand": "신의 피를 품은 자들"
+ },
+ {
+  "pid": "Z341",
+  "seed": 2,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "The Counter Gambit",
+  "dom": "wn",
+  "cand": "신들에게 주워진 남자"
+ },
+ {
+  "pid": "Z147",
+  "seed": 2,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "하백의 신부",
+  "dom": "wn",
+  "cand": "신들에게 주워진 남자"
+ },
+ {
+  "pid": "Z137",
+  "seed": 2,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "The Counter Gambit",
+  "dom": "wn",
+  "cand": "신이지만 흙수저입니다"
+ },
+ {
+  "pid": "Z231",
+  "seed": 2,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "하백의 신부",
+  "dom": "wn",
+  "cand": "신이지만 흙수저입니다"
+ },
+ {
+  "pid": "Z225",
+  "seed": 2,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "The Counter Gambit",
+  "dom": "steam",
+  "cand": "Pick My Heart Chapter 2"
+ },
+ {
+  "pid": "Z414",
+  "seed": 2,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "하백의 신부",
+  "dom": "steam",
+  "cand": "Pick My Heart Chapter 2"
+ },
+ {
+  "pid": "Z339",
+  "seed": 2,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "The Counter Gambit",
+  "dom": "steam",
+  "cand": "Internal Affairs: Love Parliament!"
+ },
+ {
+  "pid": "Z372",
+  "seed": 2,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "하백의 신부",
+  "dom": "steam",
+  "cand": "Internal Affairs: Love Parliament!"
+ },
+ {
+  "pid": "Z065",
+  "seed": 2,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "The Counter Gambit",
+  "dom": "steam",
+  "cand": "Celestia: Chain of Fate"
+ },
+ {
+  "pid": "Z127",
+  "seed": 2,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "하백의 신부",
+  "dom": "steam",
+  "cand": "Celestia: Chain of Fate"
+ },
+ {
+  "pid": "Z009",
+  "seed": 2,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "The Counter Gambit",
+  "dom": "steam",
+  "cand": "Pick My Heart Chapter 1"
+ },
+ {
+  "pid": "Z100",
+  "seed": 2,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "하백의 신부",
+  "dom": "steam",
+  "cand": "Pick My Heart Chapter 1"
+ },
+ {
+  "pid": "Z451",
+  "seed": 2,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "The Counter Gambit",
+  "dom": "steam",
+  "cand": "My Days with the Demoness"
+ },
+ {
+  "pid": "Z235",
+  "seed": 2,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "하백의 신부",
+  "dom": "steam",
+  "cand": "My Days with the Demoness"
+ },
+ {
+  "pid": "Z400",
+  "seed": 2,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "The Counter Gambit",
+  "dom": "steam",
+  "cand": "人间 The Lost We Lost"
+ },
+ {
+  "pid": "Z224",
+  "seed": 2,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "하백의 신부",
+  "dom": "steam",
+  "cand": "人间 The Lost We Lost"
+ },
+ {
+  "pid": "Z050",
+  "seed": 2,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "The Counter Gambit",
+  "dom": "steam",
+  "cand": "Chasing Tails ~A Promise in the Snow~"
+ },
+ {
+  "pid": "Z380",
+  "seed": 2,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "하백의 신부",
+  "dom": "steam",
+  "cand": "Chasing Tails ~A Promise in the Snow~"
+ },
+ {
+  "pid": "Z399",
+  "seed": 2,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "The Counter Gambit",
+  "dom": "steam",
+  "cand": "Thorned Gaze"
+ },
+ {
+  "pid": "Z389",
+  "seed": 2,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "하백의 신부",
+  "dom": "steam",
+  "cand": "Thorned Gaze"
+ },
+ {
+  "pid": "Z254",
+  "seed": 2,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "The Counter Gambit",
+  "dom": "steam",
+  "cand": "Analogue: A Hate Story"
+ },
+ {
+  "pid": "Z200",
+  "seed": 2,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "하백의 신부",
+  "dom": "steam",
+  "cand": "Analogue: A Hate Story"
+ },
+ {
+  "pid": "Z253",
+  "seed": 2,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "The Counter Gambit",
+  "dom": "steam",
+  "cand": "Hello Lady! - Complete Edition"
+ },
+ {
+  "pid": "Z246",
+  "seed": 2,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "하백의 신부",
+  "dom": "steam",
+  "cand": "Hello Lady! - Complete Edition"
+ },
+ {
+  "pid": "Z132",
+  "seed": 2,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "The Counter Gambit",
+  "dom": "tmdb",
+  "cand": "이웃집에 신이 산다"
+ },
+ {
+  "pid": "Z093",
+  "seed": 2,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "하백의 신부",
+  "dom": "tmdb",
+  "cand": "이웃집에 신이 산다"
+ },
+ {
+  "pid": "Z323",
+  "seed": 2,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "The Counter Gambit",
+  "dom": "tmdb",
+  "cand": "충사 -방울 물방울-"
+ },
+ {
+  "pid": "Z011",
+  "seed": 2,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "하백의 신부",
+  "dom": "tmdb",
+  "cand": "충사 -방울 물방울-"
+ },
+ {
+  "pid": "Z332",
+  "seed": 2,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "The Counter Gambit",
+  "dom": "tmdb",
+  "cand": "쾌락 궁전의 창립"
+ },
+ {
+  "pid": "Z327",
+  "seed": 2,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "하백의 신부",
+  "dom": "tmdb",
+  "cand": "쾌락 궁전의 창립"
+ },
+ {
+  "pid": "Z028",
+  "seed": 2,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "The Counter Gambit",
+  "dom": "tmdb",
+  "cand": "오! 나의 여신님"
+ },
+ {
+  "pid": "Z060",
+  "seed": 2,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "하백의 신부",
+  "dom": "tmdb",
+  "cand": "오! 나의 여신님"
+ },
+ {
+  "pid": "Z392",
+  "seed": 2,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "The Counter Gambit",
+  "dom": "tmdb",
+  "cand": "신만이 아는 세계"
+ },
+ {
+  "pid": "Z135",
+  "seed": 2,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "하백의 신부",
+  "dom": "tmdb",
+  "cand": "신만이 아는 세계"
+ },
+ {
+  "pid": "Z071",
+  "seed": 2,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "The Counter Gambit",
+  "dom": "tmdb",
+  "cand": "프리징"
+ },
+ {
+  "pid": "Z031",
+  "seed": 2,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "하백의 신부",
+  "dom": "tmdb",
+  "cand": "프리징"
+ },
+ {
+  "pid": "Z082",
+  "seed": 2,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "The Counter Gambit",
+  "dom": "tmdb",
+  "cand": "신을 죽여라"
+ },
+ {
+  "pid": "Z203",
+  "seed": 2,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "하백의 신부",
+  "dom": "tmdb",
+  "cand": "신을 죽여라"
+ },
+ {
+  "pid": "Z373",
+  "seed": 2,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "The Counter Gambit",
+  "dom": "tmdb",
+  "cand": "구가의 서"
+ },
+ {
+  "pid": "Z017",
+  "seed": 2,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "하백의 신부",
+  "dom": "tmdb",
+  "cand": "구가의 서"
+ },
+ {
+  "pid": "Z074",
+  "seed": 2,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "신과 함께 미술천재",
+  "dom": "wn",
+  "cand": "신의 조각을 품은 남자"
+ },
+ {
+  "pid": "Z047",
+  "seed": 2,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "다시 태어나도 심하게 잘 만듦",
+  "dom": "wn",
+  "cand": "신의 조각을 품은 남자"
+ },
+ {
+  "pid": "Z199",
+  "seed": 2,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "신과 함께 미술천재",
+  "dom": "wn",
+  "cand": "신선 한번 해 보려고 귀환했다"
+ },
+ {
+  "pid": "Z201",
+  "seed": 2,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "다시 태어나도 심하게 잘 만듦",
+  "dom": "wn",
+  "cand": "신선 한번 해 보려고 귀환했다"
+ },
+ {
+  "pid": "Z403",
+  "seed": 2,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "신과 함께 미술천재",
+  "dom": "steam",
+  "cand": "봄이 오면 꽃이 피고"
+ },
+ {
+  "pid": "Z069",
+  "seed": 2,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "다시 태어나도 심하게 잘 만듦",
+  "dom": "steam",
+  "cand": "봄이 오면 꽃이 피고"
+ },
+ {
+  "pid": "Z038",
+  "seed": 2,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "신과 함께 미술천재",
+  "dom": "steam",
+  "cand": "Sleepover"
+ },
+ {
+  "pid": "Z155",
+  "seed": 2,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "다시 태어나도 심하게 잘 만듦",
+  "dom": "steam",
+  "cand": "Sleepover"
+ },
+ {
+  "pid": "Z167",
+  "seed": 2,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "신과 함께 미술천재",
+  "dom": "steam",
+  "cand": "나는 벌을 의뢰했다 13"
+ },
+ {
+  "pid": "Z109",
+  "seed": 2,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "다시 태어나도 심하게 잘 만듦",
+  "dom": "steam",
+  "cand": "나는 벌을 의뢰했다 13"
+ },
+ {
+  "pid": "Z364",
+  "seed": 2,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "신과 함께 미술천재",
+  "dom": "steam",
+  "cand": "The Counter Gambit"
+ },
+ {
+  "pid": "Z233",
+  "seed": 2,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "다시 태어나도 심하게 잘 만듦",
+  "dom": "steam",
+  "cand": "The Counter Gambit"
+ },
+ {
+  "pid": "Z124",
+  "seed": 2,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "신과 함께 미술천재",
+  "dom": "steam",
+  "cand": "뱀과 새"
+ },
+ {
+  "pid": "Z445",
+  "seed": 2,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "다시 태어나도 심하게 잘 만듦",
+  "dom": "steam",
+  "cand": "뱀과 새"
+ },
+ {
+  "pid": "Z374",
+  "seed": 2,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "신과 함께 미술천재",
+  "dom": "steam",
+  "cand": "희생의 아파트"
+ },
+ {
+  "pid": "Z138",
+  "seed": 2,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "다시 태어나도 심하게 잘 만듦",
+  "dom": "steam",
+  "cand": "희생의 아파트"
+ },
+ {
+  "pid": "Z245",
+  "seed": 2,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "신과 함께 미술천재",
+  "dom": "steam",
+  "cand": "Poor Samantha"
+ },
+ {
+  "pid": "Z307",
+  "seed": 2,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "다시 태어나도 심하게 잘 만듦",
+  "dom": "steam",
+  "cand": "Poor Samantha"
+ },
+ {
+  "pid": "Z296",
+  "seed": 2,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "신과 함께 미술천재",
+  "dom": "steam",
+  "cand": "The Gray-Crowned Reincarnate"
+ },
+ {
+  "pid": "Z336",
+  "seed": 2,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "다시 태어나도 심하게 잘 만듦",
+  "dom": "steam",
+  "cand": "The Gray-Crowned Reincarnate"
+ },
+ {
+  "pid": "Z001",
+  "seed": 2,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "신과 함께 미술천재",
+  "dom": "steam",
+  "cand": "HAPPY SAIN† SHEOL"
+ },
+ {
+  "pid": "Z140",
+  "seed": 2,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "다시 태어나도 심하게 잘 만듦",
+  "dom": "steam",
+  "cand": "HAPPY SAIN† SHEOL"
+ },
+ {
+  "pid": "Z441",
+  "seed": 2,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "신과 함께 미술천재",
+  "dom": "tmdb",
+  "cand": "키스 식스 센스"
+ },
+ {
+  "pid": "Z295",
+  "seed": 2,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "다시 태어나도 심하게 잘 만듦",
+  "dom": "tmdb",
+  "cand": "키스 식스 센스"
+ },
+ {
+  "pid": "Z210",
+  "seed": 2,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "신과 함께 미술천재",
+  "dom": "tmdb",
+  "cand": "이웃집에 신이 산다"
+ },
+ {
+  "pid": "Z040",
+  "seed": 2,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "다시 태어나도 심하게 잘 만듦",
+  "dom": "tmdb",
+  "cand": "이웃집에 신이 산다"
+ },
+ {
+  "pid": "Z036",
+  "seed": 3,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "Lost Lands: Dark Overlord Collector's Edition",
+  "dom": "wn",
+  "cand": "던전팜!"
+ },
+ {
+  "pid": "Z408",
+  "seed": 3,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "변방의 형제들 2",
+  "dom": "wn",
+  "cand": "던전팜!"
+ },
+ {
+  "pid": "Z229",
+  "seed": 3,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "Lost Lands: Dark Overlord Collector's Edition",
+  "dom": "steam",
+  "cand": "Grim Legends: The Forsaken Bride"
+ },
+ {
+  "pid": "Z213",
+  "seed": 3,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "변방의 형제들 2",
+  "dom": "steam",
+  "cand": "Grim Legends: The Forsaken Bride"
+ },
+ {
+  "pid": "Z318",
+  "seed": 3,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "Lost Lands: Dark Overlord Collector's Edition",
+  "dom": "steam",
+  "cand": "Chronicles of Magic: Divided Kingdoms"
+ },
+ {
+  "pid": "Z326",
+  "seed": 3,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "변방의 형제들 2",
+  "dom": "steam",
+  "cand": "Chronicles of Magic: Divided Kingdoms"
+ },
+ {
+  "pid": "Z078",
+  "seed": 3,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "Lost Lands: Dark Overlord Collector's Edition",
+  "dom": "steam",
+  "cand": "Left in the Dark: No One on Board"
+ },
+ {
+  "pid": "Z342",
+  "seed": 3,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "변방의 형제들 2",
+  "dom": "steam",
+  "cand": "Left in the Dark: No One on Board"
+ },
+ {
+  "pid": "Z306",
+  "seed": 3,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "Lost Lands: Dark Overlord Collector's Edition",
+  "dom": "steam",
+  "cand": "Endless Fables 4: Shadow Within"
+ },
+ {
+  "pid": "Z269",
+  "seed": 3,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "변방의 형제들 2",
+  "dom": "steam",
+  "cand": "Endless Fables 4: Shadow Within"
+ },
+ {
+  "pid": "Z290",
+  "seed": 3,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "Lost Lands: Dark Overlord Collector's Edition",
+  "dom": "steam",
+  "cand": "Two Realms: Whispers from the Rift"
+ },
+ {
+  "pid": "Z123",
+  "seed": 3,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "변방의 형제들 2",
+  "dom": "steam",
+  "cand": "Two Realms: Whispers from the Rift"
+ },
+ {
+  "pid": "Z144",
+  "seed": 3,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "Lost Lands: Dark Overlord Collector's Edition",
+  "dom": "steam",
+  "cand": "Revive"
+ },
+ {
+  "pid": "Z178",
+  "seed": 3,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "변방의 형제들 2",
+  "dom": "steam",
+  "cand": "Revive"
+ },
+ {
+  "pid": "Z058",
+  "seed": 3,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "Lost Lands: Dark Overlord Collector's Edition",
+  "dom": "steam",
+  "cand": "Grim Tales: The Heir Collector's Edition"
+ },
+ {
+  "pid": "Z007",
+  "seed": 3,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "변방의 형제들 2",
+  "dom": "steam",
+  "cand": "Grim Tales: The Heir Collector's Edition"
+ },
+ {
+  "pid": "Z029",
+  "seed": 3,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "Lost Lands: Dark Overlord Collector's Edition",
+  "dom": "steam",
+  "cand": "The Secret Order 7: Shadow Breach"
+ },
+ {
+  "pid": "Z258",
+  "seed": 3,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "변방의 형제들 2",
+  "dom": "steam",
+  "cand": "The Secret Order 7: Shadow Breach"
+ },
+ {
+  "pid": "Z309",
+  "seed": 3,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "Lost Lands: Dark Overlord Collector's Edition",
+  "dom": "steam",
+  "cand": "Fairy Godmother Stories: Puss in Boots Collector's Edition"
+ },
+ {
+  "pid": "Z097",
+  "seed": 3,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "변방의 형제들 2",
+  "dom": "steam",
+  "cand": "Fairy Godmother Stories: Puss in Boots Collector's Edition"
+ },
+ {
+  "pid": "Z422",
+  "seed": 3,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "Lost Lands: Dark Overlord Collector's Edition",
+  "dom": "steam",
+  "cand": "Gloom"
+ },
+ {
+  "pid": "Z056",
+  "seed": 3,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "변방의 형제들 2",
+  "dom": "steam",
+  "cand": "Gloom"
+ },
+ {
+  "pid": "Z356",
+  "seed": 3,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "Lost Lands: Dark Overlord Collector's Edition",
+  "dom": "tmdb",
+  "cand": "변방의 형제들 3"
+ },
+ {
+  "pid": "Z447",
+  "seed": 3,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "변방의 형제들 2",
+  "dom": "tmdb",
+  "cand": "변방의 형제들 3"
+ },
+ {
+  "pid": "Z361",
+  "seed": 3,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "Lost Lands: Dark Overlord Collector's Edition",
+  "dom": "tmdb",
+  "cand": "변방의 형제들"
+ },
+ {
+  "pid": "Z207",
+  "seed": 3,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "변방의 형제들 2",
+  "dom": "tmdb",
+  "cand": "변방의 형제들"
+ },
+ {
+  "pid": "Z366",
+  "seed": 3,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "Lost Lands: Dark Overlord Collector's Edition",
+  "dom": "tmdb",
+  "cand": "어둠 속에서 울려 퍼지는"
+ },
+ {
+  "pid": "Z067",
+  "seed": 3,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "변방의 형제들 2",
+  "dom": "tmdb",
+  "cand": "어둠 속에서 울려 퍼지는"
+ },
+ {
+  "pid": "Z350",
+  "seed": 3,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "Lost Lands: Dark Overlord Collector's Edition",
+  "dom": "tmdb",
+  "cand": "블루 루인"
+ },
+ {
+  "pid": "Z311",
+  "seed": 3,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "변방의 형제들 2",
+  "dom": "tmdb",
+  "cand": "블루 루인"
+ },
+ {
+  "pid": "Z183",
+  "seed": 3,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "Lost Lands: Dark Overlord Collector's Edition",
+  "dom": "tmdb",
+  "cand": "뱀파이어들"
+ },
+ {
+  "pid": "Z185",
+  "seed": 3,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "변방의 형제들 2",
+  "dom": "tmdb",
+  "cand": "뱀파이어들"
+ },
+ {
+  "pid": "Z208",
+  "seed": 3,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "Lost Lands: Dark Overlord Collector's Edition",
+  "dom": "tmdb",
+  "cand": "팬"
+ },
+ {
+  "pid": "Z337",
+  "seed": 3,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "변방의 형제들 2",
+  "dom": "tmdb",
+  "cand": "팬"
+ },
+ {
+  "pid": "Z076",
+  "seed": 3,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "Lost Lands: Dark Overlord Collector's Edition",
+  "dom": "tmdb",
+  "cand": "비키니 워리어즈"
+ },
+ {
+  "pid": "Z395",
+  "seed": 3,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "변방의 형제들 2",
+  "dom": "tmdb",
+  "cand": "비키니 워리어즈"
+ },
+ {
+  "pid": "Z153",
+  "seed": 3,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "Lost Lands: Dark Overlord Collector's Edition",
+  "dom": "tmdb",
+  "cand": "컴 투 대디: 30년만의 재회"
+ },
+ {
+  "pid": "Z164",
+  "seed": 3,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "변방의 형제들 2",
+  "dom": "tmdb",
+  "cand": "컴 투 대디: 30년만의 재회"
+ },
+ {
+  "pid": "Z277",
+  "seed": 3,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "폐급 후손으로 환생했다",
+  "dom": "steam",
+  "cand": "Come to my party!"
+ },
+ {
+  "pid": "Z284",
+  "seed": 3,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "다시 태어난 반 고흐",
+  "dom": "steam",
+  "cand": "Come to my party!"
+ },
+ {
+  "pid": "Z263",
+  "seed": 3,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "폐급 후손으로 환생했다",
+  "dom": "steam",
+  "cand": "Revive"
+ },
+ {
+  "pid": "Z019",
+  "seed": 3,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "다시 태어난 반 고흐",
+  "dom": "steam",
+  "cand": "Revive"
+ },
+ {
+  "pid": "Z377",
+  "seed": 3,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "폐급 후손으로 환생했다",
+  "dom": "steam",
+  "cand": "파샤 행성: 부활"
+ },
+ {
+  "pid": "Z456",
+  "seed": 3,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "다시 태어난 반 고흐",
+  "dom": "steam",
+  "cand": "파샤 행성: 부활"
+ },
+ {
+  "pid": "Z086",
+  "seed": 3,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "폐급 후손으로 환생했다",
+  "dom": "steam",
+  "cand": "스포일러가 너무 심한 RPG2 ―절친의 본모습은 대마왕―"
+ },
+ {
+  "pid": "Z237",
+  "seed": 3,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "다시 태어난 반 고흐",
+  "dom": "steam",
+  "cand": "스포일러가 너무 심한 RPG2 ―절친의 본모습은 대마왕―"
+ },
+ {
+  "pid": "Z021",
+  "seed": 3,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "폐급 후손으로 환생했다",
+  "dom": "steam",
+  "cand": "The Meridian Under the Heaven: Valhalla"
+ },
+ {
+  "pid": "Z156",
+  "seed": 3,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "다시 태어난 반 고흐",
+  "dom": "steam",
+  "cand": "The Meridian Under the Heaven: Valhalla"
+ },
+ {
+  "pid": "Z013",
+  "seed": 3,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "폐급 후손으로 환생했다",
+  "dom": "steam",
+  "cand": "LOOM™"
+ },
+ {
+  "pid": "Z292",
+  "seed": 3,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "다시 태어난 반 고흐",
+  "dom": "steam",
+  "cand": "LOOM™"
+ },
+ {
+  "pid": "Z003",
+  "seed": 3,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "폐급 후손으로 환생했다",
+  "dom": "steam",
+  "cand": "Last Light"
+ },
+ {
+  "pid": "Z436",
+  "seed": 3,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "다시 태어난 반 고흐",
+  "dom": "steam",
+  "cand": "Last Light"
+ },
+ {
+  "pid": "Z410",
+  "seed": 3,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "폐급 후손으로 환생했다",
+  "dom": "tmdb",
+  "cand": "뱀파이어들"
+ },
+ {
+  "pid": "Z152",
+  "seed": 3,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "다시 태어난 반 고흐",
+  "dom": "tmdb",
+  "cand": "뱀파이어들"
+ },
+ {
+  "pid": "Z122",
+  "seed": 3,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "폐급 후손으로 환생했다",
+  "dom": "tmdb",
+  "cand": "블루 루인"
+ },
+ {
+  "pid": "Z145",
+  "seed": 3,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "다시 태어난 반 고흐",
+  "dom": "tmdb",
+  "cand": "블루 루인"
+ },
+ {
+  "pid": "Z018",
+  "seed": 3,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "폐급 후손으로 환생했다",
+  "dom": "tmdb",
+  "cand": "전부 불 전부 연기"
+ },
+ {
+  "pid": "Z228",
+  "seed": 3,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "다시 태어난 반 고흐",
+  "dom": "tmdb",
+  "cand": "전부 불 전부 연기"
+ },
+ {
+  "pid": "Z278",
+  "seed": 3,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "폐급 후손으로 환생했다",
+  "dom": "tmdb",
+  "cand": "팬"
+ },
+ {
+  "pid": "Z149",
+  "seed": 3,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "다시 태어난 반 고흐",
+  "dom": "tmdb",
+  "cand": "팬"
+ },
+ {
+  "pid": "Z314",
+  "seed": 3,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "폐급 후손으로 환생했다",
+  "dom": "tmdb",
+  "cand": "컴 투 대디: 30년만의 재회"
+ },
+ {
+  "pid": "Z115",
+  "seed": 3,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "다시 태어난 반 고흐",
+  "dom": "tmdb",
+  "cand": "컴 투 대디: 30년만의 재회"
+ },
+ {
+  "pid": "Z043",
+  "seed": 3,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "폐급 후손으로 환생했다",
+  "dom": "tmdb",
+  "cand": "러브 어페어: 우리가 말하는 것, 우리가 생각하는 것"
+ },
+ {
+  "pid": "Z239",
+  "seed": 3,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "다시 태어난 반 고흐",
+  "dom": "tmdb",
+  "cand": "러브 어페어: 우리가 말하는 것, 우리가 생각하는 것"
+ },
+ {
+  "pid": "Z041",
+  "seed": 3,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "폐급 후손으로 환생했다",
+  "dom": "tmdb",
+  "cand": "포레스트 검프"
+ },
+ {
+  "pid": "Z096",
+  "seed": 3,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "다시 태어난 반 고흐",
+  "dom": "tmdb",
+  "cand": "포레스트 검프"
+ },
+ {
+  "pid": "Z352",
+  "seed": 3,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "폐급 후손으로 환생했다",
+  "dom": "tmdb",
+  "cand": "토카레브"
+ },
+ {
+  "pid": "Z448",
+  "seed": 3,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "다시 태어난 반 고흐",
+  "dom": "tmdb",
+  "cand": "토카레브"
+ },
+ {
+  "pid": "Z051",
+  "seed": 4,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "Queen's Revolution ~ the romance in upheavals ~",
+  "dom": "steam",
+  "cand": "아르카디아의 연금술사"
+ },
+ {
+  "pid": "Z103",
+  "seed": 4,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "와호장룡",
+  "dom": "steam",
+  "cand": "아르카디아의 연금술사"
+ },
+ {
+  "pid": "Z419",
+  "seed": 4,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "Queen's Revolution ~ the romance in upheavals ~",
+  "dom": "steam",
+  "cand": "봄이 오면 꽃이 피고"
+ },
+ {
+  "pid": "Z214",
+  "seed": 4,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "와호장룡",
+  "dom": "steam",
+  "cand": "봄이 오면 꽃이 피고"
+ },
+ {
+  "pid": "Z255",
+  "seed": 4,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "Queen's Revolution ~ the romance in upheavals ~",
+  "dom": "steam",
+  "cand": "이어진 마음: 보름달의 저주 컬렉터 에디션"
+ },
+ {
+  "pid": "Z413",
+  "seed": 4,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "와호장룡",
+  "dom": "steam",
+  "cand": "이어진 마음: 보름달의 저주 컬렉터 에디션"
+ },
+ {
+  "pid": "Z179",
+  "seed": 4,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "Queen's Revolution ~ the romance in upheavals ~",
+  "dom": "steam",
+  "cand": "The Meridian Under the Heaven: Valhalla"
+ },
+ {
+  "pid": "Z016",
+  "seed": 4,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "와호장룡",
+  "dom": "steam",
+  "cand": "The Meridian Under the Heaven: Valhalla"
+ },
+ {
+  "pid": "Z090",
+  "seed": 4,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "Queen's Revolution ~ the romance in upheavals ~",
+  "dom": "steam",
+  "cand": "그랑 엠파이어 : 아마네"
+ },
+ {
+  "pid": "Z230",
+  "seed": 4,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "와호장룡",
+  "dom": "steam",
+  "cand": "그랑 엠파이어 : 아마네"
+ },
+ {
+  "pid": "Z107",
+  "seed": 4,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "Queen's Revolution ~ the romance in upheavals ~",
+  "dom": "steam",
+  "cand": "위험한 그놈들-여성향 스릴러 연애 스토리"
+ },
+ {
+  "pid": "Z189",
+  "seed": 4,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "와호장룡",
+  "dom": "steam",
+  "cand": "위험한 그놈들-여성향 스릴러 연애 스토리"
+ },
+ {
+  "pid": "Z250",
+  "seed": 4,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "Queen's Revolution ~ the romance in upheavals ~",
+  "dom": "steam",
+  "cand": "청춘 프레임"
+ },
+ {
+  "pid": "Z437",
+  "seed": 4,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "와호장룡",
+  "dom": "steam",
+  "cand": "청춘 프레임"
+ },
+ {
+  "pid": "Z080",
+  "seed": 4,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "Queen's Revolution ~ the romance in upheavals ~",
+  "dom": "steam",
+  "cand": "Celestia: Chain of Fate"
+ },
+ {
+  "pid": "Z215",
+  "seed": 4,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "와호장룡",
+  "dom": "steam",
+  "cand": "Celestia: Chain of Fate"
+ },
+ {
+  "pid": "Z299",
+  "seed": 4,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "Queen's Revolution ~ the romance in upheavals ~",
+  "dom": "tmdb",
+  "cand": "영야성하"
+ },
+ {
+  "pid": "Z176",
+  "seed": 4,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "와호장룡",
+  "dom": "tmdb",
+  "cand": "영야성하"
+ },
+ {
+  "pid": "Z260",
+  "seed": 4,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "용장귀환",
+  "dom": "steam",
+  "cand": "Revive"
+ },
+ {
+  "pid": "Z454",
+  "seed": 4,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "용제검전",
+  "dom": "steam",
+  "cand": "Revive"
+ },
+ {
+  "pid": "Z154",
+  "seed": 4,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "용장귀환",
+  "dom": "steam",
+  "cand": "봄이 오면 꽃이 피고"
+ },
+ {
+  "pid": "Z055",
+  "seed": 4,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "용제검전",
+  "dom": "steam",
+  "cand": "봄이 오면 꽃이 피고"
+ },
+ {
+  "pid": "Z024",
+  "seed": 4,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "용장귀환",
+  "dom": "steam",
+  "cand": "랑그릿사 I & II"
+ },
+ {
+  "pid": "Z421",
+  "seed": 4,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "용제검전",
+  "dom": "steam",
+  "cand": "랑그릿사 I & II"
+ },
+ {
+  "pid": "Z345",
+  "seed": 4,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "용장귀환",
+  "dom": "steam",
+  "cand": "LOOM™"
+ },
+ {
+  "pid": "Z091",
+  "seed": 4,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "용제검전",
+  "dom": "steam",
+  "cand": "LOOM™"
+ },
+ {
+  "pid": "Z148",
+  "seed": 4,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "용장귀환",
+  "dom": "tmdb",
+  "cand": "마도정병의 슬레이브"
+ },
+ {
+  "pid": "Z012",
+  "seed": 4,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "용제검전",
+  "dom": "tmdb",
+  "cand": "마도정병의 슬레이브"
+ },
+ {
+  "pid": "Z151",
+  "seed": 4,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "용장귀환",
+  "dom": "tmdb",
+  "cand": "레미제라블"
+ },
+ {
+  "pid": "Z298",
+  "seed": 4,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "용제검전",
+  "dom": "tmdb",
+  "cand": "레미제라블"
+ },
+ {
+  "pid": "Z236",
+  "seed": 4,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "용장귀환",
+  "dom": "tmdb",
+  "cand": "디 워"
+ },
+ {
+  "pid": "Z383",
+  "seed": 4,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "용제검전",
+  "dom": "tmdb",
+  "cand": "디 워"
+ },
+ {
+  "pid": "Z089",
+  "seed": 5,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "로도스도 전기 - 디드리트 인 원더 라비린스",
+  "dom": "steam",
+  "cand": "Blade of Mercy: Bloody Countess"
+ },
+ {
+  "pid": "Z371",
+  "seed": 5,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "나 혼자만 레벨업 -리어웨이크닝-",
+  "dom": "steam",
+  "cand": "Blade of Mercy: Bloody Countess"
+ },
+ {
+  "pid": "Z223",
+  "seed": 5,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "로도스도 전기 - 디드리트 인 원더 라비린스",
+  "dom": "steam",
+  "cand": "Another Sight - Definitive Edition"
+ },
+ {
+  "pid": "Z390",
+  "seed": 5,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "나 혼자만 레벨업 -리어웨이크닝-",
+  "dom": "steam",
+  "cand": "Another Sight - Definitive Edition"
+ },
+ {
+  "pid": "Z085",
+  "seed": 5,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "로도스도 전기 - 디드리트 인 원더 라비린스",
+  "dom": "steam",
+  "cand": "Souldiers"
+ },
+ {
+  "pid": "Z163",
+  "seed": 5,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "나 혼자만 레벨업 -리어웨이크닝-",
+  "dom": "steam",
+  "cand": "Souldiers"
+ },
+ {
+  "pid": "Z429",
+  "seed": 5,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "로도스도 전기 - 디드리트 인 원더 라비린스",
+  "dom": "steam",
+  "cand": "Stories of Somnia"
+ },
+ {
+  "pid": "Z133",
+  "seed": 5,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "나 혼자만 레벨업 -리어웨이크닝-",
+  "dom": "steam",
+  "cand": "Stories of Somnia"
+ },
+ {
+  "pid": "Z446",
+  "seed": 5,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "로도스도 전기 - 디드리트 인 원더 라비린스",
+  "dom": "steam",
+  "cand": "Rusty Rangers"
+ },
+ {
+  "pid": "Z191",
+  "seed": 5,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "나 혼자만 레벨업 -리어웨이크닝-",
+  "dom": "steam",
+  "cand": "Rusty Rangers"
+ },
+ {
+  "pid": "Z170",
+  "seed": 5,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "로도스도 전기 - 디드리트 인 원더 라비린스",
+  "dom": "steam",
+  "cand": "TWINSTAR 双星"
+ },
+ {
+  "pid": "Z287",
+  "seed": 5,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "나 혼자만 레벨업 -리어웨이크닝-",
+  "dom": "steam",
+  "cand": "TWINSTAR 双星"
+ },
+ {
+  "pid": "Z362",
+  "seed": 5,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "로도스도 전기 - 디드리트 인 원더 라비린스",
+  "dom": "steam",
+  "cand": "Ebenezer and the Invisible World"
+ },
+ {
+  "pid": "Z064",
+  "seed": 5,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "나 혼자만 레벨업 -리어웨이크닝-",
+  "dom": "steam",
+  "cand": "Ebenezer and the Invisible World"
+ },
+ {
+  "pid": "Z354",
+  "seed": 5,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "로도스도 전기 - 디드리트 인 원더 라비린스",
+  "dom": "steam",
+  "cand": "Gemini X"
+ },
+ {
+  "pid": "Z030",
+  "seed": 5,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "나 혼자만 레벨업 -리어웨이크닝-",
+  "dom": "steam",
+  "cand": "Gemini X"
+ },
+ {
+  "pid": "Z450",
+  "seed": 5,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "로도스도 전기 - 디드리트 인 원더 라비린스",
+  "dom": "steam",
+  "cand": "Ghost Song"
+ },
+ {
+  "pid": "Z205",
+  "seed": 5,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "나 혼자만 레벨업 -리어웨이크닝-",
+  "dom": "steam",
+  "cand": "Ghost Song"
+ },
+ {
+  "pid": "Z335",
+  "seed": 5,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "로도스도 전기 - 디드리트 인 원더 라비린스",
+  "dom": "steam",
+  "cand": "드라큘라: 라스트 헌트"
+ },
+ {
+  "pid": "Z160",
+  "seed": 5,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "나 혼자만 레벨업 -리어웨이크닝-",
+  "dom": "steam",
+  "cand": "드라큘라: 라스트 헌트"
+ },
+ {
+  "pid": "Z209",
+  "seed": 5,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "로도스도 전기 - 디드리트 인 원더 라비린스",
+  "dom": "tmdb",
+  "cand": "원피스 필름 골드"
+ },
+ {
+  "pid": "Z264",
+  "seed": 5,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "나 혼자만 레벨업 -리어웨이크닝-",
+  "dom": "tmdb",
+  "cand": "원피스 필름 골드"
+ },
+ {
+  "pid": "Z112",
+  "seed": 5,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "로도스도 전기 - 디드리트 인 원더 라비린스",
+  "dom": "tmdb",
+  "cand": "극장판 포켓몬스터: 루기아의 탄생"
+ },
+ {
+  "pid": "Z204",
+  "seed": 5,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "나 혼자만 레벨업 -리어웨이크닝-",
+  "dom": "tmdb",
+  "cand": "극장판 포켓몬스터: 루기아의 탄생"
+ },
+ {
+  "pid": "Z130",
+  "seed": 5,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "SSS급 버그를 쓰는 게이머",
+  "dom": "steam",
+  "cand": "Hotel Security"
+ },
+ {
+  "pid": "Z240",
+  "seed": 5,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "레벨업의 제왕",
+  "dom": "steam",
+  "cand": "Hotel Security"
+ },
+ {
+  "pid": "Z370",
+  "seed": 5,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "SSS급 버그를 쓰는 게이머",
+  "dom": "steam",
+  "cand": "홀 펀치 칵테일"
+ },
+ {
+  "pid": "Z256",
+  "seed": 5,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "레벨업의 제왕",
+  "dom": "steam",
+  "cand": "홀 펀치 칵테일"
+ },
+ {
+  "pid": "Z146",
+  "seed": 5,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "SSS급 버그를 쓰는 게이머",
+  "dom": "steam",
+  "cand": "Henosis™"
+ },
+ {
+  "pid": "Z321",
+  "seed": 5,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "레벨업의 제왕",
+  "dom": "steam",
+  "cand": "Henosis™"
+ },
+ {
+  "pid": "Z006",
+  "seed": 5,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "SSS급 버그를 쓰는 게이머",
+  "dom": "steam",
+  "cand": "AFK Shift"
+ },
+ {
+  "pid": "Z289",
+  "seed": 5,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "레벨업의 제왕",
+  "dom": "steam",
+  "cand": "AFK Shift"
+ },
+ {
+  "pid": "Z433",
+  "seed": 5,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "SSS급 버그를 쓰는 게이머",
+  "dom": "steam",
+  "cand": "Another Sight - Definitive Edition"
+ },
+ {
+  "pid": "Z276",
+  "seed": 5,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "레벨업의 제왕",
+  "dom": "steam",
+  "cand": "Another Sight - Definitive Edition"
+ },
+ {
+  "pid": "Z302",
+  "seed": 5,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "SSS급 버그를 쓰는 게이머",
+  "dom": "steam",
+  "cand": "Princess Maker ~Faery Tales Come True~ (HD Remake)"
+ },
+ {
+  "pid": "Z386",
+  "seed": 5,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "레벨업의 제왕",
+  "dom": "steam",
+  "cand": "Princess Maker ~Faery Tales Come True~ (HD Remake)"
+ },
+ {
+  "pid": "Z106",
+  "seed": 5,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "SSS급 버그를 쓰는 게이머",
+  "dom": "steam",
+  "cand": "GAME.exe 2 - Phantom Strike"
+ },
+ {
+  "pid": "Z343",
+  "seed": 5,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "레벨업의 제왕",
+  "dom": "steam",
+  "cand": "GAME.exe 2 - Phantom Strike"
+ },
+ {
+  "pid": "Z197",
+  "seed": 5,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "SSS급 버그를 쓰는 게이머",
+  "dom": "steam",
+  "cand": "燃爆英雄(Bomb Hero)"
+ },
+ {
+  "pid": "Z426",
+  "seed": 5,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "레벨업의 제왕",
+  "dom": "steam",
+  "cand": "燃爆英雄(Bomb Hero)"
+ },
+ {
+  "pid": "Z244",
+  "seed": 5,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "SSS급 버그를 쓰는 게이머",
+  "dom": "steam",
+  "cand": "Space Kettle"
+ },
+ {
+  "pid": "Z054",
+  "seed": 5,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "레벨업의 제왕",
+  "dom": "steam",
+  "cand": "Space Kettle"
+ },
+ {
+  "pid": "Z393",
+  "seed": 6,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "Princess Maker ~Faery Tales Come True~ (HD Remake)",
+  "dom": "wn",
+  "cand": "애완용 늑대 황자가 내게 집착한다"
+ },
+ {
+  "pid": "Z388",
+  "seed": 6,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "고양이의 보은",
+  "dom": "wn",
+  "cand": "애완용 늑대 황자가 내게 집착한다"
+ },
+ {
+  "pid": "Z238",
+  "seed": 6,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "Princess Maker ~Faery Tales Come True~ (HD Remake)",
+  "dom": "steam",
+  "cand": "거짓말쟁이 왕을 속이는 방법 REMASTERED"
+ },
+ {
+  "pid": "Z404",
+  "seed": 6,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "고양이의 보은",
+  "dom": "steam",
+  "cand": "거짓말쟁이 왕을 속이는 방법 REMASTERED"
+ },
+ {
+  "pid": "Z165",
+  "seed": 6,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "Princess Maker ~Faery Tales Come True~ (HD Remake)",
+  "dom": "steam",
+  "cand": "Mhakna Gramura and Fairy Bell"
+ },
+ {
+  "pid": "Z401",
+  "seed": 6,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "고양이의 보은",
+  "dom": "steam",
+  "cand": "Mhakna Gramura and Fairy Bell"
+ },
+ {
+  "pid": "Z057",
+  "seed": 6,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "Princess Maker ~Faery Tales Come True~ (HD Remake)",
+  "dom": "steam",
+  "cand": "Meowphoria"
+ },
+ {
+  "pid": "Z443",
+  "seed": 6,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "고양이의 보은",
+  "dom": "steam",
+  "cand": "Meowphoria"
+ },
+ {
+  "pid": "Z376",
+  "seed": 6,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "Princess Maker ~Faery Tales Come True~ (HD Remake)",
+  "dom": "steam",
+  "cand": "데몬 터치!"
+ },
+ {
+  "pid": "Z171",
+  "seed": 6,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "고양이의 보은",
+  "dom": "steam",
+  "cand": "데몬 터치!"
+ },
+ {
+  "pid": "Z061",
+  "seed": 6,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "Princess Maker ~Faery Tales Come True~ (HD Remake)",
+  "dom": "tmdb",
+  "cand": "슈렉 2"
+ },
+ {
+  "pid": "Z099",
+  "seed": 6,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "고양이의 보은",
+  "dom": "tmdb",
+  "cand": "슈렉 2"
+ },
+ {
+  "pid": "Z222",
+  "seed": 6,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "Princess Maker ~Faery Tales Come True~ (HD Remake)",
+  "dom": "tmdb",
+  "cand": "트위티의 대모험"
+ },
+ {
+  "pid": "Z294",
+  "seed": 6,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "고양이의 보은",
+  "dom": "tmdb",
+  "cand": "트위티의 대모험"
+ },
+ {
+  "pid": "Z411",
+  "seed": 6,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "Princess Maker ~Faery Tales Come True~ (HD Remake)",
+  "dom": "tmdb",
+  "cand": "장화신은 고양이 디 오리지널"
+ },
+ {
+  "pid": "Z349",
+  "seed": 6,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "고양이의 보은",
+  "dom": "tmdb",
+  "cand": "장화신은 고양이 디 오리지널"
+ },
+ {
+  "pid": "Z077",
+  "seed": 6,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "Princess Maker ~Faery Tales Come True~ (HD Remake)",
+  "dom": "tmdb",
+  "cand": "바비 펄 프린세스"
+ },
+ {
+  "pid": "Z367",
+  "seed": 6,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "고양이의 보은",
+  "dom": "tmdb",
+  "cand": "바비 펄 프린세스"
+ },
+ {
+  "pid": "Z087",
+  "seed": 6,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "Princess Maker ~Faery Tales Come True~ (HD Remake)",
+  "dom": "tmdb",
+  "cand": "극장판 도라에몽: 진구의 아프리카 모험 ~베코와 5인의 탐험대~"
+ },
+ {
+  "pid": "Z434",
+  "seed": 6,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "고양이의 보은",
+  "dom": "tmdb",
+  "cand": "극장판 도라에몽: 진구의 아프리카 모험 ~베코와 5인의 탐험대~"
+ },
+ {
+  "pid": "Z062",
+  "seed": 6,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "Princess Maker ~Faery Tales Come True~ (HD Remake)",
+  "dom": "tmdb",
+  "cand": "숲속왕국의 꿀벌 여왕"
+ },
+ {
+  "pid": "Z173",
+  "seed": 6,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "고양이의 보은",
+  "dom": "tmdb",
+  "cand": "숲속왕국의 꿀벌 여왕"
+ },
+ {
+  "pid": "Z162",
+  "seed": 6,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "Princess Maker ~Faery Tales Come True~ (HD Remake)",
+  "dom": "tmdb",
+  "cand": "슈퍼 마리오 갤럭시"
+ },
+ {
+  "pid": "Z325",
+  "seed": 6,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "고양이의 보은",
+  "dom": "tmdb",
+  "cand": "슈퍼 마리오 갤럭시"
+ },
+ {
+  "pid": "Z098",
+  "seed": 6,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "Princess Maker ~Faery Tales Come True~ (HD Remake)",
+  "dom": "tmdb",
+  "cand": "가필드 2"
+ },
+ {
+  "pid": "Z457",
+  "seed": 6,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "고양이의 보은",
+  "dom": "tmdb",
+  "cand": "가필드 2"
+ },
+ {
+  "pid": "Z423",
+  "seed": 6,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "Princess Maker ~Faery Tales Come True~ (HD Remake)",
+  "dom": "tmdb",
+  "cand": "마이 리틀 포니: 더 무비"
+ },
+ {
+  "pid": "Z033",
+  "seed": 6,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "고양이의 보은",
+  "dom": "tmdb",
+  "cand": "마이 리틀 포니: 더 무비"
+ },
+ {
+  "pid": "Z023",
+  "seed": 6,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "애만 키워도 레벨 업!",
+  "dom": "steam",
+  "cand": "Mhakna Gramura and Fairy Bell"
+ },
+ {
+  "pid": "Z396",
+  "seed": 6,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "레벨업하기 싫은 천마님",
+  "dom": "steam",
+  "cand": "Mhakna Gramura and Fairy Bell"
+ },
+ {
+  "pid": "Z063",
+  "seed": 6,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "애만 키워도 레벨 업!",
+  "dom": "steam",
+  "cand": "Let Me Out"
+ },
+ {
+  "pid": "Z048",
+  "seed": 6,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "레벨업하기 싫은 천마님",
+  "dom": "steam",
+  "cand": "Let Me Out"
+ },
+ {
+  "pid": "Z042",
+  "seed": 6,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "애만 키워도 레벨 업!",
+  "dom": "steam",
+  "cand": "Seed of the Dead: Sweet Home"
+ },
+ {
+  "pid": "Z427",
+  "seed": 6,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "레벨업하기 싫은 천마님",
+  "dom": "steam",
+  "cand": "Seed of the Dead: Sweet Home"
+ },
+ {
+  "pid": "Z329",
+  "seed": 6,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "애만 키워도 레벨 업!",
+  "dom": "steam",
+  "cand": "거짓말쟁이 왕을 속이는 방법 REMASTERED"
+ },
+ {
+  "pid": "Z273",
+  "seed": 6,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "레벨업하기 싫은 천마님",
+  "dom": "steam",
+  "cand": "거짓말쟁이 왕을 속이는 방법 REMASTERED"
+ },
+ {
+  "pid": "Z157",
+  "seed": 6,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "애만 키워도 레벨 업!",
+  "dom": "steam",
+  "cand": "Gachi Dash"
+ },
+ {
+  "pid": "Z168",
+  "seed": 6,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "레벨업하기 싫은 천마님",
+  "dom": "steam",
+  "cand": "Gachi Dash"
+ },
+ {
+  "pid": "Z417",
+  "seed": 6,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "애만 키워도 레벨 업!",
+  "dom": "steam",
+  "cand": "원피스 오디세이"
+ },
+ {
+  "pid": "Z037",
+  "seed": 6,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "레벨업하기 싫은 천마님",
+  "dom": "steam",
+  "cand": "원피스 오디세이"
+ },
+ {
+  "pid": "Z281",
+  "seed": 6,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "애만 키워도 레벨 업!",
+  "dom": "tmdb",
+  "cand": "마이 리틀 포니: 더 무비"
+ },
+ {
+  "pid": "Z081",
+  "seed": 6,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "레벨업하기 싫은 천마님",
+  "dom": "tmdb",
+  "cand": "마이 리틀 포니: 더 무비"
+ },
+ {
+  "pid": "Z073",
+  "seed": 6,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "애만 키워도 레벨 업!",
+  "dom": "tmdb",
+  "cand": "슈퍼 마리오 브라더스"
+ },
+ {
+  "pid": "Z159",
+  "seed": 6,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "레벨업하기 싫은 천마님",
+  "dom": "tmdb",
+  "cand": "슈퍼 마리오 브라더스"
+ },
+ {
+  "pid": "Z195",
+  "seed": 6,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "애만 키워도 레벨 업!",
+  "dom": "tmdb",
+  "cand": "슈퍼 마리오 갤럭시"
+ },
+ {
+  "pid": "Z101",
+  "seed": 6,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "레벨업하기 싫은 천마님",
+  "dom": "tmdb",
+  "cand": "슈퍼 마리오 갤럭시"
+ },
+ {
+  "pid": "Z288",
+  "seed": 6,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "애만 키워도 레벨 업!",
+  "dom": "tmdb",
+  "cand": "바비 펄 프린세스"
+ },
+ {
+  "pid": "Z406",
+  "seed": 6,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "레벨업하기 싫은 천마님",
+  "dom": "tmdb",
+  "cand": "바비 펄 프린세스"
+ },
+ {
+  "pid": "Z117",
+  "seed": 6,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "애만 키워도 레벨 업!",
+  "dom": "tmdb",
+  "cand": "신비한 개구리 나라, 앰피비아"
+ },
+ {
+  "pid": "Z348",
+  "seed": 6,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "레벨업하기 싫은 천마님",
+  "dom": "tmdb",
+  "cand": "신비한 개구리 나라, 앰피비아"
+ },
+ {
+  "pid": "Z432",
+  "seed": 6,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "애만 키워도 레벨 업!",
+  "dom": "tmdb",
+  "cand": "나니아 연대기: 새벽 출정호의 항해"
+ },
+ {
+  "pid": "Z270",
+  "seed": 6,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "레벨업하기 싫은 천마님",
+  "dom": "tmdb",
+  "cand": "나니아 연대기: 새벽 출정호의 항해"
+ },
+ {
+  "pid": "Z142",
+  "seed": 7,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "마녀의 공식: 빛과 함께",
+  "dom": "steam",
+  "cand": "프린세스 메이커 : 예언의 아이들"
+ },
+ {
+  "pid": "Z391",
+  "seed": 7,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "이상한 전생",
+  "dom": "steam",
+  "cand": "프린세스 메이커 : 예언의 아이들"
+ },
+ {
+  "pid": "Z387",
+  "seed": 7,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "마녀의 공식: 빛과 함께",
+  "dom": "steam",
+  "cand": "Princess Tomorrow"
+ },
+ {
+  "pid": "Z452",
+  "seed": 7,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "이상한 전생",
+  "dom": "steam",
+  "cand": "Princess Tomorrow"
+ },
+ {
+  "pid": "Z407",
+  "seed": 7,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "마녀의 공식: 빛과 함께",
+  "dom": "steam",
+  "cand": "프린세스 메이커 ５"
+ },
+ {
+  "pid": "Z092",
+  "seed": 7,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "이상한 전생",
+  "dom": "steam",
+  "cand": "프린세스 메이커 ５"
+ },
+ {
+  "pid": "Z027",
+  "seed": 7,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "마녀의 공식: 빛과 함께",
+  "dom": "steam",
+  "cand": "Daughter of Dawn - 시작의 소녀"
+ },
+ {
+  "pid": "Z316",
+  "seed": 7,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "이상한 전생",
+  "dom": "steam",
+  "cand": "Daughter of Dawn - 시작의 소녀"
+ },
+ {
+  "pid": "Z004",
+  "seed": 7,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "마녀의 공식: 빛과 함께",
+  "dom": "steam",
+  "cand": "소녀육성기록: 격동의 시대"
+ },
+ {
+  "pid": "Z331",
+  "seed": 7,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "이상한 전생",
+  "dom": "steam",
+  "cand": "소녀육성기록: 격동의 시대"
+ },
+ {
+  "pid": "Z129",
+  "seed": 7,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "마녀의 공식: 빛과 함께",
+  "dom": "steam",
+  "cand": "아르카디아의 연금술사"
+ },
+ {
+  "pid": "Z252",
+  "seed": 7,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "이상한 전생",
+  "dom": "steam",
+  "cand": "아르카디아의 연금술사"
+ },
+ {
+  "pid": "Z378",
+  "seed": 7,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "마녀의 공식: 빛과 함께",
+  "dom": "steam",
+  "cand": "Witchveil Hollow"
+ },
+ {
+  "pid": "Z280",
+  "seed": 7,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "이상한 전생",
+  "dom": "steam",
+  "cand": "Witchveil Hollow"
+ },
+ {
+  "pid": "Z428",
+  "seed": 7,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "마녀의 공식: 빛과 함께",
+  "dom": "steam",
+  "cand": "프린세스 메이커 2 리제네레이션"
+ },
+ {
+  "pid": "Z384",
+  "seed": 7,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "이상한 전생",
+  "dom": "steam",
+  "cand": "프린세스 메이커 2 리제네레이션"
+ },
+ {
+  "pid": "Z126",
+  "seed": 7,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "마녀의 공식: 빛과 함께",
+  "dom": "steam",
+  "cand": "Garden Witch Life"
+ },
+ {
+  "pid": "Z303",
+  "seed": 7,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "이상한 전생",
+  "dom": "steam",
+  "cand": "Garden Witch Life"
+ },
+ {
+  "pid": "Z375",
+  "seed": 7,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "마녀의 공식: 빛과 함께",
+  "dom": "tmdb",
+  "cand": "프린스 앤 프린세스"
+ },
+ {
+  "pid": "Z114",
+  "seed": 7,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "이상한 전생",
+  "dom": "tmdb",
+  "cand": "프린스 앤 프린세스"
+ },
+ {
+  "pid": "Z022",
+  "seed": 7,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "마녀의 공식: 빛과 함께",
+  "dom": "tmdb",
+  "cand": "바비 펄 프린세스"
+ },
+ {
+  "pid": "Z190",
+  "seed": 7,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "이상한 전생",
+  "dom": "tmdb",
+  "cand": "바비 펄 프린세스"
+ },
+ {
+  "pid": "Z322",
+  "seed": 7,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "레벨업 못하는 플레이어",
+  "dom": "steam",
+  "cand": "Find You"
+ },
+ {
+  "pid": "Z177",
+  "seed": 7,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "밥만 먹고 레벨업",
+  "dom": "steam",
+  "cand": "Find You"
+ },
+ {
+  "pid": "Z008",
+  "seed": 7,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "레벨업 못하는 플레이어",
+  "dom": "steam",
+  "cand": "Master Maker 3D Ultimate"
+ },
+ {
+  "pid": "Z192",
+  "seed": 7,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "밥만 먹고 레벨업",
+  "dom": "steam",
+  "cand": "Master Maker 3D Ultimate"
+ },
+ {
+  "pid": "Z249",
+  "seed": 7,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "레벨업 못하는 플레이어",
+  "dom": "steam",
+  "cand": "Cafe Dash: Cooking, Diner Game"
+ },
+ {
+  "pid": "Z363",
+  "seed": 7,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "밥만 먹고 레벨업",
+  "dom": "steam",
+  "cand": "Cafe Dash: Cooking, Diner Game"
+ },
+ {
+  "pid": "Z355",
+  "seed": 7,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "레벨업 못하는 플레이어",
+  "dom": "steam",
+  "cand": "피자 위의 인생"
+ },
+ {
+  "pid": "Z344",
+  "seed": 7,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "밥만 먹고 레벨업",
+  "dom": "steam",
+  "cand": "피자 위의 인생"
+ },
+ {
+  "pid": "Z330",
+  "seed": 7,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "레벨업 못하는 플레이어",
+  "dom": "steam",
+  "cand": "토리다마2 -담력 시험-"
+ },
+ {
+  "pid": "Z257",
+  "seed": 7,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "밥만 먹고 레벨업",
+  "dom": "steam",
+  "cand": "토리다마2 -담력 시험-"
+ },
+ {
+  "pid": "Z248",
+  "seed": 7,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "레벨업 못하는 플레이어",
+  "dom": "steam",
+  "cand": "Fish Can Run 2"
+ },
+ {
+  "pid": "Z251",
+  "seed": 7,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "밥만 먹고 레벨업",
+  "dom": "steam",
+  "cand": "Fish Can Run 2"
+ },
+ {
+  "pid": "Z338",
+  "seed": 7,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "레벨업 못하는 플레이어",
+  "dom": "tmdb",
+  "cand": "레몬첼로 도서관 탈출 게임"
+ },
+ {
+  "pid": "Z424",
+  "seed": 7,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "밥만 먹고 레벨업",
+  "dom": "tmdb",
+  "cand": "레몬첼로 도서관 탈출 게임"
+ },
+ {
+  "pid": "Z032",
+  "seed": 8,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "The Meridian Under the Heaven: Valhalla",
+  "dom": "steam",
+  "cand": "美女，请别影响我成仙"
+ },
+ {
+  "pid": "Z110",
+  "seed": 8,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "와호장룡",
+  "dom": "steam",
+  "cand": "美女，请别影响我成仙"
+ },
+ {
+  "pid": "Z425",
+  "seed": 8,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "The Meridian Under the Heaven: Valhalla",
+  "dom": "steam",
+  "cand": "Trap Yuri Tempest"
+ },
+ {
+  "pid": "Z369",
+  "seed": 8,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "와호장룡",
+  "dom": "steam",
+  "cand": "Trap Yuri Tempest"
+ },
+ {
+  "pid": "Z267",
+  "seed": 8,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "The Meridian Under the Heaven: Valhalla",
+  "dom": "steam",
+  "cand": "Lunar Legacy"
+ },
+ {
+  "pid": "Z365",
+  "seed": 8,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "와호장룡",
+  "dom": "steam",
+  "cand": "Lunar Legacy"
+ },
+ {
+  "pid": "Z193",
+  "seed": 8,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "The Meridian Under the Heaven: Valhalla",
+  "dom": "steam",
+  "cand": "무인도 생존 ~ 미녀섬에서 탈출"
+ },
+ {
+  "pid": "Z259",
+  "seed": 8,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "와호장룡",
+  "dom": "steam",
+  "cand": "무인도 생존 ~ 미녀섬에서 탈출"
+ },
+ {
+  "pid": "Z020",
+  "seed": 8,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "The Meridian Under the Heaven: Valhalla",
+  "dom": "steam",
+  "cand": "때 이른 검은 백합"
+ },
+ {
+  "pid": "Z275",
+  "seed": 8,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "와호장룡",
+  "dom": "steam",
+  "cand": "때 이른 검은 백합"
+ },
+ {
+  "pid": "Z220",
+  "seed": 8,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "The Meridian Under the Heaven: Valhalla",
+  "dom": "steam",
+  "cand": "커피여우 김삼월"
+ },
+ {
+  "pid": "Z025",
+  "seed": 8,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "와호장룡",
+  "dom": "steam",
+  "cand": "커피여우 김삼월"
+ },
+ {
+  "pid": "Z402",
+  "seed": 8,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "The Meridian Under the Heaven: Valhalla",
+  "dom": "steam",
+  "cand": "클리어 체리 아이스."
+ },
+ {
+  "pid": "Z440",
+  "seed": 8,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "와호장룡",
+  "dom": "steam",
+  "cand": "클리어 체리 아이스."
+ },
+ {
+  "pid": "Z360",
+  "seed": 8,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "The Meridian Under the Heaven: Valhalla",
+  "dom": "steam",
+  "cand": "봄이 오면 꽃이 피고"
+ },
+ {
+  "pid": "Z385",
+  "seed": 8,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "The Meridian Under the Heaven: Valhalla",
+  "dom": "steam",
+  "cand": "하오웨이1: 너의 독재적인 군벌"
+ },
+ {
+  "pid": "Z226",
+  "seed": 8,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "와호장룡",
+  "dom": "steam",
+  "cand": "하오웨이1: 너의 독재적인 군벌"
+ },
+ {
+  "pid": "Z415",
+  "seed": 8,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "The Meridian Under the Heaven: Valhalla",
+  "dom": "tmdb",
+  "cand": "포획"
+ },
+ {
+  "pid": "Z442",
+  "seed": 8,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "와호장룡",
+  "dom": "tmdb",
+  "cand": "포획"
+ },
+ {
+  "pid": "Z382",
+  "seed": 8,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "풍운방",
+  "dom": "steam",
+  "cand": "The Bunker Notes 벙커일기"
+ },
+ {
+  "pid": "Z397",
+  "seed": 8,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "용제검전",
+  "dom": "steam",
+  "cand": "The Bunker Notes 벙커일기"
+ },
+ {
+  "pid": "Z125",
+  "seed": 8,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "풍운방",
+  "dom": "steam",
+  "cand": "Artemis：We Are Escape"
+ },
+ {
+  "pid": "Z359",
+  "seed": 8,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "용제검전",
+  "dom": "steam",
+  "cand": "Artemis：We Are Escape"
+ },
+ {
+  "pid": "Z285",
+  "seed": 8,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "풍운방",
+  "dom": "steam",
+  "cand": "HAPPY SAIN† SHEOL"
+ },
+ {
+  "pid": "Z212",
+  "seed": 8,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "용제검전",
+  "dom": "steam",
+  "cand": "HAPPY SAIN† SHEOL"
+ },
+ {
+  "pid": "Z243",
+  "seed": 8,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "풍운방",
+  "dom": "tmdb",
+  "cand": "싸반"
+ },
+ {
+  "pid": "Z198",
+  "seed": 8,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "용제검전",
+  "dom": "tmdb",
+  "cand": "싸반"
+ },
+ {
+  "pid": "Z261",
+  "seed": 8,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "풍운방",
+  "dom": "tmdb",
+  "cand": "화이트 앨범 2"
+ },
+ {
+  "pid": "Z175",
+  "seed": 8,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "용제검전",
+  "dom": "tmdb",
+  "cand": "화이트 앨범 2"
+ },
+ {
+  "pid": "Z320",
+  "seed": 9,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "SINce Memories: Off The Starry Sky",
+  "dom": "wn",
+  "cand": "남주가 돈으로 나를 조련한다"
+ },
+ {
+  "pid": "Z328",
+  "seed": 9,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "러브 고즈 커킨 프레이지",
+  "dom": "wn",
+  "cand": "남주가 돈으로 나를 조련한다"
+ },
+ {
+  "pid": "Z310",
+  "seed": 9,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "SINce Memories: Off The Starry Sky",
+  "dom": "wn",
+  "cand": "언니가 남주였다"
+ },
+ {
+  "pid": "Z346",
+  "seed": 9,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "러브 고즈 커킨 프레이지",
+  "dom": "wn",
+  "cand": "언니가 남주였다"
+ },
+ {
+  "pid": "Z026",
+  "seed": 9,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "SINce Memories: Off The Starry Sky",
+  "dom": "wn",
+  "cand": "여주가 내 약혼자와 바람났다"
+ },
+ {
+  "pid": "Z044",
+  "seed": 9,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "러브 고즈 커킨 프레이지",
+  "dom": "wn",
+  "cand": "여주가 내 약혼자와 바람났다"
+ },
+ {
+  "pid": "Z381",
+  "seed": 9,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "SINce Memories: Off The Starry Sky",
+  "dom": "wn",
+  "cand": "악당의 슬기로운 은퇴 계획"
+ },
+ {
+  "pid": "Z305",
+  "seed": 9,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "러브 고즈 커킨 프레이지",
+  "dom": "wn",
+  "cand": "악당의 슬기로운 은퇴 계획"
+ },
+ {
+  "pid": "Z219",
+  "seed": 9,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "SINce Memories: Off The Starry Sky",
+  "dom": "wn",
+  "cand": "목표는 뽀시래기 영애입니다"
+ },
+ {
+  "pid": "Z431",
+  "seed": 9,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "러브 고즈 커킨 프레이지",
+  "dom": "wn",
+  "cand": "목표는 뽀시래기 영애입니다"
+ },
+ {
+  "pid": "Z416",
+  "seed": 9,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "SINce Memories: Off The Starry Sky",
+  "dom": "wn",
+  "cand": "남주가 내 집착에 집착한다"
+ },
+ {
+  "pid": "Z128",
+  "seed": 9,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "러브 고즈 커킨 프레이지",
+  "dom": "wn",
+  "cand": "남주가 내 집착에 집착한다"
+ },
+ {
+  "pid": "Z035",
+  "seed": 9,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "SINce Memories: Off The Starry Sky",
+  "dom": "steam",
+  "cand": "Help Me"
+ },
+ {
+  "pid": "Z458",
+  "seed": 9,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "러브 고즈 커킨 프레이지",
+  "dom": "steam",
+  "cand": "Help Me"
+ },
+ {
+  "pid": "Z079",
+  "seed": 9,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "SINce Memories: Off The Starry Sky",
+  "dom": "steam",
+  "cand": "7'scarlet"
+ },
+ {
+  "pid": "Z102",
+  "seed": 9,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "러브 고즈 커킨 프레이지",
+  "dom": "steam",
+  "cand": "7'scarlet"
+ },
+ {
+  "pid": "Z158",
+  "seed": 9,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "SINce Memories: Off The Starry Sky",
+  "dom": "steam",
+  "cand": "Bunny’s Rent-a-Mom Agency"
+ },
+ {
+  "pid": "Z368",
+  "seed": 9,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "러브 고즈 커킨 프레이지",
+  "dom": "steam",
+  "cand": "Bunny’s Rent-a-Mom Agency"
+ },
+ {
+  "pid": "Z449",
+  "seed": 9,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "SINce Memories: Off The Starry Sky",
+  "dom": "steam",
+  "cand": "Sayonara Okaasan"
+ },
+ {
+  "pid": "Z324",
+  "seed": 9,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "러브 고즈 커킨 프레이지",
+  "dom": "steam",
+  "cand": "Sayonara Okaasan"
+ },
+ {
+  "pid": "Z217",
+  "seed": 9,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "SINce Memories: Off The Starry Sky",
+  "dom": "steam",
+  "cand": "Lake Town Stories"
+ },
+ {
+  "pid": "Z283",
+  "seed": 9,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "러브 고즈 커킨 프레이지",
+  "dom": "steam",
+  "cand": "Lake Town Stories"
+ },
+ {
+  "pid": "Z052",
+  "seed": 9,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "SINce Memories: Off The Starry Sky",
+  "dom": "steam",
+  "cand": "Spirit Whisperer Conversation With Akari"
+ },
+ {
+  "pid": "Z347",
+  "seed": 9,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "러브 고즈 커킨 프레이지",
+  "dom": "steam",
+  "cand": "Spirit Whisperer Conversation With Akari"
+ },
+ {
+  "pid": "Z262",
+  "seed": 9,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "SINce Memories: Off The Starry Sky",
+  "dom": "steam",
+  "cand": "CrocApoca!! 크록아포카!! 악어 소녀와 세상의 종말"
+ },
+ {
+  "pid": "Z196",
+  "seed": 9,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "러브 고즈 커킨 프레이지",
+  "dom": "steam",
+  "cand": "CrocApoca!! 크록아포카!! 악어 소녀와 세상의 종말"
+ },
+ {
+  "pid": "Z247",
+  "seed": 9,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "SINce Memories: Off The Starry Sky",
+  "dom": "steam",
+  "cand": "Otter Yakuza"
+ },
+ {
+  "pid": "Z113",
+  "seed": 9,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "러브 고즈 커킨 프레이지",
+  "dom": "steam",
+  "cand": "Otter Yakuza"
+ },
+ {
+  "pid": "Z172",
+  "seed": 9,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "SINce Memories: Off The Starry Sky",
+  "dom": "tmdb",
+  "cand": "미망인"
+ },
+ {
+  "pid": "Z333",
+  "seed": 9,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "러브 고즈 커킨 프레이지",
+  "dom": "tmdb",
+  "cand": "미망인"
+ },
+ {
+  "pid": "Z002",
+  "seed": 9,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "SINce Memories: Off The Starry Sky",
+  "dom": "tmdb",
+  "cand": "강변호텔"
+ },
+ {
+  "pid": "Z143",
+  "seed": 9,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "러브 고즈 커킨 프레이지",
+  "dom": "tmdb",
+  "cand": "강변호텔"
+ },
+ {
+  "pid": "Z161",
+  "seed": 9,
+  "arm": "M",
+  "rdom": "steam",
+  "rname": "SINce Memories: Off The Starry Sky",
+  "dom": "tmdb",
+  "cand": "철콘 근크리트"
+ },
+ {
+  "pid": "Z046",
+  "seed": 9,
+  "arm": "M",
+  "rdom": "tmdb",
+  "rname": "러브 고즈 커킨 프레이지",
+  "dom": "tmdb",
+  "cand": "철콘 근크리트"
+ },
+ {
+  "pid": "Z182",
+  "seed": 9,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "카쿠리요의 여관밥",
+  "dom": "wn",
+  "cand": "오늘은 안녕"
+ },
+ {
+  "pid": "Z150",
+  "seed": 9,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "어느 황녀의 비극",
+  "dom": "wn",
+  "cand": "오늘은 안녕"
+ },
+ {
+  "pid": "Z169",
+  "seed": 9,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "카쿠리요의 여관밥",
+  "dom": "wn",
+  "cand": "여주가 내 약혼자와 바람났다"
+ },
+ {
+  "pid": "Z194",
+  "seed": 9,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "어느 황녀의 비극",
+  "dom": "wn",
+  "cand": "여주가 내 약혼자와 바람났다"
+ },
+ {
+  "pid": "Z430",
+  "seed": 9,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "카쿠리요의 여관밥",
+  "dom": "wn",
+  "cand": "발칙한 요녀를 원하신다면"
+ },
+ {
+  "pid": "Z418",
+  "seed": 9,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "어느 황녀의 비극",
+  "dom": "wn",
+  "cand": "발칙한 요녀를 원하신다면"
+ },
+ {
+  "pid": "Z241",
+  "seed": 9,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "카쿠리요의 여관밥",
+  "dom": "wn",
+  "cand": "약혼자가 어느 날 첫사랑을 데려왔다 외전"
+ },
+ {
+  "pid": "Z139",
+  "seed": 9,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "어느 황녀의 비극",
+  "dom": "wn",
+  "cand": "약혼자가 어느 날 첫사랑을 데려왔다 외전"
+ },
+ {
+  "pid": "Z136",
+  "seed": 9,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "카쿠리요의 여관밥",
+  "dom": "steam",
+  "cand": "7'scarlet"
+ },
+ {
+  "pid": "Z094",
+  "seed": 9,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "어느 황녀의 비극",
+  "dom": "steam",
+  "cand": "7'scarlet"
+ },
+ {
+  "pid": "Z174",
+  "seed": 9,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "카쿠리요의 여관밥",
+  "dom": "steam",
+  "cand": "백의성 애정 의존증"
+ },
+ {
+  "pid": "Z188",
+  "seed": 9,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "어느 황녀의 비극",
+  "dom": "steam",
+  "cand": "백의성 애정 의존증"
+ },
+ {
+  "pid": "Z104",
+  "seed": 9,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "카쿠리요의 여관밥",
+  "dom": "steam",
+  "cand": "카미야 탐정 사무소: 여고생이 사라진 여름"
+ },
+ {
+  "pid": "Z000",
+  "seed": 9,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "어느 황녀의 비극",
+  "dom": "steam",
+  "cand": "카미야 탐정 사무소: 여고생이 사라진 여름"
+ },
+ {
+  "pid": "Z358",
+  "seed": 9,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "카쿠리요의 여관밥",
+  "dom": "steam",
+  "cand": "AKIBA LOST - アキバロスト"
+ },
+ {
+  "pid": "Z439",
+  "seed": 9,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "어느 황녀의 비극",
+  "dom": "steam",
+  "cand": "AKIBA LOST - アキバロスト"
+ },
+ {
+  "pid": "Z353",
+  "seed": 9,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "카쿠리요의 여관밥",
+  "dom": "steam",
+  "cand": "비 온 뒤의 책갈피"
+ },
+ {
+  "pid": "Z297",
+  "seed": 9,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "어느 황녀의 비극",
+  "dom": "steam",
+  "cand": "비 온 뒤의 책갈피"
+ },
+ {
+  "pid": "Z075",
+  "seed": 9,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "카쿠리요의 여관밥",
+  "dom": "tmdb",
+  "cand": "세상의 중심에서 사랑을 외치다"
+ },
+ {
+  "pid": "Z202",
+  "seed": 9,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "어느 황녀의 비극",
+  "dom": "tmdb",
+  "cand": "세상의 중심에서 사랑을 외치다"
+ },
+ {
+  "pid": "Z334",
+  "seed": 9,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "카쿠리요의 여관밥",
+  "dom": "tmdb",
+  "cand": "사랑에 빠진 것처럼"
+ },
+ {
+  "pid": "Z282",
+  "seed": 9,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "어느 황녀의 비극",
+  "dom": "tmdb",
+  "cand": "사랑에 빠진 것처럼"
+ },
+ {
+  "pid": "Z116",
+  "seed": 9,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "카쿠리요의 여관밥",
+  "dom": "tmdb",
+  "cand": "미망인"
+ },
+ {
+  "pid": "Z010",
+  "seed": 9,
+  "arm": "S",
+  "rdom": "wn",
+  "rname": "어느 황녀의 비극",
+  "dom": "tmdb",
+  "cand": "미망인"
+ }
+]

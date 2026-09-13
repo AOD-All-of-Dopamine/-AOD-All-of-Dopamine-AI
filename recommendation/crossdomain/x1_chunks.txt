@@ -1,0 +1,321 @@
+x1_0000 [S: Dordogne / A YEAR OF SPRINGS / Botany Manor  ‖  T: 센과 치히로의 행방불명 / 이웃집 토토로 / 하울의 움직이는 성  ‖  W: 광공 싸움에 빌런 등 터진다 / 목표는 안전이혼인데요 / 광공들이 미쳤는데 로그아웃이 안 된다니요]  →  (게임 · Exploration · Interactive Fiction · Photo Editing ) SEASON: A letter to the future | 리뷰 1,814
+x1_0001 [S: DARK SOULS™ III / The Witcher 3: Wild Hunt / The Elder Scrolls V: Skyrim Special Edition  ‖  T: 인터스텔라 / 인셉션 / 다크 나이트  ‖  W: 회귀의 전설 / 8클래스 마법사의 회귀 / 권왕환생]  →  (소설 · 현판 · yespro) 엄청난 기연과 회귀 | 평점 7.6 · 관심 90,000 · 269화
+x1_0002 [T: 노팅 힐 / 러브 액츄얼리 / 500일의 썸머  ‖  W: 그 결혼, 이번 생엔 제가 할게요 / 지루하신 공작님과 강철의 이혼녀 / 함부로 길들이지 마시오!]  →  (영상 · 영화 · 코미디, 로맨스, 드라마) 티파니에서 아침을 | 평점 7.6 · 투표 4,536
+x1_0003 [S: Stardew Valley / Slime Rancher / Raft  ‖  W: 그 결혼, 이번 생엔 제가 할게요 / 지루하신 공작님과 강철의 이혼녀 / 함부로 길들이지 마시오!]  →  (게임 · Life Sim · RPG · Open World · Farming Sim · Crafti) My Time at Portia | 리뷰 34,784
+x1_0004 [S: Stardew Valley / Slime Rancher / Raft  ‖  T: 노팅 힐 / 러브 액츄얼리 / 500일의 썸머  ‖  W: 집착좀비가 나를 미행한다 / The Last / 너의 가이드가 되고 싶어]  →  (소설 · 로맨스 · 우름) 좀비도 환생으로 쳐주나요 | 평점 없음 · 관심 0 · 3화
+x1_0005 [S: 서브노티카 / The Long Dark / No Man's Sky  ‖  T: 워킹 데드 / 좀비랜드 / 28일 후]  →  (게임 · Open World Survival Craft · Space · Singleplayer ·) Breathedge | 리뷰 14,381
+x1_0006 [T: 대부 / 좋은 친구들 / 스카페이스  ‖  W: 복수 법률사무소 / 오뉘탑: 퇴마사건일지]  →  (영상 · 영화 · 범죄, 드라마) 마피아 INC | 평점 6.6 · 투표 69
+x1_0007 [S: Stardew Valley / Slime Rancher / Raft  ‖  T: 노팅 힐 / 러브 액츄얼리 / 500일의 썸머  ‖  W: 집착좀비가 나를 미행한다 / The Last / 너의 가이드가 되고 싶어]  →  (영상 · 영화 · 코미디, 드라마, 로맨스) 라스트 크리스마스 | 평점 7.2 · 투표 2,665
+x1_0008 [S: Hollow Knight / Dead Cells / Celeste  ‖  T: 너의 이름은. / 날씨의 아이 / 목소리의 형태]  →  (게임 · Metroidvania · Difficult · Indie · Great Soundtrac) Hollow Knight: Silksong | 리뷰 381,373
+x1_0009 [S: Hearts of Iron IV / Europa Universalis IV / Sid Meier's Civilization® V  ‖  T: 코코 / 월•E / 토이 스토리  ‖  W: 결혼과 부부생활 / 목표는 안전이혼인데요 / 메리지 어게인]  →  (영상 · 영화 · 애니메이션, 코미디, 모험, 가족) 스페이스 키드: 우주에서 살아남기 | 평점 7.2 · 투표 225
+x1_0010 [S: Opus Magnum  ‖  T: 겟 아웃 / 유전 / 미드소마  ‖  W: 복수 법률사무소 / 오뉘탑: 퇴마사건일지]  →  (게임 · Puzzle · Difficult · Programming · Indie · Logic) SpaceChem | 리뷰 2,617
+x1_0011 [S: Still Life / Jenny LeClue - Detectivu / Telling Lies  ‖  T: 대부 / 좋은 친구들 / 스카페이스  ‖  W: 천초 문순득의 수사일지 / 수사 기록실 / 천기누설 살인사건]  →  (게임 · Adventure · Detective · Story Rich · Mystery · Puz) Sherlock Holmes: The Devil's Daughter | 리뷰 11,997
+x1_0012 [S: Euro Truck Simulator 2 / BeamNG.drive / 아세토 코르사 Assetto Corsa  ‖  T: 센과 치히로의 행방불명 / 이웃집 토토로 / 하울의 움직이는 성  ‖  W: 악녀의 시집살이는 즐겁다 / 여성향 게임의 파멸 플래그밖에 없는 악역 영애로 환생해버렸다…]  →  (영상 · 영화 · 애니메이션, 가족, 판타지) 마녀배달부 키키 | 평점 7.8 · 투표 4,674
+x1_0013 [S: Opus Magnum  ‖  T: 겟 아웃 / 유전 / 미드소마  ‖  W: 복수 법률사무소 / 오뉘탑: 퇴마사건일지]  →  (영상 · 영화 · 공포, 미스터리, 스릴러) 더 칠드런 | 평점 6.1 · 투표 424
+x1_0014 [S: Salt and Sanctuary  ‖  W: 천재 무림 트레이너 / 무한 레벨업 in 무림 / 현질무신]  →  (게임 · Metroidvania · Female Protagonist · Dark Fantasy ·) ENDER LILIES: Quietus of the Knights | 리뷰 42,602
+x1_0015 [S: Dordogne / A YEAR OF SPRINGS / Botany Manor  ‖  T: 노팅 힐 / 러브 액츄얼리 / 500일의 썸머  ‖  W: 19년지기의 하룻밤 / 아찔함과 야릇함 사이 / 스위트룸에서]  →  (소설 · 로맨스 · 최리콕) 하룻밤만 쓰나요? | 평점 10.0 · 관심 7,100 · 114화
+x1_0016 [T: 노팅 힐 / 러브 액츄얼리 / 500일의 썸머  ‖  W: 그 결혼, 이번 생엔 제가 할게요 / 지루하신 공작님과 강철의 이혼녀 / 함부로 길들이지 마시오!]  →  (영상 · 영화 · 코미디, 로맨스) 나의 특별한 사랑이야기 | 평점 6.9 · 투표 2,667
+x1_0017 [S: Hearts of Iron IV / Europa Universalis IV / Sid Meier's Civilization® V  ‖  T: 왕좌의 게임 / 브레이킹 배드 / 종이의 집  ‖  W: 영업 천재가 되었다 / 재벌가 복덩이 / 재벌집 기둥서방이 되었다.]  →  (소설 · 현판 · 소수림) 재벌이 되어 버렸다 | 평점 8.2 · 관심 192,000 · 214화
+x1_0018 [S: Still Life / Jenny LeClue - Detectivu / Telling Lies  ‖  T: 대부 / 좋은 친구들 / 스카페이스  ‖  W: 천초 문순득의 수사일지 / 수사 기록실 / 천기누설 살인사건]  →  (게임 · Dialogue Heavy · Investigation · Visual Novel · Pu) Murder by Numbers | 리뷰 1,143
+x1_0019 [S: Stardew Valley / Slime Rancher / Raft  ‖  T: 샤이닝 / 할로윈 / 스크림  ‖  W: 절대 검감(絶對 劍感) / 태존비록(怠尊秘錄) / 검신재림(劍神再臨)]  →  (소설 · 무협 · 천봉) 절대무사 | 평점 8.1 · 관심 145,000 · 275화
+x1_0020 [S: Sid Meier’s Civilization® VI / XCOM® 2 / Stellaris  ‖  T: 왕좌의 게임 / 브레이킹 배드 / 종이의 집]  →  (게임 · Strategy · Simulation · Grand Strategy · 4X · Econ) Terra Invicta 테라 인빅타 | 리뷰 8,750
+x1_0021 [S: Still Life / Jenny LeClue - Detectivu / Telling Lies  ‖  T: 대부 / 좋은 친구들 / 스카페이스  ‖  W: 천초 문순득의 수사일지 / 수사 기록실 / 천기누설 살인사건]  →  (게임 · Investigation · Typing · Interactive Fiction · Det) Her Story | 리뷰 8,328
+x1_0022 [T: 대부 / 좋은 친구들 / 스카페이스  ‖  W: 복수 법률사무소 / 오뉘탑: 퇴마사건일지]  →  (영상 · 영화 · 드라마, 범죄) 스니치 : 마약과의전쟁 | 평점 7.2 · 투표 98
+x1_0023 [S: Dordogne / A YEAR OF SPRINGS / Botany Manor  ‖  T: 센과 치히로의 행방불명 / 이웃집 토토로 / 하울의 움직이는 성  ‖  W: 광공 싸움에 빌런 등 터진다 / 목표는 안전이혼인데요 / 광공들이 미쳤는데 로그아웃이 안 된다니요]  →  (영상 · 영화 · 애니메이션, 가족, 판타지) 마녀배달부 키키 | 평점 7.8 · 투표 4,674
+x1_0024 [S: Still Life / Jenny LeClue - Detectivu / Telling Lies  ‖  T: 대부 / 좋은 친구들 / 스카페이스  ‖  W: 천초 문순득의 수사일지 / 수사 기록실 / 천기누설 살인사건]  →  (영상 · 영화 · 범죄, 드라마, 역사) 살바토레 줄리아노 | 평점 7.5 · 투표 121
+x1_0025 [S: Cities: Skylines / Factorio / Farming Simulator 22  ‖  W: 영업 천재가 되었다 / 재벌가 복덩이 / 재벌집 기둥서방이 되었다.]  →  (게임 · Strategy · City Builder · Simulation · Base Buildi) Workers & Resources: Soviet Republic 워커스 앤 리소스: 소비에트 리퍼블릭 | 리뷰 24,694
+x1_0026 [S: Hearts of Iron IV / Europa Universalis IV / Sid Meier's Civilization® V  ‖  T: 왕좌의 게임 / 브레이킹 배드 / 종이의 집  ‖  W: 영업 천재가 되었다 / 재벌가 복덩이 / 재벌집 기둥서방이 되었다.]  →  (영상 · TV · 범죄, 드라마) 나르코스 | 평점 8.1 · 투표 3,400
+x1_0027 [S: Cities: Skylines / Factorio / Farming Simulator 22  ‖  W: 영업 천재가 되었다 / 재벌가 복덩이 / 재벌집 기둥서방이 되었다.]  →  (소설 · 현판 · 닥터하이츠) 재벌서자이지만 천재라서 | 평점 8.1 · 관심 4,300 · 9화
+x1_0028 [T: 아이언맨 / 캡틴 아메리카: 시빌 워 / 토르: 라그나로크  ‖  W: 게임 속 바바리안으로 살아남기 / 내가 키운 S급들 / 튜토리얼이 너무 어렵다]  →  (소설 · 판타지 · 정주(丁柱)) 전생했더니 고유스킬이 두 배 | 평점 8.0 · 관심 66,000 · 225화
+x1_0029 [S: Hollow Knight / Dead Cells / Celeste  ‖  T: 너의 이름은. / 날씨의 아이 / 목소리의 형태]  →  (게임 · Action Roguelike · Roguelite · Bullet Hell · Pixel) Halls of Torment | 리뷰 30,582
+x1_0030 [S: Euro Truck Simulator 2 / BeamNG.drive / 아세토 코르사 Assetto Corsa  ‖  T: 센과 치히로의 행방불명 / 이웃집 토토로 / 하울의 움직이는 성  ‖  W: 악녀의 시집살이는 즐겁다 / 여성향 게임의 파멸 플래그밖에 없는 악역 영애로 환생해버렸다…]  →  (영상 · 영화 · 액션, 모험, 애니메이션, 드라마, 가족, 판타지) 괴물의 아이 | 평점 7.9 · 투표 1,630
+x1_0031 [S: Counter-Strike 2 / PUBG: BATTLEGROUNDS / 톰 클랜시의 레인보우식스 시즈  ‖  T: 아이언맨 / 캡틴 아메리카: 시빌 워 / 토르: 라그나로크  ‖  W: 게임 속 바바리안으로 살아남기 / 내가 키운 S급들 / 튜토리얼이 너무 어렵다]  →  (영상 · 영화 · SF, 모험, 액션) 가디언즈 오브 갤럭시 Vol. 2 | 평점 7.6 · 투표 23,265
+x1_0032 [S: Stardew Valley / Slime Rancher / Raft  ‖  W: 그 결혼, 이번 생엔 제가 할게요 / 지루하신 공작님과 강철의 이혼녀 / 함부로 길들이지 마시오!]  →  (소설 · 로판 · 세리아) 고립된 공작 부인은 오늘도 쉬고 싶다 | 평점 9.8 · 관심 283,000 · 162화
+x1_0033 [T: 노팅 힐 / 러브 액츄얼리 / 500일의 썸머  ‖  W: 그 결혼, 이번 생엔 제가 할게요 / 지루하신 공작님과 강철의 이혼녀 / 함부로 길들이지 마시오!]  →  (소설 · 로판 · 사카린) 천한 당신의 성에서 | 평점 9.5 · 관심 413,000 · 132화
+x1_0034 [S: Stardew Valley / Slime Rancher / Raft  ‖  T: 노팅 힐 / 러브 액츄얼리 / 500일의 썸머  ‖  W: 집착좀비가 나를 미행한다 / The Last / 너의 가이드가 되고 싶어]  →  (소설 · BL · 아누) 해피 에버 에프터 | 평점 10.0 · 관심 1,600 · 49화
+x1_0035 [S: Salt and Sanctuary  ‖  W: 천재 무림 트레이너 / 무한 레벨업 in 무림 / 현질무신]  →  (소설 · 무협 · 무하연) 정천불멸 | 평점 없음 · 관심 1 · 5화
+x1_0036 [S: Stardew Valley / Slime Rancher / Raft  ‖  T: 노팅 힐 / 러브 액츄얼리 / 500일의 썸머  ‖  W: 집착좀비가 나를 미행한다 / The Last / 너의 가이드가 되고 싶어]  →  (영상 · 영화 · 코미디, 로맨스) 남주기 아까운 그녀 | 평점 6.5 · 투표 1,826
+x1_0037 [T: 대부 / 좋은 친구들 / 스카페이스  ‖  W: 복수 법률사무소 / 오뉘탑: 퇴마사건일지]  →  (영상 · 영화 · 범죄, 드라마, 역사) 살바토레 줄리아노 | 평점 7.5 · 투표 121
+x1_0038 [S: Stardew Valley / Slime Rancher / Raft  ‖  T: 노팅 힐 / 러브 액츄얼리 / 500일의 썸머  ‖  W: 집착좀비가 나를 미행한다 / The Last / 너의 가이드가 되고 싶어]  →  (소설 · BL · 적금만기) 가이드 없는 세계의 이물질 에스퍼 | 평점 없음 · 관심 0 · 3화
+x1_0039 [S: Cities: Skylines / Factorio / Farming Simulator 22  ‖  W: 영업 천재가 되었다 / 재벌가 복덩이 / 재벌집 기둥서방이 되었다.]  →  (소설 · 현판 · 새가람) 버림받은 재벌 서자의 성공 라이프 | 평점 8.3 · 관심 1,706,000 · 221화
+x1_0040 [S: Dordogne / A YEAR OF SPRINGS / Botany Manor  ‖  T: 노팅 힐 / 러브 액츄얼리 / 500일의 썸머  ‖  W: 19년지기의 하룻밤 / 아찔함과 야릇함 사이 / 스위트룸에서]  →  (영상 · 영화 · 코미디, 로맨스) 남주기 아까운 그녀 | 평점 6.5 · 투표 1,826
+x1_0041 [S: Project Zomboid / Don't Starve / The Forest  ‖  T: 워킹 데드 / 좀비랜드 / 28일 후  ‖  W: 멸망한 세계의 취사병 / 멸망 이후의 세계]  →  (게임 · Survival · Open World · Zombies · Base Building · ) State of Decay 2: Juggernaut Edition | 리뷰 58,622
+x1_0042 [S: Euro Truck Simulator 2 / BeamNG.drive / 아세토 코르사 Assetto Corsa  ‖  T: 센과 치히로의 행방불명 / 이웃집 토토로 / 하울의 움직이는 성  ‖  W: 악녀의 시집살이는 즐겁다 / 여성향 게임의 파멸 플래그밖에 없는 악역 영애로 환생해버렸다…]  →  (소설 · 로판 · 가르미슈) 악녀인 게 문제면 갱생하면 되잖아 | 평점 9.5 · 관심 318,000 · 175화
+x1_0043 [S: Stardew Valley / Slime Rancher / Raft  ‖  T: 샤이닝 / 할로윈 / 스크림  ‖  W: 절대 검감(絶對 劍感) / 태존비록(怠尊秘錄) / 검신재림(劍神再臨)]  →  (게임 · Base Building · Automation · Open World · Crafting) Satisfactory | 리뷰 232,635
+x1_0044 [S: Project Zomboid / Don't Starve / The Forest  ‖  T: 워킹 데드 / 좀비랜드 / 28일 후  ‖  W: 멸망한 세계의 취사병 / 멸망 이후의 세계]  →  (영상 · TV · Action & Adventure, 드라마, Sci-Fi & Fantasy) 지금 우리 학교는 | 평점 8.3 · 투표 4,445
+x1_0045 [T: 대부 / 좋은 친구들 / 스카페이스  ‖  W: 복수 법률사무소 / 오뉘탑: 퇴마사건일지]  →  (영상 · 영화 · 드라마, 범죄) 미드나잇 익스프레스 | 평점 7.4 · 투표 1,926
+x1_0046 [T: 노팅 힐 / 러브 액츄얼리 / 500일의 썸머  ‖  W: 그 결혼, 이번 생엔 제가 할게요 / 지루하신 공작님과 강철의 이혼녀 / 함부로 길들이지 마시오!]  →  (영상 · 영화 · 드라마, 코미디, 로맨스) 스턱 인 러브 | 평점 7.4 · 투표 2,034
+x1_0047 [S: Stardew Valley / Slime Rancher / Raft  ‖  T: 샤이닝 / 할로윈 / 스크림  ‖  W: 절대 검감(絶對 劍感) / 태존비록(怠尊秘錄) / 검신재림(劍神再臨)]  →  (게임 · Life Sim · RPG · Open World · Farming Sim · Crafti) My Time at Portia | 리뷰 34,784
+x1_0048 [S: Lethal Company / Phasmophobia / Deep Rock Galactic  ‖  T: 겟 아웃 / 유전 / 미드소마]  →  (게임 · Online Co-Op · Survival Horror · Horror · Co-op · ) Nuclear Nightmare | 리뷰 15,120
+x1_0049 [S: Counter-Strike 2 / PUBG: BATTLEGROUNDS / 톰 클랜시의 레인보우식스 시즈  ‖  T: 노팅 힐 / 러브 액츄얼리 / 500일의 썸머  ‖  W: 전남편의 미친개를 길들였다 / 구원, 그 잔혹함에 대하여 / 내 남편의 정부에게]  →  (게임 · Tactical · Action · FPS · Co-op · Singleplayer) Tom Clancy's Rainbow Six® Vegas 2 | 리뷰 5,339
+x1_0050 [T: 아이언맨 / 캡틴 아메리카: 시빌 워 / 토르: 라그나로크  ‖  W: 게임 속 바바리안으로 살아남기 / 내가 키운 S급들 / 튜토리얼이 너무 어렵다]  →  (소설 · 판타지 · 킁컹) 망겜에서 1성따리로 살아남기 | 평점 9.6 · 관심 2,009,000 · 223화
+x1_0051 [S: Stardew Valley / Slime Rancher / Raft  ‖  T: 센과 치히로의 행방불명 / 이웃집 토토로 / 하울의 움직이는 성  ‖  W: 그 결혼, 이번 생엔 제가 할게요 / 지루하신 공작님과 강철의 이혼녀 / 함부로 길들이지 마시오!]  →  (영상 · 영화 · 애니메이션, 드라마, 모험, 판타지) 스즈메의 문단속 | 평점 7.9 · 투표 1,817
+x1_0052 [S: DARK SOULS™ III / The Witcher 3: Wild Hunt / The Elder Scrolls V: Skyrim Special Edition  ‖  T: 인터스텔라 / 인셉션 / 다크 나이트  ‖  W: 회귀의 전설 / 8클래스 마법사의 회귀 / 권왕환생]  →  (게임 · Souls-like · Open World · Dark Fantasy · RPG · Dif) ELDEN RING | 리뷰 825,387
+x1_0053 [S: Stardew Valley / Slime Rancher / Raft  ‖  T: 센과 치히로의 행방불명 / 이웃집 토토로 / 하울의 움직이는 성  ‖  W: 그 결혼, 이번 생엔 제가 할게요 / 지루하신 공작님과 강철의 이혼녀 / 함부로 길들이지 마시오!]  →  (영상 · 영화 · 애니메이션, 모험, 가족, 판타지) 메리와 마녀의 꽃 | 평점 7.2 · 투표 932
+x1_0054 [S: Hollow Knight / Dead Cells / Celeste  ‖  T: 너의 이름은. / 날씨의 아이 / 목소리의 형태]  →  (영상 · 영화 · 애니메이션, 드라마, 로맨스, 판타지, SF) 여름을 향한 터널, 이별의 출구 | 평점 7.7 · 투표 295
+x1_0055 [S: Counter-Strike 2 / PUBG: BATTLEGROUNDS / 톰 클랜시의 레인보우식스 시즈  ‖  T: 아이언맨 / 캡틴 아메리카: 시빌 워 / 토르: 라그나로크  ‖  W: 게임 속 바바리안으로 살아남기 / 내가 키운 S급들 / 튜토리얼이 너무 어렵다]  →  (게임 · Survival · Massively Multiplayer · Multiplayer · O) Z1 Battle Royale | 리뷰 142,997
+x1_0056 [S: Stardew Valley / Slime Rancher / Raft  ‖  T: 센과 치히로의 행방불명 / 이웃집 토토로 / 하울의 움직이는 성  ‖  W: 그 결혼, 이번 생엔 제가 할게요 / 지루하신 공작님과 강철의 이혼녀 / 함부로 길들이지 마시오!]  →  (소설 · 로판 · 김뽀삐) 공작 부인의 남편을 찾습니다 | 평점 9.8 · 관심 467,000 · 185화
+x1_0057 [S: Lethal Company / Phasmophobia / Deep Rock Galactic  ‖  T: 샤이닝 / 할로윈 / 스크림  ‖  W: 복수 법률사무소 / 오뉘탑: 퇴마사건일지]  →  (게임 · FPS · Dwarves · Co-op · PvE · Roguelite) Deep Rock Galactic: Rogue Core | 리뷰 13,543
+x1_0058 [S: Counter-Strike 2 / PUBG: BATTLEGROUNDS / 톰 클랜시의 레인보우식스 시즈  ‖  T: 아이언맨 / 캡틴 아메리카: 시빌 워 / 토르: 라그나로크  ‖  W: 게임 속 바바리안으로 살아남기 / 내가 키운 S급들 / 튜토리얼이 너무 어렵다]  →  (소설 · 판타지 · 고리테일) 게임 난이도가 미쳤다 | 평점 7.0 · 관심 0 · 11화
+x1_0059 [T: 아이언맨 / 캡틴 아메리카: 시빌 워 / 토르: 라그나로크  ‖  W: 게임 속 바바리안으로 살아남기 / 내가 키운 S급들 / 튜토리얼이 너무 어렵다]  →  (영상 · 영화 · 모험, 애니메이션, 액션) 아이언맨과 캡틴 아메리카: 한 팀이 된 영웅들 | 평점 6.5 · 투표 171
+x1_0060 [T: 대부 / 좋은 친구들 / 스카페이스  ‖  W: 복수 법률사무소 / 오뉘탑: 퇴마사건일지]  →  (영상 · 영화 · 범죄, 드라마, 스릴러) 글로리아 | 평점 6.9 · 투표 272
+x1_0061 [S: Sid Meier’s Civilization® VI / XCOM® 2 / Stellaris  ‖  T: 왕좌의 게임 / 브레이킹 배드 / 종이의 집]  →  (게임 · Strategy · Space · Sci-fi · 4X · Turn-Based Strate) ENDLESS Space™ 2 | 리뷰 17,192
+x1_0062 [T: 대부 / 좋은 친구들 / 스카페이스  ‖  W: 복수 법률사무소 / 오뉘탑: 퇴마사건일지]  →  (소설 · 미스터리 · 수소수) 수사 기록실 | 평점 없음 · 관심 0 · 8화
+x1_0063 [S: Counter-Strike 2 / PUBG: BATTLEGROUNDS / 톰 클랜시의 레인보우식스 시즈  ‖  T: 아이언맨 / 캡틴 아메리카: 시빌 워 / 토르: 라그나로크  ‖  W: 게임 속 바바리안으로 살아남기 / 내가 키운 S급들 / 튜토리얼이 너무 어렵다]  →  (소설 · 판타지 · 정주(丁柱)) 전생했더니 고유스킬이 두 배 | 평점 8.0 · 관심 66,000 · 225화
+x1_0064 [S: Counter-Strike 2 / PUBG: BATTLEGROUNDS / 톰 클랜시의 레인보우식스 시즈  ‖  T: 아이언맨 / 캡틴 아메리카: 시빌 워 / 토르: 라그나로크  ‖  W: 게임 속 바바리안으로 살아남기 / 내가 키운 S급들 / 튜토리얼이 너무 어렵다]  →  (영상 · 영화 · 액션, 모험, SF) 스파이더맨: 파 프롬 홈 | 평점 7.4 · 투표 17,415
+x1_0065 [S: Sid Meier’s Civilization® VI / XCOM® 2 / Stellaris  ‖  T: 왕좌의 게임 / 브레이킹 배드 / 종이의 집]  →  (게임 · Aliens · Sci-fi · 4X · Turn-Based Strategy · Sandb) Galactic Civilizations III | 리뷰 8,328
+x1_0066 [S: Opus Magnum  ‖  T: 겟 아웃 / 유전 / 미드소마  ‖  W: 복수 법률사무소 / 오뉘탑: 퇴마사건일지]  →  (게임 · Puzzle · Building · Automation · Indie · Programmi) Infinifactory | 리뷰 1,787
+x1_0067 [S: Salt and Sanctuary  ‖  W: 천재 무림 트레이너 / 무한 레벨업 in 무림 / 현질무신]  →  (소설 · 무협 · 임현진) 무림에서 지존되기 | 평점 5.7 · 관심 51,000 · 151화
+x1_0068 [S: Salt and Sanctuary  ‖  W: 천재 무림 트레이너 / 무한 레벨업 in 무림 / 현질무신]  →  (게임 · Souls-like · Open World · Dark Fantasy · RPG · Dif) ELDEN RING | 리뷰 825,387
+x1_0069 [S: Stardew Valley / Slime Rancher / Raft  ‖  W: 그 결혼, 이번 생엔 제가 할게요 / 지루하신 공작님과 강철의 이혼녀 / 함부로 길들이지 마시오!]  →  (소설 · 로판 · 사카린) 천한 당신의 성에서 | 평점 9.5 · 관심 413,000 · 132화
+x1_0070 [S: Lethal Company / Phasmophobia / Deep Rock Galactic  ‖  T: 겟 아웃 / 유전 / 미드소마]  →  (영상 · 영화 · 공포, 스릴러, 미스터리) 유아 넥스트 | 평점 6.6 · 투표 2,728
+x1_0071 [S: Euro Truck Simulator 2 / BeamNG.drive / 아세토 코르사 Assetto Corsa  ‖  T: 센과 치히로의 행방불명 / 이웃집 토토로 / 하울의 움직이는 성  ‖  W: 악녀의 시집살이는 즐겁다 / 여성향 게임의 파멸 플래그밖에 없는 악역 영애로 환생해버렸다…]  →  (게임 · Driving · Open World · Simulation · Transportation) Motor Town: Behind The Wheel | 리뷰 8,718
+x1_0072 [S: Lethal Company / Phasmophobia / Deep Rock Galactic  ‖  T: 겟 아웃 / 유전 / 미드소마]  →  (영상 · 영화 · 공포, 미스터리, 스릴러) 더 팩트 | 평점 5.7 · 투표 538
+x1_0073 [S: Cities: Skylines / Factorio / Farming Simulator 22  ‖  W: 영업 천재가 되었다 / 재벌가 복덩이 / 재벌집 기둥서방이 되었다.]  →  (게임 · Farming Sim · Simulation · Open World · Agricultur) Pure Farming 2018 | 리뷰 1,053
+x1_0074 [T: 명량 / 광해, 왕이 된 남자 / 관상  ‖  W: 절대 검감(絶對 劍感) / 태존비록(怠尊秘錄) / 검신재림(劍神再臨)]  →  (영상 · 영화 · 드라마, 액션, 역사, 로맨스) 불꽃처럼 나비처럼 | 평점 6.1 · 투표 56
+x1_0075 [T: 명량 / 광해, 왕이 된 남자 / 관상  ‖  W: 절대 검감(絶對 劍感) / 태존비록(怠尊秘錄) / 검신재림(劍神再臨)]  →  (소설 · 무협 · 난세광도) 검선재차 | 평점 7.1 · 관심 888,000 · 1755화
+x1_0076 [S: Counter-Strike 2 / PUBG: BATTLEGROUNDS / 톰 클랜시의 레인보우식스 시즈  ‖  T: 아이언맨 / 캡틴 아메리카: 시빌 워 / 토르: 라그나로크  ‖  W: 게임 속 바바리안으로 살아남기 / 내가 키운 S급들 / 튜토리얼이 너무 어렵다]  →  (영상 · 영화 · 액션, 모험, SF) 어벤져스: 에이지 오브 울트론 | 평점 7.3 · 투표 24,823
+x1_0077 [T: 대부 / 좋은 친구들 / 스카페이스  ‖  W: 복수 법률사무소 / 오뉘탑: 퇴마사건일지]  →  (영상 · 영화 · 범죄, 드라마) 리오네 사니타의 대부 | 평점 6.1 · 투표 121
+x1_0078 [S: Hollow Knight / Dead Cells / Celeste  ‖  T: 너의 이름은. / 날씨의 아이 / 목소리의 형태]  →  (게임 · Metroidvania · Sci-fi · 2D · Action · Atmospheric) Ghost Song | 리뷰 985
+x1_0079 [T: 명량 / 광해, 왕이 된 남자 / 관상  ‖  W: 절대 검감(絶對 劍感) / 태존비록(怠尊秘錄) / 검신재림(劍神再臨)]  →  (소설 · 무협 · 류하(鉚河)) 무신역천검 | 평점 9.3 · 관심 1,100 · 9화
+x1_0080 [S: Lethal Company / Phasmophobia / Deep Rock Galactic  ‖  T: 대부 / 좋은 친구들 / 스카페이스  ‖  W: 영업 천재가 되었다 / 재벌가 복덩이 / 재벌집 기둥서방이 되었다.]  →  (게임 · FPS · Dwarves · Co-op · PvE · Roguelite) Deep Rock Galactic: Rogue Core | 리뷰 13,543
+x1_0081 [S: DARK SOULS™ III / The Witcher 3: Wild Hunt / The Elder Scrolls V: Skyrim Special Edition  ‖  T: 인터스텔라 / 인셉션 / 다크 나이트  ‖  W: 회귀의 전설 / 8클래스 마법사의 회귀 / 권왕환생]  →  (게임 · Souls-like · Dark Fantasy · RPG · Difficult · Acti) DARK SOULS™ II: Scholar of the First Sin | 리뷰 83,044
+x1_0082 [S: Euro Truck Simulator 2 / BeamNG.drive / 아세토 코르사 Assetto Corsa  ‖  T: 센과 치히로의 행방불명 / 이웃집 토토로 / 하울의 움직이는 성  ‖  W: 악녀의 시집살이는 즐겁다 / 여성향 게임의 파멸 플래그밖에 없는 악역 영애로 환생해버렸다…]  →  (소설 · 로판 · 마키부로) 악역 영애 안의 사람 | 평점 9.6 · 관심 36,000 · 112화
+x1_0083 [S: DARK SOULS™ III / The Witcher 3: Wild Hunt / The Elder Scrolls V: Skyrim Special Edition  ‖  W: 게임 속 바바리안으로 살아남기 / 내가 키운 S급들 / 튜토리얼이 너무 어렵다]  →  (소설 · 현판 · Cerim) 내게 튜토리얼은 지옥이다 | 평점 9.2 · 관심 320,000 · 176화
+x1_0084 [S: Stardew Valley / Slime Rancher / Raft  ‖  T: 노팅 힐 / 러브 액츄얼리 / 500일의 썸머  ‖  W: 집착좀비가 나를 미행한다 / The Last / 너의 가이드가 되고 싶어]  →  (게임 · Base Building · Automation · Open World · Crafting) Satisfactory | 리뷰 232,635
+x1_0085 [T: 아이언맨 / 캡틴 아메리카: 시빌 워 / 토르: 라그나로크  ‖  W: 게임 속 바바리안으로 살아남기 / 내가 키운 S급들 / 튜토리얼이 너무 어렵다]  →  (소설 · 판타지 · 고리테일) 게임 난이도가 미쳤다 | 평점 7.0 · 관심 0 · 11화
+x1_0086 [S: Stardew Valley / Slime Rancher / Raft  ‖  W: 그 결혼, 이번 생엔 제가 할게요 / 지루하신 공작님과 강철의 이혼녀 / 함부로 길들이지 마시오!]  →  (게임 · Life Sim · Building · Farming Sim · Multiplayer · ) My Time at Sandrock | 리뷰 23,976
+x1_0087 [S: Salt and Sanctuary  ‖  T: 명량 / 광해, 왕이 된 남자 / 관상  ‖  W: 절대 검감(絶對 劍感) / 태존비록(怠尊秘錄) / 검신재림(劍神再臨)]  →  (영상 · 영화 · 드라마, 역사, 범죄) 간신 | 평점 6.1 · 투표 91
+x1_0088 [S: Counter-Strike 2 / PUBG: BATTLEGROUNDS / 톰 클랜시의 레인보우식스 시즈  ‖  T: 아이언맨 / 캡틴 아메리카: 시빌 워 / 토르: 라그나로크  ‖  W: 게임 속 바바리안으로 살아남기 / 내가 키운 S급들 / 튜토리얼이 너무 어렵다]  →  (소설 · 현판 · Cerim) 내게 튜토리얼은 지옥이다 | 평점 9.2 · 관심 320,000 · 176화
+x1_0089 [S: Lethal Company / Phasmophobia / Deep Rock Galactic  ‖  T: 대부 / 좋은 친구들 / 스카페이스  ‖  W: 영업 천재가 되었다 / 재벌가 복덩이 / 재벌집 기둥서방이 되었다.]  →  (영상 · 영화 · 범죄, 드라마, 역사) 살바토레 줄리아노 | 평점 7.5 · 투표 121
+x1_0090 [S: Lethal Company / Phasmophobia / Deep Rock Galactic  ‖  T: 샤이닝 / 할로윈 / 스크림  ‖  W: 복수 법률사무소 / 오뉘탑: 퇴마사건일지]  →  (소설 · 라이트노벨 · 아키타 요시노부) 마술사 오펜 뜻밖의 여행 | 평점 10.0 · 관심 0 · 10화
+x1_0091 [S: 서브노티카 / The Long Dark / No Man's Sky  ‖  T: 워킹 데드 / 좀비랜드 / 28일 후]  →  (게임 · Survival · Open World Survival Craft · Crafting · ) Don't Starve | 리뷰 96,781
+x1_0092 [S: Project Zomboid / Don't Starve / The Forest  ‖  T: 워킹 데드 / 좀비랜드 / 28일 후  ‖  W: 멸망한 세계의 취사병 / 멸망 이후의 세계]  →  (영상 · 영화 · 공포, 액션, 코미디) 웜우드: 분노의 좀비 도로 | 평점 6.1 · 투표 519
+x1_0093 [S: Salt and Sanctuary  ‖  W: 천재 무림 트레이너 / 무한 레벨업 in 무림 / 현질무신]  →  (소설 · 무협 · 신조) 오늘부터 천재다 | 평점 9.2 · 관심 76,000 · 300화
+x1_0094 [S: Dordogne / A YEAR OF SPRINGS / Botany Manor  ‖  T: 센과 치히로의 행방불명 / 이웃집 토토로 / 하울의 움직이는 성  ‖  W: 광공 싸움에 빌런 등 터진다 / 목표는 안전이혼인데요 / 광공들이 미쳤는데 로그아웃이 안 된다니요]  →  (소설 · 현판 · B군) 6,421번 빙의하고 귀환했다 | 평점 8.1 · 관심 998,000 · 205화
+x1_0095 [S: DARK SOULS™ III / The Witcher 3: Wild Hunt / The Elder Scrolls V: Skyrim Special Edition  ‖  T: 인터스텔라 / 인셉션 / 다크 나이트  ‖  W: 회귀의 전설 / 8클래스 마법사의 회귀 / 권왕환생]  →  (영상 · 영화 · 액션, 모험, 코미디, SF) 맨 인 블랙 | 평점 7.2 · 투표 15,074
+x1_0096 [S: Opus Magnum  ‖  T: 워킹 데드 / 좀비랜드 / 28일 후  ‖  W: 두 번 사는 프로듀서 / 음악천재를 위하여 / 다 잘하는 히어로]  →  (게임 · Programming · Puzzle · Indie · Casual · Education) Human Resource Machine | 리뷰 3,260
+x1_0097 [S: Stardew Valley / Slime Rancher / Raft  ‖  T: 센과 치히로의 행방불명 / 이웃집 토토로 / 하울의 움직이는 성  ‖  W: 그 결혼, 이번 생엔 제가 할게요 / 지루하신 공작님과 강철의 이혼녀 / 함부로 길들이지 마시오!]  →  (게임 · Life Sim · RPG · Open World · Farming Sim · Crafti) My Time at Portia | 리뷰 34,784
+x1_0098 [S: Stardew Valley / Slime Rancher / Raft  ‖  T: 샤이닝 / 할로윈 / 스크림  ‖  W: 절대 검감(絶對 劍感) / 태존비록(怠尊秘錄) / 검신재림(劍神再臨)]  →  (영상 · 영화 · 공포, 판타지, 스릴러) 다크 하베스트 | 평점 6.0 · 투표 323
+x1_0099 [S: Salt and Sanctuary  ‖  T: 명량 / 광해, 왕이 된 남자 / 관상  ‖  W: 절대 검감(絶對 劍感) / 태존비록(怠尊秘錄) / 검신재림(劍神再臨)]  →  (영상 · 영화 · 액션, 드라마, 역사) 검객 | 평점 7.5 · 투표 293
+x1_0100 [S: Stardew Valley / Slime Rancher / Raft  ‖  T: 샤이닝 / 할로윈 / 스크림  ‖  W: 절대 검감(絶對 劍感) / 태존비록(怠尊秘錄) / 검신재림(劍神再臨)]  →  (영상 · 영화 · 공포, 코미디, 스릴러) 로스트 보이 | 평점 7.1 · 투표 2,357
+x1_0101 [S: Project Zomboid / Don't Starve / The Forest  ‖  T: 워킹 데드 / 좀비랜드 / 28일 후  ‖  W: 멸망한 세계의 취사병 / 멸망 이후의 세계]  →  (소설 · 현판 · 현빌리) 멸망한 세계에 진짜 악당이 회귀했다 | 평점 없음 · 관심 0 · 8화
+x1_0102 [S: Hearts of Iron IV / Europa Universalis IV / Sid Meier's Civilization® V  ‖  T: 코코 / 월•E / 토이 스토리  ‖  W: 결혼과 부부생활 / 목표는 안전이혼인데요 / 메리지 어게인]  →  (게임 · Strategy · Grand Strategy · Simulation · 4X · Hist) Old World 올드 월드 | 리뷰 5,884
+x1_0103 [S: DARK SOULS™ III / The Witcher 3: Wild Hunt / The Elder Scrolls V: Skyrim Special Edition  ‖  T: 인터스텔라 / 인셉션 / 다크 나이트  ‖  W: 회귀의 전설 / 8클래스 마법사의 회귀 / 권왕환생]  →  (소설 · 무협 · 시영) 회귀투왕 | 평점 8.6 · 관심 2,500 · 7화
+x1_0104 [S: Lethal Company / Phasmophobia / Deep Rock Galactic  ‖  T: 샤이닝 / 할로윈 / 스크림  ‖  W: 복수 법률사무소 / 오뉘탑: 퇴마사건일지]  →  (영상 · 영화 · 공포, 코미디, 스릴러) 로스트 보이 | 평점 7.1 · 투표 2,357
+x1_0105 [S: Stardew Valley / Slime Rancher / Raft  ‖  T: 센과 치히로의 행방불명 / 이웃집 토토로 / 하울의 움직이는 성  ‖  W: 그 결혼, 이번 생엔 제가 할게요 / 지루하신 공작님과 강철의 이혼녀 / 함부로 길들이지 마시오!]  →  (게임 · Base Building · Automation · Open World · Crafting) Satisfactory | 리뷰 232,635
+x1_0106 [S: Stardew Valley / Slime Rancher / Raft  ‖  T: 센과 치히로의 행방불명 / 이웃집 토토로 / 하울의 움직이는 성  ‖  W: 그 결혼, 이번 생엔 제가 할게요 / 지루하신 공작님과 강철의 이혼녀 / 함부로 길들이지 마시오!]  →  (게임 · Survival · Crafting · Multiplayer · Open World · O) Rust | 리뷰 1,155,966
+x1_0107 [S: Lethal Company / Phasmophobia / Deep Rock Galactic  ‖  T: 대부 / 좋은 친구들 / 스카페이스  ‖  W: 영업 천재가 되었다 / 재벌가 복덩이 / 재벌집 기둥서방이 되었다.]  →  (게임 · Online Co-Op · Survival Horror · Horror · Co-op · ) Nuclear Nightmare | 리뷰 15,120
+x1_0108 [S: Project Zomboid / Don't Starve / The Forest  ‖  T: 워킹 데드 / 좀비랜드 / 28일 후  ‖  W: 멸망한 세계의 취사병 / 멸망 이후의 세계]  →  (소설 · 현판 · 흑곰작가) 멸망한 세계의 최강자! | 평점 8.2 · 관심 27,000 · 200화
+x1_0109 [S: Stardew Valley / Slime Rancher / Raft  ‖  T: 노팅 힐 / 러브 액츄얼리 / 500일의 썸머  ‖  W: 집착좀비가 나를 미행한다 / The Last / 너의 가이드가 되고 싶어]  →  (게임 · Survival · Crafting · Multiplayer · Open World · O) Rust | 리뷰 1,155,966
+x1_0110 [S: Opus Magnum  ‖  T: 겟 아웃 / 유전 / 미드소마  ‖  W: 복수 법률사무소 / 오뉘탑: 퇴마사건일지]  →  (소설 · 현판 · 한림) 검사로 개과천선 | 평점 없음 · 관심 0 · 6화
+x1_0111 [S: Lethal Company / Phasmophobia / Deep Rock Galactic  ‖  T: 겟 아웃 / 유전 / 미드소마]  →  (게임 · Third-Person Shooter · Action Roguelike · Multipla) Risk of Rain 2 | 리뷰 238,630
+x1_0112 [S: Dordogne / A YEAR OF SPRINGS / Botany Manor  ‖  T: 노팅 힐 / 러브 액츄얼리 / 500일의 썸머  ‖  W: 19년지기의 하룻밤 / 아찔함과 야릇함 사이 / 스위트룸에서]  →  (게임 · Exploration · Interactive Fiction · Photo Editing ) SEASON: A letter to the future | 리뷰 1,814
+x1_0113 [S: Stardew Valley / Slime Rancher / Raft  ‖  T: 노팅 힐 / 러브 액츄얼리 / 500일의 썸머  ‖  W: 집착좀비가 나를 미행한다 / The Last / 너의 가이드가 되고 싶어]  →  (게임 · Open World · Adventure · Exploration · Relaxing · ) Yonder: The Cloud Catcher Chronicles | 리뷰 2,902
+x1_0114 [S: 서브노티카 / The Long Dark / No Man's Sky  ‖  T: 워킹 데드 / 좀비랜드 / 28일 후]  →  (게임 · Open World · Survival · Action · Hunting · Adventu) Far Cry® Primal | 리뷰 38,373
+x1_0115 [S: DARK SOULS™ III / The Witcher 3: Wild Hunt / The Elder Scrolls V: Skyrim Special Edition  ‖  T: 인터스텔라 / 인셉션 / 다크 나이트  ‖  W: 회귀의 전설 / 8클래스 마법사의 회귀 / 권왕환생]  →  (게임 · RPG · MMORPG · Open World · Fantasy · Adventure) The Elder Scrolls® Online | 리뷰 133,919
+x1_0116 [S: Counter-Strike 2 / PUBG: BATTLEGROUNDS / 톰 클랜시의 레인보우식스 시즈  ‖  T: 아이언맨 / 캡틴 아메리카: 시빌 워 / 토르: 라그나로크  ‖  W: 게임 속 바바리안으로 살아남기 / 내가 키운 S급들 / 튜토리얼이 너무 어렵다]  →  (게임 · Tactical · Action · FPS · Co-op · Singleplayer) Tom Clancy's Rainbow Six® Vegas 2 | 리뷰 5,339
+x1_0117 [S: Salt and Sanctuary  ‖  W: 천재 무림 트레이너 / 무한 레벨업 in 무림 / 현질무신]  →  (게임 · Online Co-Op · Souls-like · Metroidvania · Action ) Salt and Sacrifice | 리뷰 1,718
+x1_0118 [S: Cities: Skylines / Factorio / Farming Simulator 22  ‖  W: 영업 천재가 되었다 / 재벌가 복덩이 / 재벌집 기둥서방이 되었다.]  →  (게임 · Simulation · Farming Sim · Multiplayer · Casual · ) Farming Simulator 2013 Titanium Edition | 리뷰 3,917
+x1_0119 [S: Salt and Sanctuary  ‖  T: 명량 / 광해, 왕이 된 남자 / 관상  ‖  W: 절대 검감(絶對 劍感) / 태존비록(怠尊秘錄) / 검신재림(劍神再臨)]  →  (게임 · Souls-like · Open World · Dark Fantasy · RPG · Dif) ELDEN RING | 리뷰 825,387
+x1_0120 [S: Salt and Sanctuary  ‖  W: 천재 무림 트레이너 / 무한 레벨업 in 무림 / 현질무신]  →  (게임 · Souls-like · Dark Fantasy · RPG · Difficult · Acti) DARK SOULS™ II: Scholar of the First Sin | 리뷰 83,044
+x1_0121 [S: Stardew Valley / Slime Rancher / Raft  ‖  W: 그 결혼, 이번 생엔 제가 할게요 / 지루하신 공작님과 강철의 이혼녀 / 함부로 길들이지 마시오!]  →  (소설 · 로판 · 라라솔) 공작님의 다정함을 믿지 마세요 | 평점 9.6 · 관심 617,000 · 191화
+x1_0122 [S: Euro Truck Simulator 2 / BeamNG.drive / 아세토 코르사 Assetto Corsa  ‖  T: 센과 치히로의 행방불명 / 이웃집 토토로 / 하울의 움직이는 성  ‖  W: 악녀의 시집살이는 즐겁다 / 여성향 게임의 파멸 플래그밖에 없는 악역 영애로 환생해버렸다…]  →  (소설 · 로판 · 뽀짝햄스터) 파혼한 영애는 엔딩 외엔 집착하지 않는다 | 평점 없음 · 관심 0 · 8화
+x1_0123 [S: Salt and Sanctuary  ‖  T: 명량 / 광해, 왕이 된 남자 / 관상  ‖  W: 절대 검감(絶對 劍感) / 태존비록(怠尊秘錄) / 검신재림(劍神再臨)]  →  (소설 · 무협 · 난세광도) 검선재차 | 평점 7.1 · 관심 888,000 · 1755화
+x1_0124 [S: Sid Meier’s Civilization® VI / XCOM® 2 / Stellaris  ‖  T: 왕좌의 게임 / 브레이킹 배드 / 종이의 집]  →  (영상 · TV · 범죄, 드라마) 나르코스 | 평점 8.1 · 투표 3,400
+x1_0125 [S: Project Zomboid / Don't Starve / The Forest  ‖  T: 워킹 데드 / 좀비랜드 / 28일 후  ‖  W: 멸망한 세계의 취사병 / 멸망 이후의 세계]  →  (게임 · Survival · Crafting · Multiplayer · Open World · O) Rust | 리뷰 1,155,966
+x1_0126 [S: Salt and Sanctuary  ‖  T: 명량 / 광해, 왕이 된 남자 / 관상  ‖  W: 절대 검감(絶對 劍感) / 태존비록(怠尊秘錄) / 검신재림(劍神再臨)]  →  (영상 · 영화 · 전쟁, 액션, 역사, 드라마) 노량: 죽음의 바다 | 평점 6.4 · 투표 164
+x1_0127 [T: 아이언맨 / 캡틴 아메리카: 시빌 워 / 토르: 라그나로크  ‖  W: 게임 속 바바리안으로 살아남기 / 내가 키운 S급들 / 튜토리얼이 너무 어렵다]  →  (영상 · 영화 · 액션, 모험, SF) 어벤져스: 에이지 오브 울트론 | 평점 7.3 · 투표 24,823
+x1_0128 [S: Opus Magnum  ‖  T: 워킹 데드 / 좀비랜드 / 28일 후  ‖  W: 두 번 사는 프로듀서 / 음악천재를 위하여 / 다 잘하는 히어로]  →  (소설 · 현판 · 연태량) AI로 갑질하는 양아치 재벌 | 평점 8.7 · 관심 1,200 · 8화
+x1_0129 [S: Lethal Company / Phasmophobia / Deep Rock Galactic  ‖  T: 샤이닝 / 할로윈 / 스크림  ‖  W: 복수 법률사무소 / 오뉘탑: 퇴마사건일지]  →  (영상 · 영화 · 공포, 스릴러) 블랙폰 | 평점 7.5 · 투표 5,989
+x1_0130 [S: DARK SOULS™ III / The Witcher 3: Wild Hunt / The Elder Scrolls V: Skyrim Special Edition  ‖  T: 인터스텔라 / 인셉션 / 다크 나이트  ‖  W: 회귀의 전설 / 8클래스 마법사의 회귀 / 권왕환생]  →  (소설 · 판타지 · 도우.) 남작가 마법사의 회귀 | 평점 8.4 · 관심 151,000 · 115화
+x1_0131 [S: Still Life / Jenny LeClue - Detectivu / Telling Lies  ‖  T: 대부 / 좋은 친구들 / 스카페이스  ‖  W: 천초 문순득의 수사일지 / 수사 기록실 / 천기누설 살인사건]  →  (소설 · 미스터리 · 오 수) 사기 | 평점 7.6 · 관심 3,900 · 54화
+x1_0132 [S: Still Life / Jenny LeClue - Detectivu / Telling Lies  ‖  T: 대부 / 좋은 친구들 / 스카페이스  ‖  W: 천초 문순득의 수사일지 / 수사 기록실 / 천기누설 살인사건]  →  (소설 · 미스터리 · 징구빙구) 별자리 살인마 : 너를 추억한다 | 평점 없음 · 관심 0 · 79화
+x1_0133 [S: Still Life / Jenny LeClue - Detectivu / Telling Lies  ‖  T: 대부 / 좋은 친구들 / 스카페이스  ‖  W: 천초 문순득의 수사일지 / 수사 기록실 / 천기누설 살인사건]  →  (소설 · 무협 · 주홍지) 비검문도 | 평점 9.7 · 관심 2,444,000 · 577화
+x1_0134 [S: Cities: Skylines / Factorio / Farming Simulator 22  ‖  W: 영업 천재가 되었다 / 재벌가 복덩이 / 재벌집 기둥서방이 되었다.]  →  (소설 · 현판 · 소수림) 재벌이 되어 버렸다 | 평점 8.2 · 관심 192,000 · 214화
+x1_0135 [T: 대부 / 좋은 친구들 / 스카페이스  ‖  W: 복수 법률사무소 / 오뉘탑: 퇴마사건일지]  →  (영상 · 영화 · 드라마, 범죄, 스릴러) 배신자 | 평점 7.6 · 투표 1,439
+x1_0136 [S: 서브노티카 / The Long Dark / No Man's Sky  ‖  T: 워킹 데드 / 좀비랜드 / 28일 후]  →  (영상 · 영화 · 공포, 코미디) 새벽의 황당한 저주 | 평점 7.5 · 투표 9,530
+x1_0137 [S: Opus Magnum  ‖  T: 워킹 데드 / 좀비랜드 / 28일 후  ‖  W: 두 번 사는 프로듀서 / 음악천재를 위하여 / 다 잘하는 히어로]  →  (영상 · TV · Action & Adventure, 드라마, Sci-Fi & Fantasy) 지금 우리 학교는 | 평점 8.3 · 투표 4,445
+x1_0138 [T: 대부 / 좋은 친구들 / 스카페이스  ‖  W: 복수 법률사무소 / 오뉘탑: 퇴마사건일지]  →  (영상 · 영화 · 범죄, 스릴러, 드라마) 리피피 | 평점 7.8 · 투표 654
+x1_0139 [S: Sid Meier’s Civilization® VI / XCOM® 2 / Stellaris  ‖  T: 왕좌의 게임 / 브레이킹 배드 / 종이의 집]  →  (영상 · TV · 범죄, 드라마) 오즈 | 평점 8.1 · 투표 863
+x1_0140 [S: Opus Magnum  ‖  T: 겟 아웃 / 유전 / 미드소마  ‖  W: 복수 법률사무소 / 오뉘탑: 퇴마사건일지]  →  (영상 · 영화 · 공포, 미스터리, 스릴러) 더 팩트 | 평점 5.7 · 투표 538
+x1_0141 [S: Hearts of Iron IV / Europa Universalis IV / Sid Meier's Civilization® V  ‖  T: 코코 / 월•E / 토이 스토리  ‖  W: 결혼과 부부생활 / 목표는 안전이혼인데요 / 메리지 어게인]  →  (게임 · Strategy · Historical · Grand Strategy · War · Tur) Total War: NAPOLEON – Definitive Edition | 리뷰 17,827
+x1_0142 [S: Hollow Knight / Dead Cells / Celeste  ‖  T: 너의 이름은. / 날씨의 아이 / 목소리의 형태]  →  (영상 · 영화 · 애니메이션, 드라마, 음악, 로맨스) 마음이 외치고 싶어해 | 평점 7.6 · 투표 438
+x1_0143 [T: 아이언맨 / 캡틴 아메리카: 시빌 워 / 토르: 라그나로크  ‖  W: 게임 속 바바리안으로 살아남기 / 내가 키운 S급들 / 튜토리얼이 너무 어렵다]  →  (소설 · 판타지 · 신노아) SSS급 죽어야 사는 헌터 | 평점 9.4 · 관심 65,000 · 16화
+x1_0144 [S: Hollow Knight / Dead Cells / Celeste  ‖  T: 너의 이름은. / 날씨의 아이 / 목소리의 형태]  →  (영상 · 영화 · 애니메이션, 로맨스, 드라마, 판타지) 청춘 돼지는 꿈꾸는 소녀의 꿈을 꾸지 않는다 | 평점 8.2 · 투표 609
+x1_0145 [S: Opus Magnum  ‖  T: 겟 아웃 / 유전 / 미드소마  ‖  W: 복수 법률사무소 / 오뉘탑: 퇴마사건일지]  →  (소설 · 미스터리 · 수소수) 수사 기록실 | 평점 없음 · 관심 0 · 8화
+x1_0146 [S: Hollow Knight / Dead Cells / Celeste  ‖  T: 너의 이름은. / 날씨의 아이 / 목소리의 형태]  →  (게임 · Adventure · Atmospheric · Platformer · Indie · Emo) Neva | 리뷰 9,112
+x1_0147 [T: 아이언맨 / 캡틴 아메리카: 시빌 워 / 토르: 라그나로크  ‖  W: 게임 속 바바리안으로 살아남기 / 내가 키운 S급들 / 튜토리얼이 너무 어렵다]  →  (소설 · 판타지 · 선운(鮮雲)) 나 혼자 특성빨로 무한 성장 | 평점 8.0 · 관심 13,010,000 · 547화
+x1_0148 [S: Counter-Strike 2 / PUBG: BATTLEGROUNDS / 톰 클랜시의 레인보우식스 시즈  ‖  T: 아이언맨 / 캡틴 아메리카: 시빌 워 / 토르: 라그나로크  ‖  W: 게임 속 바바리안으로 살아남기 / 내가 키운 S급들 / 튜토리얼이 너무 어렵다]  →  (게임 · FPS · Realistic · Tactical · Multiplayer · Shooter) Insurgency | 리뷰 86,384
+x1_0149 [S: Hearts of Iron IV / Europa Universalis IV / Sid Meier's Civilization® V  ‖  T: 왕좌의 게임 / 브레이킹 배드 / 종이의 집  ‖  W: 영업 천재가 되었다 / 재벌가 복덩이 / 재벌집 기둥서방이 되었다.]  →  (영상 · TV · 드라마, 범죄, Sci-Fi & Fantasy, 미스터리, Action & Adv) 왓치맨 | 평점 7.6 · 투표 1,662
+x1_0150 [T: 대부 / 좋은 친구들 / 스카페이스  ‖  W: 복수 법률사무소 / 오뉘탑: 퇴마사건일지]  →  (소설 · 현판 · 그라시아S) 문제적 탐정 사무소 | 평점 8.9 · 관심 4,500 · 213화
+x1_0151 [S: Salt and Sanctuary  ‖  W: 천재 무림 트레이너 / 무한 레벨업 in 무림 / 현질무신]  →  (소설 · 무협 · 빈캔) 무림학원의 천재 마법사가 되었다 | 평점 8.0 · 관심 2,600 · 10화
+x1_0152 [S: Sid Meier’s Civilization® VI / XCOM® 2 / Stellaris  ‖  T: 왕좌의 게임 / 브레이킹 배드 / 종이의 집]  →  (영상 · TV · 범죄, 드라마) 더 와이어 | 평점 8.6 · 투표 2,781
+x1_0153 [T: 명량 / 광해, 왕이 된 남자 / 관상  ‖  W: 절대 검감(絶對 劍感) / 태존비록(怠尊秘錄) / 검신재림(劍神再臨)]  →  (영상 · 영화 · 전쟁, 액션, 역사, 드라마) 노량: 죽음의 바다 | 평점 6.4 · 투표 164
+x1_0154 [T: 노팅 힐 / 러브 액츄얼리 / 500일의 썸머  ‖  W: 그 결혼, 이번 생엔 제가 할게요 / 지루하신 공작님과 강철의 이혼녀 / 함부로 길들이지 마시오!]  →  (소설 · 로판 · 라라솔) 공작님의 다정함을 믿지 마세요 | 평점 9.6 · 관심 617,000 · 191화
+x1_0155 [S: Sid Meier’s Civilization® VI / XCOM® 2 / Stellaris  ‖  T: 왕좌의 게임 / 브레이킹 배드 / 종이의 집]  →  (게임 · Strategy · Turn-Based Strategy · Sci-fi · Space · ) Sid Meier's Civilization®: Beyond Earth™ | 리뷰 13,999
+x1_0156 [S: Cities: Skylines / Factorio / Farming Simulator 22  ‖  W: 영업 천재가 되었다 / 재벌가 복덩이 / 재벌집 기둥서방이 되었다.]  →  (게임 · Base Building · Automation · Open World · Crafting) Satisfactory | 리뷰 232,635
+x1_0157 [T: 명량 / 광해, 왕이 된 남자 / 관상  ‖  W: 절대 검감(絶對 劍感) / 태존비록(怠尊秘錄) / 검신재림(劍神再臨)]  →  (소설 · 무협 · 천봉) 절대무사 | 평점 8.1 · 관심 145,000 · 275화
+x1_0158 [S: Opus Magnum  ‖  T: 워킹 데드 / 좀비랜드 / 28일 후  ‖  W: 두 번 사는 프로듀서 / 음악천재를 위하여 / 다 잘하는 히어로]  →  (영상 · 영화 · 공포, 코미디) 새벽의 황당한 저주 | 평점 7.5 · 투표 9,530
+x1_0159 [S: Opus Magnum  ‖  T: 워킹 데드 / 좀비랜드 / 28일 후  ‖  W: 두 번 사는 프로듀서 / 음악천재를 위하여 / 다 잘하는 히어로]  →  (영상 · 영화 · 액션, 모험, 공포, SF, 스릴러) 최후의 인류 | 평점 6.3 · 투표 802
+x1_0160 [S: Stardew Valley / Slime Rancher / Raft  ‖  T: 샤이닝 / 할로윈 / 스크림  ‖  W: 절대 검감(絶對 劍感) / 태존비록(怠尊秘錄) / 검신재림(劍神再臨)]  →  (영상 · 영화 · 공포, 스릴러, 드라마) 그것 | 평점 7.2 · 투표 20,554
+x1_0161 [S: 서브노티카 / The Long Dark / No Man's Sky  ‖  T: 워킹 데드 / 좀비랜드 / 28일 후]  →  (게임 · Space Sim · Space · Open World · Exploration · Sci) Elite Dangerous | 리뷰 81,894
+x1_0162 [S: Hearts of Iron IV / Europa Universalis IV / Sid Meier's Civilization® V  ‖  T: 왕좌의 게임 / 브레이킹 배드 / 종이의 집  ‖  W: 영업 천재가 되었다 / 재벌가 복덩이 / 재벌집 기둥서방이 되었다.]  →  (소설 · 현판 · 닥터하이츠) 재벌서자이지만 천재라서 | 평점 8.1 · 관심 4,300 · 9화
+x1_0163 [S: Counter-Strike 2 / PUBG: BATTLEGROUNDS / 톰 클랜시의 레인보우식스 시즈  ‖  T: 노팅 힐 / 러브 액츄얼리 / 500일의 썸머  ‖  W: 전남편의 미친개를 길들였다 / 구원, 그 잔혹함에 대하여 / 내 남편의 정부에게]  →  (게임 · FPS · Realistic · Tactical · Multiplayer · Shooter) Insurgency | 리뷰 86,384
+x1_0164 [S: Hearts of Iron IV / Europa Universalis IV / Sid Meier's Civilization® V  ‖  T: 왕좌의 게임 / 브레이킹 배드 / 종이의 집  ‖  W: 영업 천재가 되었다 / 재벌가 복덩이 / 재벌집 기둥서방이 되었다.]  →  (게임 · Strategy · Historical · War · Grand Strategy · Tur) Age of History II | 리뷰 47,481
+x1_0165 [S: 서브노티카 / The Long Dark / No Man's Sky  ‖  T: 워킹 데드 / 좀비랜드 / 28일 후]  →  (게임 · Open World Survival Craft · Survival · Horror · Op) The Forest | 리뷰 578,324
+x1_0166 [T: 아이언맨 / 캡틴 아메리카: 시빌 워 / 토르: 라그나로크  ‖  W: 게임 속 바바리안으로 살아남기 / 내가 키운 S급들 / 튜토리얼이 너무 어렵다]  →  (소설 · 판타지 · 흑전) 나 혼자 역대급 수련 | 평점 7.1 · 관심 358,000 · 177화
+x1_0167 [S: Lethal Company / Phasmophobia / Deep Rock Galactic  ‖  T: 샤이닝 / 할로윈 / 스크림  ‖  W: 복수 법률사무소 / 오뉘탑: 퇴마사건일지]  →  (게임 · Third-Person Shooter · Action Roguelike · Multipla) Risk of Rain 2 | 리뷰 238,630
+x1_0168 [S: Hearts of Iron IV / Europa Universalis IV / Sid Meier's Civilization® V  ‖  T: 코코 / 월•E / 토이 스토리  ‖  W: 결혼과 부부생활 / 목표는 안전이혼인데요 / 메리지 어게인]  →  (소설 · BL · 이림) 악연이라면 악연 | 평점 10.0 · 관심 13,000 · 113화
+x1_0169 [S: Counter-Strike 2 / PUBG: BATTLEGROUNDS / 톰 클랜시의 레인보우식스 시즈  ‖  T: 노팅 힐 / 러브 액츄얼리 / 500일의 썸머  ‖  W: 전남편의 미친개를 길들였다 / 구원, 그 잔혹함에 대하여 / 내 남편의 정부에게]  →  (영상 · 영화 · 코미디, 로맨스, 드라마) 티파니에서 아침을 | 평점 7.6 · 투표 4,536
+x1_0170 [S: Opus Magnum  ‖  T: 겟 아웃 / 유전 / 미드소마  ‖  W: 복수 법률사무소 / 오뉘탑: 퇴마사건일지]  →  (소설 · 라이트노벨 · 아키타 요시노부) 마술사 오펜 뜻밖의 여행 | 평점 10.0 · 관심 0 · 10화
+x1_0171 [S: Counter-Strike 2 / PUBG: BATTLEGROUNDS / 톰 클랜시의 레인보우식스 시즈  ‖  T: 노팅 힐 / 러브 액츄얼리 / 500일의 썸머  ‖  W: 전남편의 미친개를 길들였다 / 구원, 그 잔혹함에 대하여 / 내 남편의 정부에게]  →  (게임 · Survival · Massively Multiplayer · Multiplayer · O) Z1 Battle Royale | 리뷰 142,997
+x1_0172 [S: Project Zomboid / Don't Starve / The Forest  ‖  T: 워킹 데드 / 좀비랜드 / 28일 후  ‖  W: 멸망한 세계의 취사병 / 멸망 이후의 세계]  →  (영상 · 영화 · 액션, 모험, 공포, SF, 스릴러) 최후의 인류 | 평점 6.3 · 투표 802
+x1_0173 [S: Still Life / Jenny LeClue - Detectivu / Telling Lies  ‖  T: 대부 / 좋은 친구들 / 스카페이스  ‖  W: 천초 문순득의 수사일지 / 수사 기록실 / 천기누설 살인사건]  →  (영상 · 영화 · 범죄, 스릴러, 드라마) 리피피 | 평점 7.8 · 투표 654
+x1_0174 [S: DARK SOULS™ III / The Witcher 3: Wild Hunt / The Elder Scrolls V: Skyrim Special Edition  ‖  W: 게임 속 바바리안으로 살아남기 / 내가 키운 S급들 / 튜토리얼이 너무 어렵다]  →  (게임 · Open World · Action · Fantasy · Adventure · Third ) Middle-earth™: Shadow of Mordor™ | 리뷰 63,368
+x1_0175 [S: Stardew Valley / Slime Rancher / Raft  ‖  T: 센과 치히로의 행방불명 / 이웃집 토토로 / 하울의 움직이는 성  ‖  W: 그 결혼, 이번 생엔 제가 할게요 / 지루하신 공작님과 강철의 이혼녀 / 함부로 길들이지 마시오!]  →  (소설 · 로판 · 라라솔) 공작님의 다정함을 믿지 마세요 | 평점 9.6 · 관심 617,000 · 191화
+x1_0176 [S: Hearts of Iron IV / Europa Universalis IV / Sid Meier's Civilization® V  ‖  T: 왕좌의 게임 / 브레이킹 배드 / 종이의 집  ‖  W: 영업 천재가 되었다 / 재벌가 복덩이 / 재벌집 기둥서방이 되었다.]  →  (게임 · Strategy · Historical · Grand Strategy · War · Tur) Total War: NAPOLEON – Definitive Edition | 리뷰 17,827
+x1_0177 [S: Hollow Knight / Dead Cells / Celeste  ‖  T: 너의 이름은. / 날씨의 아이 / 목소리의 형태]  →  (영상 · 영화 · 애니메이션, 드라마, 로맨스) 언어의 정원 | 평점 7.6 · 투표 2,273
+x1_0178 [S: Salt and Sanctuary  ‖  W: 천재 무림 트레이너 / 무한 레벨업 in 무림 / 현질무신]  →  (소설 · 무협 · 고든.M) 무림서차원 | 평점 4.0 · 관심 1 · 10화
+x1_0179 [S: DARK SOULS™ III / The Witcher 3: Wild Hunt / The Elder Scrolls V: Skyrim Special Edition  ‖  W: 게임 속 바바리안으로 살아남기 / 내가 키운 S급들 / 튜토리얼이 너무 어렵다]  →  (소설 · 판타지 · 고리테일) 게임 난이도가 미쳤다 | 평점 7.0 · 관심 0 · 11화
+x1_0180 [S: Lethal Company / Phasmophobia / Deep Rock Galactic  ‖  T: 샤이닝 / 할로윈 / 스크림  ‖  W: 복수 법률사무소 / 오뉘탑: 퇴마사건일지]  →  (게임 · Horror · Online Co-Op · Multiplayer · Co-op · Psyc) Pacify | 리뷰 32,841
+x1_0181 [S: Opus Magnum  ‖  T: 겟 아웃 / 유전 / 미드소마  ‖  W: 복수 법률사무소 / 오뉘탑: 퇴마사건일지]  →  (게임 · Programming · Puzzle · Indie · Casual · Education) Human Resource Machine | 리뷰 3,260
+x1_0182 [S: DARK SOULS™ III / The Witcher 3: Wild Hunt / The Elder Scrolls V: Skyrim Special Edition  ‖  W: 게임 속 바바리안으로 살아남기 / 내가 키운 S급들 / 튜토리얼이 너무 어렵다]  →  (소설 · 판타지 · 정주(丁柱)) 전생했더니 고유스킬이 두 배 | 평점 8.0 · 관심 66,000 · 225화
+x1_0183 [S: Opus Magnum  ‖  T: 겟 아웃 / 유전 / 미드소마  ‖  W: 복수 법률사무소 / 오뉘탑: 퇴마사건일지]  →  (영상 · 영화 · 공포, 미스터리, 스릴러) 똑똑똑 | 평점 6.2 · 투표 3,165
+x1_0184 [S: Counter-Strike 2 / PUBG: BATTLEGROUNDS / 톰 클랜시의 레인보우식스 시즈  ‖  T: 노팅 힐 / 러브 액츄얼리 / 500일의 썸머  ‖  W: 전남편의 미친개를 길들였다 / 구원, 그 잔혹함에 대하여 / 내 남편의 정부에게]  →  (소설 · 로판 · 달가듯이) 전남편이 황제가 되었다 | 평점 없음 · 관심 0 · 5화
+x1_0185 [S: Euro Truck Simulator 2 / BeamNG.drive / 아세토 코르사 Assetto Corsa  ‖  T: 센과 치히로의 행방불명 / 이웃집 토토로 / 하울의 움직이는 성  ‖  W: 악녀의 시집살이는 즐겁다 / 여성향 게임의 파멸 플래그밖에 없는 악역 영애로 환생해버렸다…]  →  (게임 · Automobile Sim · Driving · Open World · Simulation) American Truck Simulator | 리뷰 165,963
+x1_0186 [S: Project Zomboid / Don't Starve / The Forest  ‖  T: 워킹 데드 / 좀비랜드 / 28일 후  ‖  W: 멸망한 세계의 취사병 / 멸망 이후의 세계]  →  (소설 · 현판 · 에바트리체) 취사병이 요리를 너무 잘함 | 평점 9.0 · 관심 225,000 · 316화
+x1_0187 [T: 아이언맨 / 캡틴 아메리카: 시빌 워 / 토르: 라그나로크  ‖  W: 게임 속 바바리안으로 살아남기 / 내가 키운 S급들 / 튜토리얼이 너무 어렵다]  →  (영상 · 영화 · 액션, 모험, SF) 퍼스트 어벤져 | 평점 7.0 · 투표 23,067
+x1_0188 [S: DARK SOULS™ III / The Witcher 3: Wild Hunt / The Elder Scrolls V: Skyrim Special Edition  ‖  T: 인터스텔라 / 인셉션 / 다크 나이트  ‖  W: 회귀의 전설 / 8클래스 마법사의 회귀 / 권왕환생]  →  (게임 · Open World · Action · Fantasy · Adventure · Third ) Middle-earth™: Shadow of Mordor™ | 리뷰 63,368
+x1_0189 [S: Dordogne / A YEAR OF SPRINGS / Botany Manor  ‖  T: 노팅 힐 / 러브 액츄얼리 / 500일의 썸머  ‖  W: 19년지기의 하룻밤 / 아찔함과 야릇함 사이 / 스위트룸에서]  →  (영상 · 영화 · 코미디, 드라마, 로맨스) 라스트 크리스마스 | 평점 7.2 · 투표 2,665
+x1_0190 [S: Lethal Company / Phasmophobia / Deep Rock Galactic  ‖  T: 샤이닝 / 할로윈 / 스크림  ‖  W: 복수 법률사무소 / 오뉘탑: 퇴마사건일지]  →  (영상 · 영화 · 공포, 판타지, 스릴러) 다크 하베스트 | 평점 6.0 · 투표 323
+x1_0191 [S: Counter-Strike 2 / PUBG: BATTLEGROUNDS / 톰 클랜시의 레인보우식스 시즈  ‖  T: 노팅 힐 / 러브 액츄얼리 / 500일의 썸머  ‖  W: 전남편의 미친개를 길들였다 / 구원, 그 잔혹함에 대하여 / 내 남편의 정부에게]  →  (게임 · Shooter · FPS · Action · Multiplayer · Team-Based) Counter-Strike: Source | 리뷰 134,865
+x1_0192 [S: Opus Magnum  ‖  T: 워킹 데드 / 좀비랜드 / 28일 후  ‖  W: 두 번 사는 프로듀서 / 음악천재를 위하여 / 다 잘하는 히어로]  →  (소설 · 현판 · 해비베어) 두 번 사는 대표님 | 평점 7.5 · 관심 180,000 · 137화
+x1_0193 [S: Euro Truck Simulator 2 / BeamNG.drive / 아세토 코르사 Assetto Corsa  ‖  T: 센과 치히로의 행방불명 / 이웃집 토토로 / 하울의 움직이는 성  ‖  W: 악녀의 시집살이는 즐겁다 / 여성향 게임의 파멸 플래그밖에 없는 악역 영애로 환생해버렸다…]  →  (영상 · 영화 · 애니메이션, 모험, 가족, 판타지) 메리와 마녀의 꽃 | 평점 7.2 · 투표 932
+x1_0194 [S: DARK SOULS™ III / The Witcher 3: Wild Hunt / The Elder Scrolls V: Skyrim Special Edition  ‖  T: 인터스텔라 / 인셉션 / 다크 나이트  ‖  W: 회귀의 전설 / 8클래스 마법사의 회귀 / 권왕환생]  →  (영상 · 영화 · 액션, SF, 모험) 썬더볼츠* | 평점 7.3 · 투표 3,891
+x1_0195 [S: Hearts of Iron IV / Europa Universalis IV / Sid Meier's Civilization® V  ‖  T: 왕좌의 게임 / 브레이킹 배드 / 종이의 집  ‖  W: 영업 천재가 되었다 / 재벌가 복덩이 / 재벌집 기둥서방이 되었다.]  →  (소설 · 현판 · 새가람) 버림받은 재벌 서자의 성공 라이프 | 평점 8.3 · 관심 1,706,000 · 221화
+x1_0196 [T: 아이언맨 / 캡틴 아메리카: 시빌 워 / 토르: 라그나로크  ‖  W: 게임 속 바바리안으로 살아남기 / 내가 키운 S급들 / 튜토리얼이 너무 어렵다]  →  (영상 · 영화 · SF, 모험, 액션) 가디언즈 오브 갤럭시 Vol. 2 | 평점 7.6 · 투표 23,265
+x1_0197 [S: Dordogne / A YEAR OF SPRINGS / Botany Manor  ‖  T: 센과 치히로의 행방불명 / 이웃집 토토로 / 하울의 움직이는 성  ‖  W: 광공 싸움에 빌런 등 터진다 / 목표는 안전이혼인데요 / 광공들이 미쳤는데 로그아웃이 안 된다니요]  →  (영상 · 영화 · 애니메이션, 드라마, 모험, 판타지) 스즈메의 문단속 | 평점 7.9 · 투표 1,817
+x1_0198 [S: Opus Magnum  ‖  T: 겟 아웃 / 유전 / 미드소마  ‖  W: 복수 법률사무소 / 오뉘탑: 퇴마사건일지]  →  (영상 · 영화 · 미스터리, 공포, 스릴러) 더 로드 | 평점 6.4 · 투표 615
+x1_0199 [S: Dordogne / A YEAR OF SPRINGS / Botany Manor  ‖  T: 노팅 힐 / 러브 액츄얼리 / 500일의 썸머  ‖  W: 19년지기의 하룻밤 / 아찔함과 야릇함 사이 / 스위트룸에서]  →  (게임 · Walking Simulator · Short · Indie · Exploration · ) Gone Home | 리뷰 13,581
+x1_0200 [T: 노팅 힐 / 러브 액츄얼리 / 500일의 썸머  ‖  W: 그 결혼, 이번 생엔 제가 할게요 / 지루하신 공작님과 강철의 이혼녀 / 함부로 길들이지 마시오!]  →  (소설 · 로판 · 김뽀삐) 공작 부인의 남편을 찾습니다 | 평점 9.8 · 관심 467,000 · 185화
+x1_0201 [S: Stardew Valley / Slime Rancher / Raft  ‖  W: 그 결혼, 이번 생엔 제가 할게요 / 지루하신 공작님과 강철의 이혼녀 / 함부로 길들이지 마시오!]  →  (게임 · Survival · Crafting · Multiplayer · Open World · O) Rust | 리뷰 1,155,966
+x1_0202 [S: Stardew Valley / Slime Rancher / Raft  ‖  T: 노팅 힐 / 러브 액츄얼리 / 500일의 썸머  ‖  W: 집착좀비가 나를 미행한다 / The Last / 너의 가이드가 되고 싶어]  →  (게임 · Life Sim · RPG · Open World · Farming Sim · Crafti) My Time at Portia | 리뷰 34,784
+x1_0203 [S: Hearts of Iron IV / Europa Universalis IV / Sid Meier's Civilization® V  ‖  T: 왕좌의 게임 / 브레이킹 배드 / 종이의 집  ‖  W: 영업 천재가 되었다 / 재벌가 복덩이 / 재벌집 기둥서방이 되었다.]  →  (게임 · Grand Strategy · Strategy · Medieval · Historical ) Crusader Kings II | 리뷰 30,868
+x1_0204 [S: Lethal Company / Phasmophobia / Deep Rock Galactic  ‖  T: 대부 / 좋은 친구들 / 스카페이스  ‖  W: 영업 천재가 되었다 / 재벌가 복덩이 / 재벌집 기둥서방이 되었다.]  →  (영상 · 영화 · 드라마, 범죄, 스릴러) 배신자 | 평점 7.6 · 투표 1,439
+x1_0205 [S: Sid Meier’s Civilization® VI / XCOM® 2 / Stellaris  ‖  T: 왕좌의 게임 / 브레이킹 배드 / 종이의 집]  →  (게임 · Turn-Based Strategy · Tactical · Strategy · Sci-fi) XCOM: Enemy Unknown | 리뷰 40,173
+x1_0206 [S: Dordogne / A YEAR OF SPRINGS / Botany Manor  ‖  T: 노팅 힐 / 러브 액츄얼리 / 500일의 썸머  ‖  W: 19년지기의 하룻밤 / 아찔함과 야릇함 사이 / 스위트룸에서]  →  (게임 · Visual Novel · Anime · Indie · Sci-fi · Story Rich) Analogue: A Hate Story | 리뷰 1,690
+x1_0207 [S: Salt and Sanctuary  ‖  T: 명량 / 광해, 왕이 된 남자 / 관상  ‖  W: 절대 검감(絶對 劍感) / 태존비록(怠尊秘錄) / 검신재림(劍神再臨)]  →  (소설 · 무협 · 천봉) 절대무사 | 평점 8.1 · 관심 145,000 · 275화
+x1_0208 [S: Counter-Strike 2 / PUBG: BATTLEGROUNDS / 톰 클랜시의 레인보우식스 시즈  ‖  T: 노팅 힐 / 러브 액츄얼리 / 500일의 썸머  ‖  W: 전남편의 미친개를 길들였다 / 구원, 그 잔혹함에 대하여 / 내 남편의 정부에게]  →  (소설 · 로판 · 하이픈) 파멸 속에서 나를 구원하소서 | 평점 7.3 · 관심 129,000 · 150화
+x1_0209 [S: 서브노티카 / The Long Dark / No Man's Sky  ‖  T: 워킹 데드 / 좀비랜드 / 28일 후]  →  (영상 · 영화 · 코미디, 공포, SF) 카멧 나이트 | 평점 6.2 · 투표 455
+x1_0210 [S: Opus Magnum  ‖  T: 워킹 데드 / 좀비랜드 / 28일 후  ‖  W: 두 번 사는 프로듀서 / 음악천재를 위하여 / 다 잘하는 히어로]  →  (게임 · Puzzle · Building · Automation · Indie · Programmi) Infinifactory | 리뷰 1,787
+x1_0211 [T: 아이언맨 / 캡틴 아메리카: 시빌 워 / 토르: 라그나로크  ‖  W: 게임 속 바바리안으로 살아남기 / 내가 키운 S급들 / 튜토리얼이 너무 어렵다]  →  (소설 · 현판 · Cerim) 내게 튜토리얼은 지옥이다 | 평점 9.2 · 관심 320,000 · 176화
+x1_0212 [T: 노팅 힐 / 러브 액츄얼리 / 500일의 썸머  ‖  W: 그 결혼, 이번 생엔 제가 할게요 / 지루하신 공작님과 강철의 이혼녀 / 함부로 길들이지 마시오!]  →  (소설 · 로판 · 세리아) 고립된 공작 부인은 오늘도 쉬고 싶다 | 평점 9.8 · 관심 283,000 · 162화
+x1_0213 [S: Euro Truck Simulator 2 / BeamNG.drive / 아세토 코르사 Assetto Corsa  ‖  T: 센과 치히로의 행방불명 / 이웃집 토토로 / 하울의 움직이는 성  ‖  W: 악녀의 시집살이는 즐겁다 / 여성향 게임의 파멸 플래그밖에 없는 악역 영애로 환생해버렸다…]  →  (게임 · Simulation · Driving · Automobile Sim · Open World) City Car Driving | 리뷰 33,240
+x1_0214 [S: Salt and Sanctuary  ‖  T: 명량 / 광해, 왕이 된 남자 / 관상  ‖  W: 절대 검감(絶對 劍感) / 태존비록(怠尊秘錄) / 검신재림(劍神再臨)]  →  (게임 · Souls-like · Dark Fantasy · RPG · Difficult · Acti) DARK SOULS™ II: Scholar of the First Sin | 리뷰 83,044
+x1_0215 [S: Lethal Company / Phasmophobia / Deep Rock Galactic  ‖  T: 대부 / 좋은 친구들 / 스카페이스  ‖  W: 영업 천재가 되었다 / 재벌가 복덩이 / 재벌집 기둥서방이 되었다.]  →  (게임 · Third-Person Shooter · Action Roguelike · Multipla) Risk of Rain 2 | 리뷰 238,630
+x1_0216 [S: Salt and Sanctuary  ‖  W: 천재 무림 트레이너 / 무한 레벨업 in 무림 / 현질무신]  →  (소설 · 무협 · 곤붕) 무한 퀘스트 in 무림 | 평점 8.3 · 관심 708,000 · 62화
+x1_0217 [S: 서브노티카 / The Long Dark / No Man's Sky  ‖  T: 워킹 데드 / 좀비랜드 / 28일 후]  →  (영상 · TV · Action & Adventure, 드라마, Sci-Fi & Fantasy) 지금 우리 학교는 | 평점 8.3 · 투표 4,445
+x1_0218 [S: Dordogne / A YEAR OF SPRINGS / Botany Manor  ‖  T: 노팅 힐 / 러브 액츄얼리 / 500일의 썸머  ‖  W: 19년지기의 하룻밤 / 아찔함과 야릇함 사이 / 스위트룸에서]  →  (게임 · Singleplayer · LGBTQ+ · Visual Novel · Fantasy · C) 태번 토크 | 리뷰 1,442
+x1_0219 [S: Stardew Valley / Slime Rancher / Raft  ‖  T: 샤이닝 / 할로윈 / 스크림  ‖  W: 절대 검감(絶對 劍感) / 태존비록(怠尊秘錄) / 검신재림(劍神再臨)]  →  (소설 · 무협 · 류하(鉚河)) 무신역천검 | 평점 9.3 · 관심 1,100 · 9화
+x1_0220 [S: DARK SOULS™ III / The Witcher 3: Wild Hunt / The Elder Scrolls V: Skyrim Special Edition  ‖  W: 게임 속 바바리안으로 살아남기 / 내가 키운 S급들 / 튜토리얼이 너무 어렵다]  →  (게임 · RPG · Fantasy · Story Rich · Singleplayer · Choice) The Witcher: Enhanced Edition Director's Cut | 리뷰 82,053
+x1_0221 [T: 대부 / 좋은 친구들 / 스카페이스  ‖  W: 복수 법률사무소 / 오뉘탑: 퇴마사건일지]  →  (소설 · 현판 · 한림) 검사로 개과천선 | 평점 없음 · 관심 0 · 6화
+x1_0222 [T: 명량 / 광해, 왕이 된 남자 / 관상  ‖  W: 절대 검감(絶對 劍感) / 태존비록(怠尊秘錄) / 검신재림(劍神再臨)]  →  (영상 · 영화 · 드라마, 역사, 범죄) 간신 | 평점 6.1 · 투표 91
+x1_0223 [S: 서브노티카 / The Long Dark / No Man's Sky  ‖  T: 워킹 데드 / 좀비랜드 / 28일 후]  →  (영상 · 영화 · 액션, 모험, 공포, SF, 스릴러) 최후의 인류 | 평점 6.3 · 투표 802
+x1_0224 [S: Euro Truck Simulator 2 / BeamNG.drive / 아세토 코르사 Assetto Corsa  ‖  T: 센과 치히로의 행방불명 / 이웃집 토토로 / 하울의 움직이는 성  ‖  W: 악녀의 시집살이는 즐겁다 / 여성향 게임의 파멸 플래그밖에 없는 악역 영애로 환생해버렸다…]  →  (영상 · 영화 · 애니메이션, 드라마, 모험, 판타지) 스즈메의 문단속 | 평점 7.9 · 투표 1,817
+x1_0225 [S: Sid Meier’s Civilization® VI / XCOM® 2 / Stellaris  ‖  T: 왕좌의 게임 / 브레이킹 배드 / 종이의 집]  →  (영상 · TV · 범죄, 드라마, 미스터리) 덱스터 | 평점 8.2 · 투표 5,763
+x1_0226 [S: Hearts of Iron IV / Europa Universalis IV / Sid Meier's Civilization® V  ‖  T: 왕좌의 게임 / 브레이킹 배드 / 종이의 집  ‖  W: 영업 천재가 되었다 / 재벌가 복덩이 / 재벌집 기둥서방이 되었다.]  →  (소설 · 현판 · 알랜더) 이번 생은 재벌이다! | 평점 8.0 · 관심 282,000 · 133화
+x1_0227 [T: 대부 / 좋은 친구들 / 스카페이스  ‖  W: 복수 법률사무소 / 오뉘탑: 퇴마사건일지]  →  (소설 · 라이트노벨 · 아키타 요시노부) 마술사 오펜 뜻밖의 여행 | 평점 10.0 · 관심 0 · 10화
+x1_0228 [S: Salt and Sanctuary  ‖  T: 명량 / 광해, 왕이 된 남자 / 관상  ‖  W: 절대 검감(絶對 劍感) / 태존비록(怠尊秘錄) / 검신재림(劍神再臨)]  →  (소설 · 무협 · 류하(鉚河)) 무신역천검 | 평점 9.3 · 관심 1,100 · 9화
+x1_0229 [S: Dordogne / A YEAR OF SPRINGS / Botany Manor  ‖  T: 센과 치히로의 행방불명 / 이웃집 토토로 / 하울의 움직이는 성  ‖  W: 광공 싸움에 빌런 등 터진다 / 목표는 안전이혼인데요 / 광공들이 미쳤는데 로그아웃이 안 된다니요]  →  (게임 · Walking Simulator · Short · Indie · Exploration · ) Gone Home | 리뷰 13,581
+x1_0230 [S: Hearts of Iron IV / Europa Universalis IV / Sid Meier's Civilization® V  ‖  T: 코코 / 월•E / 토이 스토리  ‖  W: 결혼과 부부생활 / 목표는 안전이혼인데요 / 메리지 어게인]  →  (게임 · Strategy · Historical · War · Grand Strategy · Tur) Age of History II | 리뷰 47,481
+x1_0231 [S: Still Life / Jenny LeClue - Detectivu / Telling Lies  ‖  T: 대부 / 좋은 친구들 / 스카페이스  ‖  W: 천초 문순득의 수사일지 / 수사 기록실 / 천기누설 살인사건]  →  (영상 · 영화 · 드라마, 범죄, 스릴러) 배신자 | 평점 7.6 · 투표 1,439
+x1_0232 [S: Euro Truck Simulator 2 / BeamNG.drive / 아세토 코르사 Assetto Corsa  ‖  T: 센과 치히로의 행방불명 / 이웃집 토토로 / 하울의 움직이는 성  ‖  W: 악녀의 시집살이는 즐겁다 / 여성향 게임의 파멸 플래그밖에 없는 악역 영애로 환생해버렸다…]  →  (게임 · Racing · Automobile Sim · Simulation · VR · Multip) 아세토 코르사 컴페티치오네 Assetto Corsa Competizione | 리뷰 33,241
+x1_0233 [S: Project Zomboid / Don't Starve / The Forest  ‖  T: 워킹 데드 / 좀비랜드 / 28일 후  ‖  W: 멸망한 세계의 취사병 / 멸망 이후의 세계]  →  (게임 · Open World Survival Craft · Survival · Horror · Un) 서브노티카 | 리뷰 338,909
+x1_0234 [S: Lethal Company / Phasmophobia / Deep Rock Galactic  ‖  T: 대부 / 좋은 친구들 / 스카페이스  ‖  W: 영업 천재가 되었다 / 재벌가 복덩이 / 재벌집 기둥서방이 되었다.]  →  (소설 · 현판 · 닥터하이츠) 재벌서자이지만 천재라서 | 평점 8.1 · 관심 4,300 · 9화
+x1_0235 [S: Stardew Valley / Slime Rancher / Raft  ‖  T: 센과 치히로의 행방불명 / 이웃집 토토로 / 하울의 움직이는 성  ‖  W: 그 결혼, 이번 생엔 제가 할게요 / 지루하신 공작님과 강철의 이혼녀 / 함부로 길들이지 마시오!]  →  (게임 · Open World · Adventure · Exploration · Relaxing · ) Yonder: The Cloud Catcher Chronicles | 리뷰 2,902
+x1_0236 [S: Stardew Valley / Slime Rancher / Raft  ‖  T: 센과 치히로의 행방불명 / 이웃집 토토로 / 하울의 움직이는 성  ‖  W: 그 결혼, 이번 생엔 제가 할게요 / 지루하신 공작님과 강철의 이혼녀 / 함부로 길들이지 마시오!]  →  (영상 · 영화 · 애니메이션, 가족, 판타지) 마녀배달부 키키 | 평점 7.8 · 투표 4,674
+x1_0237 [S: Stardew Valley / Slime Rancher / Raft  ‖  W: 그 결혼, 이번 생엔 제가 할게요 / 지루하신 공작님과 강철의 이혼녀 / 함부로 길들이지 마시오!]  →  (소설 · 로판 · 김캐롤) 네가 되고 나서야 알게 된 것들 | 평점 9.9 · 관심 591,000 · 128화
+x1_0238 [S: Cities: Skylines / Factorio / Farming Simulator 22  ‖  W: 영업 천재가 되었다 / 재벌가 복덩이 / 재벌집 기둥서방이 되었다.]  →  (소설 · 현판 · 알랜더) 이번 생은 재벌이다! | 평점 8.0 · 관심 282,000 · 133화
+x1_0239 [S: Stardew Valley / Slime Rancher / Raft  ‖  T: 노팅 힐 / 러브 액츄얼리 / 500일의 썸머  ‖  W: 집착좀비가 나를 미행한다 / The Last / 너의 가이드가 되고 싶어]  →  (영상 · 영화 · 코미디, 로맨스, 드라마) 티파니에서 아침을 | 평점 7.6 · 투표 4,536
+x1_0240 [S: Lethal Company / Phasmophobia / Deep Rock Galactic  ‖  T: 샤이닝 / 할로윈 / 스크림  ‖  W: 복수 법률사무소 / 오뉘탑: 퇴마사건일지]  →  (소설 · 현판 · 한림) 검사로 개과천선 | 평점 없음 · 관심 0 · 6화
+x1_0241 [S: DARK SOULS™ III / The Witcher 3: Wild Hunt / The Elder Scrolls V: Skyrim Special Edition  ‖  W: 게임 속 바바리안으로 살아남기 / 내가 키운 S급들 / 튜토리얼이 너무 어렵다]  →  (게임 · Souls-like · Open World · Dark Fantasy · RPG · Dif) ELDEN RING | 리뷰 825,387
+x1_0242 [S: Salt and Sanctuary  ‖  T: 명량 / 광해, 왕이 된 남자 / 관상  ‖  W: 절대 검감(絶對 劍感) / 태존비록(怠尊秘錄) / 검신재림(劍神再臨)]  →  (게임 · Online Co-Op · Souls-like · Metroidvania · Action ) Salt and Sacrifice | 리뷰 1,718
+x1_0243 [S: Salt and Sanctuary  ‖  T: 명량 / 광해, 왕이 된 남자 / 관상  ‖  W: 절대 검감(絶對 劍感) / 태존비록(怠尊秘錄) / 검신재림(劍神再臨)]  →  (소설 · 무협 · 욜로) 천존재림 | 평점 7.1 · 관심 28,000 · 175화
+x1_0244 [S: 서브노티카 / The Long Dark / No Man's Sky  ‖  T: 워킹 데드 / 좀비랜드 / 28일 후]  →  (영상 · 영화 · 공포, 액션, 코미디) 웜우드: 분노의 좀비 도로 | 평점 6.1 · 투표 519
+x1_0245 [S: Sid Meier’s Civilization® VI / XCOM® 2 / Stellaris  ‖  T: 왕좌의 게임 / 브레이킹 배드 / 종이의 집]  →  (영상 · TV · 드라마, 범죄, Sci-Fi & Fantasy, 미스터리, Action & Adv) 왓치맨 | 평점 7.6 · 투표 1,662
+x1_0246 [S: Dordogne / A YEAR OF SPRINGS / Botany Manor  ‖  T: 노팅 힐 / 러브 액츄얼리 / 500일의 썸머  ‖  W: 19년지기의 하룻밤 / 아찔함과 야릇함 사이 / 스위트룸에서]  →  (영상 · 영화 · 코미디, 로맨스, 드라마) 티파니에서 아침을 | 평점 7.6 · 투표 4,536
+x1_0247 [S: Stardew Valley / Slime Rancher / Raft  ‖  T: 샤이닝 / 할로윈 / 스크림  ‖  W: 절대 검감(絶對 劍感) / 태존비록(怠尊秘錄) / 검신재림(劍神再臨)]  →  (게임 · Open World · Adventure · Exploration · Relaxing · ) Yonder: The Cloud Catcher Chronicles | 리뷰 2,902
+x1_0248 [S: Hearts of Iron IV / Europa Universalis IV / Sid Meier's Civilization® V  ‖  T: 왕좌의 게임 / 브레이킹 배드 / 종이의 집  ‖  W: 영업 천재가 되었다 / 재벌가 복덩이 / 재벌집 기둥서방이 되었다.]  →  (게임 · Strategy · Grand Strategy · Simulation · 4X · Hist) Old World 올드 월드 | 리뷰 5,884
+x1_0249 [S: Stardew Valley / Slime Rancher / Raft  ‖  T: 센과 치히로의 행방불명 / 이웃집 토토로 / 하울의 움직이는 성  ‖  W: 그 결혼, 이번 생엔 제가 할게요 / 지루하신 공작님과 강철의 이혼녀 / 함부로 길들이지 마시오!]  →  (소설 · 로판 · 사카린) 천한 당신의 성에서 | 평점 9.5 · 관심 413,000 · 132화
+x1_0250 [S: DARK SOULS™ III / The Witcher 3: Wild Hunt / The Elder Scrolls V: Skyrim Special Edition  ‖  W: 게임 속 바바리안으로 살아남기 / 내가 키운 S급들 / 튜토리얼이 너무 어렵다]  →  (게임 · Souls-like · Dark Fantasy · RPG · Difficult · Acti) DARK SOULS™ II: Scholar of the First Sin | 리뷰 83,044
+x1_0251 [S: Cities: Skylines / Factorio / Farming Simulator 22  ‖  W: 영업 천재가 되었다 / 재벌가 복덩이 / 재벌집 기둥서방이 되었다.]  →  (게임 · Automation · Management · Strategy · Building · Fu) shapez 2 - Factory | 리뷰 13,541
+x1_0252 [S: Opus Magnum  ‖  T: 워킹 데드 / 좀비랜드 / 28일 후  ‖  W: 두 번 사는 프로듀서 / 음악천재를 위하여 / 다 잘하는 히어로]  →  (소설 · 현판 · 임재민) 천재 작곡가의 화려한 귀환 | 평점 8.8 · 관심 686,000 · 200화
+x1_0253 [S: Opus Magnum  ‖  T: 워킹 데드 / 좀비랜드 / 28일 후  ‖  W: 두 번 사는 프로듀서 / 음악천재를 위하여 / 다 잘하는 히어로]  →  (게임 · Puzzle · Difficult · Programming · Indie · Logic) SpaceChem | 리뷰 2,617
+x1_0254 [S: Counter-Strike 2 / PUBG: BATTLEGROUNDS / 톰 클랜시의 레인보우식스 시즈  ‖  T: 노팅 힐 / 러브 액츄얼리 / 500일의 썸머  ‖  W: 전남편의 미친개를 길들였다 / 구원, 그 잔혹함에 대하여 / 내 남편의 정부에게]  →  (영상 · 영화 · 코미디, 로맨스) 남주기 아까운 그녀 | 평점 6.5 · 투표 1,826
+x1_0255 [S: Lethal Company / Phasmophobia / Deep Rock Galactic  ‖  T: 샤이닝 / 할로윈 / 스크림  ‖  W: 복수 법률사무소 / 오뉘탑: 퇴마사건일지]  →  (영상 · 영화 · 공포, 스릴러, 드라마) 그것 | 평점 7.2 · 투표 20,554
+x1_0256 [S: Sid Meier’s Civilization® VI / XCOM® 2 / Stellaris  ‖  T: 왕좌의 게임 / 브레이킹 배드 / 종이의 집]  →  (게임 · Strategy · Simulation · Indie · Historical · Turn-) Oriental Empires | 리뷰 2,576
+x1_0257 [S: Dordogne / A YEAR OF SPRINGS / Botany Manor  ‖  T: 노팅 힐 / 러브 액츄얼리 / 500일의 썸머  ‖  W: 19년지기의 하룻밤 / 아찔함과 야릇함 사이 / 스위트룸에서]  →  (소설 · 로맨스 · 가빈) 그 밤의 습도 | 평점 9.7 · 관심 10,000 · 79화
+x1_0258 [S: DARK SOULS™ III / The Witcher 3: Wild Hunt / The Elder Scrolls V: Skyrim Special Edition  ‖  T: 인터스텔라 / 인셉션 / 다크 나이트  ‖  W: 회귀의 전설 / 8클래스 마법사의 회귀 / 권왕환생]  →  (게임 · RPG · Fantasy · Story Rich · Singleplayer · Choice) The Witcher: Enhanced Edition Director's Cut | 리뷰 82,053
+x1_0259 [T: 명량 / 광해, 왕이 된 남자 / 관상  ‖  W: 절대 검감(絶對 劍感) / 태존비록(怠尊秘錄) / 검신재림(劍神再臨)]  →  (영상 · 영화 · 액션, 드라마, 역사) 검객 | 평점 7.5 · 투표 293
+x1_0260 [S: Lethal Company / Phasmophobia / Deep Rock Galactic  ‖  T: 겟 아웃 / 유전 / 미드소마]  →  (영상 · 영화 · 미스터리, 공포, 스릴러) 더 로드 | 평점 6.4 · 투표 615
+x1_0261 [S: Hearts of Iron IV / Europa Universalis IV / Sid Meier's Civilization® V  ‖  T: 코코 / 월•E / 토이 스토리  ‖  W: 결혼과 부부생활 / 목표는 안전이혼인데요 / 메리지 어게인]  →  (영상 · 영화 · 모험, 애니메이션, 코미디, 가족, 판타지) 우당탕 마을 | 평점 7.5 · 투표 220
+x1_0262 [S: Dordogne / A YEAR OF SPRINGS / Botany Manor  ‖  T: 노팅 힐 / 러브 액츄얼리 / 500일의 썸머  ‖  W: 19년지기의 하룻밤 / 아찔함과 야릇함 사이 / 스위트룸에서]  →  (소설 · 로맨스 · 아유이) 야밤 놀이 | 평점 10.0 · 관심 25,000 · 132화
+x1_0263 [S: Counter-Strike 2 / PUBG: BATTLEGROUNDS / 톰 클랜시의 레인보우식스 시즈  ‖  T: 노팅 힐 / 러브 액츄얼리 / 500일의 썸머  ‖  W: 전남편의 미친개를 길들였다 / 구원, 그 잔혹함에 대하여 / 내 남편의 정부에게]  →  (영상 · 영화 · 코미디, 드라마, 로맨스) 라스트 크리스마스 | 평점 7.2 · 투표 2,665
+x1_0264 [S: Stardew Valley / Slime Rancher / Raft  ‖  T: 샤이닝 / 할로윈 / 스크림  ‖  W: 절대 검감(絶對 劍感) / 태존비록(怠尊秘錄) / 검신재림(劍神再臨)]  →  (소설 · 무협 · 욜로) 천존재림 | 평점 7.1 · 관심 28,000 · 175화
+x1_0265 [S: Salt and Sanctuary  ‖  W: 천재 무림 트레이너 / 무한 레벨업 in 무림 / 현질무신]  →  (게임 · Souls-like · Dark Fantasy · Difficult · RPG · Atmo) DARK SOULS™ III | 리뷰 277,121
+x1_0266 [S: Salt and Sanctuary  ‖  W: 천재 무림 트레이너 / 무한 레벨업 in 무림 / 현질무신]  →  (소설 · 현판 · 소유현) 레벨업하는 무신님 | 평점 8.2 · 관심 24,000 · 24화
+x1_0267 [S: Hollow Knight / Dead Cells / Celeste  ‖  T: 너의 이름은. / 날씨의 아이 / 목소리의 형태]  →  (영상 · 영화 · 애니메이션, 로맨스, 코미디, 드라마, 판타지) 너와 파도를 탈 수 있다면 | 평점 7.5 · 투표 382
+x1_0268 [S: Hearts of Iron IV / Europa Universalis IV / Sid Meier's Civilization® V  ‖  T: 코코 / 월•E / 토이 스토리  ‖  W: 결혼과 부부생활 / 목표는 안전이혼인데요 / 메리지 어게인]  →  (영상 · 영화 · 가족, 애니메이션, 모험, 코미디) 파라노만 | 평점 7.0 · 투표 2,840
+x1_0269 [S: Project Zomboid / Don't Starve / The Forest  ‖  T: 워킹 데드 / 좀비랜드 / 28일 후  ‖  W: 멸망한 세계의 취사병 / 멸망 이후의 세계]  →  (게임 · Survival · Open World Survival Craft · Multiplayer) Don't Starve Together | 리뷰 373,805
+x1_0270 [T: 노팅 힐 / 러브 액츄얼리 / 500일의 썸머  ‖  W: 그 결혼, 이번 생엔 제가 할게요 / 지루하신 공작님과 강철의 이혼녀 / 함부로 길들이지 마시오!]  →  (소설 · 로판 · 김캐롤) 네가 되고 나서야 알게 된 것들 | 평점 9.9 · 관심 591,000 · 128화
+x1_0271 [S: Opus Magnum  ‖  T: 겟 아웃 / 유전 / 미드소마  ‖  W: 복수 법률사무소 / 오뉘탑: 퇴마사건일지]  →  (영상 · 영화 · 공포, 드라마, 스릴러, 미스터리) 기프트 | 평점 6.5 · 투표 1,423
+x1_0272 [S: Still Life / Jenny LeClue - Detectivu / Telling Lies  ‖  T: 대부 / 좋은 친구들 / 스카페이스  ‖  W: 천초 문순득의 수사일지 / 수사 기록실 / 천기누설 살인사건]  →  (게임 · Atmospheric · Investigation · 2D · Mystery · Point) Kathy Rain 2: Soothsayer | 리뷰 1,195
+x1_0273 [S: Sid Meier’s Civilization® VI / XCOM® 2 / Stellaris  ‖  T: 왕좌의 게임 / 브레이킹 배드 / 종이의 집]  →  (게임 · Strategy · Historical · Military · Grand Strategy ) 토탈워: 엠파이어 - 데피니티브 에디션 | 리뷰 21,158
+x1_0274 [S: Lethal Company / Phasmophobia / Deep Rock Galactic  ‖  T: 샤이닝 / 할로윈 / 스크림  ‖  W: 복수 법률사무소 / 오뉘탑: 퇴마사건일지]  →  (게임 · Online Co-Op · Survival Horror · Horror · Co-op · ) Nuclear Nightmare | 리뷰 15,120
+x1_0275 [S: Opus Magnum  ‖  T: 겟 아웃 / 유전 / 미드소마  ‖  W: 복수 법률사무소 / 오뉘탑: 퇴마사건일지]  →  (영상 · 영화 · 공포, 스릴러, 미스터리) 유아 넥스트 | 평점 6.6 · 투표 2,728
+x1_0276 [S: Hearts of Iron IV / Europa Universalis IV / Sid Meier's Civilization® V  ‖  T: 코코 / 월•E / 토이 스토리  ‖  W: 결혼과 부부생활 / 목표는 안전이혼인데요 / 메리지 어게인]  →  (소설 · 로맨스 · 희교) 언페어 메리지 | 평점 9.7 · 관심 77,000 · 97화
+x1_0277 [S: Salt and Sanctuary  ‖  W: 천재 무림 트레이너 / 무한 레벨업 in 무림 / 현질무신]  →  (소설 · 무협 · 자우) 현령무적 | 평점 9.4 · 관심 52,000 · 150화
+x1_0278 [S: Opus Magnum  ‖  T: 워킹 데드 / 좀비랜드 / 28일 후  ‖  W: 두 번 사는 프로듀서 / 음악천재를 위하여 / 다 잘하는 히어로]  →  (영상 · 영화 · 공포, 액션, 코미디) 웜우드: 분노의 좀비 도로 | 평점 6.1 · 투표 519
+x1_0279 [S: Lethal Company / Phasmophobia / Deep Rock Galactic  ‖  T: 대부 / 좋은 친구들 / 스카페이스  ‖  W: 영업 천재가 되었다 / 재벌가 복덩이 / 재벌집 기둥서방이 되었다.]  →  (게임 · Horror · Online Co-Op · Multiplayer · Co-op · Psyc) Pacify | 리뷰 32,841
+x1_0280 [S: Counter-Strike 2 / PUBG: BATTLEGROUNDS / 톰 클랜시의 레인보우식스 시즈  ‖  T: 아이언맨 / 캡틴 아메리카: 시빌 워 / 토르: 라그나로크  ‖  W: 게임 속 바바리안으로 살아남기 / 내가 키운 S급들 / 튜토리얼이 너무 어렵다]  →  (게임 · Shooter · FPS · Action · Multiplayer · Team-Based) Counter-Strike: Source | 리뷰 134,865
+x1_0281 [T: 명량 / 광해, 왕이 된 남자 / 관상  ‖  W: 절대 검감(絶對 劍感) / 태존비록(怠尊秘錄) / 검신재림(劍神再臨)]  →  (영상 · 영화 · 전쟁, 액션, 드라마, 역사) 한산: 용의 출현 | 평점 6.5 · 투표 95
+x1_0282 [S: DARK SOULS™ III / The Witcher 3: Wild Hunt / The Elder Scrolls V: Skyrim Special Edition  ‖  W: 게임 속 바바리안으로 살아남기 / 내가 키운 S급들 / 튜토리얼이 너무 어렵다]  →  (소설 · 판타지 · 흑전) 나 혼자 역대급 수련 | 평점 7.1 · 관심 358,000 · 177화
+x1_0283 [S: Hollow Knight / Dead Cells / Celeste  ‖  T: 너의 이름은. / 날씨의 아이 / 목소리의 형태]  →  (게임 · Precision Platformer · Platformer · Difficult · In) Super Meat Boy | 리뷰 29,772
+x1_0284 [S: Lethal Company / Phasmophobia / Deep Rock Galactic  ‖  T: 겟 아웃 / 유전 / 미드소마]  →  (게임 · FPS · Dwarves · Co-op · PvE · Roguelite) Deep Rock Galactic: Rogue Core | 리뷰 13,543
+x1_0285 [S: Lethal Company / Phasmophobia / Deep Rock Galactic  ‖  T: 겟 아웃 / 유전 / 미드소마]  →  (영상 · 영화 · 공포, 미스터리, 스릴러) 똑똑똑 | 평점 6.2 · 투표 3,165
+x1_0286 [T: 아이언맨 / 캡틴 아메리카: 시빌 워 / 토르: 라그나로크  ‖  W: 게임 속 바바리안으로 살아남기 / 내가 키운 S급들 / 튜토리얼이 너무 어렵다]  →  (영상 · 영화 · 액션, 모험, SF) 스파이더맨: 파 프롬 홈 | 평점 7.4 · 투표 17,415
+x1_0287 [S: Stardew Valley / Slime Rancher / Raft  ‖  W: 그 결혼, 이번 생엔 제가 할게요 / 지루하신 공작님과 강철의 이혼녀 / 함부로 길들이지 마시오!]  →  (게임 · Open World · Adventure · Exploration · Relaxing · ) Yonder: The Cloud Catcher Chronicles | 리뷰 2,902
+x1_0288 [S: Lethal Company / Phasmophobia / Deep Rock Galactic  ‖  T: 겟 아웃 / 유전 / 미드소마]  →  (영상 · 영화 · 공포, 드라마, 스릴러, 미스터리) 기프트 | 평점 6.5 · 투표 1,423
+x1_0289 [S: Hearts of Iron IV / Europa Universalis IV / Sid Meier's Civilization® V  ‖  T: 코코 / 월•E / 토이 스토리  ‖  W: 결혼과 부부생활 / 목표는 안전이혼인데요 / 메리지 어게인]  →  (소설 · 로맨스 · 리버 진) 결혼의 목적 | 평점 9.6 · 관심 2,748,000 · 101화
+x1_0290 [S: Hearts of Iron IV / Europa Universalis IV / Sid Meier's Civilization® V  ‖  T: 코코 / 월•E / 토이 스토리  ‖  W: 결혼과 부부생활 / 목표는 안전이혼인데요 / 메리지 어게인]  →  (소설 · BL · 계자) 결혼이 장난이다 | 평점 10.0 · 관심 0 · 3화
+x1_0291 [S: Lethal Company / Phasmophobia / Deep Rock Galactic  ‖  T: 샤이닝 / 할로윈 / 스크림  ‖  W: 복수 법률사무소 / 오뉘탑: 퇴마사건일지]  →  (소설 · 미스터리 · 수소수) 수사 기록실 | 평점 없음 · 관심 0 · 8화
+x1_0292 [S: Lethal Company / Phasmophobia / Deep Rock Galactic  ‖  T: 겟 아웃 / 유전 / 미드소마]  →  (게임 · FPS · Zombies · Co-op · Survival · Horror) Killing Floor | 리뷰 39,993
+x1_0293 [S: Stardew Valley / Slime Rancher / Raft  ‖  W: 그 결혼, 이번 생엔 제가 할게요 / 지루하신 공작님과 강철의 이혼녀 / 함부로 길들이지 마시오!]  →  (소설 · 로판 · 김뽀삐) 공작 부인의 남편을 찾습니다 | 평점 9.8 · 관심 467,000 · 185화
+x1_0294 [S: Cities: Skylines / Factorio / Farming Simulator 22  ‖  W: 영업 천재가 되었다 / 재벌가 복덩이 / 재벌집 기둥서방이 되었다.]  →  (소설 · 현판 · 주문향) 재벌집 침술명의가 되었다 | 평점 9.2 · 관심 2,288,000 · 215화
+x1_0295 [S: Hearts of Iron IV / Europa Universalis IV / Sid Meier's Civilization® V  ‖  T: 코코 / 월•E / 토이 스토리  ‖  W: 결혼과 부부생활 / 목표는 안전이혼인데요 / 메리지 어게인]  →  (게임 · Grand Strategy · Strategy · Medieval · Historical ) Crusader Kings II | 리뷰 30,868
+x1_0296 [T: 명량 / 광해, 왕이 된 남자 / 관상  ‖  W: 절대 검감(絶對 劍感) / 태존비록(怠尊秘錄) / 검신재림(劍神再臨)]  →  (소설 · 무협 · 욜로) 천존재림 | 평점 7.1 · 관심 28,000 · 175화
+x1_0297 [T: 명량 / 광해, 왕이 된 남자 / 관상  ‖  W: 절대 검감(絶對 劍感) / 태존비록(怠尊秘錄) / 검신재림(劍神再臨)]  →  (소설 · 무협 · 적하) 절대무신 | 평점 9.7 · 관심 137,000 · 457화
+x1_0298 [S: Lethal Company / Phasmophobia / Deep Rock Galactic  ‖  T: 대부 / 좋은 친구들 / 스카페이스  ‖  W: 영업 천재가 되었다 / 재벌가 복덩이 / 재벌집 기둥서방이 되었다.]  →  (소설 · 현판 · 알랜더) 이번 생은 재벌이다! | 평점 8.0 · 관심 282,000 · 133화
+x1_0299 [S: DARK SOULS™ III / The Witcher 3: Wild Hunt / The Elder Scrolls V: Skyrim Special Edition  ‖  T: 인터스텔라 / 인셉션 / 다크 나이트  ‖  W: 회귀의 전설 / 8클래스 마법사의 회귀 / 권왕환생]  →  (영상 · 영화 · 액션, 모험, SF) 앤트맨과 와스프 | 평점 6.9 · 투표 14,390
+x1_0300 [S: DARK SOULS™ III / The Witcher 3: Wild Hunt / The Elder Scrolls V: Skyrim Special Edition  ‖  W: 게임 속 바바리안으로 살아남기 / 내가 키운 S급들 / 튜토리얼이 너무 어렵다]  →  (게임 · RPG · MMORPG · Open World · Fantasy · Adventure) The Elder Scrolls® Online | 리뷰 133,919
+x1_0301 [S: Dordogne / A YEAR OF SPRINGS / Botany Manor  ‖  T: 센과 치히로의 행방불명 / 이웃집 토토로 / 하울의 움직이는 성  ‖  W: 광공 싸움에 빌런 등 터진다 / 목표는 안전이혼인데요 / 광공들이 미쳤는데 로그아웃이 안 된다니요]  →  (게임 · Singleplayer · LGBTQ+ · Visual Novel · Fantasy · C) 태번 토크 | 리뷰 1,442
+x1_0302 [T: 노팅 힐 / 러브 액츄얼리 / 500일의 썸머  ‖  W: 그 결혼, 이번 생엔 제가 할게요 / 지루하신 공작님과 강철의 이혼녀 / 함부로 길들이지 마시오!]  →  (영상 · 영화 · 코미디, 로맨스) 남주기 아까운 그녀 | 평점 6.5 · 투표 1,826
+x1_0303 [S: Dordogne / A YEAR OF SPRINGS / Botany Manor  ‖  T: 센과 치히로의 행방불명 / 이웃집 토토로 / 하울의 움직이는 성  ‖  W: 광공 싸움에 빌런 등 터진다 / 목표는 안전이혼인데요 / 광공들이 미쳤는데 로그아웃이 안 된다니요]  →  (소설 · BL · 퐁달치즈빵) 책 빙의는 처음인데 너네끼리 노세요 | 평점 없음 · 관심 0 · 4화
+x1_0304 [S: Stardew Valley / Slime Rancher / Raft  ‖  W: 그 결혼, 이번 생엔 제가 할게요 / 지루하신 공작님과 강철의 이혼녀 / 함부로 길들이지 마시오!]  →  (게임 · Base Building · Automation · Open World · Crafting) Satisfactory | 리뷰 232,635
+x1_0305 [S: Hearts of Iron IV / Europa Universalis IV / Sid Meier's Civilization® V  ‖  T: 왕좌의 게임 / 브레이킹 배드 / 종이의 집  ‖  W: 영업 천재가 되었다 / 재벌가 복덩이 / 재벌집 기둥서방이 되었다.]  →  (영상 · TV · 범죄, 드라마, 미스터리) 덱스터 | 평점 8.2 · 투표 5,763
+x1_0306 [S: Dordogne / A YEAR OF SPRINGS / Botany Manor  ‖  T: 센과 치히로의 행방불명 / 이웃집 토토로 / 하울의 움직이는 성  ‖  W: 광공 싸움에 빌런 등 터진다 / 목표는 안전이혼인데요 / 광공들이 미쳤는데 로그아웃이 안 된다니요]  →  (소설 · BL · 밀크티밤) 누나의 광공을 향한 지침서 3권 | 평점 없음 · 관심 0 · 1화
+x1_0307 [S: DARK SOULS™ III / The Witcher 3: Wild Hunt / The Elder Scrolls V: Skyrim Special Edition  ‖  W: 게임 속 바바리안으로 살아남기 / 내가 키운 S급들 / 튜토리얼이 너무 어렵다]  →  (소설 · 판타지 · 신노아) SSS급 죽어야 사는 헌터 | 평점 9.4 · 관심 65,000 · 16화
+x1_0308 [S: Dordogne / A YEAR OF SPRINGS / Botany Manor  ‖  T: 센과 치히로의 행방불명 / 이웃집 토토로 / 하울의 움직이는 성  ‖  W: 광공 싸움에 빌런 등 터진다 / 목표는 안전이혼인데요 / 광공들이 미쳤는데 로그아웃이 안 된다니요]  →  (게임 · Visual Novel · Anime · Indie · Sci-fi · Story Rich) Analogue: A Hate Story | 리뷰 1,690
+x1_0309 [S: Lethal Company / Phasmophobia / Deep Rock Galactic  ‖  T: 대부 / 좋은 친구들 / 스카페이스  ‖  W: 영업 천재가 되었다 / 재벌가 복덩이 / 재벌집 기둥서방이 되었다.]  →  (소설 · 현판 · 소수림) 재벌이 되어 버렸다 | 평점 8.2 · 관심 192,000 · 214화
+x1_0310 [S: Project Zomboid / Don't Starve / The Forest  ‖  T: 워킹 데드 / 좀비랜드 / 28일 후  ‖  W: 멸망한 세계의 취사병 / 멸망 이후의 세계]  →  (영상 · 영화 · 공포, 코미디) 새벽의 황당한 저주 | 평점 7.5 · 투표 9,530
+x1_0311 [S: Counter-Strike 2 / PUBG: BATTLEGROUNDS / 톰 클랜시의 레인보우식스 시즈  ‖  T: 노팅 힐 / 러브 액츄얼리 / 500일의 썸머  ‖  W: 전남편의 미친개를 길들였다 / 구원, 그 잔혹함에 대하여 / 내 남편의 정부에게]  →  (소설 · 로판 · 배고픈밤) 내 남편은 내가 정한다 | 평점 10.0 · 관심 67,000 · 278화
+x1_0312 [S: Salt and Sanctuary  ‖  T: 명량 / 광해, 왕이 된 남자 / 관상  ‖  W: 절대 검감(絶對 劍感) / 태존비록(怠尊秘錄) / 검신재림(劍神再臨)]  →  (영상 · 영화 · 전쟁, 액션, 드라마, 역사) 한산: 용의 출현 | 평점 6.5 · 투표 95
+x1_0313 [S: Lethal Company / Phasmophobia / Deep Rock Galactic  ‖  T: 겟 아웃 / 유전 / 미드소마]  →  (게임 · Horror · Online Co-Op · Multiplayer · Co-op · Psyc) Pacify | 리뷰 32,841
+x1_0314 [T: 노팅 힐 / 러브 액츄얼리 / 500일의 썸머  ‖  W: 그 결혼, 이번 생엔 제가 할게요 / 지루하신 공작님과 강철의 이혼녀 / 함부로 길들이지 마시오!]  →  (영상 · 영화 · 코미디, 드라마, 로맨스) 라스트 크리스마스 | 평점 7.2 · 투표 2,665
+x1_0315 [S: Dordogne / A YEAR OF SPRINGS / Botany Manor  ‖  T: 센과 치히로의 행방불명 / 이웃집 토토로 / 하울의 움직이는 성  ‖  W: 광공 싸움에 빌런 등 터진다 / 목표는 안전이혼인데요 / 광공들이 미쳤는데 로그아웃이 안 된다니요]  →  (영상 · 영화 · 애니메이션, 모험, 가족, 판타지) 메리와 마녀의 꽃 | 평점 7.2 · 투표 932
+x1_0316 [S: Counter-Strike 2 / PUBG: BATTLEGROUNDS / 톰 클랜시의 레인보우식스 시즈  ‖  T: 아이언맨 / 캡틴 아메리카: 시빌 워 / 토르: 라그나로크  ‖  W: 게임 속 바바리안으로 살아남기 / 내가 키운 S급들 / 튜토리얼이 너무 어렵다]  →  (소설 · 판타지 · 흑전) 나 혼자 역대급 수련 | 평점 7.1 · 관심 358,000 · 177화
+x1_0317 [S: Stardew Valley / Slime Rancher / Raft  ‖  T: 샤이닝 / 할로윈 / 스크림  ‖  W: 절대 검감(絶對 劍感) / 태존비록(怠尊秘錄) / 검신재림(劍神再臨)]  →  (게임 · Survival · Crafting · Multiplayer · Open World · O) Rust | 리뷰 1,155,966
+x1_0318 [T: 대부 / 좋은 친구들 / 스카페이스  ‖  W: 복수 법률사무소 / 오뉘탑: 퇴마사건일지]  →  (소설 · 미스터리 · 이승영) 천기누설 살인사건 | 평점 8.3 · 관심 20,000 · 93화
+x1_0319 [S: Opus Magnum  ‖  T: 워킹 데드 / 좀비랜드 / 28일 후  ‖  W: 두 번 사는 프로듀서 / 음악천재를 위하여 / 다 잘하는 히어로]  →  (소설 · 현판 · 윤김) 천재 바이올리니스트로 돌아왔다 | 평점 9.8 · 관심 93,000 · 257화
+x1_0320 [S: Lethal Company / Phasmophobia / Deep Rock Galactic  ‖  T: 대부 / 좋은 친구들 / 스카페이스  ‖  W: 영업 천재가 되었다 / 재벌가 복덩이 / 재벌집 기둥서방이 되었다.]  →  (영상 · 영화 · 범죄, 스릴러, 드라마) 리피피 | 평점 7.8 · 투표 654

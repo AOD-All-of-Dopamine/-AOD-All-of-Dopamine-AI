@@ -1,0 +1,3005 @@
+[
+ {
+  "pid": "Q000",
+  "rdom": "steam",
+  "rname": "Princess Maker ~Faery Tales Come True~ (HD Remake)",
+  "dom": "wn",
+  "cand": "이세계 셰프식탁"
+ },
+ {
+  "pid": "Q330",
+  "rdom": "tmdb",
+  "rname": "이상한 전생",
+  "dom": "wn",
+  "cand": "이세계 셰프식탁"
+ },
+ {
+  "pid": "Q085",
+  "rdom": "steam",
+  "rname": "Princess Maker ~Faery Tales Come True~ (HD Remake)",
+  "dom": "wn",
+  "cand": "이세계 기사식당"
+ },
+ {
+  "pid": "Q199",
+  "rdom": "tmdb",
+  "rname": "이상한 전생",
+  "dom": "wn",
+  "cand": "이세계 기사식당"
+ },
+ {
+  "pid": "Q318",
+  "rdom": "steam",
+  "rname": "Princess Maker ~Faery Tales Come True~ (HD Remake)",
+  "dom": "wn",
+  "cand": "이세계를 맛으로 평정하는 중입니다"
+ },
+ {
+  "pid": "Q051",
+  "rdom": "tmdb",
+  "rname": "이상한 전생",
+  "dom": "wn",
+  "cand": "이세계를 맛으로 평정하는 중입니다"
+ },
+ {
+  "pid": "Q210",
+  "rdom": "steam",
+  "rname": "Princess Maker ~Faery Tales Come True~ (HD Remake)",
+  "dom": "steam",
+  "cand": "프린세스 메이커 : 예언의 아이들"
+ },
+ {
+  "pid": "Q008",
+  "rdom": "steam",
+  "rname": "Princess Maker ~Faery Tales Come True~ (HD Remake)",
+  "dom": "steam",
+  "cand": "프린세스 메이커 리파인"
+ },
+ {
+  "pid": "Q360",
+  "rdom": "tmdb",
+  "rname": "이상한 전생",
+  "dom": "steam",
+  "cand": "프린세스 메이커 리파인"
+ },
+ {
+  "pid": "Q278",
+  "rdom": "steam",
+  "rname": "Princess Maker ~Faery Tales Come True~ (HD Remake)",
+  "dom": "steam",
+  "cand": "프린세스 메이커 2 리제네레이션"
+ },
+ {
+  "pid": "Q067",
+  "rdom": "steam",
+  "rname": "Princess Maker ~Faery Tales Come True~ (HD Remake)",
+  "dom": "tmdb",
+  "cand": "슈가 앤 스타"
+ },
+ {
+  "pid": "Q020",
+  "rdom": "tmdb",
+  "rname": "이상한 전생",
+  "dom": "tmdb",
+  "cand": "슈가 앤 스타"
+ },
+ {
+  "pid": "Q026",
+  "rdom": "wn",
+  "rname": "이세계에서 요리사를 꿈꾼다",
+  "dom": "tmdb",
+  "cand": "페어리 테일 : 드래곤 크라이"
+ },
+ {
+  "pid": "Q030",
+  "rdom": "steam",
+  "rname": "Princess Maker ~Faery Tales Come True~ (HD Remake)",
+  "dom": "tmdb",
+  "cand": "페어리 테일 : 드래곤 크라이"
+ },
+ {
+  "pid": "Q357",
+  "rdom": "tmdb",
+  "rname": "이상한 전생",
+  "dom": "tmdb",
+  "cand": "페어리 테일 : 드래곤 크라이"
+ },
+ {
+  "pid": "Q353",
+  "rdom": "wn",
+  "rname": "이세계에서 요리사를 꿈꾼다",
+  "dom": "tmdb",
+  "cand": "에라곤"
+ },
+ {
+  "pid": "Q269",
+  "rdom": "steam",
+  "rname": "Princess Maker ~Faery Tales Come True~ (HD Remake)",
+  "dom": "tmdb",
+  "cand": "에라곤"
+ },
+ {
+  "pid": "Q040",
+  "rdom": "tmdb",
+  "rname": "이상한 전생",
+  "dom": "tmdb",
+  "cand": "에라곤"
+ },
+ {
+  "pid": "Q003",
+  "rdom": "wn",
+  "rname": "이세계에서 요리사를 꿈꾼다",
+  "dom": "wn",
+  "cand": "맥거핀"
+ },
+ {
+  "pid": "Q365",
+  "rdom": "steam",
+  "rname": "Princess Maker ~Faery Tales Come True~ (HD Remake)",
+  "dom": "wn",
+  "cand": "맥거핀"
+ },
+ {
+  "pid": "Q340",
+  "rdom": "tmdb",
+  "rname": "이상한 전생",
+  "dom": "wn",
+  "cand": "맥거핀"
+ },
+ {
+  "pid": "Q005",
+  "rdom": "wn",
+  "rname": "이세계에서 요리사를 꿈꾼다",
+  "dom": "wn",
+  "cand": "이 요리사는 계속 회귀합니다!"
+ },
+ {
+  "pid": "Q275",
+  "rdom": "steam",
+  "rname": "Princess Maker ~Faery Tales Come True~ (HD Remake)",
+  "dom": "wn",
+  "cand": "이 요리사는 계속 회귀합니다!"
+ },
+ {
+  "pid": "Q405",
+  "rdom": "tmdb",
+  "rname": "이상한 전생",
+  "dom": "wn",
+  "cand": "이 요리사는 계속 회귀합니다!"
+ },
+ {
+  "pid": "Q072",
+  "rdom": "wn",
+  "rname": "이세계에서 요리사를 꿈꾼다",
+  "dom": "wn",
+  "cand": "연금술사는 꿀빨고 싶어"
+ },
+ {
+  "pid": "Q425",
+  "rdom": "steam",
+  "rname": "Princess Maker ~Faery Tales Come True~ (HD Remake)",
+  "dom": "wn",
+  "cand": "연금술사는 꿀빨고 싶어"
+ },
+ {
+  "pid": "Q069",
+  "rdom": "tmdb",
+  "rname": "이상한 전생",
+  "dom": "wn",
+  "cand": "연금술사는 꿀빨고 싶어"
+ },
+ {
+  "pid": "Q271",
+  "rdom": "steam",
+  "rname": "Princess Maker ~Faery Tales Come True~ (HD Remake)",
+  "dom": "steam",
+  "cand": "동방야작식당 -Touhou Mystia's Izakaya"
+ },
+ {
+  "pid": "Q188",
+  "rdom": "tmdb",
+  "rname": "이상한 전생",
+  "dom": "steam",
+  "cand": "동방야작식당 -Touhou Mystia's Izakaya"
+ },
+ {
+  "pid": "Q354",
+  "rdom": "steam",
+  "rname": "Princess Maker ~Faery Tales Come True~ (HD Remake)",
+  "dom": "steam",
+  "cand": "Cook For Love"
+ },
+ {
+  "pid": "Q372",
+  "rdom": "tmdb",
+  "rname": "이상한 전생",
+  "dom": "steam",
+  "cand": "Cook For Love"
+ },
+ {
+  "pid": "Q048",
+  "rdom": "wn",
+  "rname": "이세계에서 요리사를 꿈꾼다",
+  "dom": "steam",
+  "cand": "Italian Pizza Simulator"
+ },
+ {
+  "pid": "Q279",
+  "rdom": "steam",
+  "rname": "Princess Maker ~Faery Tales Come True~ (HD Remake)",
+  "dom": "steam",
+  "cand": "Italian Pizza Simulator"
+ },
+ {
+  "pid": "Q386",
+  "rdom": "tmdb",
+  "rname": "이상한 전생",
+  "dom": "steam",
+  "cand": "Italian Pizza Simulator"
+ },
+ {
+  "pid": "Q319",
+  "rdom": "wn",
+  "rname": "이세계에서 요리사를 꿈꾼다",
+  "dom": "tmdb",
+  "cand": "데스마치에서 시작되는 이세계 광상곡"
+ },
+ {
+  "pid": "Q099",
+  "rdom": "steam",
+  "rname": "Princess Maker ~Faery Tales Come True~ (HD Remake)",
+  "dom": "tmdb",
+  "cand": "데스마치에서 시작되는 이세계 광상곡"
+ },
+ {
+  "pid": "Q281",
+  "rdom": "tmdb",
+  "rname": "이상한 전생",
+  "dom": "tmdb",
+  "cand": "데스마치에서 시작되는 이세계 광상곡"
+ },
+ {
+  "pid": "Q143",
+  "rdom": "wn",
+  "rname": "이세계에서 요리사를 꿈꾼다",
+  "dom": "tmdb",
+  "cand": "마네킨 2"
+ },
+ {
+  "pid": "Q200",
+  "rdom": "steam",
+  "rname": "Princess Maker ~Faery Tales Come True~ (HD Remake)",
+  "dom": "tmdb",
+  "cand": "마네킨 2"
+ },
+ {
+  "pid": "Q284",
+  "rdom": "tmdb",
+  "rname": "이상한 전생",
+  "dom": "tmdb",
+  "cand": "마네킨 2"
+ },
+ {
+  "pid": "Q172",
+  "rdom": "wn",
+  "rname": "이세계에서 요리사를 꿈꾼다",
+  "dom": "tmdb",
+  "cand": "이세계 미궁에서 하렘을"
+ },
+ {
+  "pid": "Q233",
+  "rdom": "steam",
+  "rname": "Princess Maker ~Faery Tales Come True~ (HD Remake)",
+  "dom": "tmdb",
+  "cand": "이세계 미궁에서 하렘을"
+ },
+ {
+  "pid": "Q039",
+  "rdom": "tmdb",
+  "rname": "이상한 전생",
+  "dom": "tmdb",
+  "cand": "이세계 미궁에서 하렘을"
+ },
+ {
+  "pid": "Q161",
+  "rdom": "steam",
+  "rname": "무인도 생존 ~ 미녀섬에서 탈출",
+  "dom": "wn",
+  "cand": "이세계가 지구를 제압하고 100년, 도쿄에 돌아오니 엘프 가족이 생겼습니다."
+ },
+ {
+  "pid": "Q093",
+  "rdom": "tmdb",
+  "rname": "심부름꾼 사이토 씨, 이세계에 가다",
+  "dom": "wn",
+  "cand": "이세계가 지구를 제압하고 100년, 도쿄에 돌아오니 엘프 가족이 생겼습니다."
+ },
+ {
+  "pid": "Q098",
+  "rdom": "steam",
+  "rname": "무인도 생존 ~ 미녀섬에서 탈출",
+  "dom": "wn",
+  "cand": "내 시청자는 성좌들"
+ },
+ {
+  "pid": "Q175",
+  "rdom": "tmdb",
+  "rname": "심부름꾼 사이토 씨, 이세계에 가다",
+  "dom": "wn",
+  "cand": "내 시청자는 성좌들"
+ },
+ {
+  "pid": "Q187",
+  "rdom": "steam",
+  "rname": "무인도 생존 ~ 미녀섬에서 탈출",
+  "dom": "wn",
+  "cand": "세상이 태어나다"
+ },
+ {
+  "pid": "Q062",
+  "rdom": "tmdb",
+  "rname": "심부름꾼 사이토 씨, 이세계에 가다",
+  "dom": "wn",
+  "cand": "세상이 태어나다"
+ },
+ {
+  "pid": "Q168",
+  "rdom": "wn",
+  "rname": "성군이십니다",
+  "dom": "steam",
+  "cand": "Prism Wilds"
+ },
+ {
+  "pid": "Q408",
+  "rdom": "steam",
+  "rname": "무인도 생존 ~ 미녀섬에서 탈출",
+  "dom": "steam",
+  "cand": "Prism Wilds"
+ },
+ {
+  "pid": "Q243",
+  "rdom": "tmdb",
+  "rname": "심부름꾼 사이토 씨, 이세계에 가다",
+  "dom": "steam",
+  "cand": "Prism Wilds"
+ },
+ {
+  "pid": "Q084",
+  "rdom": "wn",
+  "rname": "성군이십니다",
+  "dom": "steam",
+  "cand": "WILL: Follow The Light"
+ },
+ {
+  "pid": "Q043",
+  "rdom": "steam",
+  "rname": "무인도 생존 ~ 미녀섬에서 탈출",
+  "dom": "steam",
+  "cand": "WILL: Follow The Light"
+ },
+ {
+  "pid": "Q012",
+  "rdom": "tmdb",
+  "rname": "심부름꾼 사이토 씨, 이세계에 가다",
+  "dom": "steam",
+  "cand": "WILL: Follow The Light"
+ },
+ {
+  "pid": "Q076",
+  "rdom": "steam",
+  "rname": "무인도 생존 ~ 미녀섬에서 탈출",
+  "dom": "steam",
+  "cand": "태국에서의 심장 박동"
+ },
+ {
+  "pid": "Q413",
+  "rdom": "tmdb",
+  "rname": "심부름꾼 사이토 씨, 이세계에 가다",
+  "dom": "steam",
+  "cand": "태국에서의 심장 박동"
+ },
+ {
+  "pid": "Q351",
+  "rdom": "steam",
+  "rname": "무인도 생존 ~ 미녀섬에서 탈출",
+  "dom": "tmdb",
+  "cand": "치유마법의 잘못된 사용법"
+ },
+ {
+  "pid": "Q377",
+  "rdom": "tmdb",
+  "rname": "심부름꾼 사이토 씨, 이세계에 가다",
+  "dom": "tmdb",
+  "cand": "치유마법의 잘못된 사용법"
+ },
+ {
+  "pid": "Q240",
+  "rdom": "steam",
+  "rname": "무인도 생존 ~ 미녀섬에서 탈출",
+  "dom": "tmdb",
+  "cand": "진화의 열매 ~모르는 사이 성공한 인생~"
+ },
+ {
+  "pid": "Q166",
+  "rdom": "tmdb",
+  "rname": "심부름꾼 사이토 씨, 이세계에 가다",
+  "dom": "tmdb",
+  "cand": "진화의 열매 ~모르는 사이 성공한 인생~"
+ },
+ {
+  "pid": "Q344",
+  "rdom": "steam",
+  "rname": "무인도 생존 ~ 미녀섬에서 탈출",
+  "dom": "tmdb",
+  "cand": "제로의 사역마"
+ },
+ {
+  "pid": "Q228",
+  "rdom": "tmdb",
+  "rname": "심부름꾼 사이토 씨, 이세계에 가다",
+  "dom": "tmdb",
+  "cand": "제로의 사역마"
+ },
+ {
+  "pid": "Q409",
+  "rdom": "wn",
+  "rname": "성군이십니다",
+  "dom": "wn",
+  "cand": "그리고 용사는 행복하게 살았습니다?"
+ },
+ {
+  "pid": "Q133",
+  "rdom": "steam",
+  "rname": "무인도 생존 ~ 미녀섬에서 탈출",
+  "dom": "wn",
+  "cand": "그리고 용사는 행복하게 살았습니다?"
+ },
+ {
+  "pid": "Q236",
+  "rdom": "tmdb",
+  "rname": "심부름꾼 사이토 씨, 이세계에 가다",
+  "dom": "wn",
+  "cand": "그리고 용사는 행복하게 살았습니다?"
+ },
+ {
+  "pid": "Q382",
+  "rdom": "wn",
+  "rname": "성군이십니다",
+  "dom": "wn",
+  "cand": "던전 경영만 했는데 세계관 빌런이 되었습니다"
+ },
+ {
+  "pid": "Q302",
+  "rdom": "steam",
+  "rname": "무인도 생존 ~ 미녀섬에서 탈출",
+  "dom": "wn",
+  "cand": "던전 경영만 했는데 세계관 빌런이 되었습니다"
+ },
+ {
+  "pid": "Q092",
+  "rdom": "tmdb",
+  "rname": "심부름꾼 사이토 씨, 이세계에 가다",
+  "dom": "wn",
+  "cand": "던전 경영만 했는데 세계관 빌런이 되었습니다"
+ },
+ {
+  "pid": "Q049",
+  "rdom": "wn",
+  "rname": "성군이십니다",
+  "dom": "wn",
+  "cand": "마녀와 짐승의 밤"
+ },
+ {
+  "pid": "Q359",
+  "rdom": "steam",
+  "rname": "무인도 생존 ~ 미녀섬에서 탈출",
+  "dom": "wn",
+  "cand": "마녀와 짐승의 밤"
+ },
+ {
+  "pid": "Q232",
+  "rdom": "tmdb",
+  "rname": "심부름꾼 사이토 씨, 이세계에 가다",
+  "dom": "wn",
+  "cand": "마녀와 짐승의 밤"
+ },
+ {
+  "pid": "Q107",
+  "rdom": "wn",
+  "rname": "성군이십니다",
+  "dom": "steam",
+  "cand": "여포키우기"
+ },
+ {
+  "pid": "Q265",
+  "rdom": "steam",
+  "rname": "무인도 생존 ~ 미녀섬에서 탈출",
+  "dom": "steam",
+  "cand": "여포키우기"
+ },
+ {
+  "pid": "Q141",
+  "rdom": "tmdb",
+  "rname": "심부름꾼 사이토 씨, 이세계에 가다",
+  "dom": "steam",
+  "cand": "여포키우기"
+ },
+ {
+  "pid": "Q252",
+  "rdom": "steam",
+  "rname": "무인도 생존 ~ 미녀섬에서 탈출",
+  "dom": "steam",
+  "cand": "그랑 엠파이어 : 아마네"
+ },
+ {
+  "pid": "Q063",
+  "rdom": "tmdb",
+  "rname": "심부름꾼 사이토 씨, 이세계에 가다",
+  "dom": "steam",
+  "cand": "그랑 엠파이어 : 아마네"
+ },
+ {
+  "pid": "Q094",
+  "rdom": "wn",
+  "rname": "성군이십니다",
+  "dom": "steam",
+  "cand": "ISOLAND3: Dust of the Universe"
+ },
+ {
+  "pid": "Q427",
+  "rdom": "steam",
+  "rname": "무인도 생존 ~ 미녀섬에서 탈출",
+  "dom": "steam",
+  "cand": "ISOLAND3: Dust of the Universe"
+ },
+ {
+  "pid": "Q056",
+  "rdom": "tmdb",
+  "rname": "심부름꾼 사이토 씨, 이세계에 가다",
+  "dom": "steam",
+  "cand": "ISOLAND3: Dust of the Universe"
+ },
+ {
+  "pid": "Q416",
+  "rdom": "steam",
+  "rname": "무인도 생존 ~ 미녀섬에서 탈출",
+  "dom": "tmdb",
+  "cand": "아일랜드"
+ },
+ {
+  "pid": "Q378",
+  "rdom": "tmdb",
+  "rname": "심부름꾼 사이토 씨, 이세계에 가다",
+  "dom": "tmdb",
+  "cand": "아일랜드"
+ },
+ {
+  "pid": "Q004",
+  "rdom": "wn",
+  "rname": "성군이십니다",
+  "dom": "tmdb",
+  "cand": "로스트 걸"
+ },
+ {
+  "pid": "Q025",
+  "rdom": "steam",
+  "rname": "무인도 생존 ~ 미녀섬에서 탈출",
+  "dom": "tmdb",
+  "cand": "로스트 걸"
+ },
+ {
+  "pid": "Q367",
+  "rdom": "tmdb",
+  "rname": "심부름꾼 사이토 씨, 이세계에 가다",
+  "dom": "tmdb",
+  "cand": "로스트 걸"
+ },
+ {
+  "pid": "Q361",
+  "rdom": "wn",
+  "rname": "성군이십니다",
+  "dom": "tmdb",
+  "cand": "그랑블루 판타지 The Animation"
+ },
+ {
+  "pid": "Q118",
+  "rdom": "steam",
+  "rname": "무인도 생존 ~ 미녀섬에서 탈출",
+  "dom": "tmdb",
+  "cand": "그랑블루 판타지 The Animation"
+ },
+ {
+  "pid": "Q074",
+  "rdom": "tmdb",
+  "rname": "심부름꾼 사이토 씨, 이세계에 가다",
+  "dom": "tmdb",
+  "cand": "그랑블루 판타지 The Animation"
+ },
+ {
+  "pid": "Q184",
+  "rdom": "steam",
+  "rname": "Sleepover",
+  "dom": "wn",
+  "cand": "신과 함께 미술천재"
+ },
+ {
+  "pid": "Q185",
+  "rdom": "tmdb",
+  "rname": "러브 인 베를린",
+  "dom": "wn",
+  "cand": "신과 함께 미술천재"
+ },
+ {
+  "pid": "Q163",
+  "rdom": "steam",
+  "rname": "Sleepover",
+  "dom": "wn",
+  "cand": "전생은 드워프인데 현생은 예술 천재"
+ },
+ {
+  "pid": "Q297",
+  "rdom": "tmdb",
+  "rname": "러브 인 베를린",
+  "dom": "wn",
+  "cand": "전생은 드워프인데 현생은 예술 천재"
+ },
+ {
+  "pid": "Q170",
+  "rdom": "wn",
+  "rname": "전생 신윤복의 현대 미술학",
+  "dom": "wn",
+  "cand": "PREPPER - 인류 최후의 생존자"
+ },
+ {
+  "pid": "Q403",
+  "rdom": "steam",
+  "rname": "Sleepover",
+  "dom": "wn",
+  "cand": "PREPPER - 인류 최후의 생존자"
+ },
+ {
+  "pid": "Q249",
+  "rdom": "tmdb",
+  "rname": "러브 인 베를린",
+  "dom": "wn",
+  "cand": "PREPPER - 인류 최후의 생존자"
+ },
+ {
+  "pid": "Q068",
+  "rdom": "wn",
+  "rname": "전생 신윤복의 현대 미술학",
+  "dom": "steam",
+  "cand": "SLEEP AWAKE"
+ },
+ {
+  "pid": "Q309",
+  "rdom": "steam",
+  "rname": "Sleepover",
+  "dom": "steam",
+  "cand": "SLEEP AWAKE"
+ },
+ {
+  "pid": "Q406",
+  "rdom": "tmdb",
+  "rname": "러브 인 베를린",
+  "dom": "steam",
+  "cand": "SLEEP AWAKE"
+ },
+ {
+  "pid": "Q120",
+  "rdom": "wn",
+  "rname": "전생 신윤복의 현대 미술학",
+  "dom": "steam",
+  "cand": "샘플 제로: 광기의 경계"
+ },
+ {
+  "pid": "Q160",
+  "rdom": "steam",
+  "rname": "Sleepover",
+  "dom": "steam",
+  "cand": "샘플 제로: 광기의 경계"
+ },
+ {
+  "pid": "Q312",
+  "rdom": "tmdb",
+  "rname": "러브 인 베를린",
+  "dom": "steam",
+  "cand": "샘플 제로: 광기의 경계"
+ },
+ {
+  "pid": "Q154",
+  "rdom": "steam",
+  "rname": "Sleepover",
+  "dom": "steam",
+  "cand": "Fallstreak: Requiem for my Homeland"
+ },
+ {
+  "pid": "Q383",
+  "rdom": "steam",
+  "rname": "Sleepover",
+  "dom": "tmdb",
+  "cand": "미인도"
+ },
+ {
+  "pid": "Q058",
+  "rdom": "tmdb",
+  "rname": "러브 인 베를린",
+  "dom": "tmdb",
+  "cand": "미인도"
+ },
+ {
+  "pid": "Q097",
+  "rdom": "wn",
+  "rname": "전생 신윤복의 현대 미술학",
+  "dom": "tmdb",
+  "cand": "루비콘"
+ },
+ {
+  "pid": "Q333",
+  "rdom": "steam",
+  "rname": "Sleepover",
+  "dom": "tmdb",
+  "cand": "루비콘"
+ },
+ {
+  "pid": "Q226",
+  "rdom": "tmdb",
+  "rname": "러브 인 베를린",
+  "dom": "tmdb",
+  "cand": "루비콘"
+ },
+ {
+  "pid": "Q331",
+  "rdom": "wn",
+  "rname": "전생 신윤복의 현대 미술학",
+  "dom": "tmdb",
+  "cand": "팬도럼"
+ },
+ {
+  "pid": "Q032",
+  "rdom": "steam",
+  "rname": "Sleepover",
+  "dom": "tmdb",
+  "cand": "팬도럼"
+ },
+ {
+  "pid": "Q001",
+  "rdom": "tmdb",
+  "rname": "러브 인 베를린",
+  "dom": "tmdb",
+  "cand": "팬도럼"
+ },
+ {
+  "pid": "Q266",
+  "rdom": "wn",
+  "rname": "전생 신윤복의 현대 미술학",
+  "dom": "wn",
+  "cand": "무림인 현대 적응기"
+ },
+ {
+  "pid": "Q407",
+  "rdom": "steam",
+  "rname": "Sleepover",
+  "dom": "wn",
+  "cand": "무림인 현대 적응기"
+ },
+ {
+  "pid": "Q270",
+  "rdom": "tmdb",
+  "rname": "러브 인 베를린",
+  "dom": "wn",
+  "cand": "무림인 현대 적응기"
+ },
+ {
+  "pid": "Q306",
+  "rdom": "wn",
+  "rname": "전생 신윤복의 현대 미술학",
+  "dom": "wn",
+  "cand": "신선을 죽여라"
+ },
+ {
+  "pid": "Q391",
+  "rdom": "steam",
+  "rname": "Sleepover",
+  "dom": "wn",
+  "cand": "신선을 죽여라"
+ },
+ {
+  "pid": "Q066",
+  "rdom": "tmdb",
+  "rname": "러브 인 베를린",
+  "dom": "wn",
+  "cand": "신선을 죽여라"
+ },
+ {
+  "pid": "Q292",
+  "rdom": "steam",
+  "rname": "Sleepover",
+  "dom": "steam",
+  "cand": "Dear me, I was..."
+ },
+ {
+  "pid": "Q137",
+  "rdom": "tmdb",
+  "rname": "러브 인 베를린",
+  "dom": "steam",
+  "cand": "Dear me, I was..."
+ },
+ {
+  "pid": "Q177",
+  "rdom": "steam",
+  "rname": "Sleepover",
+  "dom": "steam",
+  "cand": "뱀과 새"
+ },
+ {
+  "pid": "Q176",
+  "rdom": "tmdb",
+  "rname": "러브 인 베를린",
+  "dom": "steam",
+  "cand": "뱀과 새"
+ },
+ {
+  "pid": "Q399",
+  "rdom": "steam",
+  "rname": "Sleepover",
+  "dom": "steam",
+  "cand": "旅人物語 ～Journeys of Real People～"
+ },
+ {
+  "pid": "Q083",
+  "rdom": "tmdb",
+  "rname": "러브 인 베를린",
+  "dom": "steam",
+  "cand": "旅人物語 ～Journeys of Real People～"
+ },
+ {
+  "pid": "Q164",
+  "rdom": "wn",
+  "rname": "전생 신윤복의 현대 미술학",
+  "dom": "tmdb",
+  "cand": "실제상황"
+ },
+ {
+  "pid": "Q368",
+  "rdom": "steam",
+  "rname": "Sleepover",
+  "dom": "tmdb",
+  "cand": "실제상황"
+ },
+ {
+  "pid": "Q046",
+  "rdom": "tmdb",
+  "rname": "러브 인 베를린",
+  "dom": "tmdb",
+  "cand": "실제상황"
+ },
+ {
+  "pid": "Q381",
+  "rdom": "steam",
+  "rname": "Sleepover",
+  "dom": "tmdb",
+  "cand": "마지막 전투"
+ },
+ {
+  "pid": "Q087",
+  "rdom": "tmdb",
+  "rname": "러브 인 베를린",
+  "dom": "tmdb",
+  "cand": "마지막 전투"
+ },
+ {
+  "pid": "Q264",
+  "rdom": "wn",
+  "rname": "전생 신윤복의 현대 미술학",
+  "dom": "tmdb",
+  "cand": "바스키아"
+ },
+ {
+  "pid": "Q205",
+  "rdom": "steam",
+  "rname": "Sleepover",
+  "dom": "tmdb",
+  "cand": "바스키아"
+ },
+ {
+  "pid": "Q146",
+  "rdom": "tmdb",
+  "rname": "러브 인 베를린",
+  "dom": "tmdb",
+  "cand": "바스키아"
+ },
+ {
+  "pid": "Q256",
+  "rdom": "steam",
+  "rname": "The Tarnishing of Juxtia",
+  "dom": "wn",
+  "cand": "부서진 성좌의 회귀"
+ },
+ {
+  "pid": "Q276",
+  "rdom": "tmdb",
+  "rname": "라이온 킹",
+  "dom": "wn",
+  "cand": "부서진 성좌의 회귀"
+ },
+ {
+  "pid": "Q244",
+  "rdom": "steam",
+  "rname": "The Tarnishing of Juxtia",
+  "dom": "wn",
+  "cand": "망작의 삼공자로 사는 법"
+ },
+ {
+  "pid": "Q373",
+  "rdom": "tmdb",
+  "rname": "라이온 킹",
+  "dom": "wn",
+  "cand": "망작의 삼공자로 사는 법"
+ },
+ {
+  "pid": "Q375",
+  "rdom": "steam",
+  "rname": "The Tarnishing of Juxtia",
+  "dom": "wn",
+  "cand": "용사의 옆집에 산다는 것"
+ },
+ {
+  "pid": "Q254",
+  "rdom": "tmdb",
+  "rname": "라이온 킹",
+  "dom": "wn",
+  "cand": "용사의 옆집에 산다는 것"
+ },
+ {
+  "pid": "Q260",
+  "rdom": "wn",
+  "rname": "신창, 망국의 귀족이 되다",
+  "dom": "steam",
+  "cand": "Frontier Paladin"
+ },
+ {
+  "pid": "Q053",
+  "rdom": "steam",
+  "rname": "The Tarnishing of Juxtia",
+  "dom": "steam",
+  "cand": "Frontier Paladin"
+ },
+ {
+  "pid": "Q021",
+  "rdom": "tmdb",
+  "rname": "라이온 킹",
+  "dom": "steam",
+  "cand": "Frontier Paladin"
+ },
+ {
+  "pid": "Q303",
+  "rdom": "wn",
+  "rname": "신창, 망국의 귀족이 되다",
+  "dom": "steam",
+  "cand": "Cedric & Odious"
+ },
+ {
+  "pid": "Q371",
+  "rdom": "steam",
+  "rname": "The Tarnishing of Juxtia",
+  "dom": "steam",
+  "cand": "Cedric & Odious"
+ },
+ {
+  "pid": "Q013",
+  "rdom": "tmdb",
+  "rname": "라이온 킹",
+  "dom": "steam",
+  "cand": "Cedric & Odious"
+ },
+ {
+  "pid": "Q393",
+  "rdom": "wn",
+  "rname": "신창, 망국의 귀족이 되다",
+  "dom": "steam",
+  "cand": "이노티아 4 (Inotia 4)"
+ },
+ {
+  "pid": "Q010",
+  "rdom": "steam",
+  "rname": "The Tarnishing of Juxtia",
+  "dom": "steam",
+  "cand": "이노티아 4 (Inotia 4)"
+ },
+ {
+  "pid": "Q153",
+  "rdom": "tmdb",
+  "rname": "라이온 킹",
+  "dom": "steam",
+  "cand": "이노티아 4 (Inotia 4)"
+ },
+ {
+  "pid": "Q149",
+  "rdom": "steam",
+  "rname": "The Tarnishing of Juxtia",
+  "dom": "tmdb",
+  "cand": "라이온 킹"
+ },
+ {
+  "pid": "Q023",
+  "rdom": "tmdb",
+  "rname": "라이온 킹",
+  "dom": "tmdb",
+  "cand": "라이온 킹"
+ },
+ {
+  "pid": "Q197",
+  "rdom": "steam",
+  "rname": "The Tarnishing of Juxtia",
+  "dom": "tmdb",
+  "cand": "라이온 킹 2"
+ },
+ {
+  "pid": "Q400",
+  "rdom": "tmdb",
+  "rname": "라이온 킹",
+  "dom": "tmdb",
+  "cand": "라이온 킹 2"
+ },
+ {
+  "pid": "Q006",
+  "rdom": "steam",
+  "rname": "The Tarnishing of Juxtia",
+  "dom": "tmdb",
+  "cand": "무파사: 라이온 킹"
+ },
+ {
+  "pid": "Q090",
+  "rdom": "tmdb",
+  "rname": "라이온 킹",
+  "dom": "tmdb",
+  "cand": "무파사: 라이온 킹"
+ },
+ {
+  "pid": "Q136",
+  "rdom": "wn",
+  "rname": "신창, 망국의 귀족이 되다",
+  "dom": "wn",
+  "cand": "두 번 사는 흑기사"
+ },
+ {
+  "pid": "Q347",
+  "rdom": "steam",
+  "rname": "The Tarnishing of Juxtia",
+  "dom": "wn",
+  "cand": "두 번 사는 흑기사"
+ },
+ {
+  "pid": "Q115",
+  "rdom": "tmdb",
+  "rname": "라이온 킹",
+  "dom": "wn",
+  "cand": "두 번 사는 흑기사"
+ },
+ {
+  "pid": "Q121",
+  "rdom": "wn",
+  "rname": "신창, 망국의 귀족이 되다",
+  "dom": "wn",
+  "cand": "왕의 전설"
+ },
+ {
+  "pid": "Q250",
+  "rdom": "steam",
+  "rname": "The Tarnishing of Juxtia",
+  "dom": "wn",
+  "cand": "왕의 전설"
+ },
+ {
+  "pid": "Q165",
+  "rdom": "tmdb",
+  "rname": "라이온 킹",
+  "dom": "wn",
+  "cand": "왕의 전설"
+ },
+ {
+  "pid": "Q428",
+  "rdom": "wn",
+  "rname": "신창, 망국의 귀족이 되다",
+  "dom": "steam",
+  "cand": "스포일러가 너무 심한 RPG2 ―절친의 본모습은 대마왕―"
+ },
+ {
+  "pid": "Q305",
+  "rdom": "steam",
+  "rname": "The Tarnishing of Juxtia",
+  "dom": "steam",
+  "cand": "스포일러가 너무 심한 RPG2 ―절친의 본모습은 대마왕―"
+ },
+ {
+  "pid": "Q159",
+  "rdom": "tmdb",
+  "rname": "라이온 킹",
+  "dom": "steam",
+  "cand": "스포일러가 너무 심한 RPG2 ―절친의 본모습은 대마왕―"
+ },
+ {
+  "pid": "Q342",
+  "rdom": "steam",
+  "rname": "The Tarnishing of Juxtia",
+  "dom": "steam",
+  "cand": "The Surprising Adventures of Munchausen"
+ },
+ {
+  "pid": "Q295",
+  "rdom": "tmdb",
+  "rname": "라이온 킹",
+  "dom": "steam",
+  "cand": "The Surprising Adventures of Munchausen"
+ },
+ {
+  "pid": "Q178",
+  "rdom": "wn",
+  "rname": "신창, 망국의 귀족이 되다",
+  "dom": "steam",
+  "cand": "The Land of the Magnates"
+ },
+ {
+  "pid": "Q349",
+  "rdom": "steam",
+  "rname": "The Tarnishing of Juxtia",
+  "dom": "steam",
+  "cand": "The Land of the Magnates"
+ },
+ {
+  "pid": "Q227",
+  "rdom": "tmdb",
+  "rname": "라이온 킹",
+  "dom": "steam",
+  "cand": "The Land of the Magnates"
+ },
+ {
+  "pid": "Q123",
+  "rdom": "wn",
+  "rname": "신창, 망국의 귀족이 되다",
+  "dom": "tmdb",
+  "cand": "매직 로드"
+ },
+ {
+  "pid": "Q418",
+  "rdom": "steam",
+  "rname": "The Tarnishing of Juxtia",
+  "dom": "tmdb",
+  "cand": "매직 로드"
+ },
+ {
+  "pid": "Q091",
+  "rdom": "tmdb",
+  "rname": "라이온 킹",
+  "dom": "tmdb",
+  "cand": "매직 로드"
+ },
+ {
+  "pid": "Q237",
+  "rdom": "steam",
+  "rname": "The Tarnishing of Juxtia",
+  "dom": "tmdb",
+  "cand": "영웅왕, 극한의 무를 위해 전생하다 ~그리고 세계 최강의 견습 기사가 되다♀~"
+ },
+ {
+  "pid": "Q231",
+  "rdom": "tmdb",
+  "rname": "라이온 킹",
+  "dom": "tmdb",
+  "cand": "영웅왕, 극한의 무를 위해 전생하다 ~그리고 세계 최강의 견습 기사가 되다♀~"
+ },
+ {
+  "pid": "Q196",
+  "rdom": "wn",
+  "rname": "신창, 망국의 귀족이 되다",
+  "dom": "tmdb",
+  "cand": "반지의 제왕: 힘의 반지"
+ },
+ {
+  "pid": "Q206",
+  "rdom": "steam",
+  "rname": "The Tarnishing of Juxtia",
+  "dom": "tmdb",
+  "cand": "반지의 제왕: 힘의 반지"
+ },
+ {
+  "pid": "Q404",
+  "rdom": "tmdb",
+  "rname": "라이온 킹",
+  "dom": "tmdb",
+  "cand": "반지의 제왕: 힘의 반지"
+ },
+ {
+  "pid": "Q119",
+  "rdom": "steam",
+  "rname": "스위트 클락워크",
+  "dom": "wn",
+  "cand": "남주가 내 집착에 집착한다"
+ },
+ {
+  "pid": "Q296",
+  "rdom": "tmdb",
+  "rname": "나의 PS 파트너",
+  "dom": "wn",
+  "cand": "남주가 내 집착에 집착한다"
+ },
+ {
+  "pid": "Q179",
+  "rdom": "steam",
+  "rname": "스위트 클락워크",
+  "dom": "wn",
+  "cand": "남주의 집착이 악녀에게 향할 때"
+ },
+ {
+  "pid": "Q162",
+  "rdom": "tmdb",
+  "rname": "나의 PS 파트너",
+  "dom": "wn",
+  "cand": "남주의 집착이 악녀에게 향할 때"
+ },
+ {
+  "pid": "Q299",
+  "rdom": "steam",
+  "rname": "스위트 클락워크",
+  "dom": "wn",
+  "cand": "남주가 없으면 내 성적이 망한다"
+ },
+ {
+  "pid": "Q150",
+  "rdom": "tmdb",
+  "rname": "나의 PS 파트너",
+  "dom": "wn",
+  "cand": "남주가 없으면 내 성적이 망한다"
+ },
+ {
+  "pid": "Q124",
+  "rdom": "wn",
+  "rname": "다정 남주를 집착 남주로 키우는 방법",
+  "dom": "steam",
+  "cand": "X-note"
+ },
+ {
+  "pid": "Q422",
+  "rdom": "steam",
+  "rname": "스위트 클락워크",
+  "dom": "steam",
+  "cand": "X-note"
+ },
+ {
+  "pid": "Q287",
+  "rdom": "tmdb",
+  "rname": "나의 PS 파트너",
+  "dom": "steam",
+  "cand": "X-note"
+ },
+ {
+  "pid": "Q294",
+  "rdom": "wn",
+  "rname": "다정 남주를 집착 남주로 키우는 방법",
+  "dom": "steam",
+  "cand": "Pinewood Island"
+ },
+ {
+  "pid": "Q415",
+  "rdom": "steam",
+  "rname": "스위트 클락워크",
+  "dom": "steam",
+  "cand": "Pinewood Island"
+ },
+ {
+  "pid": "Q142",
+  "rdom": "tmdb",
+  "rname": "나의 PS 파트너",
+  "dom": "steam",
+  "cand": "Pinewood Island"
+ },
+ {
+  "pid": "Q207",
+  "rdom": "steam",
+  "rname": "스위트 클락워크",
+  "dom": "steam",
+  "cand": "청춘 프레임"
+ },
+ {
+  "pid": "Q332",
+  "rdom": "tmdb",
+  "rname": "나의 PS 파트너",
+  "dom": "steam",
+  "cand": "청춘 프레임"
+ },
+ {
+  "pid": "Q325",
+  "rdom": "wn",
+  "rname": "다정 남주를 집착 남주로 키우는 방법",
+  "dom": "tmdb",
+  "cand": "맛있는 비행"
+ },
+ {
+  "pid": "Q182",
+  "rdom": "steam",
+  "rname": "스위트 클락워크",
+  "dom": "tmdb",
+  "cand": "맛있는 비행"
+ },
+ {
+  "pid": "Q410",
+  "rdom": "tmdb",
+  "rname": "나의 PS 파트너",
+  "dom": "tmdb",
+  "cand": "맛있는 비행"
+ },
+ {
+  "pid": "Q317",
+  "rdom": "steam",
+  "rname": "스위트 클락워크",
+  "dom": "tmdb",
+  "cand": "리치 인 러브"
+ },
+ {
+  "pid": "Q135",
+  "rdom": "tmdb",
+  "rname": "나의 PS 파트너",
+  "dom": "tmdb",
+  "cand": "리치 인 러브"
+ },
+ {
+  "pid": "Q308",
+  "rdom": "wn",
+  "rname": "다정 남주를 집착 남주로 키우는 방법",
+  "dom": "tmdb",
+  "cand": "트루 젠틀맨"
+ },
+ {
+  "pid": "Q376",
+  "rdom": "steam",
+  "rname": "스위트 클락워크",
+  "dom": "tmdb",
+  "cand": "트루 젠틀맨"
+ },
+ {
+  "pid": "Q183",
+  "rdom": "tmdb",
+  "rname": "나의 PS 파트너",
+  "dom": "tmdb",
+  "cand": "트루 젠틀맨"
+ },
+ {
+  "pid": "Q140",
+  "rdom": "wn",
+  "rname": "다정 남주를 집착 남주로 키우는 방법",
+  "dom": "wn",
+  "cand": "언니가 남주였다"
+ },
+ {
+  "pid": "Q015",
+  "rdom": "steam",
+  "rname": "스위트 클락워크",
+  "dom": "wn",
+  "cand": "언니가 남주였다"
+ },
+ {
+  "pid": "Q113",
+  "rdom": "tmdb",
+  "rname": "나의 PS 파트너",
+  "dom": "wn",
+  "cand": "언니가 남주였다"
+ },
+ {
+  "pid": "Q155",
+  "rdom": "wn",
+  "rname": "다정 남주를 집착 남주로 키우는 방법",
+  "dom": "wn",
+  "cand": "죄악과 구원 사이에서"
+ },
+ {
+  "pid": "Q223",
+  "rdom": "steam",
+  "rname": "스위트 클락워크",
+  "dom": "wn",
+  "cand": "죄악과 구원 사이에서"
+ },
+ {
+  "pid": "Q035",
+  "rdom": "tmdb",
+  "rname": "나의 PS 파트너",
+  "dom": "wn",
+  "cand": "죄악과 구원 사이에서"
+ },
+ {
+  "pid": "Q109",
+  "rdom": "wn",
+  "rname": "다정 남주를 집착 남주로 키우는 방법",
+  "dom": "wn",
+  "cand": "X의 사정"
+ },
+ {
+  "pid": "Q283",
+  "rdom": "steam",
+  "rname": "스위트 클락워크",
+  "dom": "wn",
+  "cand": "X의 사정"
+ },
+ {
+  "pid": "Q122",
+  "rdom": "tmdb",
+  "rname": "나의 PS 파트너",
+  "dom": "wn",
+  "cand": "X의 사정"
+ },
+ {
+  "pid": "Q019",
+  "rdom": "steam",
+  "rname": "스위트 클락워크",
+  "dom": "steam",
+  "cand": "我和美女有个约会"
+ },
+ {
+  "pid": "Q152",
+  "rdom": "tmdb",
+  "rname": "나의 PS 파트너",
+  "dom": "steam",
+  "cand": "我和美女有个约会"
+ },
+ {
+  "pid": "Q145",
+  "rdom": "steam",
+  "rname": "스위트 클락워크",
+  "dom": "steam",
+  "cand": "러브 플루트"
+ },
+ {
+  "pid": "Q336",
+  "rdom": "tmdb",
+  "rname": "나의 PS 파트너",
+  "dom": "steam",
+  "cand": "러브 플루트"
+ },
+ {
+  "pid": "Q088",
+  "rdom": "wn",
+  "rname": "다정 남주를 집착 남주로 키우는 방법",
+  "dom": "steam",
+  "cand": "イケ勘 - イケメンになるかどうか勘で付き合うゲーム -"
+ },
+ {
+  "pid": "Q081",
+  "rdom": "steam",
+  "rname": "스위트 클락워크",
+  "dom": "steam",
+  "cand": "イケ勘 - イケメンになるかどうか勘で付き合うゲーム -"
+ },
+ {
+  "pid": "Q060",
+  "rdom": "tmdb",
+  "rname": "나의 PS 파트너",
+  "dom": "steam",
+  "cand": "イケ勘 - イケメンになるかどうか勘で付き合うゲーム -"
+ },
+ {
+  "pid": "Q198",
+  "rdom": "steam",
+  "rname": "스위트 클락워크",
+  "dom": "tmdb",
+  "cand": "김씨 표류기"
+ },
+ {
+  "pid": "Q352",
+  "rdom": "tmdb",
+  "rname": "나의 PS 파트너",
+  "dom": "tmdb",
+  "cand": "김씨 표류기"
+ },
+ {
+  "pid": "Q220",
+  "rdom": "wn",
+  "rname": "다정 남주를 집착 남주로 키우는 방법",
+  "dom": "tmdb",
+  "cand": "당신의 욕망"
+ },
+ {
+  "pid": "Q374",
+  "rdom": "steam",
+  "rname": "스위트 클락워크",
+  "dom": "tmdb",
+  "cand": "당신의 욕망"
+ },
+ {
+  "pid": "Q329",
+  "rdom": "tmdb",
+  "rname": "나의 PS 파트너",
+  "dom": "tmdb",
+  "cand": "당신의 욕망"
+ },
+ {
+  "pid": "Q027",
+  "rdom": "wn",
+  "rname": "다정 남주를 집착 남주로 키우는 방법",
+  "dom": "tmdb",
+  "cand": "30일"
+ },
+ {
+  "pid": "Q075",
+  "rdom": "steam",
+  "rname": "스위트 클락워크",
+  "dom": "tmdb",
+  "cand": "30일"
+ },
+ {
+  "pid": "Q125",
+  "rdom": "tmdb",
+  "rname": "나의 PS 파트너",
+  "dom": "tmdb",
+  "cand": "30일"
+ },
+ {
+  "pid": "Q044",
+  "rdom": "steam",
+  "rname": "The Meridian Under the Heaven: Valhalla",
+  "dom": "wn",
+  "cand": "결혼이 너무 어렵습니다"
+ },
+ {
+  "pid": "Q423",
+  "rdom": "tmdb",
+  "rname": "비우",
+  "dom": "wn",
+  "cand": "결혼이 너무 어렵습니다"
+ },
+ {
+  "pid": "Q033",
+  "rdom": "steam",
+  "rname": "The Meridian Under the Heaven: Valhalla",
+  "dom": "wn",
+  "cand": "6월의 장미는 결혼을 두 번 한다"
+ },
+ {
+  "pid": "Q343",
+  "rdom": "tmdb",
+  "rname": "비우",
+  "dom": "wn",
+  "cand": "6월의 장미는 결혼을 두 번 한다"
+ },
+ {
+  "pid": "Q310",
+  "rdom": "steam",
+  "rname": "The Meridian Under the Heaven: Valhalla",
+  "dom": "wn",
+  "cand": "그 악녀 인생, 제가 한번 살아 볼게요"
+ },
+ {
+  "pid": "Q181",
+  "rdom": "tmdb",
+  "rname": "비우",
+  "dom": "wn",
+  "cand": "그 악녀 인생, 제가 한번 살아 볼게요"
+ },
+ {
+  "pid": "Q186",
+  "rdom": "steam",
+  "rname": "The Meridian Under the Heaven: Valhalla",
+  "dom": "steam",
+  "cand": "橘香仲夏"
+ },
+ {
+  "pid": "Q282",
+  "rdom": "tmdb",
+  "rname": "비우",
+  "dom": "steam",
+  "cand": "橘香仲夏"
+ },
+ {
+  "pid": "Q230",
+  "rdom": "wn",
+  "rname": "이런 신혼여행은 원하지 않았다",
+  "dom": "steam",
+  "cand": "러브커스: 사랑이 아니면 죽음뿐"
+ },
+ {
+  "pid": "Q215",
+  "rdom": "steam",
+  "rname": "The Meridian Under the Heaven: Valhalla",
+  "dom": "steam",
+  "cand": "러브커스: 사랑이 아니면 죽음뿐"
+ },
+ {
+  "pid": "Q346",
+  "rdom": "tmdb",
+  "rname": "비우",
+  "dom": "steam",
+  "cand": "러브커스: 사랑이 아니면 죽음뿐"
+ },
+ {
+  "pid": "Q341",
+  "rdom": "wn",
+  "rname": "이런 신혼여행은 원하지 않았다",
+  "dom": "steam",
+  "cand": "The Symbiant II"
+ },
+ {
+  "pid": "Q261",
+  "rdom": "steam",
+  "rname": "The Meridian Under the Heaven: Valhalla",
+  "dom": "steam",
+  "cand": "The Symbiant II"
+ },
+ {
+  "pid": "Q337",
+  "rdom": "tmdb",
+  "rname": "비우",
+  "dom": "steam",
+  "cand": "The Symbiant II"
+ },
+ {
+  "pid": "Q311",
+  "rdom": "steam",
+  "rname": "The Meridian Under the Heaven: Valhalla",
+  "dom": "tmdb",
+  "cand": "백인 추장"
+ },
+ {
+  "pid": "Q208",
+  "rdom": "tmdb",
+  "rname": "비우",
+  "dom": "tmdb",
+  "cand": "백인 추장"
+ },
+ {
+  "pid": "Q126",
+  "rdom": "steam",
+  "rname": "The Meridian Under the Heaven: Valhalla",
+  "dom": "tmdb",
+  "cand": "마틸다: 황제의 연인"
+ },
+ {
+  "pid": "Q213",
+  "rdom": "tmdb",
+  "rname": "비우",
+  "dom": "tmdb",
+  "cand": "마틸다: 황제의 연인"
+ },
+ {
+  "pid": "Q273",
+  "rdom": "steam",
+  "rname": "The Meridian Under the Heaven: Valhalla",
+  "dom": "tmdb",
+  "cand": "미녀와 야수"
+ },
+ {
+  "pid": "Q316",
+  "rdom": "tmdb",
+  "rname": "비우",
+  "dom": "tmdb",
+  "cand": "미녀와 야수"
+ },
+ {
+  "pid": "Q116",
+  "rdom": "wn",
+  "rname": "이런 신혼여행은 원하지 않았다",
+  "dom": "wn",
+  "cand": "황제의 정원에는 꽃이 없다"
+ },
+ {
+  "pid": "Q057",
+  "rdom": "steam",
+  "rname": "The Meridian Under the Heaven: Valhalla",
+  "dom": "wn",
+  "cand": "황제의 정원에는 꽃이 없다"
+ },
+ {
+  "pid": "Q034",
+  "rdom": "tmdb",
+  "rname": "비우",
+  "dom": "wn",
+  "cand": "황제의 정원에는 꽃이 없다"
+ },
+ {
+  "pid": "Q238",
+  "rdom": "wn",
+  "rname": "이런 신혼여행은 원하지 않았다",
+  "dom": "wn",
+  "cand": "빙의자가 다녀간 후"
+ },
+ {
+  "pid": "Q036",
+  "rdom": "steam",
+  "rname": "The Meridian Under the Heaven: Valhalla",
+  "dom": "wn",
+  "cand": "빙의자가 다녀간 후"
+ },
+ {
+  "pid": "Q195",
+  "rdom": "tmdb",
+  "rname": "비우",
+  "dom": "wn",
+  "cand": "빙의자가 다녀간 후"
+ },
+ {
+  "pid": "Q211",
+  "rdom": "wn",
+  "rname": "이런 신혼여행은 원하지 않았다",
+  "dom": "wn",
+  "cand": "악녀인데 어쩌라고"
+ },
+ {
+  "pid": "Q171",
+  "rdom": "steam",
+  "rname": "The Meridian Under the Heaven: Valhalla",
+  "dom": "wn",
+  "cand": "악녀인데 어쩌라고"
+ },
+ {
+  "pid": "Q105",
+  "rdom": "tmdb",
+  "rname": "비우",
+  "dom": "wn",
+  "cand": "악녀인데 어쩌라고"
+ },
+ {
+  "pid": "Q242",
+  "rdom": "steam",
+  "rname": "The Meridian Under the Heaven: Valhalla",
+  "dom": "steam",
+  "cand": "Love in match"
+ },
+ {
+  "pid": "Q079",
+  "rdom": "tmdb",
+  "rname": "비우",
+  "dom": "steam",
+  "cand": "Love in match"
+ },
+ {
+  "pid": "Q289",
+  "rdom": "tmdb",
+  "rname": "비우",
+  "dom": "steam",
+  "cand": "봄이 오면 꽃이 피고"
+ },
+ {
+  "pid": "Q041",
+  "rdom": "steam",
+  "rname": "The Meridian Under the Heaven: Valhalla",
+  "dom": "steam",
+  "cand": "Derail: Sacrifice"
+ },
+ {
+  "pid": "Q156",
+  "rdom": "tmdb",
+  "rname": "비우",
+  "dom": "steam",
+  "cand": "Derail: Sacrifice"
+ },
+ {
+  "pid": "Q388",
+  "rdom": "wn",
+  "rname": "이런 신혼여행은 원하지 않았다",
+  "dom": "tmdb",
+  "cand": "블랙버드 블랙버드 블랙베리"
+ },
+ {
+  "pid": "Q395",
+  "rdom": "steam",
+  "rname": "The Meridian Under the Heaven: Valhalla",
+  "dom": "tmdb",
+  "cand": "블랙버드 블랙버드 블랙베리"
+ },
+ {
+  "pid": "Q065",
+  "rdom": "tmdb",
+  "rname": "비우",
+  "dom": "tmdb",
+  "cand": "블랙버드 블랙버드 블랙베리"
+ },
+ {
+  "pid": "Q323",
+  "rdom": "wn",
+  "rname": "이런 신혼여행은 원하지 않았다",
+  "dom": "tmdb",
+  "cand": "광란의 사랑"
+ },
+ {
+  "pid": "Q253",
+  "rdom": "steam",
+  "rname": "The Meridian Under the Heaven: Valhalla",
+  "dom": "tmdb",
+  "cand": "광란의 사랑"
+ },
+ {
+  "pid": "Q038",
+  "rdom": "tmdb",
+  "rname": "비우",
+  "dom": "tmdb",
+  "cand": "광란의 사랑"
+ },
+ {
+  "pid": "Q387",
+  "rdom": "wn",
+  "rname": "이런 신혼여행은 원하지 않았다",
+  "dom": "tmdb",
+  "cand": "하늘을 바라본다, 바람이 분다"
+ },
+ {
+  "pid": "Q180",
+  "rdom": "steam",
+  "rname": "The Meridian Under the Heaven: Valhalla",
+  "dom": "tmdb",
+  "cand": "하늘을 바라본다, 바람이 분다"
+ },
+ {
+  "pid": "Q370",
+  "rdom": "tmdb",
+  "rname": "비우",
+  "dom": "tmdb",
+  "cand": "하늘을 바라본다, 바람이 분다"
+ },
+ {
+  "pid": "Q248",
+  "rdom": "steam",
+  "rname": "Zero-Sum Heart",
+  "dom": "wn",
+  "cand": "아기 황녀는 성녀 말고 마왕이 될 꼰데?"
+ },
+ {
+  "pid": "Q009",
+  "rdom": "tmdb",
+  "rname": "바비 - 나비요정 마리포사",
+  "dom": "wn",
+  "cand": "아기 황녀는 성녀 말고 마왕이 될 꼰데?"
+ },
+ {
+  "pid": "Q324",
+  "rdom": "steam",
+  "rname": "Zero-Sum Heart",
+  "dom": "wn",
+  "cand": "마왕의 시녀"
+ },
+ {
+  "pid": "Q144",
+  "rdom": "tmdb",
+  "rname": "바비 - 나비요정 마리포사",
+  "dom": "wn",
+  "cand": "마왕의 시녀"
+ },
+ {
+  "pid": "Q246",
+  "rdom": "steam",
+  "rname": "Zero-Sum Heart",
+  "dom": "wn",
+  "cand": "아기 마왕님은 용사 아빠들이 너무 귀찮아"
+ },
+ {
+  "pid": "Q022",
+  "rdom": "tmdb",
+  "rname": "바비 - 나비요정 마리포사",
+  "dom": "wn",
+  "cand": "아기 마왕님은 용사 아빠들이 너무 귀찮아"
+ },
+ {
+  "pid": "Q100",
+  "rdom": "steam",
+  "rname": "Zero-Sum Heart",
+  "dom": "steam",
+  "cand": "우리 사이의 고요한 공간"
+ },
+ {
+  "pid": "Q103",
+  "rdom": "tmdb",
+  "rname": "바비 - 나비요정 마리포사",
+  "dom": "steam",
+  "cand": "우리 사이의 고요한 공간"
+ },
+ {
+  "pid": "Q096",
+  "rdom": "steam",
+  "rname": "Zero-Sum Heart",
+  "dom": "steam",
+  "cand": "Pick My Heart Chapter 1"
+ },
+ {
+  "pid": "Q314",
+  "rdom": "tmdb",
+  "rname": "바비 - 나비요정 마리포사",
+  "dom": "steam",
+  "cand": "Pick My Heart Chapter 1"
+ },
+ {
+  "pid": "Q050",
+  "rdom": "steam",
+  "rname": "Zero-Sum Heart",
+  "dom": "steam",
+  "cand": "The Shadow Between Words"
+ },
+ {
+  "pid": "Q111",
+  "rdom": "tmdb",
+  "rname": "바비 - 나비요정 마리포사",
+  "dom": "steam",
+  "cand": "The Shadow Between Words"
+ },
+ {
+  "pid": "Q167",
+  "rdom": "steam",
+  "rname": "Zero-Sum Heart",
+  "dom": "tmdb",
+  "cand": "사랑의 기쁨"
+ },
+ {
+  "pid": "Q362",
+  "rdom": "tmdb",
+  "rname": "바비 - 나비요정 마리포사",
+  "dom": "tmdb",
+  "cand": "사랑의 기쁨"
+ },
+ {
+  "pid": "Q047",
+  "rdom": "steam",
+  "rname": "Zero-Sum Heart",
+  "dom": "tmdb",
+  "cand": "인어공주 2"
+ },
+ {
+  "pid": "Q108",
+  "rdom": "tmdb",
+  "rname": "바비 - 나비요정 마리포사",
+  "dom": "tmdb",
+  "cand": "인어공주 2"
+ },
+ {
+  "pid": "Q017",
+  "rdom": "wn",
+  "rname": "아기 황녀의 정체는 마왕님!",
+  "dom": "tmdb",
+  "cand": "님프, 피의 요정"
+ },
+ {
+  "pid": "Q389",
+  "rdom": "steam",
+  "rname": "Zero-Sum Heart",
+  "dom": "tmdb",
+  "cand": "님프, 피의 요정"
+ },
+ {
+  "pid": "Q369",
+  "rdom": "tmdb",
+  "rname": "바비 - 나비요정 마리포사",
+  "dom": "tmdb",
+  "cand": "님프, 피의 요정"
+ },
+ {
+  "pid": "Q412",
+  "rdom": "wn",
+  "rname": "아기 황녀의 정체는 마왕님!",
+  "dom": "wn",
+  "cand": "마녀는 쉬고 싶습니다"
+ },
+ {
+  "pid": "Q059",
+  "rdom": "steam",
+  "rname": "Zero-Sum Heart",
+  "dom": "wn",
+  "cand": "마녀는 쉬고 싶습니다"
+ },
+ {
+  "pid": "Q042",
+  "rdom": "tmdb",
+  "rname": "바비 - 나비요정 마리포사",
+  "dom": "wn",
+  "cand": "마녀는 쉬고 싶습니다"
+ },
+ {
+  "pid": "Q392",
+  "rdom": "wn",
+  "rname": "아기 황녀의 정체는 마왕님!",
+  "dom": "wn",
+  "cand": "마녀가 정체를 딱히 안 숨김"
+ },
+ {
+  "pid": "Q364",
+  "rdom": "steam",
+  "rname": "Zero-Sum Heart",
+  "dom": "wn",
+  "cand": "마녀가 정체를 딱히 안 숨김"
+ },
+ {
+  "pid": "Q272",
+  "rdom": "tmdb",
+  "rname": "바비 - 나비요정 마리포사",
+  "dom": "wn",
+  "cand": "마녀가 정체를 딱히 안 숨김"
+ },
+ {
+  "pid": "Q131",
+  "rdom": "wn",
+  "rname": "아기 황녀의 정체는 마왕님!",
+  "dom": "wn",
+  "cand": "악녀는 사랑을 원치 않아요"
+ },
+ {
+  "pid": "Q064",
+  "rdom": "steam",
+  "rname": "Zero-Sum Heart",
+  "dom": "wn",
+  "cand": "악녀는 사랑을 원치 않아요"
+ },
+ {
+  "pid": "Q298",
+  "rdom": "tmdb",
+  "rname": "바비 - 나비요정 마리포사",
+  "dom": "wn",
+  "cand": "악녀는 사랑을 원치 않아요"
+ },
+ {
+  "pid": "Q307",
+  "rdom": "steam",
+  "rname": "Zero-Sum Heart",
+  "dom": "steam",
+  "cand": "거짓말쟁이 왕을 속이는 방법 REMASTERED"
+ },
+ {
+  "pid": "Q101",
+  "rdom": "tmdb",
+  "rname": "바비 - 나비요정 마리포사",
+  "dom": "steam",
+  "cand": "거짓말쟁이 왕을 속이는 방법 REMASTERED"
+ },
+ {
+  "pid": "Q132",
+  "rdom": "steam",
+  "rname": "Zero-Sum Heart",
+  "dom": "steam",
+  "cand": "Blood of Inquisition"
+ },
+ {
+  "pid": "Q029",
+  "rdom": "tmdb",
+  "rname": "바비 - 나비요정 마리포사",
+  "dom": "steam",
+  "cand": "Blood of Inquisition"
+ },
+ {
+  "pid": "Q147",
+  "rdom": "steam",
+  "rname": "Zero-Sum Heart",
+  "dom": "steam",
+  "cand": "Mhakna Gramura and Fairy Bell"
+ },
+ {
+  "pid": "Q078",
+  "rdom": "tmdb",
+  "rname": "바비 - 나비요정 마리포사",
+  "dom": "steam",
+  "cand": "Mhakna Gramura and Fairy Bell"
+ },
+ {
+  "pid": "Q080",
+  "rdom": "steam",
+  "rname": "Zero-Sum Heart",
+  "dom": "tmdb",
+  "cand": "별 내리는 왕국의 니나"
+ },
+ {
+  "pid": "Q304",
+  "rdom": "tmdb",
+  "rname": "바비 - 나비요정 마리포사",
+  "dom": "tmdb",
+  "cand": "별 내리는 왕국의 니나"
+ },
+ {
+  "pid": "Q082",
+  "rdom": "wn",
+  "rname": "아기 황녀의 정체는 마왕님!",
+  "dom": "tmdb",
+  "cand": "프린스 앤 프린세스"
+ },
+ {
+  "pid": "Q268",
+  "rdom": "steam",
+  "rname": "Zero-Sum Heart",
+  "dom": "tmdb",
+  "cand": "프린스 앤 프린세스"
+ },
+ {
+  "pid": "Q214",
+  "rdom": "tmdb",
+  "rname": "바비 - 나비요정 마리포사",
+  "dom": "tmdb",
+  "cand": "프린스 앤 프린세스"
+ },
+ {
+  "pid": "Q411",
+  "rdom": "wn",
+  "rname": "아기 황녀의 정체는 마왕님!",
+  "dom": "tmdb",
+  "cand": "악역 영애이기 때문에 최종 보스를 길러보았습니다"
+ },
+ {
+  "pid": "Q114",
+  "rdom": "steam",
+  "rname": "Zero-Sum Heart",
+  "dom": "tmdb",
+  "cand": "악역 영애이기 때문에 최종 보스를 길러보았습니다"
+ },
+ {
+  "pid": "Q204",
+  "rdom": "tmdb",
+  "rname": "바비 - 나비요정 마리포사",
+  "dom": "tmdb",
+  "cand": "악역 영애이기 때문에 최종 보스를 길러보았습니다"
+ },
+ {
+  "pid": "Q130",
+  "rdom": "steam",
+  "rname": "Derail: Sacrifice",
+  "dom": "wn",
+  "cand": "어둠에 꿈틀거리다"
+ },
+ {
+  "pid": "Q234",
+  "rdom": "tmdb",
+  "rname": "팬",
+  "dom": "wn",
+  "cand": "어둠에 꿈틀거리다"
+ },
+ {
+  "pid": "Q379",
+  "rdom": "steam",
+  "rname": "Derail: Sacrifice",
+  "dom": "wn",
+  "cand": "검은 도마뱀"
+ },
+ {
+  "pid": "Q095",
+  "rdom": "tmdb",
+  "rname": "팬",
+  "dom": "wn",
+  "cand": "검은 도마뱀"
+ },
+ {
+  "pid": "Q401",
+  "rdom": "steam",
+  "rname": "Derail: Sacrifice",
+  "dom": "wn",
+  "cand": "탐정은 죽지 않는다"
+ },
+ {
+  "pid": "Q011",
+  "rdom": "tmdb",
+  "rname": "팬",
+  "dom": "wn",
+  "cand": "탐정은 죽지 않는다"
+ },
+ {
+  "pid": "Q424",
+  "rdom": "wn",
+  "rname": "초록돛배의 비밀",
+  "dom": "steam",
+  "cand": "NEVERLANDER: An Awfully Big Adventure"
+ },
+ {
+  "pid": "Q225",
+  "rdom": "steam",
+  "rname": "Derail: Sacrifice",
+  "dom": "steam",
+  "cand": "NEVERLANDER: An Awfully Big Adventure"
+ },
+ {
+  "pid": "Q055",
+  "rdom": "tmdb",
+  "rname": "팬",
+  "dom": "steam",
+  "cand": "NEVERLANDER: An Awfully Big Adventure"
+ },
+ {
+  "pid": "Q258",
+  "rdom": "wn",
+  "rname": "초록돛배의 비밀",
+  "dom": "steam",
+  "cand": "Kathy Rain: Director's Cut"
+ },
+ {
+  "pid": "Q262",
+  "rdom": "steam",
+  "rname": "Derail: Sacrifice",
+  "dom": "steam",
+  "cand": "Kathy Rain: Director's Cut"
+ },
+ {
+  "pid": "Q173",
+  "rdom": "tmdb",
+  "rname": "팬",
+  "dom": "steam",
+  "cand": "Kathy Rain: Director's Cut"
+ },
+ {
+  "pid": "Q426",
+  "rdom": "wn",
+  "rname": "초록돛배의 비밀",
+  "dom": "steam",
+  "cand": "Rotten Utopia"
+ },
+ {
+  "pid": "Q350",
+  "rdom": "steam",
+  "rname": "Derail: Sacrifice",
+  "dom": "steam",
+  "cand": "Rotten Utopia"
+ },
+ {
+  "pid": "Q322",
+  "rdom": "tmdb",
+  "rname": "팬",
+  "dom": "steam",
+  "cand": "Rotten Utopia"
+ },
+ {
+  "pid": "Q363",
+  "rdom": "steam",
+  "rname": "Derail: Sacrifice",
+  "dom": "tmdb",
+  "cand": "피터팬 & 웬디"
+ },
+ {
+  "pid": "Q348",
+  "rdom": "tmdb",
+  "rname": "팬",
+  "dom": "tmdb",
+  "cand": "피터팬 & 웬디"
+ },
+ {
+  "pid": "Q419",
+  "rdom": "wn",
+  "rname": "초록돛배의 비밀",
+  "dom": "tmdb",
+  "cand": "피터 팬 2: 리턴 투 네버랜드"
+ },
+ {
+  "pid": "Q219",
+  "rdom": "steam",
+  "rname": "Derail: Sacrifice",
+  "dom": "tmdb",
+  "cand": "피터 팬 2: 리턴 투 네버랜드"
+ },
+ {
+  "pid": "Q335",
+  "rdom": "tmdb",
+  "rname": "팬",
+  "dom": "tmdb",
+  "cand": "피터 팬 2: 리턴 투 네버랜드"
+ },
+ {
+  "pid": "Q071",
+  "rdom": "wn",
+  "rname": "초록돛배의 비밀",
+  "dom": "tmdb",
+  "cand": "후크"
+ },
+ {
+  "pid": "Q293",
+  "rdom": "steam",
+  "rname": "Derail: Sacrifice",
+  "dom": "tmdb",
+  "cand": "후크"
+ },
+ {
+  "pid": "Q157",
+  "rdom": "tmdb",
+  "rname": "팬",
+  "dom": "tmdb",
+  "cand": "후크"
+ },
+ {
+  "pid": "Q024",
+  "rdom": "steam",
+  "rname": "Derail: Sacrifice",
+  "dom": "wn",
+  "cand": "너드남이 알고 보니 폭군이라 합니다"
+ },
+ {
+  "pid": "Q104",
+  "rdom": "tmdb",
+  "rname": "팬",
+  "dom": "wn",
+  "cand": "너드남이 알고 보니 폭군이라 합니다"
+ },
+ {
+  "pid": "Q203",
+  "rdom": "wn",
+  "rname": "초록돛배의 비밀",
+  "dom": "wn",
+  "cand": "불과 검과 얼음꽃"
+ },
+ {
+  "pid": "Q380",
+  "rdom": "steam",
+  "rname": "Derail: Sacrifice",
+  "dom": "wn",
+  "cand": "불과 검과 얼음꽃"
+ },
+ {
+  "pid": "Q222",
+  "rdom": "tmdb",
+  "rname": "팬",
+  "dom": "wn",
+  "cand": "불과 검과 얼음꽃"
+ },
+ {
+  "pid": "Q328",
+  "rdom": "steam",
+  "rname": "Derail: Sacrifice",
+  "dom": "steam",
+  "cand": "Chronique des Silencieux"
+ },
+ {
+  "pid": "Q267",
+  "rdom": "tmdb",
+  "rname": "팬",
+  "dom": "steam",
+  "cand": "Chronique des Silencieux"
+ },
+ {
+  "pid": "Q174",
+  "rdom": "steam",
+  "rname": "Derail: Sacrifice",
+  "dom": "steam",
+  "cand": "The Secret Order 7: Shadow Breach"
+ },
+ {
+  "pid": "Q274",
+  "rdom": "tmdb",
+  "rname": "팬",
+  "dom": "steam",
+  "cand": "The Secret Order 7: Shadow Breach"
+ },
+ {
+  "pid": "Q280",
+  "rdom": "wn",
+  "rname": "초록돛배의 비밀",
+  "dom": "steam",
+  "cand": "드라큘라: 라스트 헌트"
+ },
+ {
+  "pid": "Q417",
+  "rdom": "steam",
+  "rname": "Derail: Sacrifice",
+  "dom": "steam",
+  "cand": "드라큘라: 라스트 헌트"
+ },
+ {
+  "pid": "Q045",
+  "rdom": "tmdb",
+  "rname": "팬",
+  "dom": "steam",
+  "cand": "드라큘라: 라스트 헌트"
+ },
+ {
+  "pid": "Q086",
+  "rdom": "wn",
+  "rname": "초록돛배의 비밀",
+  "dom": "tmdb",
+  "cand": "펄스 2: 애프터라이프"
+ },
+ {
+  "pid": "Q241",
+  "rdom": "steam",
+  "rname": "Derail: Sacrifice",
+  "dom": "tmdb",
+  "cand": "펄스 2: 애프터라이프"
+ },
+ {
+  "pid": "Q402",
+  "rdom": "tmdb",
+  "rname": "팬",
+  "dom": "tmdb",
+  "cand": "펄스 2: 애프터라이프"
+ },
+ {
+  "pid": "Q216",
+  "rdom": "steam",
+  "rname": "Derail: Sacrifice",
+  "dom": "tmdb",
+  "cand": "이상한 나라의 앨리스"
+ },
+ {
+  "pid": "Q338",
+  "rdom": "tmdb",
+  "rname": "팬",
+  "dom": "tmdb",
+  "cand": "이상한 나라의 앨리스"
+ },
+ {
+  "pid": "Q224",
+  "rdom": "wn",
+  "rname": "초록돛배의 비밀",
+  "dom": "tmdb",
+  "cand": "에놀라 홈즈"
+ },
+ {
+  "pid": "Q339",
+  "rdom": "steam",
+  "rname": "Derail: Sacrifice",
+  "dom": "tmdb",
+  "cand": "에놀라 홈즈"
+ },
+ {
+  "pid": "Q315",
+  "rdom": "tmdb",
+  "rname": "팬",
+  "dom": "tmdb",
+  "cand": "에놀라 홈즈"
+ },
+ {
+  "pid": "Q290",
+  "rdom": "steam",
+  "rname": "Zero-Sum Heart",
+  "dom": "wn",
+  "cand": "사랑의 알약"
+ },
+ {
+  "pid": "Q077",
+  "rdom": "tmdb",
+  "rname": "나니아 연대기: 새벽 출정호의 항해",
+  "dom": "wn",
+  "cand": "사랑의 알약"
+ },
+ {
+  "pid": "Q259",
+  "rdom": "steam",
+  "rname": "Zero-Sum Heart",
+  "dom": "wn",
+  "cand": "퀘스트 깨는 영주님"
+ },
+ {
+  "pid": "Q394",
+  "rdom": "tmdb",
+  "rname": "나니아 연대기: 새벽 출정호의 항해",
+  "dom": "wn",
+  "cand": "퀘스트 깨는 영주님"
+ },
+ {
+  "pid": "Q285",
+  "rdom": "steam",
+  "rname": "Zero-Sum Heart",
+  "dom": "wn",
+  "cand": "이 사랑에서 빠지겠습니다"
+ },
+ {
+  "pid": "Q117",
+  "rdom": "tmdb",
+  "rname": "나니아 연대기: 새벽 출정호의 항해",
+  "dom": "wn",
+  "cand": "이 사랑에서 빠지겠습니다"
+ },
+ {
+  "pid": "Q212",
+  "rdom": "tmdb",
+  "rname": "나니아 연대기: 새벽 출정호의 항해",
+  "dom": "steam",
+  "cand": "우리 사이의 고요한 공간"
+ },
+ {
+  "pid": "Q129",
+  "rdom": "tmdb",
+  "rname": "나니아 연대기: 새벽 출정호의 항해",
+  "dom": "steam",
+  "cand": "Pick My Heart Chapter 1"
+ },
+ {
+  "pid": "Q229",
+  "rdom": "wn",
+  "rname": "사랑의 마법약을 해독하는 방법 외전",
+  "dom": "steam",
+  "cand": "The Shadow Between Words"
+ },
+ {
+  "pid": "Q247",
+  "rdom": "tmdb",
+  "rname": "나니아 연대기: 새벽 출정호의 항해",
+  "dom": "steam",
+  "cand": "The Shadow Between Words"
+ },
+ {
+  "pid": "Q217",
+  "rdom": "steam",
+  "rname": "Zero-Sum Heart",
+  "dom": "tmdb",
+  "cand": "나니아 연대기: 사자, 마녀 그리고 옷장"
+ },
+ {
+  "pid": "Q014",
+  "rdom": "tmdb",
+  "rname": "나니아 연대기: 새벽 출정호의 항해",
+  "dom": "tmdb",
+  "cand": "나니아 연대기: 사자, 마녀 그리고 옷장"
+ },
+ {
+  "pid": "Q245",
+  "rdom": "steam",
+  "rname": "Zero-Sum Heart",
+  "dom": "tmdb",
+  "cand": "나니아 연대기: 캐스피언 왕자"
+ },
+ {
+  "pid": "Q201",
+  "rdom": "tmdb",
+  "rname": "나니아 연대기: 새벽 출정호의 항해",
+  "dom": "tmdb",
+  "cand": "나니아 연대기: 캐스피언 왕자"
+ },
+ {
+  "pid": "Q291",
+  "rdom": "wn",
+  "rname": "사랑의 마법약을 해독하는 방법 외전",
+  "dom": "tmdb",
+  "cand": "님프, 피의 요정"
+ },
+ {
+  "pid": "Q139",
+  "rdom": "tmdb",
+  "rname": "나니아 연대기: 새벽 출정호의 항해",
+  "dom": "tmdb",
+  "cand": "님프, 피의 요정"
+ },
+ {
+  "pid": "Q263",
+  "rdom": "wn",
+  "rname": "사랑의 마법약을 해독하는 방법 외전",
+  "dom": "wn",
+  "cand": "당신의 레이디"
+ },
+ {
+  "pid": "Q018",
+  "rdom": "steam",
+  "rname": "Zero-Sum Heart",
+  "dom": "wn",
+  "cand": "당신의 레이디"
+ },
+ {
+  "pid": "Q334",
+  "rdom": "tmdb",
+  "rname": "나니아 연대기: 새벽 출정호의 항해",
+  "dom": "wn",
+  "cand": "당신의 레이디"
+ },
+ {
+  "pid": "Q218",
+  "rdom": "wn",
+  "rname": "사랑의 마법약을 해독하는 방법 외전",
+  "dom": "wn",
+  "cand": "저주받은 짐승을 길들였다"
+ },
+ {
+  "pid": "Q356",
+  "rdom": "steam",
+  "rname": "Zero-Sum Heart",
+  "dom": "wn",
+  "cand": "저주받은 짐승을 길들였다"
+ },
+ {
+  "pid": "Q054",
+  "rdom": "tmdb",
+  "rname": "나니아 연대기: 새벽 출정호의 항해",
+  "dom": "wn",
+  "cand": "저주받은 짐승을 길들였다"
+ },
+ {
+  "pid": "Q169",
+  "rdom": "wn",
+  "rname": "사랑의 마법약을 해독하는 방법 외전",
+  "dom": "wn",
+  "cand": "물 만난 드래곤의 집착이 곤란하다"
+ },
+ {
+  "pid": "Q007",
+  "rdom": "steam",
+  "rname": "Zero-Sum Heart",
+  "dom": "wn",
+  "cand": "물 만난 드래곤의 집착이 곤란하다"
+ },
+ {
+  "pid": "Q073",
+  "rdom": "tmdb",
+  "rname": "나니아 연대기: 새벽 출정호의 항해",
+  "dom": "wn",
+  "cand": "물 만난 드래곤의 집착이 곤란하다"
+ },
+ {
+  "pid": "Q358",
+  "rdom": "steam",
+  "rname": "Zero-Sum Heart",
+  "dom": "steam",
+  "cand": "Grim Legends: The Forsaken Bride"
+ },
+ {
+  "pid": "Q366",
+  "rdom": "tmdb",
+  "rname": "나니아 연대기: 새벽 출정호의 항해",
+  "dom": "steam",
+  "cand": "Grim Legends: The Forsaken Bride"
+ },
+ {
+  "pid": "Q127",
+  "rdom": "steam",
+  "rname": "Zero-Sum Heart",
+  "dom": "steam",
+  "cand": "이어진 마음: 보름달의 저주 컬렉터 에디션"
+ },
+ {
+  "pid": "Q190",
+  "rdom": "tmdb",
+  "rname": "나니아 연대기: 새벽 출정호의 항해",
+  "dom": "steam",
+  "cand": "이어진 마음: 보름달의 저주 컬렉터 에디션"
+ },
+ {
+  "pid": "Q112",
+  "rdom": "steam",
+  "rname": "Zero-Sum Heart",
+  "dom": "steam",
+  "cand": "Queen's Revolution ~ the romance in upheavals ~"
+ },
+ {
+  "pid": "Q193",
+  "rdom": "tmdb",
+  "rname": "나니아 연대기: 새벽 출정호의 항해",
+  "dom": "steam",
+  "cand": "Queen's Revolution ~ the romance in upheavals ~"
+ },
+ {
+  "pid": "Q414",
+  "rdom": "wn",
+  "rname": "사랑의 마법약을 해독하는 방법 외전",
+  "dom": "tmdb",
+  "cand": "사신 도련님과 검은 메이드"
+ },
+ {
+  "pid": "Q239",
+  "rdom": "steam",
+  "rname": "Zero-Sum Heart",
+  "dom": "tmdb",
+  "cand": "사신 도련님과 검은 메이드"
+ },
+ {
+  "pid": "Q016",
+  "rdom": "tmdb",
+  "rname": "나니아 연대기: 새벽 출정호의 항해",
+  "dom": "tmdb",
+  "cand": "사신 도련님과 검은 메이드"
+ },
+ {
+  "pid": "Q345",
+  "rdom": "wn",
+  "rname": "사랑의 마법약을 해독하는 방법 외전",
+  "dom": "tmdb",
+  "cand": "프린스 앤 프린세스"
+ },
+ {
+  "pid": "Q052",
+  "rdom": "tmdb",
+  "rname": "나니아 연대기: 새벽 출정호의 항해",
+  "dom": "tmdb",
+  "cand": "프린스 앤 프린세스"
+ },
+ {
+  "pid": "Q301",
+  "rdom": "wn",
+  "rname": "사랑의 마법약을 해독하는 방법 외전",
+  "dom": "tmdb",
+  "cand": "코멧"
+ },
+ {
+  "pid": "Q251",
+  "rdom": "steam",
+  "rname": "Zero-Sum Heart",
+  "dom": "tmdb",
+  "cand": "코멧"
+ },
+ {
+  "pid": "Q191",
+  "rdom": "tmdb",
+  "rname": "나니아 연대기: 새벽 출정호의 항해",
+  "dom": "tmdb",
+  "cand": "코멧"
+ },
+ {
+  "pid": "Q138",
+  "rdom": "steam",
+  "rname": "심장에 해로워",
+  "dom": "wn",
+  "cand": "첫사랑에게 종말을 고하다"
+ },
+ {
+  "pid": "Q355",
+  "rdom": "tmdb",
+  "rname": "솔로 미오",
+  "dom": "wn",
+  "cand": "첫사랑에게 종말을 고하다"
+ },
+ {
+  "pid": "Q396",
+  "rdom": "steam",
+  "rname": "심장에 해로워",
+  "dom": "wn",
+  "cand": "너의 가치"
+ },
+ {
+  "pid": "Q089",
+  "rdom": "tmdb",
+  "rname": "솔로 미오",
+  "dom": "wn",
+  "cand": "너의 가치"
+ },
+ {
+  "pid": "Q209",
+  "rdom": "steam",
+  "rname": "심장에 해로워",
+  "dom": "wn",
+  "cand": "너를 잊는 가장 나쁜 방법"
+ },
+ {
+  "pid": "Q286",
+  "rdom": "tmdb",
+  "rname": "솔로 미오",
+  "dom": "wn",
+  "cand": "너를 잊는 가장 나쁜 방법"
+ },
+ {
+  "pid": "Q385",
+  "rdom": "steam",
+  "rname": "심장에 해로워",
+  "dom": "steam",
+  "cand": "Internal Affairs: Love Parliament!"
+ },
+ {
+  "pid": "Q288",
+  "rdom": "tmdb",
+  "rname": "솔로 미오",
+  "dom": "steam",
+  "cand": "Internal Affairs: Love Parliament!"
+ },
+ {
+  "pid": "Q002",
+  "rdom": "steam",
+  "rname": "심장에 해로워",
+  "dom": "steam",
+  "cand": "우주공강"
+ },
+ {
+  "pid": "Q028",
+  "rdom": "tmdb",
+  "rname": "솔로 미오",
+  "dom": "steam",
+  "cand": "우주공강"
+ },
+ {
+  "pid": "Q321",
+  "rdom": "steam",
+  "rname": "심장에 해로워",
+  "dom": "steam",
+  "cand": "유이의 여름방학"
+ },
+ {
+  "pid": "Q327",
+  "rdom": "tmdb",
+  "rname": "솔로 미오",
+  "dom": "steam",
+  "cand": "유이의 여름방학"
+ },
+ {
+  "pid": "Q128",
+  "rdom": "steam",
+  "rname": "심장에 해로워",
+  "dom": "tmdb",
+  "cand": "백인 추장"
+ },
+ {
+  "pid": "Q192",
+  "rdom": "tmdb",
+  "rname": "솔로 미오",
+  "dom": "tmdb",
+  "cand": "백인 추장"
+ },
+ {
+  "pid": "Q257",
+  "rdom": "steam",
+  "rname": "심장에 해로워",
+  "dom": "tmdb",
+  "cand": "저스트 세이 예스"
+ },
+ {
+  "pid": "Q151",
+  "rdom": "tmdb",
+  "rname": "솔로 미오",
+  "dom": "tmdb",
+  "cand": "저스트 세이 예스"
+ },
+ {
+  "pid": "Q390",
+  "rdom": "steam",
+  "rname": "심장에 해로워",
+  "dom": "tmdb",
+  "cand": "로드 투 로마"
+ },
+ {
+  "pid": "Q189",
+  "rdom": "tmdb",
+  "rname": "솔로 미오",
+  "dom": "tmdb",
+  "cand": "로드 투 로마"
+ },
+ {
+  "pid": "Q061",
+  "rdom": "wn",
+  "rname": "너에게 내딛는 마지막 발걸음",
+  "dom": "wn",
+  "cand": "단디 로맨스"
+ },
+ {
+  "pid": "Q277",
+  "rdom": "steam",
+  "rname": "심장에 해로워",
+  "dom": "wn",
+  "cand": "단디 로맨스"
+ },
+ {
+  "pid": "Q037",
+  "rdom": "tmdb",
+  "rname": "솔로 미오",
+  "dom": "wn",
+  "cand": "단디 로맨스"
+ },
+ {
+  "pid": "Q070",
+  "rdom": "wn",
+  "rname": "너에게 내딛는 마지막 발걸음",
+  "dom": "wn",
+  "cand": "해피엔딩에 로맨스가 필요할까"
+ },
+ {
+  "pid": "Q320",
+  "rdom": "steam",
+  "rname": "심장에 해로워",
+  "dom": "wn",
+  "cand": "해피엔딩에 로맨스가 필요할까"
+ },
+ {
+  "pid": "Q102",
+  "rdom": "tmdb",
+  "rname": "솔로 미오",
+  "dom": "wn",
+  "cand": "해피엔딩에 로맨스가 필요할까"
+ },
+ {
+  "pid": "Q326",
+  "rdom": "steam",
+  "rname": "심장에 해로워",
+  "dom": "wn",
+  "cand": "달콤하고도 위험한 고백"
+ },
+ {
+  "pid": "Q420",
+  "rdom": "tmdb",
+  "rname": "솔로 미오",
+  "dom": "wn",
+  "cand": "달콤하고도 위험한 고백"
+ },
+ {
+  "pid": "Q148",
+  "rdom": "wn",
+  "rname": "너에게 내딛는 마지막 발걸음",
+  "dom": "steam",
+  "cand": "아무나 나랑 결혼해줘! : 해변편"
+ },
+ {
+  "pid": "Q221",
+  "rdom": "steam",
+  "rname": "심장에 해로워",
+  "dom": "steam",
+  "cand": "아무나 나랑 결혼해줘! : 해변편"
+ },
+ {
+  "pid": "Q106",
+  "rdom": "tmdb",
+  "rname": "솔로 미오",
+  "dom": "steam",
+  "cand": "아무나 나랑 결혼해줘! : 해변편"
+ },
+ {
+  "pid": "Q202",
+  "rdom": "steam",
+  "rname": "심장에 해로워",
+  "dom": "steam",
+  "cand": "우리 사이의 고요한 공간"
+ },
+ {
+  "pid": "Q384",
+  "rdom": "tmdb",
+  "rname": "솔로 미오",
+  "dom": "steam",
+  "cand": "우리 사이의 고요한 공간"
+ },
+ {
+  "pid": "Q300",
+  "rdom": "wn",
+  "rname": "너에게 내딛는 마지막 발걸음",
+  "dom": "steam",
+  "cand": "秘密のFakeRing"
+ },
+ {
+  "pid": "Q313",
+  "rdom": "steam",
+  "rname": "심장에 해로워",
+  "dom": "steam",
+  "cand": "秘密のFakeRing"
+ },
+ {
+  "pid": "Q397",
+  "rdom": "tmdb",
+  "rname": "솔로 미오",
+  "dom": "steam",
+  "cand": "秘密のFakeRing"
+ },
+ {
+  "pid": "Q421",
+  "rdom": "wn",
+  "rname": "너에게 내딛는 마지막 발걸음",
+  "dom": "tmdb",
+  "cand": "콜레라 시대의 사랑"
+ },
+ {
+  "pid": "Q134",
+  "rdom": "steam",
+  "rname": "심장에 해로워",
+  "dom": "tmdb",
+  "cand": "콜레라 시대의 사랑"
+ },
+ {
+  "pid": "Q110",
+  "rdom": "tmdb",
+  "rname": "솔로 미오",
+  "dom": "tmdb",
+  "cand": "콜레라 시대의 사랑"
+ },
+ {
+  "pid": "Q158",
+  "rdom": "wn",
+  "rname": "너에게 내딛는 마지막 발걸음",
+  "dom": "tmdb",
+  "cand": "내가 사랑했던 모든 남자들에게"
+ },
+ {
+  "pid": "Q398",
+  "rdom": "steam",
+  "rname": "심장에 해로워",
+  "dom": "tmdb",
+  "cand": "내가 사랑했던 모든 남자들에게"
+ },
+ {
+  "pid": "Q235",
+  "rdom": "tmdb",
+  "rname": "솔로 미오",
+  "dom": "tmdb",
+  "cand": "내가 사랑했던 모든 남자들에게"
+ },
+ {
+  "pid": "Q255",
+  "rdom": "wn",
+  "rname": "너에게 내딛는 마지막 발걸음",
+  "dom": "tmdb",
+  "cand": "스프링 피버"
+ },
+ {
+  "pid": "Q031",
+  "rdom": "steam",
+  "rname": "심장에 해로워",
+  "dom": "tmdb",
+  "cand": "스프링 피버"
+ },
+ {
+  "pid": "Q194",
+  "rdom": "tmdb",
+  "rname": "솔로 미오",
+  "dom": "tmdb",
+  "cand": "스프링 피버"
+ }
+]

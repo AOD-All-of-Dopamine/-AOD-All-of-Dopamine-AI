@@ -1,0 +1,322 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>추천 시험대</title>
+<style>
+:root{
+  --bg:#faf9f7; --panel:#fff; --line:#e3e0da; --ink:#1c1a17; --dim:#6f6a62;
+  --accent:#1f6f5c; --accent-soft:#e6f0ec; --warn:#b4531f;
+  --g3:#1f6f5c; --g2:#4f8f57; --g1:#a8791f; --g0:#a33b2a;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){
+  --bg:#16181a; --panel:#1f2225; --line:#33383d; --ink:#e8e6e2; --dim:#9a958d;
+  --accent:#4fb99a; --accent-soft:#1d3a33; --warn:#e08b52;
+  --g3:#4fb99a; --g2:#79bd80; --g1:#d3a94a; --g0:#e0705c;
+}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:15px/1.55 ui-sans-serif,-apple-system,"Pretendard","Apple SD Gothic Neo",system-ui,sans-serif}
+.wrap{max-width:1080px;margin:0 auto;padding:28px 20px 80px}
+h1{font-size:22px;margin:0 0 4px;letter-spacing:-.01em}
+.sub{color:var(--dim);font-size:13px;margin:0 0 22px}
+.tabs{display:flex;gap:6px;margin-bottom:20px;flex-wrap:wrap}
+.tab{padding:8px 16px;border:1px solid var(--line);background:var(--panel);color:var(--ink);
+  border-radius:999px;cursor:pointer;font-size:14px;font-family:inherit}
+.tab[aria-selected=true]{background:var(--accent);border-color:var(--accent);color:var(--bg);font-weight:600}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+@media (max-width:820px){.grid{grid-template-columns:1fr}}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px}
+.card h2{font-size:13px;text-transform:uppercase;letter-spacing:.08em;color:var(--dim);margin:0 0 12px;font-weight:600}
+input,select,button{font-family:inherit;font-size:14px}
+.row{display:flex;gap:8px}
+input[type=search]{flex:1;padding:9px 12px;border:1px solid var(--line);border-radius:8px;
+  background:var(--bg);color:var(--ink)}
+select{padding:9px 10px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink)}
+.btn{padding:9px 16px;border:1px solid var(--accent);background:var(--accent);color:var(--bg);
+  border-radius:8px;cursor:pointer;font-weight:600}
+.btn[disabled]{opacity:.45;cursor:not-allowed}
+.btn.ghost{background:transparent;color:var(--accent)}
+ul{list-style:none;margin:12px 0 0;padding:0}
+.hit{display:flex;justify-content:space-between;gap:10px;align-items:flex-start;
+  padding:8px 0;border-bottom:1px solid var(--line);cursor:pointer}
+.hit:last-child{border-bottom:0}
+.hit:hover .nm{color:var(--accent)}
+.nm{font-weight:600}
+.mt{font-size:12.5px;color:var(--dim);margin-top:2px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px;min-height:30px}
+.chip{display:inline-flex;align-items:center;gap:7px;background:var(--accent-soft);
+  border:1px solid var(--accent);border-radius:999px;padding:5px 8px 5px 12px;font-size:13px}
+.chip button{border:0;background:transparent;color:var(--dim);cursor:pointer;font-size:15px;padding:0 3px;line-height:1}
+.empty{color:var(--dim);font-size:13px;padding:6px 0}
+.rec{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--line)}
+.rec:last-child{border-bottom:0}
+.rk{width:26px;flex:0 0 26px;color:var(--dim);font-variant-numeric:tabular-nums;font-size:13px;padding-top:2px}
+.rec .body{flex:1;min-width:0}
+.st{font-size:12.5px;color:var(--dim);margin-top:3px;font-variant-numeric:tabular-nums}
+.grades{display:grid;grid-template-columns:52px 1fr;gap:6px 10px;margin-top:10px;align-items:center}
+.grades .ql{font-size:11.5px;color:var(--dim);letter-spacing:.02em}
+.grades .qr{display:flex;gap:5px;flex-wrap:wrap;align-items:center}
+.grades .qr input{flex:1;min-width:140px;border:1px solid var(--line);background:transparent;color:inherit;border-radius:6px;padding:4px 8px;font-size:12.5px}
+.gb.k{color:var(--dim)} .gb.w{color:var(--dim)}
+.gb.k[aria-pressed=true],.gb.w[aria-pressed=true]{color:var(--accent)}
+.rater{display:flex;gap:8px;align-items:center;margin-top:8px;font-size:12.5px;color:var(--dim)}
+.rater input{border:1px solid var(--line);background:transparent;color:inherit;border-radius:6px;padding:4px 8px;font-size:12.5px;width:160px}
+.gb{border:1px solid var(--line);background:transparent;border-radius:6px;padding:4px 10px;
+  cursor:pointer;font-size:12.5px;color:var(--dim)}
+.gb:hover{border-color:currentColor}
+.gb[data-g="3"]{color:var(--g3)} .gb[data-g="2"]{color:var(--g2)}
+.gb[data-g="1"]{color:var(--g1)} .gb[data-g="0"]{color:var(--g0)}
+.gb[aria-pressed=true]{background:currentColor;border-color:currentColor}
+.gb[aria-pressed=true] span{color:var(--panel)}
+a{color:var(--accent)}
+.status{display:flex;gap:14px;flex-wrap:wrap;font-size:12.5px;color:var(--dim);margin:-14px 0 18px}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--dim);margin-right:6px;vertical-align:1px}
+.dot.up{background:var(--g2)} .dot.down{background:var(--g0)}
+.note{margin-top:22px;font-size:12.5px;color:var(--dim);border-top:1px solid var(--line);padding-top:14px}
+.bar{position:sticky;bottom:0;background:var(--panel);border-top:1px solid var(--line);
+  margin:0 -20px -80px;padding:10px 20px;font-size:13px;color:var(--dim)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>추천 시험대</h1>
+  <p class="sub">좋아하는 걸 직접 골라 넣고 뭐가 나오는지 보세요. <b>평가에 쓴 것과 똑같은 경로</b>로 돕니다.</p>
+
+  <div class="status" id="status"><span>백엔드 확인 중…</span></div>
+  <div class="tabs" role="tablist" id="tabs"></div>
+
+  <div class="grid">
+    <div class="card">
+      <h2>1 · 좋아하는 것 찾기</h2>
+      <div class="row">
+        <input type="search" id="q" placeholder="제목 일부를 입력하세요" autocomplete="off">
+        <button class="btn ghost" id="go">검색</button>
+      </div>
+      <ul id="hits"></ul>
+    </div>
+
+    <div class="card">
+      <h2>2 · 내 시드</h2>
+      <div class="chips" id="chips"><span class="empty">아직 없습니다. 왼쪽에서 골라 담으세요.</span></div>
+      <div class="row" style="margin-top:14px">
+        <select id="k"><option value="10">top 10</option><option value="20" selected>top 20</option><option value="50">top 50</option></select>
+        <button class="btn" id="rec" disabled>추천 받기</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" id="xcard" style="display:none">
+    <h2>통합 · 프로필 고르기</h2>
+    <p class="sub" style="margin:0 0 10px">세 플랫폼의 <b>기존 프로필을 조합</b>한 30개입니다. 각 플랫폼 랭커는 확정 설정 그대로 돌고,
+      통합 층은 <b>순위만</b> 받아 섞습니다. 시드가 없는 플랫폼은 나오지 않습니다.</p>
+    <div class="row">
+      <select id="xpid" style="flex:1"></select>
+      <select id="xrule"><option value="M6" selected>M6 = M3 + 시드 1개 플랫폼 쿼터 절반 (확정 X-10)</option><option value="M3">M3 라운드로빈 + 웹소설 20화↑</option><option value="M0">M0 라운드로빈</option><option value="M1">M1 시드 비례</option><option value="M2">M2 비례+저응집 절반</option></select>
+      <select id="xk"><option value="10" selected>top 10</option><option value="15">top 15</option></select>
+      <button class="btn" id="xrec">통합 추천</button>
+    </div>
+    <div class="chips" id="xseeds"></div>
+  </div>
+
+  <div class="card" style="margin-top:20px">
+    <h2>3 · 결과 <span id="scope" style="text-transform:none;letter-spacing:0"></span></h2>
+    <div id="out"><p class="empty">시드를 담고 <b>추천 받기</b>를 누르세요.</p></div>
+    <p class="note">항목마다 세 가지를 묻습니다. <b>알고 있나</b>(모름 / 알지만 안 봄 / 이미 봄) ·
+      <b>볼 의향</b>(3 꼭 본다 · 2 볼 만하다 · 1 글쎄 · 0 안 본다) · <b>이유</b>(선택, 메모 가능).
+      "볼 의향"이 핵심 지표이고 <b>2 이상 = 적합</b>으로 셉니다 — LLM 채점과 같은 척도라 바로 비교됩니다.
+      "이미 봄"이 많으면 정확하지만 쓸모없는 추천이고, 이유는 실패 유형을 가르는 데 씁니다.
+      답을 바꾸면 그 항목이 다시 저장됩니다(마지막 답이 유효). 여기 쌓이는 답은 LLM 채점 은행과 <b>섞지 않습니다</b>.</p>
+    <div class="rater">채점자 <input id="rater" placeholder="이름 또는 별명" autocomplete="off"> <span id="raterhint">— 먼저 적어 주세요. 채점자별로 따로 봅니다.</span></div>
+  </div>
+
+  <div class="bar" id="bar">이번 세션에서 답한 항목 <b id="cnt">0</b>개</div>
+</div>
+
+<script>
+const PLATFORMS=[["steam","Steam"],["tmdb","TMDB"],["webnovel","웹소설"],["cross","통합 (크로스 도메인)"]];
+let plat="steam", seeds=[], graded=0, lastSeeds=[];
+
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+function drawTabs(){
+  $("#tabs").innerHTML=PLATFORMS.map(([id,label])=>
+    `<button class="tab" role="tab" data-p="${id}" aria-selected="${id===plat}">${label}</button>`).join("");
+  $("#tabs").querySelectorAll(".tab").forEach(b=>b.onclick=()=>{
+    plat=b.dataset.p; seeds=[]; $("#hits").innerHTML=""; $("#q").value="";
+    $("#out").innerHTML='<p class="empty">시드를 담고 <b>추천 받기</b>를 누르세요.</p>';
+    $("#scope").textContent=""; drawTabs(); drawChips();
+    document.querySelector(".grid").style.display = plat==="cross" ? "none" : "";
+    document.getElementById("xcard").style.display = plat==="cross" ? "" : "none";
+  });
+}
+
+function drawChips(){
+  const c=$("#chips");
+  c.innerHTML = seeds.length
+    ? seeds.map((s,i)=>`<span class="chip">${esc(s.name)}<button data-i="${i}" title="빼기">×</button></span>`).join("")
+    : '<span class="empty">아직 없습니다. 왼쪽에서 골라 담으세요.</span>';
+  c.querySelectorAll("button").forEach(b=>b.onclick=()=>{seeds.splice(+b.dataset.i,1);drawChips();});
+  $("#rec").disabled = seeds.length===0;
+}
+
+async function postGrade(rec){
+  // 예전에는 응답을 안 보고 카운터를 올렸다 — 저장이 실패해도 화면이 성공처럼 보였다 (D-74).
+  try{
+    const r=await fetch("/grade",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(rec)});
+    const j=await r.json().catch(()=>({}));
+    if(!r.ok||!j.ok) throw new Error(j.error||`HTTP ${r.status}`);
+    $("#bar").innerHTML=`이번 세션에서 매긴 등급 <b id="cnt">${graded+1}</b>개 · 서버 파일 총 <b>${j.total}</b>줄 ✓`;
+    return true;
+  }catch(e){
+    $("#bar").innerHTML=`<span style="color:var(--g0)">⚠ 등급이 저장되지 않았습니다 — ${esc(e.message)}. 게이트웨이(:8000)가 살아 있는지 확인하세요.</span>`;
+    return false;
+  }
+}
+
+// ---- 사람 채점: 항목당 세 질문 ---------------------------------------------
+// Q1 known  : unknown / known_unseen / seen        (발견성)
+// Q2 grade  : 3 꼭 본다 · 2 볼 만 · 1 글쎄 · 0 안 본다  (핵심 지표, 적합 = 2 이상)
+// Q3 why    : 선택 하나 + note (실패 유형)
+const KNOWN=[["unknown","모름"],["known_unseen","알지만 안 봄"],["seen","이미 봄·해봄"]];
+const WHY=[["taste","취향에 맞음"],["genre_only","장르만 비슷"],["obvious","너무 뻔함"],["off_genre","관심 없는 장르"],["redundant","비슷한 게 이미 많음"],["low_quality","질이 낮아 보임"],["other","기타"]];
+function gradeBox(i){
+  return `<div class="grades" data-i="${i}">
+    <span class="ql">알고 있나</span><span class="qr">${KNOWN.map(([v,l])=>`<button class="gb k" data-q="known" data-v="${v}" aria-pressed="false"><span>${l}</span></button>`).join("")}</span>
+    <span class="ql">볼 의향</span><span class="qr">${[3,2,1,0].map(g=>`<button class="gb" data-q="grade" data-g="${g}" data-v="${g}" aria-pressed="false"><span>${g}</span></button>`).join("")}<span style="font-size:11.5px;color:var(--dim)">3 꼭 · 2 볼 만 · 1 글쎄 · 0 안 봄</span></span>
+    <span class="ql">이유</span><span class="qr">${WHY.map(([v,l])=>`<button class="gb w" data-q="why" data-v="${v}" aria-pressed="false"><span>${l}</span></button>`).join("")}<input data-q="note" placeholder="메모 (선택)" maxlength="200"></span>
+  </div>`;
+}
+function raterName(){ return ($("#rater").value||"").trim(); }
+function wireGrades(rows, mkRec){
+  $("#out").querySelectorAll(".grades").forEach(box=>{
+    const item=rows[+box.dataset.i], i=+box.dataset.i;
+    const ans={known:null,grade:null,why:null,note:""}; let counted=false;
+    const save=async()=>{
+      if(ans.grade===null) return;                 // 볼 의향이 있어야 한 줄이 된다
+      if(!raterName()){ $("#raterhint").innerHTML='<b style="color:var(--g0)">채점자 이름을 먼저 적어 주세요.</b>'; $("#rater").focus(); return; }
+      const ok=await postGrade(mkRec(item,i,{v:2,rater:raterName(),...ans}));
+      if(ok&&!counted){ counted=true; $("#cnt").textContent=++graded; }
+    };
+    box.querySelectorAll(".gb").forEach(b=>b.onclick=()=>{
+      const q=b.dataset.q, on=b.getAttribute("aria-pressed")==="true";
+      box.querySelectorAll(`.gb[data-q="${q}"]`).forEach(x=>x.setAttribute("aria-pressed","false"));
+      if(on&&q!=="grade"){ ans[q]=null; } else { b.setAttribute("aria-pressed","true"); ans[q]= q==="grade"? +b.dataset.v : b.dataset.v; }
+      save();
+    });
+    const note=box.querySelector('input[data-q="note"]');
+    note.addEventListener("change",()=>{ ans.note=note.value.trim(); save(); });
+  });
+}
+async function api(path){
+  const r=await fetch(`/api/${plat}${path}`);
+  const j=await r.json();
+  if(j&&j.error) throw new Error(j.error);
+  return j;
+}
+
+async function search(){
+  const q=$("#q").value.trim(); if(!q) return;
+  $("#hits").innerHTML='<li class="empty">찾는 중…</li>';
+  try{
+    const rows=await api(`/search?q=${encodeURIComponent(q)}&n=20`);
+    $("#hits").innerHTML = rows.length ? rows.map((r,i)=>
+      `<li class="hit" data-i="${i}"><div><div class="nm">${esc(r.name)}</div>
+       <div class="mt">${esc(r.meta)}</div></div><div class="mt">${esc(r.stat)}</div></li>`).join("")
+      : '<li class="empty">결과가 없습니다.</li>';
+    $("#hits").querySelectorAll(".hit").forEach(el=>el.onclick=()=>{
+      const r=rows[+el.dataset.i];
+      if(!seeds.some(s=>String(s.id)===String(r.id))) seeds.push(r);
+      drawChips();
+    });
+  }catch(e){ $("#hits").innerHTML=`<li class="empty">오류: ${esc(e.message)}</li>`; }
+}
+
+async function recommend(){
+  const k=$("#k").value;
+  $("#out").innerHTML='<p class="empty">추천을 계산하는 중…</p>';
+  $("#rec").disabled=true;
+  lastSeeds=seeds.map(s=>({id:s.id,name:s.name}));
+  try{
+    const qs=seeds.map(s=>`seed=${encodeURIComponent(s.id)}`).join("&");
+    const rows=await api(`/recommend?${qs}&k=${k}`);
+    $("#scope").textContent=`— 시드 ${seeds.length}개 · ${rows.length}편`;
+    $("#out").innerHTML = rows.map((r,i)=>`
+      <div class="rec">
+        <div class="rk">${i+1}</div>
+        <div class="body">
+          <div class="nm">${r.link?`<a href="${esc(r.link)}" target="_blank" rel="noopener">${esc(r.name)}</a>`:esc(r.name)}</div>
+          <div class="mt">${esc(r.meta)}</div>
+          <div class="st">${esc(r.stat)}</div>
+          ${gradeBox(i)}
+        </div>
+      </div>`).join("");
+    wireGrades(rows,(item,i,a)=>({platform:plat,seeds:lastSeeds,rank:i+1,item_id:item.id,name:item.name,...a}));
+  }catch(e){ $("#out").innerHTML=`<p class="empty">오류: ${esc(e.message)}</p>`; }
+  $("#rec").disabled=false;
+}
+
+async function loadCross(){
+  try{
+    const ps=await (await fetch("/api/cross/profiles")).json();
+    $("#xpid").innerHTML=ps.map(p=>{
+      const parts=[p.steam&&`S:${p.steam}`,p.tmdb&&`T:${p.tmdb}`,p.wn&&`W:${p.wn}`].filter(Boolean).join(" + ");
+      return `<option value="${esc(p.pid)}">${esc(p.pid)} — ${esc(parts)}</option>`;}).join("");
+  }catch(e){ $("#xpid").innerHTML=`<option>불러오기 실패: ${esc(e.message)}</option>`; }
+}
+const PL={steam:"Steam",tmdb:"TMDB",webnovel:"웹소설"};
+async function crossRecommend(){
+  const pid=$("#xpid").value, rule=$("#xrule").value, k=$("#xk").value;
+  $("#out").innerHTML='<p class="empty">세 플랫폼에서 받아 섞는 중… (첫 호출은 느립니다)</p>';
+  $("#xrec").disabled=true;
+  try{
+    const r=await fetch(`/api/cross/recommend?pid=${encodeURIComponent(pid)}&rule=${rule}&k=${k}`);
+    const j=await r.json(); if(j.error) throw new Error(j.error);
+    $("#xseeds").innerHTML=Object.entries(j.seeds).map(([p,names])=>
+      `<span class="chip"><b style="margin-right:4px">${PL[p]}</b>${esc(names.join(" / "))}</span>`).join("");
+    $("#scope").textContent=`— ${pid} · ${rule} · ${j.items.length}편`;
+    const rows=j.items;
+    $("#out").innerHTML = rows.map((it,i)=>`
+      <div class="rec">
+        <div class="rk">${i+1}</div>
+        <div class="body">
+          <div class="nm"><span style="font-size:11px;color:var(--dim);border:1px solid var(--line);border-radius:4px;padding:1px 6px;margin-right:6px">${PL[it.plat]} #${it.plat_rank}</span>${it.link?`<a href="${esc(it.link)}" target="_blank" rel="noopener">${esc(it.name)}</a>`:esc(it.name)}</div>
+          <div class="mt">${esc(it.meta)}</div>
+          <div class="st">${esc(it.stat)}</div>
+          ${gradeBox(i)}
+        </div>
+      </div>`).join("");
+    // platform:"cross" 로 구분해 쌓는다. 은행과 섞이지 않는다.
+    wireGrades(rows,(it,i,a)=>({platform:"cross",pid,rule,k:+k,rank:i+1,
+        item_plat:it.plat,item_plat_rank:it.plat_rank,item_id:it.id,name:it.name,...a}));
+  }catch(e){ $("#out").innerHTML=`<p class="empty">오류: ${esc(e.message)}</p>`; }
+  $("#xrec").disabled=false;
+}
+
+async function drawStatus(){
+  const NAMES={steam:"Steam",tmdb:"TMDB",webnovel:"웹소설"};
+  try{
+    const st=await (await fetch("/status")).json();
+    $("#status").innerHTML = Object.entries(NAMES).map(([k,label])=>{
+      const s=st[k]||{};
+      return `<span><i class="dot ${s.ok?"up":"down"}"></i>${label} ${
+        s.ok ? esc((s.n||0).toLocaleString())+"편" : "죽어 있음"}</span>`;
+    }).join("") + '<span style="margin-left:auto">문제가 있으면 터미널에서 <code>recommendation/tryout/run.sh</code></span>';
+  }catch(e){ $("#status").innerHTML='<span><i class="dot down"></i>게이트웨이에 못 닿습니다</span>'; }
+}
+
+try{ $("#rater").value=localStorage.getItem("aod_rater")||""; }catch(e){}
+$("#rater").addEventListener("change",()=>{ try{localStorage.setItem("aod_rater",$("#rater").value.trim());}catch(e){} $("#raterhint").textContent=""; });
+if($("#rater").value) $("#raterhint").textContent="";
+drawStatus(); setInterval(drawStatus, 20000);
+drawTabs(); drawChips();
+$("#go").onclick=search;
+$("#q").addEventListener("keydown",e=>{if(e.key==="Enter")search();});
+$("#rec").onclick=recommend;
+$("#xrec").onclick=crossRecommend;
+loadCross();
+</script>
+</body>
+</html>
