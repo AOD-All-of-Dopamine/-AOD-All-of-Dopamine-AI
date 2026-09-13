@@ -46,6 +46,13 @@ class Engine:
         r = self.ds["rating"].to_numpy(dtype=np.float32)
         self.rating_norm = np.where(r > 0, np.clip((r - 5.0) / 5.0, -1.0, 1.0), 0.0)
 
+        # W-4 축. **임베딩 텍스트에 작가가 없다**(제목·장르·줄거리. 작가명이 줄거리에 우연히 5.1%).
+        # TMDB V-2 에서 같은 결손을 감독 정합으로 메워 +0.056. 웹소설 작가는 1명이라
+        # 시드 개별 최대 피복률 |A∩S_i|/|S_i| 가 "시드 작가와 같은가" 이진값이 된다.
+        # `self.ds` 행 순서가 점수 배열 순서다(아래 `df["seed_similarity"] = s`).
+        self._author = self.ds["author"].fillna("").astype(str).str.strip().to_numpy()
+        self._ds_row = {int(i): k for k, i in enumerate(self.ds["item_id"])}
+
     def mmr(self, df: pd.DataFrame, k: int, lam: float) -> pd.DataFrame:
         """MMR — 관련성과 **이미 고른 것과의 중복** 을 맞바꾼다 (D-53).
 
@@ -102,11 +109,13 @@ class Engine:
                   # 서빙은 0.03/0.15 로 돌고 있었다. 갈라진 채로 두지 않는다.
                   pop_boost=None,
                   rating_boost=0.0, hub_lambda=0.0, k=10,
+                  author_w=None,
                   # `mmr_lambda` 는 **기각된 축이다** (D-53 전역 · D-54 시드묶음).
                   # 1.0 = 끔. 켜지 않는다. 재현·재검증용으로만 남긴다.
                   mmr_lambda=1.0,
                   postprocess_on=True, exclude=None) -> pd.DataFrame:
         pop_boost = PRODUCTION["pop_boost"] if pop_boost is None else pop_boost
+        author_w = PRODUCTION["author_w"] if author_w is None else author_w
         rows = [self.id_to_row[i] for i in seed_ids]
         V = self.emb[rows]
         if hub_lambda:
@@ -124,7 +133,12 @@ class Engine:
         else:
             raise ValueError(strategy)
 
-        final = s * (1 + self.pop_pct * pop_boost + self.rating_norm * rating_boost)
+        bonus = self.pop_pct * pop_boost + self.rating_norm * rating_boost
+        if author_w:
+            sa = {self._author[self._ds_row[int(i)]] for i in seed_ids if int(i) in self._ds_row} - {""}
+            if sa:   # 작가 미상 후보는 0 — 감점이 아니라 무보정
+                bonus = bonus + author_w * np.isin(self._author, list(sa)).astype(np.float32)
+        final = s * (1 + bonus)
 
         df = self.ds[["item_id", "name"]].copy()
         df["seed_similarity"] = s

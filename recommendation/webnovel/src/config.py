@@ -99,4 +99,5 @@ PRODUCTION = {
     "hub_lambda": 0.0,
     "mmr_lambda": 1.0,      # **기각된 축** (D-53 전역 · D-54 시드묶음). 1.0 = 끔
     "min_interest_count": None,   # D-62. 걸면 30% 를 버리는데 버리는 쪽이 더 낫다
+    "author_w": 0.0,        # W-4 대기. 측정 전이라 0 (TMDB V-2 감독 정합의 웹소설판)
 }
