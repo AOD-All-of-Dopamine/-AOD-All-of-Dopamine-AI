@@ -5,7 +5,12 @@ from pathlib import Path
 import yaml
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
-ARTIFACTS_DIR = PROJECT_ROOT / "artifacts" / "s1_v2"
+# **확정값과 같은 코퍼스를 가리켜야 한다.** 예전 기본값은 `s1_v2`(파일럿 19,476행)였는데
+# `PRODUCTION["tag_w"]=0.40`(D-49)이 `dataset["tags"]` 를 요구한다 — s1_v2 엔 그 열이 없다.
+# 그래서 `recommend_page()` 를 기본 설정으로 부르면 KeyError: 'tags' 로 죽었다.
+# 시험대(`tryout/backend.py`)가 AOD_ARTIFACTS 를 tags_full 로 setdefault 하고 있어서
+# 화면으로는 멀쩡해 보였고, 라이브러리를 직접 부르는 경로만 터졌다.
+ARTIFACTS_DIR = PROJECT_ROOT / "artifacts" / "tags_full"   # 173,691행 + tags
 
 DEFAULT_CONFIG = PROJECT_ROOT / "configs" / "s1_v2.yaml"
 ENV_FILE = PROJECT_ROOT / ".env"
