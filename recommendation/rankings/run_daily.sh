@@ -31,3 +31,7 @@ done
 for p in $MISSING; do
     "$PY" rankings/collect.py --only "$p" >> "$LOG" 2>&1
 done
+
+# 수집 직후 코퍼스 피복률을 잰다 — 랭킹에 있는데 우리한테 없으면 그 작품은
+# 어떤 시드로도 추천될 수 없다. 크롤 지연 경보이지 랭커 문제가 아니다.
+"$PY" rankings/coverage.py --quiet >> "$LOG" 2>&1
