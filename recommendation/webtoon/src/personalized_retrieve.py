@@ -49,7 +49,7 @@ class Engine:
         return np.sort(sim, axis=0)[-2:].mean(axis=0)      # top2_mean
 
     def recommend(self, seed_ids, k=50, exclude=None, *, strategy=None, pop_boost=None,
-                  star_boost=None, tag_w=None, hub_lambda=None, **pp):
+                  star_boost=None, tag_w=None, hub_lambda=None, creator_w=None, **pp):
         seed_ids = [int(s) for s in seed_ids if int(s) in self.row]
         if not seed_ids:
             return pd.DataFrame(columns=["item_id", "name", "rank"])
@@ -65,6 +65,7 @@ class Engine:
             pop_boost=PRODUCTION["pop_boost"] if pop_boost is None else pop_boost,
             star_boost=PRODUCTION["star_boost"] if star_boost is None else star_boost,
             tag_w=PRODUCTION["tag_w"] if tag_w is None else tag_w,
+            creator_w=PRODUCTION["creator_w"] if creator_w is None else creator_w,
         )
         ex = set(seed_ids) | set(int(x) for x in (exclude or []))
         # **후보 풀 깊이를 k 에 묶지 않는다.** 세 플랫폼은 전부 `rank_n = k × 상수` 라
@@ -72,7 +73,8 @@ class Engine:
         # 교차)가 풀 전체를 보고 재배치하기 때문이다. 실측(2026-09-04 검수): Steam 에서
         # 서빙(k=20)과 평가(k=50)의 top-20 이 15프로필 중 7개에서 갈렸다(최소 겹침 85%).
         # 여기서는 고정 하한을 둬서 k 가 결과를 바꾸지 못하게 한다.
-        ranked = r.rank(folded, exclude_ids=ex, seed_tags=seed_tags,
+        seed_creators = [r._creators[self.row[s]] for s in seed_ids] if r.creator_w else None
+        ranked = r.rank(folded, exclude_ids=ex, seed_tags=seed_tags, seed_creators=seed_creators,
                         top_n=max(POOL_FLOOR, k * 8), dominant=dominant)
         opts = {**POSTPROCESS, **pp}
         return postprocess(ranked, self.ds, top_n=k, seed_ids=seed_ids,
