@@ -1,0 +1,53 @@
+  steam    실패: URLError: <urlopen error [Errno -3] Temporary failure in name resolution>
+  tmdb     실패: URLError: <urlopen error [Errno -3] Temporary failure in name resolution>
+  webtoon  실패: URLError: <urlopen error [Errno -3] Temporary failure in name resolution>
+  webnovel 실패: URLError: <urlopen error [Errno -3] Temporary failure in name resolution>
+2026-09-05 · 소스 0개 저장 · 실패 4
+  steam    실패: URLError: <urlopen error [Errno -3] Temporary failure in name resolution>
+  tmdb     실패: URLError: <urlopen error [Errno -3] Temporary failure in name resolution>
+  webtoon  실패: URLError: <urlopen error [Errno -3] Temporary failure in name resolution>
+  webnovel 실패: URLError: <urlopen error [Errno -3] Temporary failure in name resolution>
+2026-09-06 · 소스 0개 저장 · 실패 4
+  steam    실패: URLError: <urlopen error [Errno -3] Temporary failure in name resolution>
+  tmdb     실패: URLError: <urlopen error [Errno -3] Temporary failure in name resolution>
+  webtoon  실패: URLError: <urlopen error [Errno -3] Temporary failure in name resolution>
+  webnovel 실패: URLError: <urlopen error [Errno -3] Temporary failure in name resolution>
+2026-09-07 · 소스 0개 저장 · 실패 4
+  steam    실패: URLError: <urlopen error [Errno -3] Temporary failure in name resolution>
+  tmdb     실패: URLError: <urlopen error [Errno -3] Temporary failure in name resolution>
+  webtoon  실패: URLError: <urlopen error [Errno -3] Temporary failure in name resolution>
+  webnovel 실패: URLError: <urlopen error [Errno -3] Temporary failure in name resolution>
+2026-09-08 · 소스 0개 저장 · 실패 4
+  steam    실패: URLError: <urlopen error [Errno -3] Temporary failure in name resolution>
+  tmdb     실패: URLError: <urlopen error [Errno -3] Temporary failure in name resolution>
+  webtoon  실패: URLError: <urlopen error [Errno -3] Temporary failure in name resolution>
+  webnovel 실패: URLError: <urlopen error [Errno -3] Temporary failure in name resolution>
+2026-09-09 · 소스 0개 저장 · 실패 4
+  steam    실패: URLError: <urlopen error [Errno -3] Temporary failure in name resolution>
+  tmdb     실패: URLError: <urlopen error [Errno -3] Temporary failure in name resolution>
+  webtoon  실패: URLError: <urlopen error [Errno -3] Temporary failure in name resolution>
+  webnovel 실패: URLError: <urlopen error [Errno -3] Temporary failure in name resolution>
+2026-09-10 · 소스 0개 저장 · 실패 4
+  steam    실패: URLError: <urlopen error [Errno -3] Temporary failure in name resolution>
+  tmdb     실패: URLError: <urlopen error [Errno -3] Temporary failure in name resolution>
+  webtoon  실패: URLError: <urlopen error [Errno -3] Temporary failure in name resolution>
+  webnovel 실패: URLError: <urlopen error [Errno -3] Temporary failure in name resolution>
+2026-09-11 · 소스 0개 저장 · 실패 4
+  steam    실패: URLError: <urlopen error [Errno -3] Temporary failure in name resolution>
+  tmdb     실패: URLError: <urlopen error [Errno -3] Temporary failure in name resolution>
+  webtoon  실패: URLError: <urlopen error [Errno -3] Temporary failure in name resolution>
+  webnovel 실패: URLError: <urlopen error [Errno -3] Temporary failure in name resolution>
+2026-09-12 · 소스 0개 저장 · 실패 4
+  steam    most_played           100개
+  steam    top_sellers            10개
+  tmdb     trending_movie_day    100개
+  tmdb     trending_tv_day       100개
+  tmdb     popular_movie         100개
+  tmdb     popular_tv            100개
+  webtoon  weekday_mon           115개
+  webtoon  weekday_tue           115개
+  webtoon  weekday_wed           108개
+  webtoon  weekday_thu           108개
+  webtoon  weekday_fri           114개
+  webtoon  weekday_sat           125개
+  webtoon  weekday_sun           107개
