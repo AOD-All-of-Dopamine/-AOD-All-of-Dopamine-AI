@@ -28,7 +28,7 @@ class CandidateRetriever:
     hub_lambda: float = 0.0
 
     def __init__(self, artifacts=None, min_overview_len: int = 0,
-                 require_korean: bool = True):
+                 require_korean: bool = False):
         d = artifact_dir(artifacts)
         self.artifacts = d
         self.embeddings = np.load(d / "corpus_embeddings.npy", mmap_mode="r")
@@ -51,8 +51,12 @@ class CandidateRetriever:
         # 즉 이 필터는 사실상 **"유명작만 서빙"** 으로 작동한다. 롱테일·다큐·저투표 취향만
         # 대가를 치른다. Steam 의 `require_known_reviews` 와 같은 모양이다.
         #
-        # 그래서 숨은 하드코딩이 아니라 **이름 붙인 정책**으로 둔다. 기본값은 바꾸지 않는다
-        # (원어 줄거리를 보여줄지는 제품 결정이고, 바꾸면 사용자가 보는 화면이 달라진다).
+        # 그래서 숨은 하드코딩이 아니라 **이름 붙인 정책**으로 뒀고,
+        # **2026-09-12 에 제품 결정으로 기본값을 False 로 뒤집었다** — 원어 줄거리도 서빙한다.
+        # 대가: 화면에 영어 줄거리가 섞인다. 얻는 것: 롱테일·다큐·저투표 취향의 손실이 사라진다.
+        # **주의 — 이 변경으로 후보 풀이 26,051건 늘었다.** TMDB 의 확정값(D-19 hub_lambda 0.35 ·
+        # D-31 rating_boost 0.15 · D-42 media_w · D-44 genre_w)은 전부 마스크가 켜진 풀에서 잰 것이라
+        # 재판정 전까지 **미확인**이다. 웹소설 wn_v6 교체(§85)와 같은 상황이다.
         ko = (self.dataset["overview"].fillna("").str.contains(r"[가-힣]").to_numpy()
               if require_korean else np.ones(len(self.dataset), dtype=bool))
         self.require_korean = require_korean

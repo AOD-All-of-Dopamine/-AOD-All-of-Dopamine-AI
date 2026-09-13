@@ -16,7 +16,12 @@ from src.config import PRODUCTION, PRODUCTION_POSTPROCESS
 def build_components(artifacts=None, hub_lambda: float | None = None,
                      vote_boost: float = 0.0, rating_boost: float = 0.0,
                      align_w: float = 0.0, min_overview_len: int = 0,
-                     require_korean: bool = True,
+                     # **제품 결정 (2026-09-12)**: 원어 줄거리도 서빙한다.
+                     # 켜 두면 한국어 번역이 없는 26,051건이 통째로 빠지는데, 그 비용이
+                     # 취향마다 다르다 — lowvote_romance 60% · longtail_family 42% ·
+                     # coh_marvel 0%. 사실상 "유명작만 서빙" 필터였다.
+                     # 빠진 작품들은 줄거리가 **있고** 임베딩도 돼 있다. 없는 건 한글 표시뿐이다.
+                     require_korean: bool = False,
                      media_w: float = 0.0, genre_w: float = 0.0, vote_w: float = 0.0,
                      kw_w: float = 0.0):
     ret = CandidateRetriever(artifacts, min_overview_len=min_overview_len,
