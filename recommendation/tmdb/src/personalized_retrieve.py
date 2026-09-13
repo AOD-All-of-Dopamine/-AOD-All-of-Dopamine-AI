@@ -23,14 +23,15 @@ def build_components(artifacts=None, hub_lambda: float | None = None,
                      # 빠진 작품들은 줄거리가 **있고** 임베딩도 돼 있다. 없는 건 한글 표시뿐이다.
                      require_korean: bool = False,
                      media_w: float = 0.0, genre_w: float = 0.0, vote_w: float = 0.0,
-                     kw_w: float = 0.0):
+                     kw_w: float = 0.0, director_w: float = 0.0):
     ret = CandidateRetriever(artifacts, min_overview_len=min_overview_len,
                              require_korean=require_korean)
     if hub_lambda is not None: ret.hub_lambda = hub_lambda
     return (SeedLoader(artifacts), ret, ScoreAggregator(),
             PersonalizedRanker(artifacts, vote_boost=vote_boost,
                                rating_boost=rating_boost, align_w=align_w,
-                               media_w=media_w, genre_w=genre_w, vote_w=vote_w, kw_w=kw_w))
+                               media_w=media_w, genre_w=genre_w, vote_w=vote_w, kw_w=kw_w,
+                               director_w=director_w))
 
 
 POOL_FLOOR = 400   # = 평가 경로의 풀 깊이(k=50 × 8)
@@ -64,7 +65,12 @@ def recommend(seed_rows, components=None, strategy: str = "top2_mean", top_n: in
         for rr in seed_rows:
             kk = ranker.dataset.iloc[int(rr)]["keywords"]
             seed_kws.append(frozenset(kk.tolist() if hasattr(kk, "tolist") else (kk or [])))
+    seed_dirs = None
+    if ranker.director_w:
+        # 감독이 없는 시드(드라마 created_by 결측 등)는 빈 집합 → 그 시드 기여는 0 이다.
+        seed_dirs = [ranker._dirs[int(rr)] for rr in seed_rows]
     ranked = ranker.rank(scored, exclude_rows=excl, top_n=rank_n, seed_kws=seed_kws,
+                         seed_dirs=seed_dirs,
                          servable_mask=retriever.servable, seed_pct=seed_pct,
                          seed_medias=seed_medias, seed_genres=seed_genres)
     if postprocess_on:

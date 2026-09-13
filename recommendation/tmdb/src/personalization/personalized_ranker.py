@@ -45,7 +45,8 @@ from src.config import artifact_dir
 class PersonalizedRanker:
     def __init__(self, artifacts=None, rating_boost: float = 0.0, align_w: float = 0.0,
                  vote_boost: float = 0.0, media_w: float = 0.0,
-                 genre_w: float = 0.0, vote_w: float = 0.0, kw_w: float = 0.0):
+                 genre_w: float = 0.0, vote_w: float = 0.0, kw_w: float = 0.0,
+                 director_w: float = 0.0):
         d = artifact_dir(artifacts)
         idx = pd.read_parquet(d / "corpus_index.parquet").sort_values("embedding_row")
         ds = pd.read_parquet(d / "dataset.parquet").set_index("item_id")
@@ -72,6 +73,32 @@ class PersonalizedRanker:
         self.kw_w = kw_w
         self._kw = [frozenset(k.tolist() if hasattr(k, "tolist") else (k or []))
                     for k in self.dataset["keywords"]] if kw_w else None
+        # V-2. 감독 정합. **임베딩에는 감독이 없다** — 줄거리·키워드·장르만 들어간다.
+        # 그래서 "놀란을 좋아한다"는 취향을 시스템이 표현할 방법이 지금은 없다
+        # (실측: 인터스텔라·인셉션·다크 나이트 시드에 마블이 몰려 들어온다. 다크 나이트가
+        #  시스템에게는 '액션·범죄·스릴러 슈퍼히어로물'이라 어벤져스가 가까운 이웃이다).
+        #
+        # 텍스트에 넣지 않고 랭킹 항으로 둔 이유:
+        #   · 재임베딩 10시간(실측 1.71건/s × 59,780)이 드는데 효과를 따로 못 잰다
+        #   · 이름을 토큰으로 섞으면 가중치도 못 정하고 끄지도 못한다
+        #   · `text_builder` 가 제목을 뺀 이유와 같다 — 이름이 프랜차이즈를 뭉친다
+        # 항으로 두면 정확 집합 일치라 노이즈가 없고, director_w 0 으로 되돌릴 수 있다.
+        #
+        # 식은 genre_w 와 동일하다(시드 **개별** 최대 피복률). 감독은 보통 1명이라
+        # 사실상 "이 시드와 같은 감독인가"의 이진 지시자가 된다.
+        self.director_w = director_w
+        self._dirs = None
+        if director_w:
+            f = d / "directors.parquet"
+            if not f.exists():
+                raise FileNotFoundError(
+                    f"{f} 가 없다 — scripts/fetch_directors.py 로 수집한 뒤 "
+                    "scripts/build_directors.py 로 만든다")
+            dd = pd.read_parquet(f).set_index("item_id")["directors"]
+            dd = dd.reindex(self.dataset["item_id"])
+            self._dirs = [frozenset(x.tolist() if hasattr(x, "tolist") else (x or []))
+                          if x is not None and hasattr(x, "__len__") else frozenset()
+                          for x in dd]
         vc = self.dataset["vote_count"].astype(float)
         self.vote_pct = vc.rank(pct=True).to_numpy()          # 결측 없음 → 눕힐 것이 없다
         self.vote_q = np.clip(np.log10(1.0 + vc.to_numpy()) / 5.0, 0.0, 1.0)   # D-60
@@ -81,7 +108,7 @@ class PersonalizedRanker:
     def rank(self, scored: pd.DataFrame, exclude_rows=None, top_n: int = 300,
              servable_mask: np.ndarray | None = None,
              seed_pct: float | None = None, seed_medias=None,
-             seed_genres=None, seed_kws=None) -> pd.DataFrame:
+             seed_genres=None, seed_kws=None, seed_dirs=None) -> pd.DataFrame:
         """`seed_pct` — 시드 인기 백분위 중앙. 없으면 정합 항을 끈다.
 
         `seed_medias` — 시드의 media 집합 (D-42). `media_w > 0` 이고 후보 media 가
@@ -114,6 +141,12 @@ class PersonalizedRanker:
                                for sk in seed_kws)
                            for i in r], dtype=np.float32)
             base = base * (1.0 + self.kw_w * kf)
+        if self.director_w and seed_dirs:
+            # 시드 개별 최대 |A∩S|/|S|. 감독 정보가 없는 후보는 0 이라 감점이 아니라 무보정이다.
+            dfm = np.array([max((len(self._dirs[i] & sd) / len(sd) if sd else 0.0)
+                                for sd in seed_dirs)
+                            for i in r], dtype=np.float32)
+            base = base * (1.0 + self.director_w * dfm)
         if self.media_w and seed_medias:
             mis = ~np.isin(self._media[r], list(seed_medias))
             base = base * (1.0 - self.media_w * mis)
