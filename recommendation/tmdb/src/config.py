@@ -17,7 +17,7 @@ PRODUCTION = {
     "hub_lambda": 0.35,     # D-19
     "rating_boost": 0.15,   # D-31
     "media_w": 0.20,        # D-42. 시드 매체 집합 밖이면 (1−media_w)
-    "genre_w": 0.40,        # D-44. 시드 개별 최대 피복률 |A∩S|/|S|
+    "genre_w": 0.40,        # D-44 → **V-4 재판정 +0.079 (B') 유지** — 붕괴 안전장치(longtail_history −0.30) 로 A→B'. 시드 개별 최대 피복률 |A∩S|/|S|
     # align_w 는 **확정값이 아니다.** D-42 이후 변형 문자열에 0.3 이 적혀 있었으나
     # variant_recs 가 넘기지 않아 실제로는 한 번도 켜진 적이 없다 (D-43 verdict 부수 결함).
     "align_w": 0.0,
