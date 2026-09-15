@@ -132,7 +132,9 @@ class Webnovel:
 
     def __init__(self):
         sys.path.insert(0, str(WN))
-        import os; os.environ.setdefault("AOD_ARTIFACTS", "artifacts/wn_v4")
+        # wn_v6(29,494편) — 웹소설 확정값(W-1~W-4)을 전부 이 코퍼스에서 쟀다.
+        # 2026-09-15 전까지 wn_v4(파일럿 7,062편)로 떠서 시험 목록 ≠ 평가 목록이었다.
+        import os; os.environ.setdefault("AOD_ARTIFACTS", "artifacts/wn_v6")
         os.chdir(WN)
         from src.wn_eval import Engine
         self.eng = Engine()

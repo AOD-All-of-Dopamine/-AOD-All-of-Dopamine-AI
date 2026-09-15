@@ -267,7 +267,7 @@ M6 은 **이미 만들어진 목록들의 순위를 섞을 뿐**이고, 각 플�
 ```
 브라우저 → :8000 gateway.py ─┬→ :8011 steam backend    (AOD_ARTIFACTS=tags_full, PRODUCTION, top2_mean)
                             ├→ :8012 tmdb backend     (tmdb_v1, PRODUCTION + PRODUCTION_POSTPROCESS)
-                            └→ :8013 webnovel backend (wn_v4, Engine 기본값 = PRODUCTION)
+                            └→ :8013 webnovel backend (wn_v6, Engine 기본값 = PRODUCTION · 2026-09-15 전까지 wn_v4 로 떠 있었다)
 통합:  seed_index.json 에서 시드 → 플랫폼별 /recommend?k=50 → 카드 stat 문자열에서 "N화" 파싱 → M6 → 카드 조립
 채점:  POST /grade → eval/user_grades.jsonl (설계자 채점 은행과 분리 — D-25 의 유일한 독립 증거)
 ```
