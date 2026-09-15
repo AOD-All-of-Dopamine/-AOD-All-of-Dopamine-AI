@@ -3,3 +3,4 @@ recommendation/viewer/index.html
 recommendation/rankings/data/collect.log
 __pycache__/
 *.pyc
+recommendation/webnovel/artifacts/*/corpus_embeddings.npy

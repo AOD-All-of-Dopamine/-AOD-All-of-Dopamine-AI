@@ -1,0 +1,18 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "aod-steam-recommendation"
+version = "0.1.0"
+description = "AOD Steam 추천 실험 파이프라인 (S1 retrieval / P1 personalization)"
+requires-python = ">=3.11"
+
+[tool.setuptools]
+# 모든 모듈이 `src.` 절대 경로로 import 한다. sys.path 주입 금지.
+packages = ["src", "src.personalization", "src.trend"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+# rootdir 를 sys.path 에 넣어 `from src.X import ...` 가 설치 없이도 동작하게 한다.
+pythonpath = ["."]

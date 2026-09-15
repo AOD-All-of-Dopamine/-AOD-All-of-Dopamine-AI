@@ -1,0 +1,7 @@
+{
+  "model": "Qwen/Qwen3-Embedding-0.6B",
+  "corpus_rows": 828,
+  "representation": "title_genre_synopsis",
+  "embedding_dim": 1024,
+  "source": "webnovels_10k.jsonl (셔플 층화 표본)"
+}

@@ -1,0 +1,44 @@
+{
+  "artifacts": "/home/ubuntu/aod-webnovel/recommendation/webnovel/artifacts/wn_v2",
+  "corpus_size": 828,
+  "embedding_dim": 1024,
+  "random_pair_similarity": {
+    "mean": 0.4610077738761902,
+    "p50": 0.45474886894226074,
+    "p95": 0.5804535746574402,
+    "std": 0.06743400543928146
+  },
+  "genre_similarity": {
+    "same_genre_mean": 0.5324327945709229,
+    "diff_genre_mean": 0.43919265270233154,
+    "gap": 0.09324014186859131,
+    "same_genre_pairs": 4714
+  },
+  "neighbor_genre_purity@10": 0.834,
+  "genre_base_rate": 0.2363824126584051,
+  "genre_purity_lift": 0.5976175873415949,
+  "genre_label_count": 828,
+  "distinct_genres": 8,
+  "semantic_text_chars": {
+    "median": 326.5,
+    "p25": 157.0
+  },
+  "synopsis_chars": {
+    "median": 300.0,
+    "under_30_ratio": 0.03140096618357488
+  },
+  "control": {
+    "control_to_control": 0.22195085883140564,
+    "control_to_corpus": 0.28063419461250305,
+    "n_control_texts": 6,
+    "separation_from_floor": 0.23905691504478455
+  },
+  "gates": {
+    "genre_gap > 0.05": true,
+    "genre_purity@10 > 0.50": true,
+    "genre_purity_lift > 0.15": true,
+    "pair_similarity_std > 0.03": true,
+    "corpus_mean − control_floor > 0.10": true
+  },
+  "passed": true
+}

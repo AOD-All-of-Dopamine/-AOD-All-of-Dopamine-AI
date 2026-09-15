@@ -1,0 +1,109 @@
+# src/config.py
+import os
+from pathlib import Path
+
+import yaml
+
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+ARTIFACTS_DIR = PROJECT_ROOT / "artifacts" / "wn_v1"
+
+DEFAULT_CONFIG = PROJECT_ROOT / "configs" / "wn_v1.yaml"
+ENV_FILE = PROJECT_ROOT / ".env"
+
+
+def _load_env_file() -> None:
+    """`.env` 를 환경변수로 올린다(이미 설정된 값은 덮어쓰지 않는다)."""
+    if not ENV_FILE.exists():
+        return
+    for line in ENV_FILE.read_text(encoding="utf-8").splitlines():
+        line = line.strip()
+        if not line or line.startswith("#") or "=" not in line:
+            continue
+        key, value = line.split("=", 1)
+        os.environ.setdefault(key.strip(), value.strip())
+
+
+def resolve_path(raw: str | Path) -> Path:
+    """`${AOD_DATA_ROOT}/webnovels.jsonl` 형태를 실제 경로로 푼다.
+
+    예전에는 설정과 소스에 `/home/jiho/projects/...` 가 하드코딩돼 있어 다른 머신에서
+    파이프라인이 전혀 돌지 않았다. 미설정 변수는 조용히 빈 문자열이 되지 않고 실패한다.
+    """
+    _load_env_file()
+    text = str(raw)
+    expanded = os.path.expandvars(text)
+    if "$" in expanded:
+        missing = {
+            token.strip("${}")
+            for token in expanded.replace("}", "} ").split()
+            if token.startswith("$")
+        }
+        raise SystemExit(
+            f"경로에 미설정 환경변수가 있습니다: {sorted(missing)}\n"
+            f"  원본: {text}\n"
+            f"  {ENV_FILE} 또는 셸 환경에 설정하세요 (.env.example 참고)."
+        )
+    return Path(expanded).expanduser()
+
+
+def load_config(path: str | Path | None = None) -> dict:
+    """설정 로드 우선순위: 인자 > AOD_CONFIG 환경변수 > configs/s1_v2.yaml."""
+    _load_env_file()
+    cfg_path = Path(path or os.environ.get("AOD_CONFIG") or DEFAULT_CONFIG)
+    if not cfg_path.is_absolute():
+        cfg_path = PROJECT_ROOT / cfg_path
+    if not cfg_path.exists():
+        raise SystemExit(f"설정 파일이 없습니다: {cfg_path}")
+    with open(cfg_path, encoding="utf-8") as f:
+        return yaml.safe_load(f)
+
+
+def artifact_dir(path: str | Path | None = None) -> Path:
+    """추천 파이프라인이 읽을 아티팩트 디렉터리.
+
+    표현을 바꿔 실험하려면 임베딩/데이터셋 경로를 갈아끼울 수 있어야 한다.
+    우선순위: 인자 > AOD_ARTIFACTS 환경변수 > artifacts/wn_v1.
+    """
+    p = Path(path or os.environ.get("AOD_ARTIFACTS") or ARTIFACTS_DIR)
+    return p if p.is_absolute() else PROJECT_ROOT / p
+
+
+def ensure_artifacts_dir(path: str | Path | None = None) -> Path:
+    """`artifact_dir()` 와 **같은 우선순위**(인자 > AOD_ARTIFACTS > wn_v1)로 만든다.
+
+    2026-09-04 정정: 예전엔 `ARTIFACTS_DIR`(wn_v1) 로 고정돼 있어서 `AOD_ARTIFACTS=wn_v6`
+    으로 data_loader 를 돌려도 결과가 **wn_v1 을 덮어썼다.** 읽는 쪽(`artifact_dir`)과 쓰는 쪽이
+    다른 규칙을 쓰면 "어디에 썼는지 모르는" 사고가 난다 — 그래서 하나로 맞춘다.
+    """
+    d = artifact_dir(path)
+    d.mkdir(parents=True, exist_ok=True)
+    return d
+
+
+# ── 확정 설정 ────────────────────────────────────────────────────────────────
+#: **확정값은 여기 하나에만 둔다.** 호출부마다 기본값을 적으면 확정한 순간부터
+#: 갈라진다 — 이 프로젝트에서 네 번 났다(`align_w` · `drop_seed_iter` ·
+#: Steam `quality_w`/`tag_w` · 그리고 여기 `pop_boost`).
+#:
+#: D-66 이전에 `pop_boost` 는 **세 값이 세 곳에 살아 있었다:**
+#:     0.0   `wn_eval.variant_recs` — 실험 로그의 모든 웹소설 숫자 · 시험대 백엔드
+#:     0.03  `configs/wn_v1.yaml` · `personalized_retrieve.build_components`
+#:     0.15  `personalized_retrieve.REFRESH_POP_BOOST` — 제품 새로고침
+#: 두 구현(`wn_eval.Engine` vs `PersonalizedRanker`)은 **같은 값에서 9.88/10 일치**한다.
+#: §25 가 기록한 "top-10 겹침 8.5/10"은 구현 차이가 아니라 이 상수 차이였다.
+PRODUCTION = {
+    "strategy": "top2_mean",
+    "pop_boost": 0.0,       # **W-1 확정 (D-66 철회)**: 전체 코퍼스 wn_v6 에서 0.03 은 +0.0115 (문턱 +0.02 미달, LOO 0/52).
+                            # D-66 의 0.03 은 파일럿 코퍼스(7,062편)의 결론이었다. 관심수 중앙만 56k→155k 로 민다.
+    "rating_boost": 0.0,    # 신호 없음 (D-62: 평점 잔차 −0.034 · 베이지안 −0.045)
+    "hub_lambda": 0.0,
+    "mmr_lambda": 1.0,      # **기각된 축** (D-53 전역 · D-54 시드묶음). 1.0 = 끔
+    "min_interest_count": None,   # D-62. 걸면 30% 를 버리는데 버리는 쪽이 더 낫다
+    "author_w": 0.0,        # **W-4 기각 (0 유지)**: 0.10 −0.031 · 0.25 −0.043 (역할 B · 대상군 51, 세 역할 모두 하락).
+                            # TMDB V-2(+0.056)와 반대. 기준선이 0.908 로 높아 시드 작가의 흥행작(관심수 33배)이
+                            # 이미 적합한 근접 이웃(0.938)을 밀어냈다. 결손 존재 ≠ 결손이 병목.
+    "series_by": "author",     # **W-5 채택**: 출판사 키는 판본 표기(제이플미디어/제이플러스)가 달라 시드 에코 11(전부 1~2위)·판본 중복 30 이 샜다.
+                               # 작가|제목 키로 기계 0/0 · 진입 작품 다수결 0.933 = 대조 0.933 (Δ ±0) · 제목 다른 작품 병합 0.
+    "drop_excluded_series": True,   # **W-6 채택**: next_page 가 시드·seen 의 시리즈 키까지 뺀다. 3페이지 에코 33(21건 1위)·페이지 간 판본 72 → 0/0.
+                                    # 진입 119 다수결 0.790 vs 대조 109 0.807 (Δ −0.017, 문턱 −0.10). 1페이지 == Engine top-10 25→38/52.
+}
