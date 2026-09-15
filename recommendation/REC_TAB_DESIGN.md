@@ -1,6 +1,6 @@
 # 추천 탭 설계 — 화면 · 로그 · 백엔드 · 프론트 · 추천 서비스
 
-- 상태: **v2** — v1 초안을 코드 대조 리뷰(23건)로 고친 판. 리뷰 기록은 부록 B
+- 상태: **v2.1** — v1 초안을 코드 대조 리뷰(23건)로 고친 판(부록 B) + §8-6 서빙 컨테이너 구성(메모리 실측 반영)
 - 작성: 2026-09-15
 - 관련 문서: `INDUSTRY_COMPARISON.md`(유튜브·당근 사례) · `TRANSITION_ROADMAP.md`(로그 기반 전환 단계) · `crossdomain/DESIGN.md`(플랫폼 혼합)
 - 대상 시스템: 프론트 `allofdophamin.com`(Vite + React SPA) · 백엔드 `-AOD-All-of-Dopamine-back`(Spring Boot 3.4, Java 17, PostgreSQL) · 추천기 이 리포(Python, 플랫폼 4개)
@@ -164,7 +164,7 @@
                                                   aod_rec.*      서빙 상태 (rec_chain, not_interested, corpus_map)
                                                   aod_log.*      로그 (버려도 되는 경로)
 ```
-- 엔진은 **플랫폼당 프로세스 1개**(§1-3 패키지 충돌). 메모리 총량은 약 4.3GB 로 같다. API 서버(t3.small)와 **다른 호스트**, 내부망 전용.
+- 엔진은 **플랫폼당 컨테이너 1개**(§1-3 패키지 충돌 · 구성은 §8-6). 상주 메모리 합계 약 4.3GB, 컨테이너 한도 합계 약 6.5GB. API 서버(t3.small)와 **다른 호스트(16GB 급)**, 내부망 전용.
 - 라우터는 엔진을 import 하지 않는다 — HTTP 로 부르고 M6 만 수행한다.
 - **서빙 상태(`aod_rec`)와 로그(`aod_log`)를 분리한다.** 서빙 상태는 추천 정확성에 필요해 동기로 쓰고, 로그는 유실돼도 추천이 틀리지 않는다.
 
@@ -531,7 +531,7 @@ CREATE TABLE aod_log.event_default PARTITION OF aod_log.event DEFAULT;
 ### 8-1. 구성
 - **엔진 프로세스 4개**: 시험대 `tryout/backend.py` 의 플랫폼 클래스를 바탕으로 플랫폼당 1개. `POST /engine/recommend` · `GET /health`.
 - **라우터 1개**: 엔진을 import 하지 않는다. 탭 분기 · M6 혼합 · 제한 시간 · 부분 응답.
-- 배포: 한 호스트(메모리 8GB 이상)에 컨테이너 5개, 내부망 전용.
+- 배포: **한 호스트에 컨테이너 5개(플랫폼별 컨테이너)**, 내부망 전용 — 컨테이너 구성은 §8-6.
 
 ### 8-2. 엔진 어댑터 (공통 검증)
 - 코퍼스 밖 시드는 **예외 대신 제외**하고 `droppedSeeds` 로 반환(Steam·TMDB·웹소설은 지금 예외를 던진다).
@@ -565,13 +565,139 @@ CREATE TABLE aod_log.event_default PARTITION OF aod_log.event DEFAULT;
 | 백엔드 → 라우터 읽기 | 2.0초 |
 | 라우터 → 엔진 | 1.5초. 늦은 플랫폼은 빼고 `partial` 로 응답 |
 
-- **출시 전 관문**: seen 0·200·500 × 동시 요청 1·5·20 에서 엔진별 `next_page` p95 를 잰다. 라우터 p95 가 1.5초를 넘으면 예산을 조정하거나 Steam 엔진을 복제한다.
+- **출시 전 관문**: seen 0·200·500 × 동시 요청 1·5·20 에서 엔진별 `next_page` p95 와 **컨테이너별 상주·최대 메모리(익명·파일 매핑 분리)**를 잰다. 예열 뒤에 잰다(첫 요청은 임베딩 파일 읽기로 느리다 — §8-6).
+  라우터 p95 가 1.5초를 넘으면 예산을 조정하거나 Steam 컨테이너를 복제하고, 최대 메모리가 한도의 80% 를 넘으면 `mem_limit` 을 올린다.
 
-### 8-5b. 코퍼스와 ID 매핑
-- 코퍼스 빌드가 `corpus_map`(content_id ↔ 코퍼스 키)과 **커버리지 리포트**(플랫폼별 백엔드 작품 중 코퍼스에 있는 비율)를 함께 산출한다.
-- TMDB 는 `platform_data(TMDB_MOVIE|TMDB_TV, 숫자 id)` → `movie_{id}`/`tv_{id}` → 코퍼스 행 번호.
-- 웹소설은 NaverSeries 만 — KakaoPage 로만 좋아요한 작품은 시드가 되지 않는다(시드 탈락률 지표로 감시).
-- 갱신 주기: **주 1회 제안**(크롤러 신규 작품 → 임베딩 → 새 `corpus_version` → 엔진 교체). 버전이 바뀌면 진행 중 체인은 끝까지 옛 매핑을 쓰지 않고 새로 매핑한다(seen 은 content_id 라 영향 없음).
+### 8-5b. 코퍼스와 ID 매핑 — 백엔드 크롤링 데이터로 재임베딩
+**방침(2026-09-15 결정)**: 코퍼스는 백엔드가 크롤링한 데이터(`contents`·도메인 테이블·`platform_data`)를 읽어 **재임베딩**해 만든다. 지금의 외부 수집 코퍼스(tags_full·tmdb_v1·wt_v1·wn_v6)는 이 배치가 생길 때까지의 임시본이다.
+
+- **얻는 것**: 코퍼스 = 백엔드 카탈로그라 추천 결과가 항상 상세 페이지가 있는 작품이고, `corpus_map` 이 거의 1:1 이 되며, 신작이 크롤링 주기에 맞춰 들어온다.
+- **배치 산출물** (`/srv/aod-artifacts/{platform}/{corpus_version}/`): `corpus_embeddings.npy` · `corpus_index.parquet` · `dataset.parquet`(랭커가 쓰는 메타데이터 컬럼) · `corpus_map`(content_id ↔ 코퍼스 키, DB 적재) · **커버리지·결측 리포트**.
+- **지켜야 할 것**
+  1. **같은 표현**: 임베딩 모델(Qwen3-Embedding-0.6B, 1024차원, 정규화)과 플랫폼별 텍스트 조립 규칙(`text_builder.py`)을 그대로 쓴다. 필드가 빠지면 표현이 바뀐 것이다.
+  2. **랭커 입력 컬럼**: 확정값(`PRODUCTION`)은 태그·키워드·투표 수·평점·관심 수·화수 같은 메타데이터 위에서 검증됐다. 백엔드에 없는 컬럼은 결측 리포트로 드러내고, 대체하거나 그 보정 항을 끈 상태로 **다시 평가**한다.
+  3. **코퍼스 상대 값**: 허브 보정(코퍼스 중심)·투표 백분위 같은 값은 코퍼스가 바뀌면 달라진다 → 증분 추가가 아니라 **버전 단위 전체 재생성**.
+  4. **ID 단위**: 백엔드는 여러 플랫폼 행을 한 `content_id` 로 합친다(예: NaverSeries + KakaoPage). 코퍼스 1행 = 플랫폼 작품 1개로 두고, `corpus_map` 이 여러 행을 같은 content_id 로 잇는다.
+  5. **성인 작품**: `contents.is_adult` 를 dataset 에 싣고 후처리 성인 필터가 쓰게 한다.
+- **재검증 관문**: 새 코퍼스 첫 버전은 현행 평가 프로필을 새 코퍼스 키로 옮겨 **플랫폼별 P@k 회귀 판정**(사전등록)을 통과해야 서빙한다. 이후 주간 갱신은 표현·컬럼이 같으면 커버리지·결측 리포트와 동일성 스모크 테스트만 본다.
+- 갱신 주기: **주 1회 제안**(크롤링 → 재임베딩 → 새 `corpus_version` → 엔진 교체). 버전이 바뀌어도 seen·시드는 content_id 라 진행 중 체인에 영향이 없다.
+
+### 8-6. 서빙 컨테이너 구성
+
+**결정: 플랫폼별 컨테이너 (엔진 4 + 라우터 1), Dockerfile 은 하나, 아티팩트는 이미지 밖.**
+
+한 컨테이너에 프로세스 5개(supervisord)도 가능하지만 택하지 않는다 — 어차피 프로세스는 5개이고(§1-3 패키지 충돌),
+컨테이너를 나누면 아래가 공짜로 따라온다.
+
+| | 한 컨테이너 | 플랫폼별 컨테이너 (채택) |
+|---|---|---|
+| 메모리 초과 | Steam 이 넘치면 전체 중단 | Steam 만 재시작, 나머지는 `partial` 로 응답 |
+| 코퍼스 갱신 | 한 플랫폼만 바꿔도 전체 재시작 | 바뀐 플랫폼만 교체 |
+| 메모리 한도 | 전체에 하나 | 플랫폼별 |
+| 헬스체크·재시작 | 프로세스 감시를 직접 구성 | docker 가 플랫폼별로 |
+| 저장소 | 웹소설이 별도 저장소(`aod-webnovel`)라 빌드가 복잡 | 저장소마다 이미지 |
+| 확장 | 전체 복제 | 느린 Steam 만 복제 |
+| 기존 운영 방식 | 다름 | 백엔드와 같음 (모듈별 이미지 → ECR → EC2 `docker compose up`) |
+
+#### 이미지
+- **Dockerfile 하나 + 빌드 인자 `PLATFORM`** 으로 넣을 코드만 바꾼다. 두 가상환경의 버전이 같다(Python 3.12.3 · numpy 2.5.1 · pandas 3.0.5).
+- **선행 작업**: 두 저장소 모두 `requirements.txt`·`pyproject.toml` 이 없다 → 의존성 고정 파일부터 만든다.
+- 라우터 이미지는 numpy·pandas 없이 가볍게(HTTP·M6 만).
+- **아티팩트(임베딩·parquet)는 이미지에 넣지 않는다.** Steam 아티팩트만 764MB 라, 넣으면 코드 한 줄 바꿀 때마다 이미지를 다시 받는다.
+  **전제: 아티팩트는 추천 호스트의 로컬 경로 `/srv/aod-artifacts/{platform}/{corpus_version}/` 에 있다**(원격 저장소에서 받지 않는다).
+  이 경로는 재임베딩 배치(§8-5b)가 채우고, 엔진 컨테이너는 읽기 전용으로 마운트한다. 코퍼스 갱신 = 새 버전 폴더 + 환경변수 교체 + 재시작, 되돌리기 = 이전 폴더.
+  지금 아티팩트는 git 에 없고(네 플랫폼 모두 `.gitignore`) 개발 머신에만 있다 — 재임베딩 배치가 생기기 전까지는 이 파일이 유일본이다.
+
+#### 메모리 — 측정값 (2026-09-15, Steam)
+엔진은 임베딩을 `np.load(..., mmap_mode="r")` 로 연다(`steam/src/personalization/candidate_retriever.py:13`). 적재 시점에는 파일을 주소에만 연결하고 **첫 유사도 계산 때 파일 전체가 읽혀 들어온다.**
+
+| 시점 | RSS | 익명 메모리 | 파일 매핑 |
+|---|---|---|---|
+| 적재 직후 | 1,535MB | 1,475MB | 60MB |
+| 첫 요청 후 (상주) | **1,893MB** | 1,152MB | **740MB** (임베딩 678MB) |
+| 요청 3회 후 | 1,895MB | 1,154MB | 740MB |
+| 요청 중 최대 | 약 2,250MB | | |
+
+- 첫 요청 뒤 늘어나는 것은 **누수가 아니라 임베딩 파일이 읽혀 들어온 것**이다. 요청 2회째부터 늘지 않는다.
+- **적재 직후 수치는 운영 메모리가 아니다** — 한도는 첫 요청 뒤 상주 크기 + 요청 작업분 + 여유로 잡는다.
+- Docker 메모리 한도에는 파일 매핑 메모리도 들어간다. 한도가 빠듯하면 커널이 임베딩 페이지를 쫓아냈다 다시 읽어 **오류 없이 지연만 들쭉날쭉**해진다.
+- 행렬 연산 스레드(OpenBLAS)를 12 → 1 로 줄이면 적재 시 메모리가 약 230MB 준다(스레드별 작업 버퍼).
+- TMDB·웹툰·웹소설은 시험대 최대 RSS(1,082 / 222 / 478MB)만 있다. 같은 방식(익명·파일 매핑 분리, 상주·최대)으로 §8-5 부하 관문에서 다시 잰다.
+
+#### compose (초안)
+```yaml
+x-engine: &engine
+  image: ${ECR}/aod-rec-engine:${ENGINE_TAG}
+  restart: unless-stopped
+  read_only: true
+  tmpfs: ["/tmp"]            # 읽기 전용 루트에서도 임시 파일이 필요하다
+  networks: [aod-rec]
+  healthcheck:
+    test: ["CMD", "python", "-c", "import urllib.request,sys; sys.exit(0 if urllib.request.urlopen('http://localhost:8000/health').status==200 else 1)"]
+    interval: 15s
+    timeout: 3s
+    start_period: 60s        # 적재 + 예열
+    retries: 3
+
+services:
+  rec-steam:
+    <<: *engine
+    environment: { PLATFORM: steam, CORPUS_VERSION: tags_full,
+                   OMP_NUM_THREADS: 2, OPENBLAS_NUM_THREADS: 2, MKL_NUM_THREADS: 2 }
+    volumes: ["/srv/aod-artifacts/steam:/artifacts:ro"]
+    mem_limit: 3200m          # 상주 1.9G + 동시 요청 작업분 + 여유 — 부하 관문에서 확정
+    cpus: 2.0
+  rec-tmdb:
+    <<: *engine
+    environment: { PLATFORM: tmdb, CORPUS_VERSION: tmdb_v1, OMP_NUM_THREADS: 2, OPENBLAS_NUM_THREADS: 2 }
+    volumes: ["/srv/aod-artifacts/tmdb:/artifacts:ro"]
+    mem_limit: 1600m
+    cpus: 1.5
+  rec-webtoon:
+    <<: *engine
+    environment: { PLATFORM: webtoon, CORPUS_VERSION: wt_v1, OMP_NUM_THREADS: 1, OPENBLAS_NUM_THREADS: 1 }
+    volumes: ["/srv/aod-artifacts/webtoon:/artifacts:ro"]
+    mem_limit: 500m
+    cpus: 0.5
+  rec-webnovel:
+    <<: *engine
+    image: ${ECR}/aod-rec-webnovel:${WEBNOVEL_TAG}   # 별도 저장소, 같은 Dockerfile 규칙
+    environment: { PLATFORM: webnovel, CORPUS_VERSION: wn_v6, OMP_NUM_THREADS: 1, OPENBLAS_NUM_THREADS: 1 }
+    volumes: ["/srv/aod-artifacts/webnovel:/artifacts:ro"]
+    mem_limit: 900m
+    cpus: 1.0
+  rec-router:
+    image: ${ECR}/aod-rec-router:${ROUTER_TAG}
+    restart: unless-stopped
+    networks: [aod-rec]
+    ports: ["${PRIVATE_IP}:8080:8080"]   # 호스트 사설 IP 에만 바인딩 — 백엔드 API 서버의 보안 그룹만 허용
+    depends_on:
+      rec-steam: { condition: service_healthy }
+      rec-tmdb: { condition: service_healthy }
+      rec-webtoon: { condition: service_healthy }
+      rec-webnovel: { condition: service_healthy }
+    mem_limit: 256m
+
+networks:
+  aod-rec: {}
+```
+- `mem_limit`·`cpus` 는 **출발값**이다. §8-5 부하 관문(seen 0·200·500 × 동시 1·5·20)에서 컨테이너별 상주·최대 메모리와 p95 를 재서 확정한다.
+- 라우터는 엔진 하나가 준비되지 않아도 뜨게 할지(`depends_on` 을 빼고 `partial` 로 운영) 출시 전에 정한다 — 초안은 전부 준비 후 시작.
+
+#### 기동·예열
+1. 엔진 시작 → 아티팩트 적재 → **예열 요청 1회**(고정 시드로 `next_page`) — 임베딩 파일을 미리 읽혀 첫 사용자 요청이 느리지 않게 한다(시험대 Steam 첫 요청 804ms vs 이후 중앙 584ms).
+2. 예열이 끝나야 `/health` 가 200 — `{ready, platform, corpus_version, engine_sha, rss_mb, rss_file_mb}`.
+3. 라우터는 `/health` 가 200 인 엔진에만 요청한다. 준비 안 된 엔진은 `partial` 로 뺀다.
+
+#### 호스트
+- **16GB 급 권장**(합계 한도 약 6.5GB + 운영체제 파일 캐시 + 컨테이너 교체 시 옛/새 동시 적재 여유). 8GB 는 코퍼스 교체 순간 옛 컨테이너와 새 컨테이너가 겹치면 부족하다.
+- 코어: 4 이상. 컨테이너 `cpus` 합이 코어 수를 넘지 않게 하고 스레드 환경변수를 `cpus` 에 맞춘다(안 맞추면 행렬 곱이 서로 코어를 뺏어 느려진다).
+- 같은 호스트에서 Steam 을 복제하면 임베딩 파일 페이지는 운영체제 캐시로 공유된다(메모리 집계는 먼저 읽은 컨테이너에 잡힌다).
+
+#### 빌드·배포
+- CI: 백엔드와 같은 방식 — 저장소 푸시 → 이미지 빌드(`PLATFORM` 별 태그) → ECR → SSH 로 추천 호스트에서 `docker compose pull && up -d {서비스}`.
+- 엔진 교체는 **한 번에 하나씩**: 새 컨테이너 healthy 확인 → 옛 컨테이너 중지. 교체 중 그 플랫폼은 `partial` 가능.
+- 코퍼스 갱신(주 1회 제안, §8-5b): 새 버전 폴더 동기화 → `CORPUS_VERSION` 변경 → 해당 엔진만 재시작 → `corpus_map` 버전 전환.
 
 ---
 
@@ -582,7 +708,7 @@ CREATE TABLE aod_log.event_default PARTITION OF aod_log.event DEFAULT;
 | 0 | **개인정보 처리방침 갱신** · 삭제 절차 | 법무 확인 · 게시 |
 | 1 | `V8` 스키마 · `LogWriter` · 파티션 작업 · `ReactionService`(이벤트 발행) · `/api/rec-events` | 기존 좋아요 화면에서 `reaction_changed` 이력이 쌓이고 DEFAULT 파티션 0행 |
 | 2 | 트래커 · 상세 체류 · 외부 링크 이벤트 | 기존 화면 이벤트 적재 · 품질 점검 1~4 통과 |
-| 3 | 엔진 4개 + 라우터 배포(내부망) · 동일성 테스트 · **지연 관문** | §10 통과 · §8-5 관문 통과 |
+| 3 | 의존성 고정 파일 · 엔진/라우터 이미지 · 추천 호스트 compose 배포(내부망) · 예열 · 동일성 테스트 · **지연·메모리 관문** | §10 통과 · §8-5 관문 통과 · `mem_limit`·`cpus` 확정 |
 | 4 | `corpus_map`·커버리지 리포트 · 추천 API(시드·체인·카드·대체·서킷) | 테스트 계정으로 탭별 응답 · 대체 경로 강제 시험 |
 | 5 | 추천 탭 · 노출 추적 · 반응 상태 API · 관심 없음 — **기능 플래그로 팀만** | 팀 내부 1주 사용 · 지표 대시보드 확인 |
 | 6 | 온보딩 작품 고르기 · 가입 흐름 | 시드 0 사용자가 추천까지 도달 |
@@ -609,7 +735,7 @@ CREATE TABLE aod_log.event_default PARTITION OF aod_log.event DEFAULT;
 | 지연 | 추천 API p95 > 2.5초 |
 | 로그 유실 | `log_dropped_total` 증가 |
 | DEFAULT 파티션 | 행 수 > 0 |
-| 엔진 | `/health` 실패 · RSS > 기준의 120% · 코퍼스 버전 불일치 |
+| 엔진 | `/health` 실패 · 컨테이너 재시작(OOM 포함) · 메모리 > `mem_limit` 의 85% · 코퍼스 버전 불일치(엔진 ↔ `corpus_map`) |
 | 이벤트 | 일 건수 전주 대비 ±50% · 거절 비율 > 2% |
 
 - 킬 스위치: `RecFeatureFlag` 끄면 추천 탭 숨김 · API 는 랭킹 대체만.
@@ -625,6 +751,8 @@ CREATE TABLE aod_log.event_default PARTITION OF aod_log.event DEFAULT;
 5. 모바일 진입 = 홈 세그먼트 (메뉴 7개 회피)
 6. 코퍼스 갱신 주 1회
 7. 담당자
+8. 추천 호스트 사양 (초안: 16GB · 4코어 이상)
+9. 엔진 하나가 준비되지 않아도 라우터를 띄울지 (초안: 전부 준비 후 시작)
 
 ## 13. 후속
 - 전체 탭에 웹툰 넣기 (M6 확장 사전등록)
