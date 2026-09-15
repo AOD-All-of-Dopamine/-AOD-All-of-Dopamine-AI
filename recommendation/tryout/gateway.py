@@ -22,7 +22,7 @@ from urllib.error import HTTPError, URLError
 
 HERE = Path(__file__).resolve().parent
 GRADES = HERE.parent / "eval" / "user_grades.jsonl"
-PORTS = {"steam": 8011, "tmdb": 8012, "webnovel": 8013}
+PORTS = {"steam": 8011, "tmdb": 8012, "webnovel": 8013, "webtoon": 8014}
 
 
 class H(BaseHTTPRequestHandler):

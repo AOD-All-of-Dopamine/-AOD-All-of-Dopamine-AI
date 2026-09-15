@@ -135,7 +135,7 @@ a{color:var(--accent)}
 </div>
 
 <script>
-const PLATFORMS=[["steam","Steam"],["tmdb","TMDB"],["webnovel","웹소설"],["cross","통합 (크로스 도메인)"]];
+const PLATFORMS=[["steam","Steam"],["tmdb","TMDB"],["webnovel","웹소설"],["webtoon","웹툰"],["cross","통합 (크로스 도메인)"]];
 let plat="steam", seeds=[], graded=0, lastSeeds=[];
 
 const $=s=>document.querySelector(s);
@@ -296,7 +296,7 @@ async function crossRecommend(){
 }
 
 async function drawStatus(){
-  const NAMES={steam:"Steam",tmdb:"TMDB",webnovel:"웹소설"};
+  const NAMES={steam:"Steam",tmdb:"TMDB",webnovel:"웹소설",webtoon:"웹툰"};
   try{
     const st=await (await fetch("/status")).json();
     $("#status").innerHTML = Object.entries(NAMES).map(([k,label])=>{

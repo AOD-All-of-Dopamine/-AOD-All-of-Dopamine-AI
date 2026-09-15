@@ -104,14 +104,21 @@ class Tmdb:
         ds = pd.read_parquet(AOD / "tmdb/artifacts/tmdb_v1/dataset.parquet").set_index("item_id")
         self.ds = ds.loc[idx["item_id"].to_numpy()].reset_index()
         self._lname = self.ds["name"].fillna("").str.lower()
+        # 표시명 — 한글·라틴 문자가 없는 원제(데바나가리·텔루구 등)만 영어 제목으로 보여준다.
+        # 랭킹·임베딩과 무관하다. 파일이 없으면 원래 이름 그대로 (scripts/fetch_display_titles.py).
+        dn = AOD / "tmdb/artifacts/tmdb_v1/display_names.parquet"
+        self._display = dict(pd.read_parquet(dn).itertuples(index=False, name=None)) if dn.exists() else {}
 
     def _card(self, row):
         r = self.ds.iloc[int(row)]
         g = r["genres"]
         g = list(g) if g is not None and len(g) else []
         media = "영화" if r["media"] == "movie" else "TV"
-        return dict(id=int(row), name=str(r["name"]),
-                    meta=f"{media} · " + (", ".join(str(x) for x in g) or "-"),
+        # 연도 — 코퍼스의 9.5% 가 제목이 겹친다(퍼니 게임 1997/2007 · 왓치맨 2009 영화/2019 TV).
+        # 서빙 top-10 카드의 14% 가 그런 작품이라 연도 없이는 어느 작품인지 못 가린다. 검색(시드 고르기)도 같다.
+        y = str(r["date"])[:4] if r.get("date") is not None and str(r["date"])[:4].isdigit() else ""
+        return dict(id=int(row), name=str(self._display.get(r["item_id"], r["name"])),
+                    meta=f"{media}{' · ' + y if y else ''} · " + (", ".join(str(x) for x in g) or "-"),
                     stat=f"평점 {_num(r['vote_average'], 0.0):.1f} · 투표 {_num(r['vote_count']):,}",
                     link=f"https://www.themoviedb.org/{r['media']}/{int(r['tmdb_id'])}")
 
@@ -167,7 +174,47 @@ class Webnovel:
         return [self._card(i) for i in df["item_id"].head(k)]
 
 
-ENGINES = {"steam": Steam, "tmdb": Tmdb, "webnovel": Webnovel}
+class Webtoon:
+    """2026-09-15 추가 — 네 플랫폼 중 웹툰만 시험대가 없어 사람이 직접 볼 길이 없었다.
+    평가(T-1~T-9)와 같은 `Engine.recommend` 기본값 = PRODUCTION(tag_w 0.2 등)으로 돈다."""
+    label = "웹툰"
+    id_field = "item_id"
+
+    def __init__(self):
+        sys.path.insert(0, str(AOD / "webtoon"))
+        import os; os.environ.setdefault("AOD_WT_ARTIFACTS", str(AOD / "webtoon/artifacts/wt_v1"))
+        os.chdir(AOD / "webtoon")
+        from src.personalized_retrieve import Engine
+        self.eng = Engine()
+        self.ds = self.eng.ds
+        self.by_id = self.ds.set_index("item_id")
+        self._lname = self.ds["name"].fillna("").str.lower()
+
+    def _card(self, iid):
+        try: r = self.by_id.loc[int(iid)]
+        except (KeyError, ValueError): return None
+        if isinstance(r, pd.DataFrame): r = r.iloc[0]
+        g = list(r["genres"]) if r["genres"] is not None else []
+        tags = [t for t in (list(r["tags"]) if r["tags"] is not None else [])
+                if not str(t).startswith("완결") and t not in g][:4]     # 태그에 장르명이 또 들어 있다
+        who = ", ".join(list(r["artists"])[:2]) if r["artists"] is not None and len(r["artists"]) else str(r["author"] or "")
+        state = "휴재" if bool(r["rest"]) else ("완결" if bool(r["finished"]) else "연재중")
+        return dict(id=int(iid), name=str(r["name"]),
+                    meta=" · ".join(x for x in [", ".join(map(str, g)), ", ".join(map(str, tags)), who] if x) or "-",
+                    stat=f"관심 {_num(r['favorite_count']):,} · {_num(r['episode_count'])}화 · {state}",
+                    link=r.get("url"))
+
+    def search(self, q, n=20):
+        hit = self.ds[self._lname.str.contains(q.lower(), regex=False)]
+        hit = hit.sort_values("favorite_count", ascending=False).head(n)
+        return [c for c in (self._card(i) for i in hit["item_id"]) if c]
+
+    def recommend(self, seeds, k=20):
+        df = self.eng.recommend([int(s) for s in seeds], k=k)   # 확정 = 전부 기본값
+        return [c for c in (self._card(i) for i in df["item_id"].head(k)) if c]
+
+
+ENGINES = {"steam": Steam, "tmdb": Tmdb, "webnovel": Webnovel, "webtoon": Webtoon}
 
 
 def make_handler(eng):

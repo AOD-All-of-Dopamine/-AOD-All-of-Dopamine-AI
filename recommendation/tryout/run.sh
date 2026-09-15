@@ -9,9 +9,9 @@ PY_AOD="$AOD/steam/.venv/bin/python"
 PY_WN="/home/ubuntu/aod-webnovel/recommendation/webnovel/.venv/bin/python"
 LOG="${TMPDIR:-/tmp}/aod-tryout"; mkdir -p "$LOG"
 
-declare -A PORT=([steam]=8011 [tmdb]=8012 [webnovel]=8013)
-declare -A PYB=([steam]=$PY_AOD [tmdb]=$PY_AOD [webnovel]=$PY_WN)
-WANT=("${@:-steam tmdb webnovel}"); WANT=(${WANT[@]})
+declare -A PORT=([steam]=8011 [tmdb]=8012 [webnovel]=8013 [webtoon]=8014)
+declare -A PYB=([steam]=$PY_AOD [tmdb]=$PY_AOD [webnovel]=$PY_WN [webtoon]=$PY_AOD)
+WANT=("${@:-steam tmdb webnovel webtoon}"); WANT=(${WANT[@]})
 
 for p in "${WANT[@]}"; do
   pkill -f "backend.py --platform $p" 2>/dev/null
