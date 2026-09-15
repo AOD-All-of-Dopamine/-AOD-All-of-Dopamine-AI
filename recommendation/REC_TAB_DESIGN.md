@@ -626,13 +626,13 @@ CREATE TABLE aod_log.event_default PARTITION OF aod_log.event DEFAULT;
 | 코퍼스 갱신 | 한 플랫폼만 바꿔도 전체 재시작 | 바뀐 플랫폼만 교체 |
 | 메모리 한도 | 전체에 하나 | 플랫폼별 |
 | 헬스체크·재시작 | 프로세스 감시를 직접 구성 | docker 가 플랫폼별로 |
-| 저장소 | 웹소설이 별도 저장소(`aod-webnovel`)라 빌드가 복잡 | 저장소마다 이미지 |
+| 빌드 | 플랫폼 하나를 고쳐도 전체 이미지 재빌드 | 플랫폼별 태그만 재빌드 (네 플랫폼 모두 이 리포 `recommendation/` 아래 — 웹소설은 2026-09-15 main 병합) |
 | 확장 | 전체 복제 | 느린 Steam 만 복제 |
 | 기존 운영 방식 | 다름 | 백엔드와 같음 (모듈별 이미지 → ECR → EC2 `docker compose up`) |
 
 #### 이미지
 - **Dockerfile 하나 + 빌드 인자 `PLATFORM`** 으로 넣을 코드만 바꾼다. 두 가상환경의 버전이 같다(Python 3.12.3 · numpy 2.5.1 · pandas 3.0.5).
-- **선행 작업**: 두 저장소 모두 `requirements.txt`·`pyproject.toml` 이 없다 → 의존성 고정 파일부터 만든다.
+- **선행 작업**: 리포에 `requirements.txt`·`pyproject.toml` 이 없다 → 의존성 고정 파일부터 만든다. 네 플랫폼이 한 리포에 있으므로(웹소설 2026-09-15 병합) 이미지 빌드도 한 리포에서 `PLATFORM` 별로 한다.
 - 라우터 이미지는 numpy·pandas 없이 가볍게(HTTP·M6 만).
 - **아티팩트(임베딩·parquet)는 이미지에 넣지 않는다.** Steam 아티팩트만 764MB 라, 넣으면 코드 한 줄 바꿀 때마다 이미지를 다시 받는다.
   **전제: 아티팩트는 추천 호스트의 로컬 경로 `/srv/aod-artifacts/{platform}/{corpus_version}/` 에 있다**(원격 저장소에서 받지 않는다).
@@ -768,7 +768,6 @@ services:
     cpus: 0.5
   rec-webnovel:
     <<: *engine
-    image: ${ECR}/aod-rec-webnovel:${WEBNOVEL_TAG}   # 별도 저장소, 같은 Dockerfile 규칙
     environment: { PLATFORM: webnovel, CORPUS_VERSION: wn_v6, OMP_NUM_THREADS: 1, OPENBLAS_NUM_THREADS: 1 }
     volumes: ["/srv/aod-artifacts/webnovel:/artifacts:ro"]
     mem_limit: 900m

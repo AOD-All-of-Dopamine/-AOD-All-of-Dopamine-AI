@@ -15,7 +15,7 @@ import numpy as np
 import pandas as pd
 
 AOD = Path("/home/ubuntu/-AOD-All-of-Dopamine-AI/recommendation")
-WN = Path("/home/ubuntu/aod-webnovel/recommendation/webnovel")
+WN = AOD / "webnovel"   # 2026-09-15 main 병합 — 예전 별도 사본(/home/ubuntu/aod-webnovel) 대신 리포 안
 
 
 def _num(v, default=0):

@@ -6,7 +6,7 @@ set -u
 HERE="$(cd "$(dirname "$0")" && pwd)"
 AOD="$HERE/.."
 PY_AOD="$AOD/steam/.venv/bin/python"
-PY_WN="/home/ubuntu/aod-webnovel/recommendation/webnovel/.venv/bin/python"
+PY_WN="$AOD/webnovel/.venv/bin/python"   # main 병합 후 리포 안 (.venv = steam venv 링크)
 LOG="${TMPDIR:-/tmp}/aod-tryout"; mkdir -p "$LOG"
 
 declare -A PORT=([steam]=8011 [tmdb]=8012 [webnovel]=8013 [webtoon]=8014)
