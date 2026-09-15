@@ -36,6 +36,7 @@ def run_multi(
     postprocess: bool = False,
     postprocess_kwargs: dict | None = None,
     exclude_ids: set[int] | list[int] | None = None,
+    drop_excluded_series: bool | None = None,   # None = PRODUCTION (W-6)
 ) -> dict[str, dict]:
     """`postprocess=True` 면 랭킹 뒤에 다양성 후처리(시드 인터리빙·시리즈 상한·hard filter)를 건다.
 
@@ -69,6 +70,12 @@ def run_multi(
         if postprocess:
             from src.postprocess import postprocess as apply_postprocess
 
+            dx = PRODUCTION["drop_excluded_series"] if drop_excluded_series is None else drop_excluded_series
+            if dx and excluded:
+                # 제외는 id 로만 된다. 시드·이미 본 작품의 **다른 판본**(작가|제목 키가 같은 것)도 뺀다 —
+                # 없으면 1페이지에 시드 판본이, 2·3페이지에 앞 페이지 작품의 판본이 다시 뜬다(W-6).
+                from src.postprocess import drop_seed_series
+                ranked = drop_seed_series(ranked, ranker.dataset.reset_index(), list(excluded))
             ranked = apply_postprocess(
                 ranked, ranker.dataset.reset_index(), top_n=top_n,
                 **(postprocess_kwargs or {}),
@@ -116,6 +123,7 @@ def next_page(
     components: tuple | None = None,
     postprocess: bool = True,
     min_interest_count: int | None = REFRESH_MIN_INTEREST,
+    drop_excluded_series: bool | None = None,   # None = PRODUCTION (W-6)
 ):
     """새로고침 한 번 = 이 함수 한 번. 서빙이 쓸 계약을 코드로 고정한다.
 
@@ -159,6 +167,7 @@ def next_page(
         postprocess=postprocess,
         postprocess_kwargs={"min_interest_count": min_interest_count},
         exclude_ids=seen,
+        drop_excluded_series=drop_excluded_series,
     )[strategy]
     return ranked.head(page_size).reset_index(drop=True)
 

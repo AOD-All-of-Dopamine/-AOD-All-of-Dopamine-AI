@@ -81,6 +81,25 @@ class TestExclusionContract:
             seen |= ids
 
 
+class TestEditionExclusion:
+    def test_excluded_series_drop_removes_seed_editions_and_cross_page_repeats(self, components, seeds, dataset):
+        """W-6: 제외가 id 로만 되면 시드 판본이 1페이지에, 앞 페이지 작품의 판본이 뒤 페이지에 뜬다."""
+        from src.personalized_retrieve import next_page
+        from src.postprocess import series_group
+
+        meta = dataset.set_index("item_id")
+        key = lambda i: series_group(str(meta.loc[i, "name"]), str(meta.loc[i, "publisher"] or ""),
+                                     str(meta.loc[i, "author"] or ""))
+        banned = {key(s) for s in seeds}
+        seen: set[int] = set()
+        for _ in range(3):
+            page = next_page(seeds, seen_ids=seen, page_size=10, components=components, drop_excluded_series=True)
+            keys = [key(i) for i in page["item_id"]]
+            assert not set(keys) & banned, "시드 또는 앞 페이지 작품의 판본이 나왔다"
+            banned |= set(keys)
+            seen |= set(page["item_id"])
+
+
 class TestDiversity:
     def test_no_single_seed_dominates_a_page(self, components, seeds):
         """한 시드가 Top-100 의 73%를 먹던 문제. 인터리빙이 이걸 막아야 한다."""
