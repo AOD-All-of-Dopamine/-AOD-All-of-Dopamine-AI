@@ -21,8 +21,27 @@ def creators_of(r) -> frozenset:
     return frozenset(x.strip() for x in str(getattr(r, "author", "") or "").split("/") if x.strip())
 
 
+def clean_tags(ds: pd.DataFrame, drop_genre: bool = False) -> list:
+    """작품별 태그 집합. 표현(`text_builder`)과 같은 정지어 규칙.
+
+    `drop_genre=True` (T-10 축) — 작품 **자신의 장르명과 같은 태그**도 뺀다. `text_builder` 는 이미 뺀다.
+    웹툰 30%(1,098편)는 정제 후 태그가 장르명 하나뿐이라(`드라마` · `로맨스` …) 그런 시드가 끼면
+    같은 장르 전 작품이 피복 1.0 을 받아 `tag_w` 가 장르 보너스로 포화한다(67프로필 중 50개).
+    """
+    from src.text_builder import _TAG_STOP, _TAG_STOP_PREFIX
+    tags = ds.get("tags", pd.Series([None] * len(ds)))
+    genres = ds.get("genres", pd.Series([None] * len(ds)))
+    out = []
+    for t, g in zip(tags, genres):
+        xs = t if t is not None and not isinstance(t, str) else ([t] if t else [])
+        gs = set(g) if (drop_genre and g is not None and not isinstance(g, str)) else ({g} if drop_genre and g else set())
+        out.append(frozenset(x for x in xs if x not in _TAG_STOP and not str(x).startswith(_TAG_STOP_PREFIX) and x not in gs))
+    return out
+
+
 class PersonalizedRanker:
-    def __init__(self, dataset: pd.DataFrame, pop_boost=0.0, star_boost=0.0, tag_w=0.0, creator_w=0.0):
+    def __init__(self, dataset: pd.DataFrame, pop_boost=0.0, star_boost=0.0, tag_w=0.0, creator_w=0.0,
+                 tag_drop_genre=False):
         self.ds = dataset.reset_index(drop=True)
         self.pop_boost, self.star_boost, self.tag_w = pop_boost, star_boost, tag_w
         # T-7 축. **임베딩 텍스트에 작가가 없다**(제목·장르·태그·줄거리, 작가명은 줄거리 홍보문구에
@@ -37,10 +56,7 @@ class PersonalizedRanker:
         # 태그 피복은 **표현과 같은 정지어 규칙**을 쓴다. `완결로맨스` 같은 라벨을 세면
         # 피복률이 "같은 장르 + 같은 연재 상태"를 재게 된다 — 취향 신호가 아니다 (T-3 전에 고침).
         from src.text_builder import _TAG_STOP, _TAG_STOP_PREFIX
-        def _clean(t):
-            xs = t if t is not None and not isinstance(t, str) else ([t] if t else [])
-            return frozenset(x for x in xs if x not in _TAG_STOP and not str(x).startswith(_TAG_STOP_PREFIX))
-        self._tags = [_clean(t) for t in self.ds.get("tags", pd.Series([None] * len(self.ds)))]
+        self._tags = clean_tags(self.ds, drop_genre=tag_drop_genre)
 
     def rank(self, sim: np.ndarray, *, exclude_ids=None, seed_tags=None, top_n=200,
              dominant=None, seed_creators=None) -> pd.DataFrame:

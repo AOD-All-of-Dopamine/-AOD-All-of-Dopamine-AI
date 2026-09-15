@@ -20,11 +20,9 @@ class Engine:
         self.row = {int(v): i for i, v in enumerate(self.ds["item_id"])}
         self.centroid = self.emb.mean(axis=0)
         self.centroid /= (np.linalg.norm(self.centroid) + 1e-9)
-        from src.text_builder import _TAG_STOP, _TAG_STOP_PREFIX   # 랭커와 같은 정지어 규칙
-        def _clean(t):
-            xs = t if t is not None and not isinstance(t, str) else ([t] if t else [])
-            return frozenset(x for x in xs if x not in _TAG_STOP and not str(x).startswith(_TAG_STOP_PREFIX))
-        self._tags = [_clean(t) for t in self.ds.get("tags", pd.Series([None] * len(self.ds)))]
+        from src.personalization.personalized_ranker import clean_tags   # 랭커와 같은 정지어 규칙
+        self._tags = clean_tags(self.ds)                    # 현행
+        self._tags_ng = clean_tags(self.ds, drop_genre=True)  # T-10 축: 장르명 태그 제외
 
     # ── 검색 ──
     def similarity(self, seed_ids, hub_lambda=None) -> np.ndarray:
@@ -49,7 +47,7 @@ class Engine:
         return np.sort(sim, axis=0)[-2:].mean(axis=0)      # top2_mean
 
     def recommend(self, seed_ids, k=50, exclude=None, *, strategy=None, pop_boost=None,
-                  star_boost=None, tag_w=None, hub_lambda=None, creator_w=None, **pp):
+                  star_boost=None, tag_w=None, hub_lambda=None, creator_w=None, tag_drop_genre=None, **pp):
         seed_ids = [int(s) for s in seed_ids if int(s) in self.row]
         if not seed_ids:
             return pd.DataFrame(columns=["item_id", "name", "rank"])
@@ -59,13 +57,16 @@ class Engine:
         dominant = [seed_ids[i] for i in sim.argmax(axis=0)]
         # 명시적 0 은 0 이다 — `or` 는 0.0 을 설정 기본값으로 바꿔 버린다 (TMDB 하네스 D-55 와 같은 함정).
         tag_w = PRODUCTION["tag_w"] if tag_w is None else tag_w
-        seed_tags = [self._tags[self.row[s]] for s in seed_ids] if tag_w else None
+        tdg = PRODUCTION["tag_drop_genre"] if tag_drop_genre is None else tag_drop_genre
+        tags = self._tags_ng if tdg else self._tags
+        seed_tags = [tags[self.row[s]] for s in seed_ids] if tag_w else None
         r = PersonalizedRanker(
             self.ds,
             pop_boost=PRODUCTION["pop_boost"] if pop_boost is None else pop_boost,
             star_boost=PRODUCTION["star_boost"] if star_boost is None else star_boost,
             tag_w=PRODUCTION["tag_w"] if tag_w is None else tag_w,
             creator_w=PRODUCTION["creator_w"] if creator_w is None else creator_w,
+            tag_drop_genre=tdg,
         )
         ex = set(seed_ids) | set(int(x) for x in (exclude or []))
         # **후보 풀 깊이를 k 에 묶지 않는다.** 세 플랫폼은 전부 `rank_n = k × 상수` 라
