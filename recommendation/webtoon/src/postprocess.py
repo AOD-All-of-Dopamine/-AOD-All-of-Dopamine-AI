@@ -97,9 +97,11 @@ def interleave_by_seed(ranked: pd.DataFrame, top_n: int = 100) -> pd.DataFrame:
 
 
 def postprocess(df, dataset, top_n=50, seed_ids=None, series_max=1, artist_max=2,
-                drop_adult=True, interleave=True):
+                drop_adult=True, interleave=True, drop_series_ids=None):
     df = apply_hard_filters(df, dataset, drop_adult)
     if seed_ids: df = drop_seed_series(df, dataset, seed_ids)
+    # 싫어요한 작품의 다른 시즌·외전도 뺀다. series_key 한계: 제목 끝에 숫자가 붙은 속편은 못 묶는다.
+    if drop_series_ids: df = drop_seed_series(df, dataset, drop_series_ids)
     if series_max: df = cap_series(df, dataset, series_max)
     if artist_max: df = cap_artist(df, dataset, artist_max)
     if interleave: df = interleave_by_seed(df, top_n)
