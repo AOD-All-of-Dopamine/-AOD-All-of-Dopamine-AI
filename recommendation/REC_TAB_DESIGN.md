@@ -639,6 +639,82 @@ CREATE TABLE aod_log.event_default PARTITION OF aod_log.event DEFAULT;
   이 경로는 재임베딩 배치(§8-5b)가 채우고, 엔진 컨테이너는 읽기 전용으로 마운트한다. 코퍼스 갱신 = 새 버전 폴더 + 환경변수 교체 + 재시작, 되돌리기 = 이전 폴더.
   지금 아티팩트는 git 에 없고(네 플랫폼 모두 `.gitignore`) 개발 머신에만 있다 — 재임베딩 배치가 생기기 전까지는 이 파일이 유일본이다.
 
+#### 빌드와 코퍼스를 분리한다 — 서로 기다리지 않는다
+이미지는 **코드만**, 코퍼스는 **볼륨**이다. 그래서 크롤러 필드 추가·재임베딩·재평가(§8-5b)를 기다리지 않고 이미지를 만들고 검증한다.
+
+| 작업 | 막는 것 | 이미지 빌드를 막나 |
+|---|---|---|
+| 엔진 서비스 코드 · 라우터 · 의존성 파일 · Dockerfile · 스키마 계약 | 이미지 빌드 | **예** |
+| 크롤러 필드 추가 · 재임베딩 배치 | 새 코퍼스 생성 | 아니요 |
+| 새 코퍼스 P@k 회귀 판정 | 새 코퍼스로 **사용자에게** 서빙 | 아니요 |
+
+```
+[서빙]  서비스 코드 → 의존성·Dockerfile → 빌드 → 로컬 compose → 동일성 테스트 → 부하·메모리 관문 → 팀 내부 공개
+                                                                               (지금 코퍼스로)
+[데이터] 크롤러 필드 추가 → 재크롤 → 재임베딩 배치 → 결측 리포트 → P@k 회귀 판정 → 코퍼스 폴더 교체 → 전체 공개
+```
+- **지금 코퍼스(tags_full·tmdb_v1·wt_v1·wn_v6)가 서빙 쪽 기준이다.** 동일성 테스트(서비스 결과 == 평가 목록)는 평가를 한 이 코퍼스로만 할 수 있다.
+- 팀 내부 공개도 지금 코퍼스로 한다. 코퍼스에만 있고 사이트에 없는 작품은 카드 조립 단계에서 빠진다(§4-2 `k+buffer`).
+- 새 코퍼스가 판정을 통과하면 **폴더와 `CORPUS_VERSION` 만 바꾼다.** 코드를 바꿔야 하는 경우는 아래 "재빌드가 필요한 경우"뿐이다.
+
+#### 아티팩트 스키마 계약
+코퍼스를 바꿀 때 코드까지 바뀌면 분리한 의미가 없다. **재임베딩 배치가 지켜야 하고 엔진이 기동 시 검증하는 계약**을 둔다.
+
+**폴더 구조**
+```
+/srv/aod-artifacts/{platform}/{corpus_version}/
+  manifest.json            # 아래 필드
+  corpus_embeddings.npy    # (N, 1024) float32, 행마다 L2 정규화
+  corpus_index.parquet     # embedding_row(int64, 0..N-1 연속) · 키 · name
+  dataset.parquet          # 플랫폼별 필수 컬럼 (아래 표), N행, 키 유일
+  config.json              # 코퍼스별 설정 덮어쓰기 (선택, 아래)
+  {플랫폼별 부가 파일}      # 아래 표
+```
+`manifest.json`: `platform` · `corpus_version` · `schema_version` · `embedding_model`(Qwen3-Embedding-0.6B) · `dim` · `rows` · `text_builder_version` · `source`(백엔드 크롤링 기준 시각) · `created_at` · 파일별 `sha256`.
+
+**플랫폼별 필수 파일·컬럼** (현행 아티팩트와 엔진 코드가 읽는 컬럼 기준. 계약 파일 작성 시 엔진 테스트로 확정)
+| 플랫폼 | 키 | dataset 필수 컬럼 | 부가 파일 |
+|---|---|---|---|
+| Steam | `steam_appid` int64 | name · short_description · genres · **tags(투표순)** · categories · publisher · developer · recommendations_total(Int64) · has_recommendations · metacritic_score(Int64) · has_metacritic · coming_soon · content_descriptorids | `reviews/*.parquet`(steam_appid · total_positive · total_negative · total_reviews) · `trend_features.parquet`(steam_appid · trend_signal) |
+| TMDB | `item_id` str (`movie_{id}`/`tv_{id}`) | tmdb_id · media · name · overview · overview_len · lang · genres · **keywords** · vote_count · vote_average · date · adult | `directors.parquet`(`director_w>0` 일 때만) |
+| 웹툰 | `item_id` int64 | name · synopsis · genres · **tags** · author · artists · favorite_count · star_score · episode_count · adult · age_type · finished · rest · url | — |
+| 웹소설 | `item_id` int64 | name · synopsis · genres · author · publisher · age_limit · interest_count(Int64) · episode_count(Int64) · rating · status · is_completed · url | — |
+
+- **코드 변경 필요**: Steam 랭커는 리뷰·트렌드 파일을 코퍼스 폴더 밖 **고정 경로**(`steam/artifacts/reviews`, `steam/artifacts/trend_v2` — `personalized_ranker.py:7-8`)에서 읽는다 → 코퍼스 폴더 안의 부가 파일로 옮긴다. 이 폴더들이 코퍼스와 따로 놀면 같은 `corpus_version` 이라도 결과가 달라진다.
+- **검증 (엔진 기동 시)**: manifest·sha256 · 필수 컬럼·타입 · `rows` == 임베딩 행 수 == dataset 행 수 · `embedding_row` 연속 · 키 유일 · 임베딩 노름 ≈ 1. 하나라도 실패하면 **`/health` 가 준비 안 됨** — 반쯤 맞는 코퍼스로 서빙하지 않는다.
+- **결측 허용 규칙**: 컬럼 값이 비어도 되지만(예: 옛 영화의 vote_average), **컬럼 자체가 없거나 전부 비었으면 그 컬럼에 의존하는 보정 항이 `config.json` 에서 꺼져 있어야** 한다(예: tags 없음 ⇒ `tag_w: 0`). 검증이 설정과 컬럼을 교차 확인한다.
+- 계약 파일: 리포에 `recommendation/schemas/{platform}.v{n}.json` 으로 버전 관리. 재임베딩 배치는 **같은 검증을 통과해야 폴더를 게시**하고, 임시 폴더에 쓴 뒤 이름을 바꿔 원자적으로 게시한다.
+
+#### 코퍼스별 설정 덮어쓰기
+크롤러에 없는 필드 때문에 보정 항을 꺼야 할 때 이미지를 다시 빌드하지 않는다.
+
+```json
+{
+  "production":  { "tag_w": 0.0 },
+  "postprocess": {},
+  "verdict":     { "id": "D-xx", "preregister_md5": "…" },
+  "approved":    true
+}
+```
+- 코드 기본값 = 현재 확정값(`PRODUCTION`). `config.json` 은 **허용된 키만** 덮어쓴다(오타·임의 키는 기동 실패).
+- `config.json` 이 없으면 기본값 — 지금 코퍼스가 이 경우다.
+- **"새 코퍼스 + 그 코퍼스에서 판정받은 설정"이 한 폴더에 묶여** 함께 교체되고 함께 되돌려진다.
+- 운영 모드(`SERVING_MODE=prod`)에서는 `approved: true` 와 `verdict` 가 없는 **새** 코퍼스를 거부한다. 스테이징은 허용.
+- 실제 적용된 설정의 해시를 `/health` 와 응답 `versions` 에 싣는다 → `rec_request.versions` 로 로그에 남는다.
+
+#### 재빌드가 필요한 경우
+| 바뀐 것 | 필요한 조치 |
+|---|---|
+| 코퍼스 갱신 (같은 스키마) | 폴더 교체 + 재시작 — **재빌드 없음** |
+| 보정 항 켜기/끄기·계수 변경 (판정 후) | `config.json` — **재빌드 없음** |
+| 스키마 버전 변경 (컬럼 추가·의미 변경) | 엔진 코드 + 계약 파일 → 재빌드 |
+| 새 보정 항·후처리 규칙 | 엔진 코드 → 재빌드 + 사전등록 판정 |
+| 엔진 버그 수정 | 재빌드 + 동일성 테스트 |
+
+#### 배치 이미지는 따로
+- 텍스트 조립(`text_builder.py`)·임베딩 모델은 **재임베딩 배치 이미지**(`aod-rec-embed`)에만 들어간다. 서빙 이미지에는 임베딩 모델이 없다(요청 시 모델 호출 없음).
+- 배치는 GPU 가 필요할 수 있다 — Steam 17만 편 재임베딩 시간은 미측정.
+
 #### 메모리 — 측정값 (2026-09-15, Steam)
 엔진은 임베딩을 `np.load(..., mmap_mode="r")` 로 연다(`steam/src/personalization/candidate_retriever.py:13`). 적재 시점에는 파일을 주소에만 연결하고 **첫 유사도 계산 때 파일 전체가 읽혀 들어온다.**
 
@@ -739,7 +815,7 @@ networks:
 | 0 | **개인정보 처리방침 갱신** · 삭제 절차 | 법무 확인 · 게시 |
 | 1 | `V8` 스키마 · `LogWriter` · 파티션 작업 · `ReactionService`(이벤트 발행) · `/api/rec-events` | 기존 좋아요 화면에서 `reaction_changed` 이력이 쌓이고 DEFAULT 파티션 0행 |
 | 2 | 트래커 · 상세 체류 · 외부 링크 이벤트 | 기존 화면 이벤트 적재 · 품질 점검 1~4 통과 |
-| 3 | 의존성 고정 파일 · 엔진/라우터 이미지 · 추천 호스트 compose 배포(내부망) · 예열 · 동일성 테스트 · **지연·메모리 관문** | §10 통과 · §8-5 관문 통과 · `mem_limit`·`cpus` 확정 |
+| 3 | 의존성 고정 파일 · **아티팩트 스키마 계약·기동 검증·`config.json` 덮어쓰기** · Steam 리뷰/트렌드 파일 경로를 코퍼스 폴더로 · 엔진/라우터 이미지 · 추천 호스트 compose 배포(내부망) · 예열 · 동일성 테스트 · **지연·메모리 관문** — **지금 코퍼스로 진행 (§8-5b 재임베딩을 기다리지 않음)** | §10 통과 · §8-5 관문 통과 · `mem_limit`·`cpus` 확정 |
 | 4 | `corpus_map`·커버리지 리포트 · 추천 API(시드·체인·카드·대체·서킷) | 테스트 계정으로 탭별 응답 · 대체 경로 강제 시험 |
 | 5 | 추천 탭 · 노출 추적 · 반응 상태 API · 관심 없음 — **기능 플래그로 팀만** | 팀 내부 1주 사용 · 지표 대시보드 확인 |
 | 6 | 온보딩 작품 고르기 · 가입 흐름 | 시드 0 사용자가 추천까지 도달 |
