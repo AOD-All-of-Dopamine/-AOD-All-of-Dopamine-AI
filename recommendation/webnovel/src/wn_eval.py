@@ -113,7 +113,8 @@ class Engine:
                   # `mmr_lambda` 는 **기각된 축이다** (D-53 전역 · D-54 시드묶음).
                   # 1.0 = 끔. 켜지 않는다. 재현·재검증용으로만 남긴다.
                   mmr_lambda=1.0,
-                  postprocess_on=True, exclude=None) -> pd.DataFrame:
+                  postprocess_on=True, exclude=None,
+                  series_by=None) -> pd.DataFrame:           # None = PRODUCTION["series_by"] (W-5)
         pop_boost = PRODUCTION["pop_boost"] if pop_boost is None else pop_boost
         author_w = PRODUCTION["author_w"] if author_w is None else author_w
         rows = [self.id_to_row[i] for i in seed_ids]
@@ -153,9 +154,9 @@ class Engine:
 
         if postprocess_on:
             from src.postprocess import drop_seed_series
-            out = drop_seed_series(df.head(k * 8), self.ds, seed_ids)
+            out = drop_seed_series(df.head(k * 8), self.ds, seed_ids, series_by=series_by)
             out = self.mmr_by_seed(out, mmr_lambda)      # D-54. 묶음 **안**에서만
-            return pp(out, self.ds, top_n=k).head(k).reset_index(drop=True)
+            return pp(out, self.ds, top_n=k, series_by=series_by).head(k).reset_index(drop=True)
         return self.mmr(df.head(k * 8), k, mmr_lambda)
 
 

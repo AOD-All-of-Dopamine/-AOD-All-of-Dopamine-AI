@@ -60,6 +60,20 @@ class TestSeriesGroup:
         """대형 출판사 다작이 통째로 한 그룹이 되면 안 된다."""
         assert series_group("검신", "아르데오") != series_group("마탑주", "아르데오")
 
+    def test_author_key_merges_editions_across_publisher_spellings(self):
+        """W-5: wn_v6 실례 — 같은 작품 판본의 출판사 표기가 다르다."""
+        a = series_group("재벌집 천재가 되었다", "제이플미디어", "새가람", by="author")
+        b = series_group("재벌집 천재가 되었다", "제이플러스 ", "새가람", by="author")
+        assert a == b
+        assert series_group("재벌집 천재가 되었다", "제이플미디어", "새가람", by="publisher") != \
+               series_group("재벌집 천재가 되었다", "제이플러스 ", "새가람", by="publisher")
+
+    def test_author_key_keeps_same_title_by_different_authors_apart(self):
+        assert series_group("검신", "P", "김작가", by="author") != series_group("검신", "P", "이작가", by="author")
+
+    def test_author_key_falls_back_to_publisher_without_author(self):
+        assert series_group("검신", "아르데오", "", by="author") == series_group("검신", "아르데오", by="publisher")
+
 
 class TestHardFilters:
     def test_drops_19_rated(self):
@@ -113,6 +127,14 @@ class TestCapSeries:
         ])
         out = cap_series(make_ranked([2, 1]), ds, series_max=1)
         assert list(out["item_id"]) == [2]
+
+    def test_author_mode_caps_editions_with_different_publishers(self):
+        ds = make_dataset([
+            (1, "튜토리얼이 너무 어렵다", "제이플러스미디어", "gandara", 0, 100),
+            (2, "튜토리얼이 너무 어렵다", "제이플미디어", "gandara", 0, 100),
+        ])
+        assert len(cap_series(make_ranked([1, 2]), ds, series_max=1, series_by="publisher")) == 2
+        assert list(cap_series(make_ranked([1, 2]), ds, series_max=1, series_by="author")["item_id"]) == [1]
 
 
 class TestCapAuthor:

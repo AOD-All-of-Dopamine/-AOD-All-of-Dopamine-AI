@@ -12,7 +12,7 @@ import re
 
 import pandas as pd
 
-from src.config import artifact_dir
+from src.config import artifact_dir, PRODUCTION
 
 # 성인물은 크롤 단계에서 이미 빠지지만(19금은 상세 진입 자체가 막힘) 목록 경로가 바뀌면
 # 샐 수 있어 여기서도 막는다. Steam 의 ADULT_GENRES 자리.
@@ -44,14 +44,22 @@ def series_key(name: str) -> str:
     return " ".join(toks[:2]) if toks else str(name).lower()
 
 
-def series_group(name: str, publisher: str = "") -> str:
-    """시리즈 식별자. 출판사가 있으면 `출판사|이름앞부분` 으로 더 정확해진다.
+def series_group(name: str, publisher: str = "", author: str = "", by: str | None = None) -> str:
+    """시리즈 식별자.
 
-    웹소설은 Steam 보다 출판사 신호가 강하다 — 같은 작품의 [독점]/[단행본]/개정판이
-    같은 출판사에서 나오기 때문이다. 다만 대형 출판사가 다작을 하므로 이름 첫 어절을
-    함께 남겨서 한 출판사 전체가 한 그룹으로 뭉치는 것을 막는다.
+    `by="publisher"` (현행) — `출판사|이름 첫 어절`. 전제는 "같은 작품의 [독점]/[단행본]/개정판이
+    같은 출판사에서 나온다"였다. 대형 출판사 다작이 한 그룹으로 뭉치지 않게 첫 어절을 남긴다.
+
+    `by="author"` (W-5 후보) — `작가|series_key`. **wn_v6 에서 위 전제가 깨진다**: 같은 작품 판본이
+    `제이플미디어`/`제이플러스` 처럼 출판사 표기가 달라 서로 다른 시리즈로 갈라지고,
+    시드와 똑같은 작품이 추천되거나 한 목록에 두 번 나온다(52프로필 top-10 에코 11 · 중복 5).
+    작가가 없으면 출판사 키로 돌아간다.
     """
+    by = PRODUCTION["series_by"] if by is None else by
     key = series_key(name)
+    au = str(author or "").strip().lower()
+    if by == "author" and au:
+        return f"a:{au}|{key}"
     pub = str(publisher or "").strip().lower()
     if not pub:
         return key
@@ -93,7 +101,7 @@ def apply_hard_filters(
     return df[keep].reset_index(drop=True)
 
 
-def drop_seed_series(df: pd.DataFrame, dataset: pd.DataFrame, seed_ids) -> pd.DataFrame:
+def drop_seed_series(df: pd.DataFrame, dataset: pd.DataFrame, seed_ids, series_by: str | None = None) -> pd.DataFrame:
     """시드 작품의 외전·후속부를 추천에서 뺀다.
 
     2026-08-22 사용자 피드백(Steam 문명 VI→VII 사례와 동일 규칙): 좋아한 작품의
@@ -106,14 +114,15 @@ def drop_seed_series(df: pd.DataFrame, dataset: pd.DataFrame, seed_ids) -> pd.Da
     meta = dataset.set_index("item_id") if "item_id" in dataset.columns else dataset
     def grp(i):
         r = meta.loc[int(i)]
-        return series_group(str(r.get("name", "")), str(r.get("publisher", "")))
+        return series_group(str(r.get("name", "")), str(r.get("publisher", "")),
+                            str(r.get("author", "") or ""), by=series_by)
     seed_groups = {grp(i) for i in seed_ids}
     # 시드 자체는 상위에서 이미 제외되므로 여기서는 시리즈 동료만 거른다
     keep = [g not in seed_groups for g in (grp(i) for i in df["item_id"])]
     return df[pd.Series(keep, index=df.index)].reset_index(drop=True)
 
 
-def cap_series(df: pd.DataFrame, dataset: pd.DataFrame, series_max: int = 1) -> pd.DataFrame:
+def cap_series(df: pd.DataFrame, dataset: pd.DataFrame, series_max: int = 1, series_by: str | None = None) -> pd.DataFrame:
     """같은 시리즈를 최대 series_max 개만 남긴다.
 
     인터리빙은 각 시드의 최근접을 끌어올리는데, 웹소설에서 시드의 최근접은 거의 항상
@@ -123,10 +132,13 @@ def cap_series(df: pd.DataFrame, dataset: pd.DataFrame, series_max: int = 1) -> 
         return df.reset_index(drop=True)
     meta = dataset.set_index("item_id") if "item_id" in dataset.columns else dataset
     has_pub = "publisher" in meta.columns
+    has_au = "author" in meta.columns
     keys = df["item_id"].map(
         lambda i: series_group(
             meta["name"].get(i, ""),
             meta["publisher"].get(i, "") if has_pub else "",
+            meta["author"].get(i, "") if has_au else "",
+            by=series_by,
         )
     )
     seen: dict[str, int] = {}
@@ -206,13 +218,14 @@ def postprocess(
     author_max: int = 2,
     hard_filters: bool = True,
     min_interest_count: int | None = None,
+    series_by: str | None = None,
 ) -> pd.DataFrame:
     """스펙 §5.4 순서: hard filter → 시리즈/작가 상한 → 다양성 → Top-N."""
     df = ranked
     if hard_filters:
         df = apply_hard_filters(df, dataset, min_interest_count=min_interest_count)
     if series_max:
-        df = cap_series(df, dataset, series_max)
+        df = cap_series(df, dataset, series_max, series_by=series_by)
     if author_max:
         df = cap_author(df, dataset, author_max)
     if seed_interleave:
