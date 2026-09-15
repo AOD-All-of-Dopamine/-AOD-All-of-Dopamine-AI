@@ -134,6 +134,10 @@ class TestQualityFloor:
         """
         from src.personalized_retrieve import REFRESH_MIN_INTEREST, next_page
 
+        if REFRESH_MIN_INTEREST is None:
+            # D-62 에서 하한을 껐다(걸면 버리는 쪽이 더 낫다). 끈 하한은 검사할 대상이 없다 —
+            # 예전엔 여기서 `int >= None` 으로 TypeError 가 났다.
+            pytest.skip("REFRESH_MIN_INTEREST=None (D-62) — 품질 하한이 꺼져 있다")
         meta = dataset.set_index("item_id")["interest_count"]
         seen: set[int] = set()
         for page_no in range(1, 4):
