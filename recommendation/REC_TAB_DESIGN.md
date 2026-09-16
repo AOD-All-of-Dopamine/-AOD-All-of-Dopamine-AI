@@ -1,7 +1,10 @@
 # 추천 탭 설계 — 화면 · 로그 · 백엔드 · 프론트 · 추천 서비스
 
-- 상태: **v2.1** — v1 초안을 코드 대조 리뷰(23건)로 고친 판(부록 B) + §8-6 서빙 컨테이너 구성(메모리 실측 반영)
-- 작성: 2026-09-15
+- 상태: **v2.3** (2026-09-16) — 변경 이력
+  - v1 → **v2**: 코드 대조 독립 리뷰 23건 반영 (부록 B)
+  - **v2.1**: §8-6 서빙 컨테이너 구성 · 메모리 실측 · 아티팩트 스키마 계약 · 코퍼스별 설정 덮어쓰기 · 백엔드 크롤링 필드 차이(§8-5b)
+  - **v2.3**: 자체 검토 12건 반영 — DEFAULT 파티션 누락 · `hasMore` 규칙 충돌 · 없는 라이브러리 전제(Resilience4j·Guava) · 대체 응답 로깅 · `user_agent` 보관 방식 · 부하 관문 시드 축 · 버퍼 탈락 기록 · 경보 문턱 · 구현 체크리스트(부록 C)
+- 작성: 2026-09-15 · 최종 수정: 2026-09-16
 - 관련 문서: `INDUSTRY_COMPARISON.md`(유튜브·당근 사례) · `TRANSITION_ROADMAP.md`(로그 기반 전환 단계) · `crossdomain/DESIGN.md`(플랫폼 혼합)
 - 대상 시스템: 프론트 `allofdophamin.com`(Vite + React SPA) · 백엔드 `-AOD-All-of-Dopamine-back`(Spring Boot 3.4, Java 17, PostgreSQL) · 추천기 이 리포(Python, 플랫폼 4개)
 - **이 문서가 로그 테이블·이벤트 이름·지표의 기준이다.** `TRANSITION_ROADMAP.md` §8 은 근거 조사이고, 이름은 이 문서를 따른다.
@@ -36,6 +39,10 @@
 | 추천 API | main 에 없음. `feature/m2-recommend-serving` 브랜치에 뼈대 — 익명 콜드스타트만, 로그는 요청 스레드에서 작품마다 동기 INSERT, `V4` 번호가 main 과 충돌 |
 | 인증·보안 | JWT(subject = username), 컨트롤러가 헤더 직접 파싱. `SecurityConfig` 전부 `permitAll`. 회원 탈퇴 API 없음 |
 | HTTP 클라이언트 | `RestTemplate` 빈에 타임아웃 없음 (`RestTemplateConfig.java:15-16`) |
+| 백엔드 의존성 | api 모듈 `build.gradle` 의존성 35개에 **서킷 브레이커(Resilience4j)·Guava 없음**. actuator·micrometer-prometheus 는 있다 → 서킷·해시는 **새 의존성 없이** 구현한다(§6-2·§5-5) |
+| 추천기 저장소 | 네 플랫폼 모두 이 리포 `recommendation/` 아래 — 웹소설은 2026-09-15 `main` 병합(merge `6bd8542`). 옛 사본 `/home/ubuntu/aod-webnovel` 은 치웠고, 옛 경로를 쓰는 봉인된 평가 스크립트 38개는 그대로 둔다 |
+| 추천기 — 기본 코퍼스 | 환경변수 없을 때: Steam `tags_full` · TMDB `tmdb_v1` · 웹툰 `wt_v1` · 웹소설 **`wn_v6`**(2026-09-16 `wn_v1`→`wn_v6` 수정, 확정값을 잰 코퍼스로 맞춤) |
+| 추천기 — 싫어요 감점 | Steam `w=2.0`(미채점) · 웹툰 **`dislike_w=0`**(T-11 기각 — 닮은 작품 감소 0.54~0.62배로 문턱 0.50 미달) · TMDB·웹소설 인자 없음 |
 | DB 마이그레이션 | api 모듈 Flyway V1·V3~V6 (V7 은 `perf/works-review-count-index` 가 선점). 크롤러 모듈에도 V2·V3 파일이 있으나 크롤러는 Flyway 를 쓰지 않는다 |
 | 추천기 — 공통 | 네 플랫폼 모두 `next_page` 와 주도 시드(`dominant_seed`) 계산이 있고 후처리에 난수가 없어 **같은 입력이면 같은 결과** |
 | 추천기 — 프로세스 | 네 플랫폼 모두 최상위 패키지가 `src` 이고 `os.chdir`·`AOD_ARTIFACTS` 환경변수를 쓴다 → **한 프로세스에 둘 이상 적재할 수 없다** (시험대가 플랫폼마다 프로세스를 따로 띄우는 이유) |
@@ -125,6 +132,9 @@
   넷플릭스도 "최근에 추천받은 것을 다시 찾을 수 있어야 한다"며 안정성을 명시했다.
   목록은 좋아요·싫어요·관심 없음이 바뀌면 **다음 "더 보기"부터**, 새 체인은 첫 페이지부터 달라진다.
 - 칩을 바꾸면 칩마다 체인이 따로다.
+- **체인 상한 500개(=25페이지)**: `rec_chain.seen_ids` 가 500 에 닿으면 `hasMore=false` 로 끝낸다. 화면은 "더 보기" 대신
+  **"여기까지 봤어요 — 좋아요를 더 담으면 새로 추천해드려요"** 와 `새로 보기`(새 체인 시작) 버튼을 보여준다.
+  실제로 25페이지까지 내려가는 사용자는 드물지만, 규칙이 없으면 `seen` 이 무한히 커져 요청마다 배열을 통째로 넘기게 된다.
 
 ### 2-7. 빈 상태 · 오류 · 대체
 | 상황 | 화면 | `fallback_reason` |
@@ -137,6 +147,8 @@
 | 더 볼 작품 없음 | "더 보기" 숨김 | — |
 
 - **랭킹 대체 규칙**: `external_ranking` 에서 `content_id` 가 있는 행만(null 제외), 성인 작품 제외. 전체 칩 = 게임·영화·시리즈·웹소설 랭킹을 번갈아 20개. 이유 표시 없음.
+- **대체 응답도 로그에 남긴다**: `rec_request`(`fallback=true`·`fallback_reason`·`experiments={}`)와 `rec_item_served`(`candidate_source="ranking_fallback"`·`propensity=1.0`).
+  비로그인이면 `user_id` 는 null, `anon_id` 는 항상 있다. **대체 응답을 빼면 노출·클릭 분모가 틀어진다** — 추천과 대체를 나눠 보되 둘 다 센다.
 - 당근 동네생활은 추천 엔진이 늦거나 실패하면 후보의 기본 순서로 대체한다.
 
 ---
@@ -246,6 +258,7 @@ POST /v1/recommend
       "versions": { "router": "git sha", "engines": { "tmdb": { "sha": "…", "config": "PRODUCTION 해시", "corpus": "tmdb_v1" } } } }
 ```
 - `k + buffer` 개를 받아, 백엔드가 DB 에 없는 작품·성인 작품을 뺀 뒤 20개를 채운다.
+  **버퍼에서 탈락한 것도 로그에 남긴다** — `rec_item_served(is_served=false, dropped_reason)`. 무엇이 왜 빠졌는지 없으면 커버리지 문제를 추적할 수 없다(구글 Rules of ML #6).
 - `score.factors` 는 플랫폼별 곱셈 인자. 스키마에 버전(`factorSchema`)을 붙인다.
 - `excluded` 는 제외만(감점·시리즈 제외 없음). `disliked` 는 플랫폼 규칙(§8-3).
 
@@ -335,7 +348,7 @@ CREATE TABLE aod_log.rec_request (
   fallback_reason text,
   partial      text[] NOT NULL DEFAULT '{}',
   latency_ms   int,
-  app_version  text, device text, user_agent text,
+  app_version  text, device text,        -- user_agent 는 aod_log.client_agent (아래)
   PRIMARY KEY (request_id, served_at)
 ) PARTITION BY RANGE (served_at);
 
@@ -355,6 +368,8 @@ CREATE TABLE aod_log.rec_item_served (
   is_exploration   boolean NOT NULL DEFAULT false,
   propensity       real NOT NULL DEFAULT 1.0,
   interleave_team  text,
+  is_served        boolean NOT NULL DEFAULT true,   -- false = 버퍼에서 탈락(화면에 안 나감)
+  dropped_reason   text,                            -- not_in_db · adult · dup_content · over_k
   PRIMARY KEY (impression_id, served_at)
 ) PARTITION BY RANGE (served_at);
 
@@ -368,9 +383,18 @@ CREATE TABLE aod_log.event (
   surface       text,
   payload       jsonb NOT NULL DEFAULT '{}',
   client_ts     timestamptz,
-  app_version   text, device text, user_agent text,
+  app_version   text, device text,       -- user_agent 는 aod_log.client_agent (아래)
   PRIMARY KEY (event_id, server_ts)
 ) PARTITION BY RANGE (server_ts);
+
+-- user_agent 는 봇 판별에만 쓰고 90일만 둔다. 로그 본체에 컬럼으로 두면
+-- "90일 뒤 null 로 지우기"가 파티션 전체 UPDATE 가 되어 비싸다 → 세션 단위 별도 테이블 + 파티션 DROP.
+CREATE TABLE aod_log.client_agent (
+  session_id uuid NOT NULL,
+  first_seen timestamptz NOT NULL,
+  user_agent text NOT NULL,
+  PRIMARY KEY (session_id, first_seen)
+) PARTITION BY RANGE (first_seen);       -- 월 파티션, 90일 지나면 DROP
 
 -- 중복 제거: 파티션 PK 로는 event_id 전역 유일을 보장할 수 없다 → 짧은 보관 테이블로 거른다
 CREATE TABLE aod_log.event_seen (event_id uuid PRIMARY KEY, server_ts timestamptz NOT NULL);  -- 7일 보관
@@ -379,8 +403,11 @@ CREATE TABLE aod_log.rejected_event (
   id bigserial PRIMARY KEY, raw jsonb NOT NULL, reason text NOT NULL, server_ts timestamptz NOT NULL
 );                                               -- 1% 표본만 저장 · 30일 보관
 
--- 각 파티션 테이블: DEFAULT 파티션 + 월 파티션
-CREATE TABLE aod_log.event_default PARTITION OF aod_log.event DEFAULT;
+-- 파티션 테이블 **전부** DEFAULT 파티션을 만든다. 하나라도 빠지면 월 파티션이 밀린 순간 그 테이블만 INSERT 가 실패한다.
+CREATE TABLE aod_log.rec_request_default     PARTITION OF aod_log.rec_request     DEFAULT;
+CREATE TABLE aod_log.rec_item_served_default PARTITION OF aod_log.rec_item_served DEFAULT;
+CREATE TABLE aod_log.event_default           PARTITION OF aod_log.event           DEFAULT;
+CREATE TABLE aod_log.client_agent_default    PARTITION OF aod_log.client_agent    DEFAULT;
 ```
 - 인덱스: `rec_request(user_id, served_at)` · `rec_request(chain_id)` · `rec_item_served(request_id)` · `event(impression_id)` · `event(user_id, server_ts)` · `event(session_id)`.
 - **파티션 관리**: Flyway `V8` 은 스키마·DEFAULT·이번 달과 다음 달 파티션만 만든다. 이후는 백엔드 `@Scheduled` 작업이 매일 "다음 2개월 파티션이 없으면 생성", 보관 기간 지난 파티션 `DROP`.
@@ -413,7 +440,9 @@ CREATE TABLE aod_log.event_default PARTITION OF aod_log.event DEFAULT;
 - 모든 시각 UTC. 클라이언트 시각과 서버 수신 시각을 둘 다 저장.
 
 ### 5-5. 실험 배정 (칸만 먼저)
-- 추천은 로그인 사용자만 받으므로 **user_id 로만** 배정한다. `bucket = murmur3_32("{layer}:{salt}:{user_id}") % 10000`.
+- 추천은 로그인 사용자만 받으므로 **user_id 로만** 배정한다.
+  `bucket = SHA-256("{layer}:{salt}:{user_id}") 앞 4바이트를 부호 없는 정수로 % 10000` — JDK `MessageDigest` 로 충분하고 **새 의존성이 필요 없다**(백엔드에 Guava 가 없다, §1-3).
+  레이어마다 salt 를 다르게 둬서 레이어끼리 직교하게 한다(구글 Overlapping Experiments 와 같은 이유).
 - 지금 레이어 `rec_ranker` 하나, 변형 `control` 하나. 응답을 **실제로 만든** 변형을 `rec_request.experiments` 에 남긴다(배정이 아니라 적용 기준 — Spotify). 대체 응답은 `experiments={}`.
 
 ### 5-6. 지표
@@ -433,7 +462,7 @@ CREATE TABLE aod_log.event_default PARTITION OF aod_log.event DEFAULT;
 2. `impression_viewed` → `rec_item_served` 조인율 — **로그 큐 유실(`log_dropped_total`)이 0 인 날만** "보인 수 > 응답 수" 경보를 판정
 3. `card_clicked` 대비 `detail_viewed` 유실률
 4. `rejected_event` 비율 · DEFAULT 파티션 행 수
-5. 봇: user_agent 규칙 + 초당 클릭 수 이상치 → 분석에서 제외(원본 보관)
+5. 봇: `client_agent` 를 `session_id` 로 조인한 user_agent 규칙 + 초당 클릭 수 이상치 → 분석에서 제외(원본 보관)
 6. 지표는 이틀 뒤 확정(늦게 온 이벤트) — 당근은 72시간
 7. 실험을 켠 뒤: 그룹 비율 불일치(SRM) 매일 검정
 
@@ -449,7 +478,7 @@ CREATE TABLE aod_log.event_default PARTITION OF aod_log.event DEFAULT;
 
 ### 5-9. 개인정보
 - **로그 수집을 켜기 전에** 개인정보 처리방침에 수집 항목(행동 이벤트·기기 정보·익명 식별자)·목적(추천 개선)·보관 기간을 반영한다(출시 순서 0단계). 동의가 필요한지는 법무 확인.
-- IP 는 저장하지 않는다. `user_agent` 는 90일 뒤 지운다(파티션 갱신 작업이 컬럼을 null 로).
+- IP 는 저장하지 않는다. `user_agent` 는 로그 본체가 아니라 `aod_log.client_agent`(세션 단위)에만 두고 **90일 지난 파티션을 DROP** 한다.
 - 보관: 원시 요청·이벤트 로그 **1년**(파티션 DROP), 집계는 기간 제한 없음.
 - 삭제: 탈퇴 API 가 아직 없다. 탈퇴 기능을 만들 때 `user_id` 행과 **그 사용자와 같이 쓰인 `anon_id`·`session_id` 행**을 함께 지우는 작업을 포함한다(anon_id 만 남으면 재연결 가능). 그 전까지는 요청 시 운영 스크립트로 삭제.
 
@@ -469,8 +498,8 @@ CREATE TABLE aod_log.event_default PARTITION OF aod_log.event DEFAULT;
 | `RecEventController` | `POST /api/rec-events` (`text/plain` 수용) · 타입 화이트리스트 · 속도 제한 · 거절 표본 저장 |
 | `SeedResolver` | 시드 규칙(§6-4) · 싫어요 · 관심 없음 |
 | `CorpusMapRepository` | content_id ↔ 플랫폼 코퍼스 키 (현재 `corpus_version`) |
-| `ChainService` | `rec_chain` 생성·조회·갱신 (seen 최대 500, 넘으면 `hasMore=false`) |
-| `RecRouterClient` | 전용 `RestTemplate` 빈(연결 300ms · 읽기 2.0초) + 서킷 브레이커(Resilience4j, 30초 창에서 실패 50% → 30초 열림) + 동시 호출 제한(세마포어 20) |
+| `ChainService` | `rec_chain` 생성·조회·갱신. **seen 이 500 에 닿으면 `hasMore=false`**(§2-6 화면 문구·`새로 보기`) · 24시간 지난 체인 정리 |
+| `RecRouterClient` | 전용 `RestTemplate` 빈(연결 300ms · 읽기 2.0초) + **의존성 없는 서킷**(연속 실패 10회 → 30초 열림, 열린 동안 바로 대체, 30초 뒤 1건만 시험) + 동시 호출 제한(세마포어 20). Resilience4j 는 백엔드에 없어 도입하지 않는다(§1-3) |
 | `CardAssembler` | 코퍼스 키 → content_id → `WorkSummaryDTO` 배치 조회 · DB 없음·성인 제외 · 20개 채우기 |
 | `FallbackProvider` | §2-7 랭킹 대체 |
 | `ReasonBuilder` | §2-3 문구·조사 |
@@ -554,7 +583,7 @@ CREATE TABLE aod_log.event_default PARTITION OF aod_log.event DEFAULT;
 - 대상: Steam · TMDB · 웹소설(평가된 그대로). 웹툰 포함은 사전등록 평가 후.
 - 매 페이지: 플랫폼별 `next_page(k=50, seen=그 플랫폼 seen)` → M6 할당·라운드로빈으로 20개.
 - **부족분은 채우지 않는다**(평가된 규칙 유지). 20개 미만이어도 응답한다.
-- `hasMore` = 세 플랫폼 중 하나라도 `exhausted=false`.
+- `hasMore` = (세 플랫폼 중 하나라도 `exhausted=false`) **그리고** 체인 seen < 500. 둘 중 하나라도 어긋나면 `false` — 화면 처리는 §2-6.
 - seen 은 플랫폼별로 나눠 `rec_chain` 에 content_id 로 둔다(백엔드가 `corpus_map` 으로 나눈다).
 
 ### 8-5. 지연 예산
@@ -565,7 +594,8 @@ CREATE TABLE aod_log.event_default PARTITION OF aod_log.event DEFAULT;
 | 백엔드 → 라우터 읽기 | 2.0초 |
 | 라우터 → 엔진 | 1.5초. 늦은 플랫폼은 빼고 `partial` 로 응답 |
 
-- **출시 전 관문**: seen 0·200·500 × 동시 요청 1·5·20 에서 엔진별 `next_page` p95 와 **컨테이너별 상주·최대 메모리(익명·파일 매핑 분리)**를 잰다. 예열 뒤에 잰다(첫 요청은 임베딩 파일 읽기로 느리다 — §8-6).
+- **출시 전 관문**: **시드 1·10·50** × seen 0·200·500 × 동시 요청 1·5·20 에서 엔진별 `next_page` p95 와 **컨테이너별 상주·최대 메모리(익명·파일 매핑 분리)**를 잰다.
+  시드 축을 빼면 안 된다 — 시드는 플랫폼당 50개까지 허용되고(§6-4), Steam 은 시드 50개면 17만 행과의 유사도를 50번 계산한다(측정된 적 없는 구간). 예열 뒤에 잰다(첫 요청은 임베딩 파일 읽기로 느리다 — §8-6).
   라우터 p95 가 1.5초를 넘으면 예산을 조정하거나 Steam 컨테이너를 복제하고, 최대 메모리가 한도의 80% 를 넘으면 `mem_limit` 을 올린다.
 
 ### 8-5b. 코퍼스와 ID 매핑 — 백엔드 크롤링 데이터로 재임베딩
@@ -636,6 +666,7 @@ CREATE TABLE aod_log.event_default PARTITION OF aod_log.event DEFAULT;
   게다가 Steam 쪽은 **버전을 고정하지 않고**(`torch`·`transformers>=4.51.0`·`numpy`…) 임베딩용 `torch`·`transformers`·`sentence-transformers` 까지 포함한다 — 서빙 이미지에는 필요 없는 무거운 의존성이다.
   → **서빙용 고정 목록**(numpy 2.5.1 · pandas 3.0.5 · pyarrow 등, 실제 가상환경 버전으로 고정)과 **배치용 목록**(임베딩 모델 포함)을 나눠 만든다. 네 플랫폼이 한 리포에 있으므로(웹소설 2026-09-15 병합) 이미지 빌드도 한 리포에서 `PLATFORM` 별로 한다.
 - 라우터 이미지는 numpy·pandas 없이 가볍게(HTTP·M6 만).
+- Dockerfile 에 `ENV PYTHONDONTWRITEBYTECODE=1` — 컨테이너 루트가 읽기 전용(`read_only: true`)이라 `__pycache__` 를 못 쓴다.
 - **아티팩트(임베딩·parquet)는 이미지에 넣지 않는다.** Steam 아티팩트만 764MB 라, 넣으면 코드 한 줄 바꿀 때마다 이미지를 다시 받는다.
   **전제: 아티팩트는 추천 호스트의 로컬 경로 `/srv/aod-artifacts/{platform}/{corpus_version}/` 에 있다**(원격 저장소에서 받지 않는다).
   이 경로는 재임베딩 배치(§8-5b)가 채우고, 엔진 컨테이너는 읽기 전용으로 마운트한다. 코퍼스 갱신 = 새 버전 폴더 + 환경변수 교체 + 재시작, 되돌리기 = 이전 폴더.
@@ -785,6 +816,7 @@ services:
       rec-webtoon: { condition: service_healthy }
       rec-webnovel: { condition: service_healthy }
     mem_limit: 256m
+    cpus: 0.5
 
 networks:
   aod-rec: {}
@@ -827,7 +859,7 @@ networks:
 ## 10. 테스트 계획
 | 종류 | 내용 |
 |---|---|
-| **동일성** | 엔진 서비스 `next_page` 결과 == 평가 경로 결과 (각 플랫폼 기준 목록: TMDB X-27 · 웹툰 T-10 n0 · 웹소설 W-6 · Steam X-20). 점수 인자 계측 전후 순서 동일 |
+| **동일성** | 엔진 서비스 `next_page` 결과 == 평가 경로 결과. 기준 목록: TMDB `crossdomain/x27_tmdb_pages.json` · 웹툰 `webtoon/eval/t10_pages.json`(n0) · 웹소설 W-6 · Steam(**기준 파일 확정 필요** — X-20 목록 위치를 찾아 못박는다). 점수 인자 계측 전후 순서 동일 |
 | 계약 | 라우터·엔진 요청/응답 JSON 스키마 · 코퍼스 밖·빈 시드 · `partial` |
 | 백엔드 단위 | 시드 규칙 · 조사 · 반응 상태 전이(좋아요→싫어요→되돌리기=좋아요) · 토글 API 응답 형태 불변 |
 | 백엔드 통합 | Testcontainers PostgreSQL 로 `V8` · 파티션 생성 · `event_seen` 중복 제거 · 체인 seen |
@@ -840,7 +872,7 @@ networks:
 |---|---|
 | 대체 비율 | 10분 평균 > 10% |
 | 부분 응답 | 10분 평균 > 5% |
-| 지연 | 추천 API p95 > 2.5초 |
+| 지연 | 추천 API p95 > **2.0초** (예산 2.5초보다 낮게 — 예산과 같게 두면 정상 운영에서도 울린다) |
 | 로그 유실 | `log_dropped_total` 증가 |
 | DEFAULT 파티션 | 행 수 > 0 |
 | 엔진 | `/health` 실패 · 컨테이너 재시작(OOM 포함) · 메모리 > `mem_limit` 의 85% · 코퍼스 버전 불일치(엔진 ↔ `corpus_map`) |
@@ -920,3 +952,61 @@ v1 을 코드(백엔드·프론트 번들·Python 추천기)와 대조한 독립
 
 리뷰에서 코드로 **맞다고 확인된** v1 주장: 온보딩 `console.log`·링크 0곳 · 프론트 계측 없음 · "볼 수 있는 곳" 외부 링크 · 좋아요 삭제/덮어쓰기 · `WorkSummaryDTO` · JWT 파싱 · m2 브랜치 동기 로그·V4 충돌·V8 · 네 플랫폼 `next_page`·`dominant_seed`·결정성 · 지연·메모리 수치 · `reviews.rating` 0~5 · CORS 헤더 허용 · `external_ranking` 플랫폼 범위.
 리뷰의 "전역 react-query `staleTime` 5분" 지적은 번들에서 확인되지 않아(기본값 0 확인) 전역값과 무관하게 이 쿼리만 설정하는 방식으로 반영했다.
+
+### v2.3 자체 검토 (2026-09-16)
+| # | 문제 | 반영 |
+|---|---|---|
+| 1 | DEFAULT 파티션이 `event` 에만 있어 나머지 두 테이블은 월 파티션이 밀리면 INSERT 실패 | 파티션 테이블 4개 전부 DEFAULT (§5-3) |
+| 2 | `hasMore` 규칙이 §6-2(seen 500)와 §8-4(exhausted)에서 충돌 | 두 조건의 AND 로 통일 + 상한 도달 시 화면 문구·`새로 보기` (§2-6·§6-2·§8-4) |
+| 3 | 백엔드에 없는 라이브러리 전제(Resilience4j·Guava) | 의존성 없는 서킷 + JDK SHA-256 해시 (§1-3·§5-5·§6-2) |
+| 4 | 대체 응답(비로그인 포함)을 로그에 남기는지 미정 → 노출·클릭 분모 왜곡 | `fallback=true` 로 남긴다고 명시 (§2-7) |
+| 5 | `user_agent` 90일 null 처리 = 파티션 전체 UPDATE | 세션 단위 `client_agent` 분리 · 파티션 DROP (§5-3·§5-7·§5-9) |
+| 6 | 부하 관문에 시드 수 축 없음 (플랫폼당 최대 50 시드) | 시드 1·10·50 축 추가 (§8-5) |
+| 7 | 버퍼에서 탈락한 후보 기록 없음 | `is_served`·`dropped_reason` (§4-2·§5-3) |
+| 8 | 지연 경보가 예산과 같아 정상 운영에서도 울림 | 경보 2.0초 < 예산 2.5초 (§11) |
+| 9 | 읽기 전용 컨테이너에서 `__pycache__` 쓰기 실패 | `PYTHONDONTWRITEBYTECODE=1` (§8-6) · 라우터 `cpus` 명시 |
+| 10 | Steam 동일성 기준 목록 파일이 불명확 | 파일 경로 명시 · Steam 은 확정 필요로 표시 (§10) |
+| 11 | §1-3 사실 표가 병합·기본 코퍼스·T-11 이후 상태를 반영하지 않음 | 4행 추가 (§1-3) |
+| 12 | 922줄이라 구현자가 읽기 무겁다 | 부록 C 구현 체크리스트 |
+
+---
+
+## 부록 C. 구현 체크리스트
+
+담당 영역별로 **위에서부터 순서대로**. 괄호는 근거 절.
+
+### 백엔드 (Spring)
+1. `V8__create_rec_schemas.sql` — `aod_rec`(chain·not_interested·corpus_map) · `aod_log`(rec_request·rec_item_served·event·event_seen·rejected_event·client_agent) · **DEFAULT 파티션 4개** · 이번·다음 달 파티션 (§5-3)
+2. `PartitionMaintenanceJob` — 매일 다음 2개월 파티션 생성 · 보관 지난 파티션 DROP (§5-3·§5-9)
+3. `LogQueue`·`LogWriter` — 메모리 큐 10,000 · 1초/200건 배치 · 전용 풀 2 · 종료 flush · `event_seen` 중복 제거 (§5-8)
+4. `ReactionService` + `PUT /api/works/{id}/reaction` — 상태 지정·`previousState`·멱등 · 기존 토글 API 는 이 서비스 호출(응답 형태 불변) · `reaction_changed` 발행 (§4-1·§6-3)
+5. `BookmarkService`·`ReviewService` 이벤트 발행 (§5-2)
+6. `POST /api/rec-events` — `text/plain` 수용 · 타입 화이트리스트 · 속도 제한 · 거절 1% 표본 (§4-1·§6-2)
+7. `SeedResolver`(시드 규칙 7개) · `CorpusMapRepository` · `ChainService`(seen 500 상한) (§6-4·§6-2)
+8. `RecRouterClient`(전용 타임아웃·의존성 없는 서킷·세마포어) · `FallbackProvider` · `CardAssembler`(k+buffer·탈락 기록) · `ReasonBuilder`(조사 규칙) · `ExperimentAssigner`(SHA-256) (§6-2)
+9. `GET /api/recommendations` · 관심 없음 `PUT/DELETE` · `RecFeatureFlag` 킬 스위치 (§4-1·§6-2)
+10. 테스트: 반응 상태 전이 · 시드 규칙 · Testcontainers 로 V8·파티션·중복 제거 (§10)
+
+### 프론트 (React)
+1. `tracker.ts` — `anon_id`·`session_id` · 큐 5초/20건 · `keepalive` · `sendBeacon`(`text/plain`) · `event_id` (§7-3)
+2. `useImpressionTracker`(50%·1초 교차 1회 + 최종) · `useDwellTracker`(`detail_open_id`·15초 누적·최댓값) (§5-4)
+3. 상세 페이지 — `?rid`·`iid` 읽기 · "볼 수 있는 곳" `outbound_clicked` (§5-2)
+4. `/for-you` · 모바일 홈 세그먼트 · 칩 · 반응형 그리드 · 더 보기 · 빈 상태·대체 (§2-1·§2-2·§2-7)
+5. `RecCard`(이유·♡·더보기) · `UndoToast`(`previousState`) · 관심 없음 (§2-3·§2-4)
+6. react-query — 키 `['rec', tab, chainNonce]` · `staleTime: Infinity` · 뒤로가기 복원 · 404 처리 (§7-2)
+7. `OnboardingPickWorks` + 가입 흐름(`needsOnboarding`) (§2-5·§6-3)
+
+### 추천 서비스 (Python, 이 리포)
+1. 의존성 고정 — **서빙용**(numpy 2.5.1·pandas 3.0.5·pyarrow)과 **배치용**(torch·transformers) 분리 (§8-6)
+2. 아티팩트 스키마 계약 `recommendation/schemas/{platform}.v1.json` + 기동 검증 + `config.json` 덮어쓰기 (§8-6)
+3. Steam 리뷰·트렌드 파일을 코퍼스 폴더 안으로 (`personalized_ranker.py:7-8`) (§8-6)
+4. 엔진 어댑터 — 시드 검증(예외 대신 제외) · 빈 시드 = 빈 결과 · 점수 인자 계측 · 웹소설 `episode_count` 필드 (§8-2)
+5. 엔진 HTTP(`/engine/recommend`·`/health`·예열) · 라우터(M6·제한 시간·`partial`) (§8-1·§8-4)
+6. Dockerfile 1개(`PLATFORM` 인자·`PYTHONDONTWRITEBYTECODE`) · compose 5개 서비스 (§8-6)
+7. **동일성 테스트** — 플랫폼별 기준 목록과 일치 (§10)
+8. **부하·메모리 관문** — 시드 1·10·50 × seen 0·200·500 × 동시 1·5·20 → `mem_limit`·`cpus` 확정 (§8-5)
+
+### 순서 의존
+- 백엔드 1~6 과 프론트 1~3 은 **추천 탭 없이** 먼저 나간다(로그 선행, §9 1~2단계).
+- 추천 서비스 1~8 은 지금 코퍼스로 진행한다 — 재임베딩(§8-5b)을 기다리지 않는다.
+- 개인정보 처리방침(§5-9)은 **로그 수집보다 먼저**(§9 0단계).
