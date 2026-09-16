@@ -632,7 +632,9 @@ CREATE TABLE aod_log.event_default PARTITION OF aod_log.event DEFAULT;
 
 #### 이미지
 - **Dockerfile 하나 + 빌드 인자 `PLATFORM`** 으로 넣을 코드만 바꾼다. 두 가상환경의 버전이 같다(Python 3.12.3 · numpy 2.5.1 · pandas 3.0.5).
-- **선행 작업**: 리포에 `requirements.txt`·`pyproject.toml` 이 없다 → 의존성 고정 파일부터 만든다. 네 플랫폼이 한 리포에 있으므로(웹소설 2026-09-15 병합) 이미지 빌드도 한 리포에서 `PLATFORM` 별로 한다.
+- **선행 작업 — 의존성 고정**: 지금 리포에는 `recommendation/steam/`·`recommendation/webnovel/` 에만 `requirements.txt`·`pyproject.toml` 이 있고 **tmdb·webtoon 에는 없다.**
+  게다가 Steam 쪽은 **버전을 고정하지 않고**(`torch`·`transformers>=4.51.0`·`numpy`…) 임베딩용 `torch`·`transformers`·`sentence-transformers` 까지 포함한다 — 서빙 이미지에는 필요 없는 무거운 의존성이다.
+  → **서빙용 고정 목록**(numpy 2.5.1 · pandas 3.0.5 · pyarrow 등, 실제 가상환경 버전으로 고정)과 **배치용 목록**(임베딩 모델 포함)을 나눠 만든다. 네 플랫폼이 한 리포에 있으므로(웹소설 2026-09-15 병합) 이미지 빌드도 한 리포에서 `PLATFORM` 별로 한다.
 - 라우터 이미지는 numpy·pandas 없이 가볍게(HTTP·M6 만).
 - **아티팩트(임베딩·parquet)는 이미지에 넣지 않는다.** Steam 아티팩트만 764MB 라, 넣으면 코드 한 줄 바꿀 때마다 이미지를 다시 받는다.
   **전제: 아티팩트는 추천 호스트의 로컬 경로 `/srv/aod-artifacts/{platform}/{corpus_version}/` 에 있다**(원격 저장소에서 받지 않는다).
