@@ -5,7 +5,10 @@ from pathlib import Path
 import yaml
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
-ARTIFACTS_DIR = PROJECT_ROOT / "artifacts" / "wn_v1"
+#: 기본 코퍼스 = **wn_v6**(29,494편). 확정값(W-1~W-6)을 전부 이 코퍼스에서 쟀다.
+#: 2026-09-16 이전 기본값은 파일럿 wn_v1(7,062편)이라, 환경변수를 안 주면 평가·서빙과
+#: 다른 코퍼스로 돌았다(테스트 8개가 wn_v6 시드를 못 찾아 KeyError 로 실패하던 원인).
+ARTIFACTS_DIR = PROJECT_ROOT / "artifacts" / "wn_v6"
 
 DEFAULT_CONFIG = PROJECT_ROOT / "configs" / "wn_v1.yaml"
 ENV_FILE = PROJECT_ROOT / ".env"
@@ -62,14 +65,14 @@ def artifact_dir(path: str | Path | None = None) -> Path:
     """추천 파이프라인이 읽을 아티팩트 디렉터리.
 
     표현을 바꿔 실험하려면 임베딩/데이터셋 경로를 갈아끼울 수 있어야 한다.
-    우선순위: 인자 > AOD_ARTIFACTS 환경변수 > artifacts/wn_v1.
+    우선순위: 인자 > AOD_ARTIFACTS 환경변수 > artifacts/wn_v6(확정 코퍼스).
     """
     p = Path(path or os.environ.get("AOD_ARTIFACTS") or ARTIFACTS_DIR)
     return p if p.is_absolute() else PROJECT_ROOT / p
 
 
 def ensure_artifacts_dir(path: str | Path | None = None) -> Path:
-    """`artifact_dir()` 와 **같은 우선순위**(인자 > AOD_ARTIFACTS > wn_v1)로 만든다.
+    """`artifact_dir()` 와 **같은 우선순위**(인자 > AOD_ARTIFACTS > wn_v6)로 만든다.
 
     2026-09-04 정정: 예전엔 `ARTIFACTS_DIR`(wn_v1) 로 고정돼 있어서 `AOD_ARTIFACTS=wn_v6`
     으로 data_loader 를 돌려도 결과가 **wn_v1 을 덮어썼다.** 읽는 쪽(`artifact_dir`)과 쓰는 쪽이

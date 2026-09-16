@@ -5434,3 +5434,4 @@ merge `6bd8542` 로 `recommendation/webnovel/` 을 main 에 합쳤다(충돌은 
 - **예전 평가·교차 도메인 스크립트**(`eval/h48~h67_*` · `crossdomain/_one.py`·`build.py`·`xseed.py`·`x20~x25_*`, 웹소설 `run_embed_v6.sh`)는 옛 사본 경로를 그대로 둔다 — 봉인된 실험 기록이라 고치지 않는다. 다시 돌릴 때는 경로를 `recommendation/webnovel` 로 바꿔 쓴다.
 - 위 §(웹소설 코드 위치 주의, "별도 저장소 `/home/ubuntu/aod-webnovel/`") 문장은 이 병합 이전 기준이다.
 - 병합 후 확인: 웹소설 테스트 `AOD_ARTIFACTS=artifacts/wn_v6` 로 **89 통과 · 1 건너뜀**. 환경변수 없이 돌리면 기본 코퍼스(wn_v1)에 없는 시드(14499247) 때문에 `test_refresh.py` 8개가 `KeyError` — **옛 사본에서도 똑같이 8개 실패**하는 기존 문제다(병합과 무관). 시험대 `Webnovel()` 은 리포 안 경로에서 29,494편 적재·추천 확인.
+- 2026-09-16 후속: 웹소설 **기본 코퍼스를 wn_v1 → wn_v6 으로** 바꿨다(`src/config.py`). 확정값(W-1~W-6)을 전부 wn_v6 에서 쟀는데 기본값만 파일럿(7,062편)이라 환경변수를 잊으면 평가·서빙과 다른 코퍼스로 돌았다. `tests/conftest.py` 가 한 번 더 고정한다(setdefault). 환경변수 없이 **89 통과 · 1 건너뜀**, 서빙 경로도 wn_v6 확인. `configs/wn_v1.yaml`(수집 파이프라인 설정)은 코퍼스와 무관해 그대로 둔다. 병합이 끝난 원격 브랜치 `webnovel_recommendation` 은 삭제했다.
