@@ -1,0 +1,16 @@
+{
+  "platform": "webnovel",
+  "corpus_version": "wn_v6",
+  "schema_version": 1,
+  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
+  "dim": 1024,
+  "rows": 29494,
+  "text_builder_version": "unknown",
+  "source": "external-crawl",
+  "created_at": "2026-09-19T07:25:12+00:00",
+  "files": {
+    "corpus_embeddings.npy": "0955838d0c1999e46655d31e70ae8559aeebb0531154d9f43a131e927889fb25",
+    "corpus_index.parquet": "f5cfcef035a68a8189c0dc46bf6c2c8df19d5bd6b9d56ac928f6f9fca97829c5",
+    "dataset.parquet": "1223b4589c0ddd151dc0c3e23e3a697af3927597135e261430251295f6eac0f5"
+  }
+}
