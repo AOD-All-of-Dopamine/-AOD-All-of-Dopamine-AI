@@ -8,6 +8,22 @@ TREND_DIR = PROJECT_ROOT / "artifacts" / "trend_v2"
 REVIEW_DIR = PROJECT_ROOT / "artifacts" / "reviews"
 
 
+def review_dir(artifacts: Path) -> Path:
+    """리뷰 파일 폴더. **코퍼스 폴더 안(`<코퍼스>/reviews`)이 먼저** — 코퍼스와 함께 교체·되돌림된다(REC_TAB_DESIGN §8-6).
+    없으면 예전 고정 경로(실험 재현용)."""
+    d = Path(artifacts) / "reviews"
+    return d if d.is_dir() else REVIEW_DIR
+
+
+def trend_file(artifacts: Path, trend_dir: str | Path | None) -> Path:
+    """트렌드 파일. 명시한 `trend_dir` > 코퍼스 폴더 안 > 예전 고정 경로."""
+    if trend_dir:
+        d = Path(trend_dir)
+        return (d if d.is_absolute() else PROJECT_ROOT / d) / "trend_features.parquet"
+    inside = Path(artifacts) / "trend_features.parquet"
+    return inside if inside.exists() else TREND_DIR / "trend_features.parquet"
+
+
 def _wilson_lower(pos, n, z: float = 1.96, index=None):
     """긍정 비율의 Wilson score 95% 하한 ∈ [0, 1].
 
@@ -179,7 +195,7 @@ class PersonalizedRanker:
 
     def _load_reviews(self) -> pd.DataFrame:
         """D-39 크롤 결과. 못 받은 appid 는 0 으로 채운다(미출시작·상장폐지)."""
-        d = REVIEW_DIR
+        d = review_dir(self.artifacts)
         parts = sorted(d.glob("part-*.parquet"))
         if not parts:
             raise SystemExit(f"{d} 가 비었다 — 먼저 `python -m src.crawl_reviews` 를 돌려라")
@@ -188,13 +204,9 @@ class PersonalizedRanker:
         out = rv.reindex(self.dataset.index).fillna(0.0)
         return out
 
-    @staticmethod
-    def _load_trend(trend_dir: str | Path | None) -> pd.Series:
+    def _load_trend(self, trend_dir: str | Path | None) -> pd.Series:
         """appid → 정규화된 trend_signal ∈ [0, 1]."""
-        d = Path(trend_dir) if trend_dir else TREND_DIR
-        if not d.is_absolute():
-            d = PROJECT_ROOT / d
-        path = d / "trend_features.parquet"
+        path = trend_file(self.artifacts, trend_dir)
         if not path.exists():
             raise SystemExit(
                 f"{path} 없음 — trend_weight 를 쓰려면 먼저 실행하세요:\n"
