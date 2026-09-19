@@ -12,6 +12,6 @@ cmd="${1:-help}"; [ $# -gt 0 ] && shift
 case "$cmd" in
   build) docker build -f "$REC/serving/Dockerfile" --target dev -t "$IMAGE" "$REC" ;;
   test)  docker run --rm -e PYTHONIOENCODING=utf-8 -v "$REC:/rec:ro" --tmpfs /tmp "$IMAGE" pytest -p no:cacheprovider "$@" ;;
-  run)   docker run --rm -e PYTHONIOENCODING=utf-8 -v "$REC:/rec" "$IMAGE" "$@" ;;
+  run)   docker run --rm -i -e PYTHONIOENCODING=utf-8 -v "$REC:/rec" "$IMAGE" "$@" ;;
   *)     sed -n '2,5p' "${BASH_SOURCE[0]}"; exit 2 ;;
 esac
