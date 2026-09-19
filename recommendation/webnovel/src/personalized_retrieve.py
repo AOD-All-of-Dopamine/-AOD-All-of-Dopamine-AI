@@ -75,9 +75,12 @@ def run_multi(
                 # 제외는 id 로만 된다. 시드·이미 본 작품의 **다른 판본**(작가|제목 키가 같은 것)도 뺀다 —
                 # 없으면 1페이지에 시드 판본이, 2·3페이지에 앞 페이지 작품의 판본이 다시 뜬다(W-6).
                 from src.postprocess import drop_seed_series
-                ranked = drop_seed_series(ranked, ranker.dataset.reset_index(), list(excluded))
+                # 랭커가 이미 `item_id` 로 인덱싱해 둔 dataset 을 그대로 넘긴다. 예전에는
+                # 단계마다 `reset_index()` → `set_index()` 로 29,494행 인덱스를 다시 세웠다
+                # (2026-09-19 서빙 지연). 후처리는 이 프레임을 읽기만 한다.
+                ranked = drop_seed_series(ranked, ranker.dataset, list(excluded))
             ranked = apply_postprocess(
-                ranked, ranker.dataset.reset_index(), top_n=top_n,
+                ranked, ranker.dataset, top_n=top_n,
                 **(postprocess_kwargs or {}),
             )
         results[strategy] = ranked
