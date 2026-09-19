@@ -142,10 +142,11 @@ class PersonalizedRanker:
         self._pct = (self.dataset["recommendations_total"].fillna(0)
                      .rank(pct=True, ascending=True).astype("float64"))
         self._qf = self._q.astype("float64") if self._q is not None else None
-        self._pos = pd.Series(range(len(self.dataset)), index=self.dataset.index)
+        self._pos = None         # appid → 행 번호. 태그 분기에서만 쓴다
         self._tag_rows = None
         if self._tags is not None:
             import numpy as np
+            self._pos = pd.Series(range(len(self.dataset)), index=self.dataset.index)
             rows: dict[str, list[int]] = {}
             for i, a in enumerate(self.dataset.index):
                 for t in self._tags[a]:
@@ -158,10 +159,15 @@ class PersonalizedRanker:
 
         `postprocess.rare/consensus_seed_tags` 가 호출마다 17만 행을 세던 값이다.
         같은 함수로 세므로 값이 같다. 두 번 만들어도 같은 값이라 경합에 안전하다.
+
+        태그 열이 없는 코퍼스(rep_v2·s1_v2·full_v1)에서는 빈 빈도를 준다 —
+        저쪽 태그 함수들도 태그 열이 없으면 `set()` 로 조용히 넘어가므로 같은 결과다.
         """
         if self._tag_df is None:
             from src.postprocess import tag_document_frequency
-            self._tag_df = tag_document_frequency(self.dataset["tags"])
+            self._tag_df = (tag_document_frequency(self.dataset["tags"])
+                            if "tags" in self.dataset.columns
+                            else ({}, len(self.dataset)))
         return self._tag_df
 
     def _build_quality(self) -> pd.Series:

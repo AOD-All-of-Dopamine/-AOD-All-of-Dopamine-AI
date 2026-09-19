@@ -45,7 +45,10 @@ def _run(case, next_page, comps) -> list[dict]:
 def _diff(want: dict, got: dict, allow_ties: bool) -> list[str]:
     problems = []
     for cid, wp in want.items():
-        for i, (w, g) in enumerate(zip(wp, got[cid])):
+        gp = got[cid]
+        if len(wp) != len(gp):   # zip 이 조용히 잘라내지 않게 먼저 본다
+            problems.append(f"{cid} 쪽 수 다름: 기준 {len(wp)} · 결과 {len(gp)}")
+        for i, (w, g) in enumerate(zip(wp, gp)):
             if w["ids"] == g["ids"] and w["scores"] == g["scores"]:
                 continue
             if allow_ties and pages_equal(w["ids"], g["ids"], w["scores"], allow_ties=True):
@@ -62,6 +65,10 @@ def main(argv=None) -> int:
     ap.add_argument("--cases", help="사례 id 에 이 문자열이 든 것만 돌린다(개발용 빠른 반복). "
                                     "--check 도 고른 사례만 비교한다 — 최종 확인은 필터 없이.")
     a = ap.parse_args(argv)
+    if a.cases and (a.out or a.bench):
+        print("--cases 는 --check 에서만 쓴다 — 기준 목록(--out)은 전체로만 만들고 "
+              "--bench 는 고정 사례를 잰다", file=sys.stderr)
+        return 2
 
     enter_platform("steam")
     import numpy, pandas as pd
@@ -79,9 +86,6 @@ def main(argv=None) -> int:
                 ts.append((time.perf_counter() - t0) * 1000)
             print(f"{cid:28s} seeds={len(c['seeds']):2d}  median {statistics.median(ts):7.0f} ms  max {max(ts):7.0f} ms")
         return 0
-
-    if a.cases and a.out:
-        print("--out 은 전체 사례로만 만든다 — --cases 와 같이 쓰지 않는다", file=sys.stderr); return 2
 
     # 싫어요 사례: 첫 프로필의 1쪽 상위 2개를 싫어요로 넣고 다시 뽑는다
     first = cases[0]; dislike_id = "dislike:" + first["id"].split(":", 1)[1]
@@ -102,7 +106,7 @@ def main(argv=None) -> int:
         try:
             sha = subprocess.run(["git", "-C", str(rec_root()), "rev-parse", "--short", "HEAD"],
                                  capture_output=True, text=True).stdout.strip()
-        except (FileNotFoundError, OSError):
+        except OSError:
             sha = ""   # dev 이미지에는 git 이 없다 — 호스트 값으로 나중에 손으로 채운다
         doc = {"meta": {"what": "Steam next_page 제품 경로 기준 목록 (서빙 동일성 테스트용)",
                         "generated_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),

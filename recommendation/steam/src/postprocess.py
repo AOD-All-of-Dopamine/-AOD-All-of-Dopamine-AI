@@ -11,6 +11,7 @@
     새로고침 제품의 병목은 정확도가 아니라 변화량이다.
 """
 import re
+import weakref
 from functools import lru_cache
 from pathlib import Path
 
@@ -92,6 +93,8 @@ _SERIES_NOISE = re.compile(
 
 #: 이름 → 키 변환은 순수 함수이고 이름은 코퍼스(17만)로 한정된다. 후처리가 호출마다
 #: 후보 수천 개에 같은 정규식을 다시 돌리던 것을 메모이즈로 없앤다 (2026-09-19 서빙 지연).
+#: **전제: 위 정규식 상수(`_SERIES_STRIP`·`_HANGUL_DIGIT`·`_SERIES_NOISE`·`_ITER_MARK`)를
+#: 런타임에 바꾸지 않는다.** 바꾸려면 두 캐시의 `cache_clear()` 를 함께 불러야 한다.
 _NAME_CACHE_MAX = 1 << 18
 
 
@@ -155,11 +158,17 @@ _REAL_CACHE: dict = {}
 
 
 def _real_reviews(meta: pd.DataFrame) -> pd.Series:
-    """D-39 크롤(artifacts/reviews)의 실측 리뷰 수. appid → float, 못 받은 것은 0."""
+    """D-39 크롤(artifacts/reviews)의 실측 리뷰 수. appid → float, 못 받은 것은 0.
+
+    캐시 키는 `id(meta)` 지만 **약한 참조로 동일 객체인지 확인**한다. meta 는 이제
+    오래 사는 `ranker.dataset` 이라, 랭커가 버려진 뒤 다른 dataset 이 같은 주소에
+    들어오면 앞 코퍼스의 Series 를 돌려줄 수 있다.
+    """
     from pathlib import Path
     key = id(meta)
-    if key in _REAL_CACHE:
-        return _REAL_CACHE[key]
+    hit = _REAL_CACHE.get(key)
+    if hit is not None and hit[0]() is meta:
+        return hit[1]
     d = Path(__file__).resolve().parents[1] / "artifacts" / "reviews"
     parts = sorted(d.glob("part-*.parquet"))
     if not parts:
@@ -167,7 +176,7 @@ def _real_reviews(meta: pd.DataFrame) -> pd.Series:
     rv = pd.concat([pd.read_parquet(f) for f in parts], ignore_index=True)
     rv = rv[rv["total_reviews"] >= 0].drop_duplicates("steam_appid").set_index("steam_appid")
     out = rv["total_reviews"].astype(float).reindex(meta.index).fillna(0.0)
-    _REAL_CACHE[key] = out
+    _REAL_CACHE[key] = (weakref.ref(meta), out)
     return out
 
 
@@ -213,10 +222,12 @@ def apply_hard_filters(
 
     # 열 꺼내기(`meta["…"]`)는 람다 **밖**에서 한 번만 한다. 안에 두면 후보 수만큼
     # DataFrame.__getitem__ 이 돈다(호출당 6천 회 실측). 꺼낸 Series 는 같은 객체다.
+    # 밖으로 빼면 열이 없을 때 즉시 KeyError 가 되므로 다른 열들과 같은 가드를 붙인다.
     if drop_adult:
-        genre_col = meta["genres"]
-        genres = df["steam_appid"].map(lambda a: set(genre_col.get(a, [])))
-        keep &= ~genres.map(lambda g: bool(g & ADULT_GENRES))
+        if "genres" in meta.columns:
+            genre_col = meta["genres"]
+            genres = df["steam_appid"].map(lambda a: set(genre_col.get(a, [])))
+            keep &= ~genres.map(lambda g: bool(g & ADULT_GENRES))
         if "content_descriptorids" in meta.columns:
             # parquet 는 리스트를 numpy 배열로 돌려준다 — `x or ()` 는 배열에서
             # "truth value is ambiguous" 로 터진다. None 검사를 명시적으로 한다.

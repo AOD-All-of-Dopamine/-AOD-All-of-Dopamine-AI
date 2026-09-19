@@ -370,27 +370,37 @@ def next_page(
     # "희귀"·"합의"의 기준 자체가 달라졌고, 작은 쪽에 없는 시드에서는 그냥 터졌다.
     #
     # 랭커의 dataset 은 이미 `steam_appid` 인덱스다 — `reset_index()` 복사를 하지 않고
-    # 그대로 쓴다. 태그 문서 빈도(17만 행 집계)도 랭커가 기동 시 만든 것을 재사용한다.
+    # 그대로 쓴다.
     ds = (
         components[3].dataset
         if components is not None
         else load_dataset()
     )
-    tag_df = components[3].tag_document_frequency() if components is not None else None
 
     # reindex 로 뽑는다: `.get()` 은 없는 시드에 None 을 줘서 nanmedian 이 터진다.
     rt = meta_frame(ds)["recommendations_total"]
     med = float(np.nanmedian(rt.reindex([int(a) for a in liked_appids]).astype("float")))
 
+    def tag_df():
+        """태그 문서 빈도(17만 행 집계) — 랭커가 기동 시 만든 것을 재사용한다.
+
+        **태그 필터를 실제로 부르는 분기에서만** 부른다. 다시드·비인기 취향은 아예
+        필요 없고(첫 요청 ~590ms), 태그 열이 없는 코퍼스에서는 랭커를 건드리지 않고
+        `None` 을 줘서 저쪽이 예전처럼 `set()` 으로 넘어가게 한다.
+        """
+        if components is None or "tags" not in ds.columns:
+            return None
+        return components[3].tag_document_frequency()
+
     solo_tags = cons_tags = None
     if len(liked_appids) == 1:
-        solo_tags = rare_seed_tags(liked_appids, ds, tag_df=tag_df) or None
+        solo_tags = rare_seed_tags(liked_appids, ds, tag_df=tag_df()) or None
     else:
         # 인기 시드(리뷰 중앙 10만+) 취향에만 합의 태그를 요구한다. 니치·롱테일은 건드리지
         # 않는다 — 무조건 걸면 그쪽이 깎여 이득이 상쇄된다(postprocess docstring 참고).
         # "합의"는 시드 2개 이상에서만 정의되므로 이 분기에만 남는다.
         if med >= POPULAR_SEED_REVIEWS:
-            cons_tags = consensus_seed_tags(liked_appids, ds, tag_df=tag_df) or None
+            cons_tags = consensus_seed_tags(liked_appids, ds, tag_df=tag_df()) or None
 
     # 시드 인기도에 비례하는 하한. 임계값을 손으로 고르지 않으려는 연속 규칙이다.
     # 대작 취향(시드 중앙 176만)에는 큰 하한이, 니치 장르에는 약한 하한이 걸린다.
@@ -453,16 +463,18 @@ def cold_start_page(
 
     _, retriever, _, ranker = components or build_components(REFRESH_REC_BOOST)
     seen = set(int(a) for a in (seen_appids or ()))
-    ds = ranker.dataset.reset_index()
-    pool = ds[["steam_appid", "name"]].copy()
-    rv = ds["recommendations_total"].astype("float").fillna(0.0)
+    # 후처리에는 인덱스된 dataset 을 그대로 넘긴다(`run_multi` 과 같은 방식) — 17만 행
+    # 전체를 `reset_index()` 로 복사하지 않는다. 풀을 만들 때만 평탄한 두 열이 필요하다.
+    meta = ranker.dataset
+    pool = meta[["name"]].reset_index()
+    rv = meta["recommendations_total"].astype("float").fillna(0.0)
     pool["seed_similarity"] = 0.0
     pool["dominant_seed"] = None
     pool["final_score"] = rv.rank(pct=True).values
     pool = pool[~pool["steam_appid"].astype(int).isin(seen)]
     pool = pool.sort_values("final_score", ascending=False).head(page_size * 30)
     out = apply_postprocess(
-        pool.reset_index(drop=True), ds, top_n=page_size,
+        pool.reset_index(drop=True), meta, top_n=page_size,
         seed_interleave=False,
         seen_appids=seen, series_session_max=REFRESH_SERIES_SESSION_MAX,
         drop_dead_mp=REFRESH_DROP_DEAD_MP,
