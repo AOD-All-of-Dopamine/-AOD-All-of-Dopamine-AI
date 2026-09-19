@@ -17,7 +17,7 @@ case "$cmd" in
   build) docker build -f "$REC/serving/Dockerfile" --target dev -t "$IMAGE" "$REC" ;;
   test)  docker run --rm -e PYTHONIOENCODING=utf-8 -v "$REC:/rec:ro" --tmpfs /tmp "$IMAGE" pytest -p no:cacheprovider "$@" ;;
   run)   docker run --rm -i -e PYTHONIOENCODING=utf-8 -v "$REC:/rec" "$IMAGE" "$@" ;;
-  up)    GIT_SHA="$(git -C "$HERE" rev-parse --short HEAD 2>/dev/null || echo dev)" docker compose -p aod-rec -f "$REC/serving/compose.yaml" -f "$REC/serving/compose.local.yaml" up -d --build "$@" ;;
+  up)    GIT_SHA="$(git -C "$REC" rev-parse --short HEAD 2>/dev/null || echo dev)" docker compose -p aod-rec -f "$REC/serving/compose.yaml" -f "$REC/serving/compose.local.yaml" up -d --build "$@" ;;   # $REC (pwd -W 형태) 를 쓴다 — $HERE(POSIX 경로)는 MSYS_NO_PATHCONV=1 에서 네이티브 git.exe 가 못 읽는다
   down)  docker compose -p aod-rec -f "$REC/serving/compose.yaml" -f "$REC/serving/compose.local.yaml" down "$@" ;;
   net)   docker run --rm -i -e PYTHONIOENCODING=utf-8 --network aod-rec_aod-rec -v "$REC:/rec:ro" --tmpfs /tmp "$IMAGE" "$@" ;;   # compose 망 안에서 dev 이미지로 명령 실행(e2e·loadgate)
   *)     sed -n '2,9p' "${BASH_SOURCE[0]}"; exit 2 ;;
