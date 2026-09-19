@@ -56,6 +56,7 @@ def run_multi(
     exclude_appids: set[int] | list[int] | None = None,
     disliked_appids: list[int] | None = None,
     dislike_weight: float = 0.0,
+    blocked_rows=None,
 ) -> dict[str, dict]:
     """`postprocess=True` 면 랭킹 뒤에 다양성 후처리(시드 인터리빙·시리즈 상한·hard filter)를 건다.
 
@@ -66,6 +67,23 @@ def run_multi(
       · 이미 보여준 것    (`aod_ai.rec_impression`)
       · 이미 아는 것      (LIKE / DISLIKE / bookmark / 리뷰 작성한 콘텐츠)
     시드(`liked_appids`)는 자동으로 합쳐지므로 따로 넣지 않아도 된다.
+
+    `blocked_rows` — **서빙 가능 목록**(2026-09-19). 코퍼스 행 순서(`full_corpus_frame()` 의
+    행 순서)에 맞춘 불리언 배열로, True 인 행은 후보에서 뺀다. 백엔드 카탈로그에 없는 작품을
+    추천해 봐야 카드로 못 만드는 것을 막는 **제품이 정한 후보 범위**이고, 랭킹 공식은 그대로다
+    (TMDB 의 `media` 탭 필터와 같은 성격). `None` 이면 아무것도 하지 않는다 — 기존 호출부·평가
+    하네스는 전부 이 경로라 결과가 비트 단위로 같다.
+
+    거는 자리가 중요하다: **랭커에 넘기는 후보 프레임에서만** 뺀다. `exclude_appids` 나 후처리의
+    `seen_appids`·`bucket_offset`·`series_session_max` 에는 절대 넣지 않는다 — 그 셋은 "이
+    사용자가 이미 본 것"을 뜻해서, 17만 개를 넣으면 버킷 회전이 망가지고 시리즈 세션 상한이
+    통째로 포화된다. 점수는 행마다 독립이고(랭커의 백분위·품질·태그 표는 코퍼스 기준으로 생성
+    시 한 번 고정된다) 정렬은 걸러낸 뒤에 하므로, 거르는 시점이 점수 계산 앞이든 뒤든 남는 행과
+    그 값이 같다.
+
+    집합이 아니라 **배열**인 이유는 비용이다 — 17만짜리 집합을 요청마다 합집합해 `isin` 하면
+    수십 ms 가 든다. 갱신 때 한 번 만든 불리언 배열을 재사용하면 요청당 비용이 행 수에 비례하는
+    마스킹 한 번으로 끝난다.
     """
     if strategies is None:
         strategies = ["max", "mean", "top2_mean"]
@@ -109,8 +127,13 @@ def run_multi(
     rank_n = max(POOL_FLOOR, top_n * 5) if postprocess else top_n
     results = {}
     for strategy in strategies:
+        candidates = aggregated[strategy]
+        if blocked_rows is not None:
+            # 서빙 가능 목록 — 랭커에 넘기기 전에 후보에서 뺀다(위 docstring). 풀 깊이(rank_n)는
+            # 그대로라 목록이 얕아지는 만큼만 결과가 짧아진다.
+            candidates = candidates[~blocked_rows]
         ranked = ranker.rank(
-            aggregated[strategy],
+            candidates,
             exclude_appids=excluded,
             top_n=rank_n,
             seed_appids=list(liked_appids),
@@ -282,8 +305,12 @@ def next_page(
     seed_scaled_floor: float = REFRESH_SEED_SCALED_FLOOR,
     disliked_appids: list[int] | None = None,
     dislike_weight: float | None = None,
+    blocked_rows=None,
 ):
     """새로고침 한 번 = 이 함수 한 번. 서빙이 쓸 계약을 코드로 고정한다.
+
+    `blocked_rows` — 서빙 가능 목록(후보 제외 전용). `run_multi` 로 그대로 넘어간다.
+    `None`(기본값)이면 예전과 결과가 완전히 같다. 자세한 근거는 `run_multi` docstring.
 
     호출자는 반환된 `steam_appid` 를 `seen_appids` 에 누적해서 다음 호출에 넘겨야 한다.
     그 누적을 어디에 저장할지가 서빙의 과제다(`aod_ai.rec_impression`).
@@ -444,6 +471,9 @@ def next_page(
                             # 영영 안 나온다(실측: 시드 15개 중 11~15번째가 20페이지 내 0회).
                             "bucket_offset": len(seen)},
         exclude_appids=seen,
+        # 서빙 가능 목록은 **후보 프레임에서만** 빠진다 — 바로 위 `seen_appids`·`bucket_offset`·
+        # `series_session_max` 에는 들어가지 않는다(그쪽은 "이미 본 것"의 의미다).
+        blocked_rows=blocked_rows,
     )[strategy]
     return ranked.head(page_size).reset_index(drop=True)
 

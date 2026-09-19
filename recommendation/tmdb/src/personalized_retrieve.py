@@ -39,13 +39,20 @@ POOL_FLOOR = 400   # = 평가 경로의 풀 깊이(k=50 × 8)
 
 def recommend(seed_rows, components=None, strategy: str = "top2_mean", top_n: int = 50,
               postprocess_on: bool = True, postprocess_kwargs: dict | None = None,
-              exclude_rows=None, media: str | None = None, **comp_kwargs) -> pd.DataFrame:
+              exclude_rows=None, media: str | None = None, servable_rows=None,
+              **comp_kwargs) -> pd.DataFrame:
     """`media` — "movie" | "tv" 면 그 매체만 후보로 남긴다(영화 탭 / 드라마 탭). `None` 은 혼합(현행).
 
     D-42 가 기각한 하드 필터는 **혼합 목록 안에서** 매체를 자르는 것이었다. 여기는 제품이
     탭을 나눈 뒤의 후보 범위라 다른 문제다. 시드는 매체와 무관하게 그대로 쓴다 —
     영화 시드로 드라마 탭을 채울 수 있어야 한다(시드 40/52 가 영화뿐).
     후보가 전부 한 매체면 `media_w` 페널티는 모든 후보에 같게 걸려 순서를 바꾸지 않는다.
+
+    `servable_rows` — **서빙 가능 목록**(2026-09-19). 코퍼스 행 순서에 맞춘 불리언 배열로 True
+    인 행만 후보로 남긴다(백엔드 카탈로그에 있는 작품). `media` 와 **같은 자리**에서 기존
+    `retriever.servable` 에 AND 로 합치므로 풀 깊이 `rank_n` 이 그대로 유지되고, 랭킹 공식은
+    건드리지 않는다 — `media` 탭 필터와 완전히 같은 성격의 후보 범위 제한이다. `None`(기본값)
+    이면 아무것도 하지 않는다: 기존 호출부·평가 하네스는 전부 이 경로라 결과가 비트 단위로 같다.
     """
     if media not in (None, "movie", "tv"):
         raise ValueError(f"media 는 None | 'movie' | 'tv' — {media!r}")
@@ -84,6 +91,8 @@ def recommend(seed_rows, components=None, strategy: str = "top2_mean", top_n: in
         # 감독이 없는 시드(드라마 created_by 결측 등)는 빈 집합 → 그 시드 기여는 0 이다.
         seed_dirs = [ranker._dirs[int(rr)] for rr in seed_rows]
     servable = retriever.servable
+    if servable_rows is not None:   # 서빙 가능 목록 — media 와 같은 자리, 같은 방식(AND)
+        servable = servable & servable_rows
     if media is not None:   # 풀 자르기(head) 전에 거르므로 탭마다 풀 깊이 rank_n 이 유지된다
         # `media_mask` 는 같은 `==` 비교를 매체값마다 한 번만 한다. `&` 가 새 배열을 만들어
         # 캐시는 그대로다(요청이 `servable` 을 고치지 않는다).
@@ -115,11 +124,12 @@ def recommend(seed_rows, components=None, strategy: str = "top2_mean", top_n: in
 # 않는다 — 깊은 페이지에 별도 설정이 필요하다는 근거가 나오면 **그때 사전등록으로** 정한다.
 def next_page(seed_rows, seen_rows=None, page_size: int = 10, components=None,
               strategy: str | None = None, postprocess_kwargs: dict | None = None,
-              media: str | None = None, **comp_kwargs):
+              media: str | None = None, servable_rows=None, **comp_kwargs):
     """TMDB 새로고침 한 페이지. `seen_rows` 아래를 잇는다.
 
     반환은 `recommend` 와 같은 프레임이고 `row`(코퍼스 행)가 아이템 키다.
     `media` — "movie" | "tv" 탭 분리 (`recommend` 참고). 탭마다 `seen_rows` 를 따로 누적한다.
+    `servable_rows` — 서빙 가능 목록(후보 제외 전용, `recommend` 참고). `None` 이면 결과 불변.
 
     시드 0개는 계약 밖이다 — 개인화할 근거가 없다. 콜드스타트는 호출자가 별도 경로로
     처리해야 한다(Steam 이 같은 이유로 `ValueError` 를 던진다).
@@ -136,5 +146,6 @@ def next_page(seed_rows, seen_rows=None, page_size: int = 10, components=None,
         postprocess_kwargs=postprocess_kwargs,
         exclude_rows=seen,
         media=media,
+        servable_rows=servable_rows,
         **comp_kwargs,
     )
