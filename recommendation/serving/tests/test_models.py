@@ -32,6 +32,7 @@ def test_response_serializes_camel_case():
     d = resp.model_dump(by_alias=True)
     assert d["droppedSeeds"] == ["9"] and d["factorSchema"] == "steam.v1" and d["tookMs"] == 12
     assert d["items"][0]["dominantSeed"] == "730" and d["items"][0]["episodeCount"] is None
+    assert d["usedSeeds"] == 0     # 기본값 — usedSeeds 가 없던 엔진과의 하위 호환(I2)
 
 
 def test_router_request_shape():

@@ -237,7 +237,8 @@ def create_app(state: EngineState, *, load_in_background: bool = True) -> FastAP
             len(req.excluded), len(req.seen), len(items), len(res.dropped_seeds), res.exhausted, took_ms,
             int(timing.get("queue_wait_ms", 0)))
         return EngineResponse(platform=state.platform, items=items, exhausted=res.exhausted, dropped_seeds=res.dropped_seeds,
-                              factor_schema=state.adapter.factor_schema, version=state.version(), took_ms=took_ms)
+                              factor_schema=state.adapter.factor_schema, version=state.version(), took_ms=took_ms,
+                              used_seeds=res.used_seeds)
 
     return app
 
@@ -250,8 +251,13 @@ def app_from_env() -> FastAPI:
         raise SystemExit(f"PLATFORM={platform!r} — {PLATFORMS} 중 하나")
     corpus = os.environ.get("CORPUS_VERSION") or BASELINE_CORPORA[platform]
     src = source_from_env()          # CATALOG_KEYS_URL / CATALOG_KEYS_FILE 이 없으면 None = 기능 꺼짐
+    # 기본값은 **운영(prod)** — 승인 없는 새 코퍼스를 막는 게이트(overrides.py)가 compose 설정을
+    # 깜빡해도 꺼지지 않게 fail closed 로 둔다. dev 로 내리려면 명시적으로 SERVING_MODE=dev 를 줘야 한다.
+    mode = os.environ.get("SERVING_MODE", "prod").strip().lower()
+    if mode not in ("dev", "prod"):
+        raise SystemExit(f"SERVING_MODE={mode!r} — dev|prod 중 하나")
     state = EngineState(platform=platform, corpus_version=corpus, engine_sha=os.environ.get("GIT_SHA", "dev"),
-                        loader=default_loader(platform, corpus, os.environ.get("SERVING_MODE", "dev")),
+                        loader=default_loader(platform, corpus, mode),
                         max_queue=int(os.environ.get("MAX_QUEUE", "8")),
                         queue_deadline_s=int(os.environ.get("QUEUE_DEADLINE_MS", "1500")) / 1000,
                         catalog=None if src is None else CatalogLoader(src))

@@ -393,10 +393,42 @@ def test_corpus_keys_lists_external_keys():
 
 def test_health_shape_when_disabled_and_when_enabled(http_keys):
     assert DISABLED == {"enabled": False, "size": None, "matched": None, "loaded_at": None,
-                        "source": None, "last_error": None}
+                        "source": None, "last_error": None, "blocking_all": False}
     a, _ = steam(known=(1, 2, 3))
     ld = CatalogLoader(CatalogSource("url", http_keys.url), now=lambda: 1_700_000_000.0); ld.bind(a)
     ld.refresh_once()
-    assert ld.health() == {"enabled": True, "size": 2, "matched": 2,
+    assert ld.health() == {"enabled": True, "size": 2, "matched": 2, "blocking_all": False,
                            "loaded_at": "2023-11-14T22:13:20+00:00", "source": "url", "last_error": None}
     assert set(ld.health()) == set(DISABLED)          # 켜짐/꺼짐이 같은 모양이어야 한다
+
+
+# ── blocking_all (I6) ──────────────────────────────────────────────────────
+
+def test_blocking_all_false_before_any_successful_fetch():
+    """아직 한 번도 못 받았으면 필터 없이(전체 코퍼스) 서빙 중이다 — 막고 있는 게 아니다."""
+    ld = CatalogLoader(CatalogSource("file", "/nowhere/keys.txt"))
+    assert ld.health()["blocking_all"] is False
+
+
+def test_blocking_all_true_when_the_fetched_list_is_empty(http_keys):
+    http_keys.set(body=b"\n\n")
+    a, _ = steam(known=(1, 2, 3))
+    ld = CatalogLoader(CatalogSource("url", http_keys.url)); ld.bind(a)
+    ld.refresh_once()
+    assert ld.health() == {"enabled": True, "size": 0, "matched": 0, "blocking_all": True, "source": "url",
+                           "last_error": None, "loaded_at": ld.health()["loaded_at"]}
+
+
+def test_blocking_all_true_when_nothing_overlaps_the_corpus(http_keys):
+    http_keys.set(body=b"999\n888\n")
+    a, _ = steam(known=(1, 2, 3))
+    ld = CatalogLoader(CatalogSource("url", http_keys.url)); ld.bind(a)
+    ld.refresh_once()
+    assert ld.health()["size"] == 2 and ld.health()["matched"] == 0 and ld.health()["blocking_all"] is True
+
+
+def test_blocking_all_false_when_some_keys_match(http_keys):
+    a, _ = steam(known=(1, 2, 3))
+    ld = CatalogLoader(CatalogSource("url", http_keys.url)); ld.bind(a)
+    ld.refresh_once()
+    assert ld.health()["matched"] > 0 and ld.health()["blocking_all"] is False

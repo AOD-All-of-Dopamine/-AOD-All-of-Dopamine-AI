@@ -51,7 +51,7 @@ def expected_all(http, seeds, seen, want):
     for p, name in (("steam", "steam"), ("tmdb", "tmdb"), ("webnovel", "wn")):
         e = engine_call(http, p, {"k": 50, "seeds": seeds[p], "seen": seen.get(p, [])})
         lists[name] = [i["key"] for i in e["items"]]
-        n = len(dict.fromkeys(seeds[p])) - len(e["droppedSeeds"])
+        n = e.get("usedSeeds", 0)      # 엔진이 보고한 실제 사용 시드 수(라우터와 같은 값을 믿는다)
         if n > 0: n_seeds[name] = n
         if p == "webnovel": episodes = {i["key"]: (i["episodeCount"] or 0) for i in e["items"]}
     mixed = load_m6()({k: v for k, v in lists.items() if k in n_seeds}, n_seeds, None, k=want, episodes=episodes)

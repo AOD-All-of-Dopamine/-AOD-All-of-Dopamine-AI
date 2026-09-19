@@ -45,7 +45,7 @@ MAX_BYTES = 32 * 2 ** 20
 
 #: 기능이 꺼졌을 때의 `/health.catalog`.
 DISABLED: dict = {"enabled": False, "size": None, "matched": None,
-                  "loaded_at": None, "source": None, "last_error": None}
+                  "loaded_at": None, "source": None, "last_error": None, "blocking_all": False}
 
 
 @dataclass(frozen=True)
@@ -168,5 +168,10 @@ class CatalogLoader:
     def health(self) -> dict:
         with self._lock:
             s = dict(self._state)
+        # 목록을 받은 적이 있고(size != None) 그게 0줄이거나 코퍼스와 하나도 안 겹치면 —
+        # 이 엔진은 지금 **아무것도** 추천하지 않는다(전 요청이 exhausted). 운영자가 /health 만
+        # 보고도 알아채야 하는 상태라 계산해서 얹어 둔다(README §6-1 — 이 필드에 알림을 건다).
+        blocking_all = s["size"] is not None and (s["size"] == 0 or s["matched"] == 0)
         return {"enabled": True, "size": s["size"], "matched": s["matched"],
-                "loaded_at": s["loaded_at"], "source": self.source.kind, "last_error": s["last_error"]}
+                "loaded_at": s["loaded_at"], "source": self.source.kind, "last_error": s["last_error"],
+                "blocking_all": blocking_all}

@@ -1,3 +1,4 @@
+import pytest
 from aod_serving.common.models import EngineItem, Score
 from aod_serving.router.mixing import load_m6, mix_all
 
@@ -10,6 +11,18 @@ def items(prefix, n, episodes=None):
 def test_m6_is_the_evaluated_function_from_crossdomain():
     m6 = load_m6()
     assert m6.__module__.endswith("mix") and m6.__name__ == "M6"
+
+
+def test_load_m6_raises_when_mix_path_is_missing(monkeypatch, tmp_path):
+    """기동 시 M6 를 먼저 적재하는 것(I3, `router/app.py`)이 실패로 이어지려면 `load_m6()` 자체가
+    없는 파일에서 예외를 내야 한다 — 요청까지 미루면 `/health` 는 준비됐다는데 전체 탭마다 500 이 난다."""
+    monkeypatch.setenv("MIX_PATH", str(tmp_path / "missing_mix.py"))
+    load_m6.cache_clear()
+    try:
+        with pytest.raises(Exception):
+            load_m6()
+    finally:
+        load_m6.cache_clear()
 
 
 def test_round_robin_by_seed_count_order():

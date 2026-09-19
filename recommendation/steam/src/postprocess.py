@@ -182,7 +182,16 @@ def meta_frame(dataset: pd.DataFrame) -> pd.DataFrame:
 
 
 def _take(col: pd.Series, pos, known, default):
-    """위치 배열로 한 번에 꺼내고, 모르는 id 자리만 기본값으로 바꾼다."""
+    """위치 배열로 한 번에 꺼내고, 모르는 id 자리만 기본값으로 바꾼다.
+
+    `col`(메타 프레임의 그 열)이 **비어 있으면** `take(np.where(known, pos, 0))` 이 존재하지
+    않는 위치 0 을 가리켜 `IndexError` 가 난다 — 빈 인덱스에서는 `get_indexer` 가 애초에 전부
+    -1(=모름)을 주므로 `known` 도 전부 `False` 다. 예전 `col.get(i, default)` 라면 조용히
+    `default` 를 줬을 자리이므로, 아는 것이 하나도 없을 때(빈 프레임이면 항상 이 경우다)는
+    `take` 를 부르지 않고 바로 기본값 목록을 돌려준다 — 값은 같다.
+    """
+    if len(col) == 0 or not known.any():
+        return [default] * len(known)
     v = col.take(np.where(known, pos, 0)).tolist()
     return v if known.all() else [x if k else default for x, k in zip(v, known)]
 
@@ -220,11 +229,18 @@ def _lookup(meta: pd.DataFrame, cols: tuple[str, ...], ids, default=""):
 
 
 def _row_dtypes_round_trip(dtypes) -> bool:
-    """`pd.DataFrame(행 Series 목록)` 의 열 추론이 원래 dtype 을 그대로 되돌려주는가.
+    """`interleave_by_seed` 가 `ranked.take(picked)` 지름길을 써도 되는 dtype 조합인가.
 
-    되돌려주는 것만 허용한다: 정수·실수·불리언 numpy dtype(int64·float32·float64·bool)과
-    pandas 3.0 의 기본 문자열 dtype(`str` — 결측이 NaN). 실측으로 확인했고, 문자열 열에
-    결측이 섞여도 같다.
+    **정확히 보장하는 것 — 값은 항상 같다.** `take` 와 예전 경로(행 Series 를 하나씩 모아
+    `pd.DataFrame(...)` 로 재조립)는 같은 셀을 고를 뿐이라 어느 쪽을 써도 값은 동일하다.
+
+    **dtype 은 다를 수 있다 — 이 함수가 참을 돌려준 열에서만 같다.** 정수·실수·불리언
+    numpy dtype(int64·float32·float64·bool)과 pandas 3.0 의 기본 문자열 dtype(`str`, 결측은
+    NaN)이 그 경우다. **모두 정수인 프레임이 실제로 부딪히는 사례다**: 예전 행 Series 조립
+    경로는 결측이 하나도 없어도 `pd.DataFrame([...])` 의 열 추론이 정수 열을 **float64 로
+    넓힌다**(행마다 만든 Series 를 다시 열로 모으는 추론이 이렇게 동작한다). `take` 는 열
+    단위로 값을 그대로 꺼내므로 dtype(int64 등)이 넓혀지지 않는다 — 즉 이 함수가 참인
+    프레임에서 `take` 쪽 dtype 이 예전 경로보다 **더 좁다(원래 dtype 그대로).**
 
     **`object` 는 일부러 뺀다.** 값이 전부 정수인 object 열은 추론이 int64 로 **좁혀서**
     dtype 이 달라진다(결측 `dominant_seed` 를 섞은 합성 프레임에서 실제로 걸렸다).

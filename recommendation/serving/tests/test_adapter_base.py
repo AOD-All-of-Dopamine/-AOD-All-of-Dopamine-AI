@@ -74,6 +74,25 @@ def test_media_is_refused_by_platforms_without_media():
     with pytest.raises(ValueError, match="media"): Fake().recommend(k=3, seeds=["1"], media="movie")
 
 
+# ── used_seeds (I2) — 라우터의 M6 쿼터가 이 값을 믿는다 ───────────────────────────
+
+def test_used_seeds_counts_native_parsed_and_deduped_seeds():
+    """"2"·"002" 는 파싱하면 같은 코퍼스 키다 — 원문 문자열이 둘이어도 실제 사용은 한 개."""
+    a = Fake(); r = a.recommend(k=3, seeds=["2", "002", "1"])
+    assert r.used_seeds == 2
+
+
+def test_used_seeds_is_zero_when_no_valid_seed():
+    a = Fake(); r = a.recommend(k=3, seeds=["999"])
+    assert r.used_seeds == 0
+    assert Fake().recommend(k=3, seeds=[]).used_seeds == 0
+
+
+def test_used_seeds_excludes_disliked():
+    a = Fake(); r = a.recommend(k=3, seeds=["1", "2"], disliked=["2"])
+    assert r.used_seeds == 1
+
+
 def test_frame_items_maps_columns_and_skips_missing_factors():
     f = pd.DataFrame({"item_id": [10], "seed_similarity": [0.5], "final_score": [0.6], "dominant_seed": [1],
                       "quality": [1.0], "tag_fit": [float("nan")]})

@@ -73,7 +73,8 @@ def validate_artifacts(d: Path, schema: dict, *, corpus_version: str, production
             raise ArtifactError(f"manifest.json 없음: {d} — `python -m aod_serving.tools.make_manifest` 로 만든다")
         manifest = json.loads(mf.read_text(encoding="utf-8"))
     for field, want in (("platform", schema["platform"]), ("corpus_version", corpus_version),
-                        ("schema_version", schema["schema_version"]), ("embedding_model", schema["embedding_model"])):
+                        ("schema_version", schema["schema_version"]), ("embedding_model", schema["embedding_model"]),
+                        ("dim", schema["embedding"]["dim"])):
         if manifest.get(field) != want:
             raise ArtifactError(f"manifest {field}={manifest.get(field)!r} ≠ {want!r}")
 

@@ -6,6 +6,10 @@ ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1 PIP_NO_CACHE_DIR=1 PIP_DISABLE_
 # 죽고 그 TLS 블록을 새 스레드가 재활용하면 `mi_thread_init()` 에서 SIGSEGV 를 낸다.
 # 할당자만 바뀌므로 수치 결과는 그대로다. 자세한 근거·재현은 aod_serving/native.py 머리말 참고.
 ENV ARROW_DEFAULT_MEMORY_POOL=system PYTHONFAULTHANDLER=1
+# 엔진·라우터 두 타깃이 공유하는 비루트 사용자. read_only 컨테이너 + uid 고정 마운트(§5-1)라
+# 이름보다 숫자가 안전하다 — USER 는 그대로 10001:10001 로 두고, 여기서는 그 uid/gid 가
+# 이미지 안에 존재하게만 만든다(base 에서 한 번만 만들어 두 타깃 모두에 상속된다).
+RUN groupadd -g 10001 app && useradd -u 10001 -g app -M -d /tmp -s /usr/sbin/nologin app
 
 # 개발·테스트용: 코드는 복사하지 않고 레포를 /rec 에 마운트해 쓴다
 FROM base AS dev
@@ -31,7 +35,7 @@ COPY serving/aod_serving /app/serving/aod_serving
 COPY schemas /app/schemas
 COPY ${PLATFORM}/src /app/${PLATFORM}/src
 ENV PYTHONPATH=/app/serving AOD_REC_ROOT=/app ARTIFACTS_ROOT=/artifacts PLATFORM=${PLATFORM} GIT_SHA=${GIT_SHA} PORT=8000 \
-    HOME=/tmp
+    HOME=/tmp SERVING_MODE=prod
 WORKDIR /app
 USER 10001:10001
 EXPOSE 8000
@@ -39,9 +43,11 @@ CMD ["python", "-m", "aod_serving.engine"]
 
 # ── 라우터: numpy·pandas 없음. 평가된 혼합 규칙(mix.py) 파일 하나만 가져온다 ──
 FROM base AS router
-ARG GIT_SHA=dev
 COPY serving/requirements/router.txt /tmp/requirements.txt
 RUN pip install -r /tmp/requirements.txt
+# GIT_SHA 는 pip 설치 뒤에 선언한다 — 커밋마다 바뀌는 값을 앞에 두면 이 무거운 레이어가
+# 커밋마다 다시 돈다(엔진 타깃은 아예 별도 스테이지 engine-deps 로 같은 효과를 낸다).
+ARG GIT_SHA=dev
 COPY serving/aod_serving /app/serving/aod_serving
 COPY crossdomain/mix.py /app/crossdomain/mix.py
 ENV PYTHONPATH=/app/serving AOD_REC_ROOT=/app GIT_SHA=${GIT_SHA} PORT=8080 \

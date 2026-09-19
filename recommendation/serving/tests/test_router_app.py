@@ -1,7 +1,10 @@
-import httpx
+import json
+
+import httpx, pytest
 from fastapi.testclient import TestClient
 from aod_serving.router.app import create_app
 from aod_serving.router.client import EngineClient
+from aod_serving.router.mixing import load_m6
 
 
 def engine(platform, n=30, status=200):
@@ -12,8 +15,13 @@ def engine(platform, n=30, status=200):
             return httpx.Response(status, json={"error": "not_ready"})
         items = [{"key": f"{platform[0]}{i}", "rank": i, "dominantSeed": "x", "score": {"final": 1.0, "sim": 0.5, "factors": {}},
                   "episodeCount": 30 if platform == "webnovel" else None} for i in range(n)]
+        # 실제 엔진처럼 요청 시드 수(원문 중복 제거)를 usedSeeds 로 되돌려준다 — 라우터가 이 값을
+        # 믿고 전체 탭 M6 쿼터를 계산하므로(I2), 가짜 엔진도 0 이 아닌 그럴듯한 값을 줘야 한다.
+        body_in = json.loads(request.content)
+        used = len(dict.fromkeys(body_in.get("seeds", [])))
         return httpx.Response(200, json={"platform": platform, "items": items, "exhausted": False, "droppedSeeds": [],
-                                         "factorSchema": f"{platform}.v1", "version": {"sha": "e", "config": "c", "corpus": "cv"}, "tookMs": 3})
+                                         "factorSchema": f"{platform}.v1", "version": {"sha": "e", "config": "c", "corpus": "cv"},
+                                         "tookMs": 3, "usedSeeds": used})
     return handler
 
 
@@ -67,6 +75,21 @@ def test_health_is_always_200_and_lists_engines():
     body = r.json()
     assert r.status_code == 200 and body["ready"] is True and body["router_sha"] == "r1"
     assert body["engines"]["steam"]["ready"] is True and body["engines"]["webtoon"]["ready"] is False
+    assert body["mix_loaded"] is True          # M6 은 기동 시 이미 적재돼 있다(I3)
+
+
+def test_app_startup_fails_fast_when_mix_path_is_missing(monkeypatch, tmp_path):
+    """M6(`crossdomain/mix.py`)이 없으면 첫 전체 탭 요청까지 기다리지 않고 기동 자체가 실패해야
+    한다(I3) — 그래야 컨테이너 헬스체크가 절대 healthy 가 안 되고 배포가 트래픽을 안 받는다."""
+    monkeypatch.setenv("MIX_PATH", str(tmp_path / "missing_mix.py"))
+    load_m6.cache_clear()
+    try:
+        app = make_app(ALL_OK)
+        with pytest.raises(Exception):
+            with TestClient(app):
+                pass
+    finally:
+        load_m6.cache_clear()
 
 
 def test_too_many_seeds_is_422_and_no_engine_is_called():

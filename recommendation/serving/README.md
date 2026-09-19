@@ -77,7 +77,7 @@ backend (Spring) ──POST /v1/recommend──▶ rec-router (FastAPI, :8080)
 
 - 응답 필드 이름은 전부 pydantic `alias_generator=to_camel` 로 camelCase 로 나간다
   (`dominant_seed`→`dominantSeed`, `factor_schema`→`factorSchema`, `dropped_seeds`→`droppedSeeds` 등,
-  `aod_serving/common/models.py`). **`score.factors` 의 안쪽 키(`rec_pct`·`tag_fit`·`has_mc`·
+  `aod_serving/common/models.py`). **`score.factors` 의 안쪽 키(`rec_pct`·`quality`·`tag_fit`·`has_mc`·
   `interest_pct`)는 예외다** — `factors` 는 `dict[str, float]` 라 필드 이름이 아니라 값이고, 이 값은
   어댑터가 담은 원래 표기(snake_case) 그대로 나간다(변환 안 됨).
 - `exhausted`/`droppedSeeds` 는 **탭에서 실제로 부르는 플랫폼만** 키로 갖는다. `all` 탭은 Steam·TMDB·
@@ -116,10 +116,14 @@ backend (Spring) ──POST /v1/recommend──▶ rec-router (FastAPI, :8080)
   설령 여기서 막혀도(예: 잔여 버그) 요청 전체가 아니라 그 플랫폼만 `partial` 이 된다.
 
 `GET /health` — 라우터 자신은 **항상 200**. 매 호출마다 알고 있는 각 엔진의 `/health` 를 0.5초
-제한으로 실시간 조회해 본문에 담는다(캐시 아님): `{ "ready": true, "router_sha": "…", "engines": { "steam": {…엔진 /health 그대로…} } }`.
+제한으로 실시간 조회해 본문에 담는다(캐시 아님): `{ "ready": true, "router_sha": "…", "mix_loaded": true, "engines": { "steam": {…엔진 /health 그대로…} } }`.
 **`/health` 는 `/v1/recommend`·`/engine/recommend` 와 달리 pydantic `response_model` 을 안 쓰고
 일반 dict 를 그대로 돌려준다 — 그래서 이 안의 키는 camelCase 로 바뀌지 않고 코드에 적힌
 snake_case 그대로 나간다**(`router_sha`·`corpus_version`·`engine_sha` 등, `router/app.py`·`engine/app.py`).
+**`mix_loaded`** — 전체 탭 혼합 규칙(`crossdomain/mix.py` 의 `M6`)이 적재됐는가. 기동 시
+(lifespan startup) 한 번 적재하고 실패하면 기동 자체를 중단한다(fail fast) — `mix.py` 가 없는
+이미지가 컨테이너 헬스체크를 절대 통과하지 못하게 막는 것이 목적이다. 요청까지 적재를 미루면
+`/health` 는 준비됐다고 하는데 첫 전체 탭 요청이 500 나는 상태가 가능했다(`router/mixing.py:load_m6`).
 
 ### 2-2. 엔진 `POST /engine/recommend` (:8000, 내부망 전용)
 
@@ -136,7 +140,7 @@ snake_case 그대로 나간다**(`router_sha`·`corpus_version`·`engine_sha` �
   "exhausted": false, "droppedSeeds": ["999999999"],
   "factorSchema": "steam.v1",
   "version": { "sha": "…", "config": "a10cb55f0cc0", "corpus": "tags_full" },
-  "tookMs": 412 }
+  "tookMs": 412, "usedSeeds": 2 }
 
 // 422 입력 한도 초과·형식 오류(FastAPI 자동 검증) 또는 { "detail": "<platform> 은 media 를 받지 않는다" }
 // 503 { "error": "not_ready", "reason": "…" }  또는  { "error": "busy" }
@@ -145,6 +149,11 @@ snake_case 그대로 나간다**(`router_sha`·`corpus_version`·`engine_sha` �
 - 한도: `k` 1~100 · `seeds` ≤ 50 · `disliked`+`excluded`+`seen` 합계 ≤ 5,000. `media` 는 TMDB 만
   받는다(`movie`|`tv`|`null`) — 다른 플랫폼에 주면 422.
 - `exhausted` = 돌려준 개수 < `k`. 코퍼스 밖·형식이 틀린 시드는 예외 대신 제외되어 `droppedSeeds` 에 담긴다.
+- **`usedSeeds`** — 어댑터가 랭커에 실제로 넘긴 네이티브 시드 수(문자열 파싱 후 중복 제거 ·
+  싫어요 제외, 시드가 하나도 안 남으면 0). 라우터는 이 값을 그대로 믿어 전체 탭 M6 쿼터를
+  계산한다(§3 · `router/service.py`) — 원본 요청 문자열을 라우터가 다시 세지 않는다("7"·"007"
+  처럼 같은 코퍼스 키를 가리키는 다른 표기가 있으면 원문 개수와 달라질 수 있어서다. 이 필드가
+  없던 엔진과의 하위 호환을 위해 기본값은 0).
 - **한 프로세스는 한 번에 한 요청만 계산한다**(전용 계산 스레드 1개, 이유는 §8-a). 대기 중인 요청이
   `MAX_QUEUE`(기본 8)를 넘으면 즉시 `503 busy`. 대기가 `QUEUE_DEADLINE_MS`(기본 1500ms)를 넘기면
   계산을 시작하지 않고 바로 `503 busy` 로 빠진다(라우터가 이미 포기한 요청을 뒤에서 계속 계산하지 않는다).
@@ -242,10 +251,23 @@ snake_case 그대로 나간다**(`router_sha`·`corpus_version`·`engine_sha` �
   `corpus_embeddings.npy` 가 평가 때와 바이트 단위로 같은가"를 확인하는 무결성 점검이다. 통과하면
   `기존 manifest 와 일치 — 검증 통과 · …행 × …` 를 출력하고 끝난다(`tools/make_manifest.py`).
 - **TMDB**: `recommendation/tmdb/artifacts/tmdb_v1/` 폴더 전체가 gitignore 라 커밋된 manifest 가
-  없다. 파일을 호스트에 올린 뒤 같은 명령으로 **처음부터 만든다**(신규 생성 경로).
+  없다. 파일을 호스트에 올린 뒤 같은 명령으로 **처음부터 만든다**(신규 생성 경로). 서빙 컨테이너는
+  `/artifacts` 를 읽기 전용으로 마운트하므로(§5-5), manifest 를 **쓰려면** 엔진 이미지(또는 `dev`
+  이미지)를 그 폴더에 읽기·쓰기로 한 번만 띄워 돌린다 — 추천 호스트에서:
+  ```bash
+  docker run --rm -v /srv/aod-artifacts/tmdb:/artifacts <REGISTRY>/aod-rec-engine:tmdb-<TAG> \
+    python -m aod_serving.tools.make_manifest --platform tmdb --dir /artifacts/tmdb_v1
+  ```
+  (`:ro` 를 안 붙였다 — 여기서는 새로 써야 한다. compose 로 띄우는 서빙 컨테이너의 `:ro` 마운트와는
+  다른 별개의 1회성 실행이다.)
 - **`--force`**: manifest.json 이 이미 있어도 **다시 만든다**(sha256 을 지금 폴더 기준으로 재계산). 무결성
   기준 자체를 새로 세우는 것이므로, 정말로 새 코퍼스를 게시할 때만 쓴다 — 복사가 깨졌는지 확인하는
   용도로는 쓰면 안 된다(깨진 파일에 기준을 맞춰버린다).
+- 그 밖의 `make_manifest` 인자: `--corpus-version`(기본값 = `--dir` 폴더 이름) · `--text-builder-version`
+  (기본 `unknown`, manifest 에 그대로 적힌다) · `--source`(기본 `external-crawl`, manifest 의 출처 기록).
+- **권한**: 컨테이너는 uid 10001 로 돈다(비루트, §5-5). `/srv/aod-artifacts` 밑의 파일·폴더는
+  **모두에게 읽기 권한**이 있어야 한다 — `chmod -R a+rX /srv/aod-artifacts` (읽기 전용 마운트라
+  컨테이너 쪽에서 권한을 고칠 방법이 없다. 새 코퍼스를 올릴 때마다 잊지 말 것).
 
 ### 5-2. 이미지 빌드·태그
 
@@ -274,7 +296,8 @@ docker build -f serving/Dockerfile --target router \
 | `BIND_IP` | `127.0.0.1` | 라우터 포트를 바인딩할 호스트 IP — **운영에서는 사설 IP** |
 | `ARTIFACTS_BASE` | `/srv/aod-artifacts` | 아티팩트 루트 |
 | `STEAM_CORPUS`/`TMDB_CORPUS`/`WEBTOON_CORPUS`/`WEBNOVEL_CORPUS` | `tags_full`/`tmdb_v1`/`wt_v1`/`wn_v6` | 플랫폼별 `CORPUS_VERSION` |
-| `SERVING_MODE` | `prod` | `dev`\|`prod` — §6 |
+| `SERVING_MODE` | `prod` | `dev`\|`prod` — §6. `dev`\|`prod` 가 아닌 값은 기동을 거부한다(fail closed) |
+| 라우터 `ENGINE_STEAM_URL`/`ENGINE_TMDB_URL`/`ENGINE_WEBTOON_URL`/`ENGINE_WEBNOVEL_URL` | `http://rec-<p>:8000` | 라우터가 그 플랫폼 엔진을 부를 주소(`router/client.py:urls_from_env`). `compose.yaml` 이 서비스 이름으로 명시한다 |
 | 엔진 `WORKERS` | `1`(uvicorn 기본) | 워커 프로세스 수 — §8-b 의 대가 참고 |
 | 엔진 `MAX_QUEUE` | `8` | 대기열 최대 길이(코드 기본값, `EngineState`) |
 | 엔진 `QUEUE_DEADLINE_MS` | `1500` | 대기열 마감(ms) |
@@ -408,17 +431,24 @@ TMDB 의 `media` 탭 필터와 같은 성격(제품이 정한 후보 범위)이�
   HTML 이 200 으로 오면 그 본문이 "키"로 파싱돼 코퍼스와 하나도 안 겹치고 → 전부 차단이 된다.
   "목록이 비어 있다"(의도)와 "응답이 목록이 아니다"(사고)를 가르는 선이다. 목록을 받긴 했는데
   코퍼스와 겹치는 것이 **0개**면 적용은 하되 ERROR 로 남긴다(키 형식·코퍼스 버전 의심).
+  **`Content-Type` 헤더가 아예 없으면(빈 값) 통과시킨다** — 거절하는 것은 헤더가 **있는데**
+  `text/plain` 이 아닌 경우뿐이다(`fetch_text`, `aod_serving/engine/catalog.py`). 헤더를 안 주는
+  정적 파일 서버·프록시가 꽤 흔해서, 없는 것과 잘못된 것을 같이 막으면 정상 목록까지 거절한다.
 
 ### `/health.catalog`
 
 ```jsonc
 "catalog": { "enabled": true, "size": 894, "matched": 871,
-             "loaded_at": "2026-09-19T05:12:33+00:00", "source": "url", "last_error": null }
-// 기능 꺼짐: { "enabled": false, "size": null, "matched": null, "loaded_at": null, "source": null, "last_error": null }
+             "loaded_at": "2026-09-19T05:12:33+00:00", "source": "url", "last_error": null, "blocking_all": false }
+// 기능 꺼짐: { "enabled": false, "size": null, "matched": null, "loaded_at": null, "source": null, "last_error": null, "blocking_all": false }
 ```
 - `size` 받은 키 개수(중복 제거 후) · `matched` 그중 코퍼스에 실제로 있는 것 · `source` `"url"`|`"file"`
 - `enabled: true` 인데 `loaded_at: null` = **한 번도 못 받았다**(필터 없이 서빙 중). 사유는 `last_error`.
 - `loaded_at` 이 있는데 `last_error` 도 있으면 = 그 시각의 목록으로 서빙 중이고 **최근 갱신이 실패**했다.
+- **`blocking_all: true`** = 목록을 받긴 했는데(`size != null`) `size == 0` 이거나 `matched == 0` —
+  이 엔진은 **지금 아무것도 추천하지 않는다**(모든 요청이 `exhausted`). 로그를 뒤지지 않아도
+  `/health` 하나로 드러나게 만든 필드이니 **운영자는 이 값에 알림을 걸어야 한다**
+  (`true` 가 오래 지속되면 백엔드 카탈로그나 목록 주소가 잘못됐다는 뜻이다).
 
 ### 측정·검증
 
@@ -438,11 +468,11 @@ TMDB 의 `media` 탭 필터와 같은 성격(제품이 정한 후보 범위)이�
 
 | 도구 | 무엇을 확인하나 | 실행 |
 |---|---|---|
-| `identity` | **L1**: 어댑터 결과 == 같은 프로세스에서 평가 경로를 직접 부른 결과(id·순서·점수 완전 일치, 싫어요/제외/seen 조합 포함). **L2**: 어댑터 결과 == 커밋된 평가 기준 목록 — TMDB/웹툰/Steam 은 id 완전 일치 + 점수 오차 1e-6, **웹소설은 (제목, 작가) 키로 비교**(동점 판본 때문, §8-c) | `dev.sh run python -m aod_serving.tools.identity --platform steam [--level l1\|l2\|all] [--allow-ties] [--limit N]` |
+| `identity` | **L1**: 어댑터 결과 == 같은 프로세스에서 평가 경로를 직접 부른 결과(id·순서·점수 완전 일치, 싫어요/제외/seen 조합 포함). **L2**: 어댑터 결과 == 커밋된 평가 기준 목록 — **Steam 만** id 완전 일치 + 점수 오차 1e-6(`--allow-ties` 도 Steam 전용, 안 주면 argparse 오류), **TMDB·웹툰은 id 완전 일치만**(커밋된 기준 파일에 점수가 없다), **웹소설은 (제목, 작가) 키로 비교**(동점 판본 때문, §8-c) | `dev.sh run python -m aod_serving.tools.identity --platform steam [--level l1\|l2\|all] [--allow-ties] [--limit N]` |
 | `identity --catalog-check` | **서빙 가능 목록**(§6-1) — 정렬한 코퍼스 키의 7번째마다를 목록으로 걸고 프로필 5개 × 3쪽 × k=30 으로 (a) 결과가 전부 목록 안 (b) 빈 쪽·쪽 사이 중복 없음 (c) 목록 = 코퍼스 전체면 기능 OFF 와 id·점수까지 동일 (d) 목록 밖 시드도 동작 | `dev.sh run python -m aod_serving.tools.identity --platform steam --catalog-check` |
 | `e2e` | compose 로 띄운 상태에서 **L3**(라우터 전체 탭 결과 == 엔진 직접 호출 + `mix.M6` 재현) + 계약(스키마·422·코퍼스 밖 시드→`droppedSeeds`·빈 시드→`exhausted`) + 장애(엔진 중단 시 `partial`/503) | `dev.sh net python -m aod_serving.tools.e2e [--expect-partial steam] [--bundles N]` |
 | `loadgate` | 부하·메모리 관문(시드 1·10·50 × seen 0·200·500 × 동시 1·5·20) — **결과·판정은 `LOADGATE_RESULTS.md` 참고**(이 README 에는 수치를 옮기지 않는다 — 갱신 진행 중일 수 있다) | `dev.sh net python -m aod_serving.tools.loadgate --out <경로> [--platforms steam,tmdb,…] [--per-cell N] [--skip-router\|--skip-engines]` |
-| `{steam,webnovel,tmdb}_baseline` | 코드 변경(주로 지연 개선)이 **결과를 바꾸지 않았는지** — `--out` 으로 기준 목록 생성, `--check` 로 비교(같은 머신·같은 스레드 설정에서 **비트 단위** 완전 일치가 기준; 다른 머신 비교는 `--allow-ties` 로 동점 자리의 순서 차이만 허용), `--bench` 로 지연만 측정, `--cases <부분문자열>` 로 사례 필터 | `dev.sh run python -m aod_serving.tools.steam_baseline --check <기존 파일>` |
+| `{steam,webnovel,tmdb}_baseline` | 코드 변경(주로 지연 개선)이 **결과를 바꾸지 않았는지** — `--out` 으로 기준 목록 생성, `--check` 로 비교(같은 머신·같은 스레드 설정에서 **비트 단위** 완전 일치가 기준; 다른 머신 비교는 `--allow-ties` 로 동점 자리의 순서 차이만 허용), `--bench` 로 지연만 측정, `--cases <부분문자열>` 로 사례 필터(**`--check` 전용** — `--out`/`--bench` 와 같이 주면 인자 오류로 끝난다: 기준 목록은 항상 전체로 만들고, `--bench` 는 고정 사례를 잰다) | `dev.sh run python -m aod_serving.tools.steam_baseline --check <기존 파일>` |
 | `scripts/stress_engine.sh` | 엔진 세그폴트 회귀(§8-a) — 컨테이너를 반복 기동하며 과거 크래시가 났던 세 지점(기동 직후 첫 요청 · 동시 요청 묶음 · 유휴 10초 초과 후)을 다시 때린다 | `scripts/stress_engine.sh <platform> <runs> <reqs>` |
 | `scripts/repro_segv.py` | 소켓 없이 스레드 친화도 가설만 빠르게 재현(모드: `main`/`fresh`/`keepalive`/`pool`/`dedicated`/`anyio`) | `dev.sh run env PLATFORM=webtoon python scripts/repro_segv.py --mode fresh --iters 20` |
 

@@ -7,7 +7,6 @@
 """
 from __future__ import annotations
 import argparse, json, sys
-from pathlib import Path
 
 from aod_serving.engine.bootstrap import default_artifacts, enter_platform, rec_root
 from aod_serving.tools.compare import pages_equal
@@ -224,6 +223,10 @@ def main(argv=None) -> int:
     ap.add_argument("--catalog-check", action="store_true",
                     help="서빙 가능 목록만 점검한다(L1·L2 는 건너뛴다) — spec3 §10")
     a = ap.parse_args(argv)
+    if a.allow_ties and a.platform != "steam":
+        # L2 는 Steam 만 점수를 비교한다(TMDB·웹툰·웹소설의 커밋된 기준 파일은 id 만 담는다) —
+        # 동점 허용은 점수가 있어야 의미가 있으므로 다른 플랫폼에 준 건 조용히 무시하지 않고 막는다.
+        ap.error("--allow-ties 는 --platform steam 에서만 쓴다 (L2 점수 비교가 있는 플랫폼)")
     adapter = _adapter(a.platform)
     summary = {"platform": a.platform}; failed = False
     if a.catalog_check:

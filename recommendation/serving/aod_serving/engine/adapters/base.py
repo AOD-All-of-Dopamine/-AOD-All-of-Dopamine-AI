@@ -33,6 +33,9 @@ class AdapterResult:
     items: list[AdapterItem]
     dropped_seeds: list[str]
     exhausted: bool
+    #: 랭커에 실제로 넘긴 네이티브 시드 수(파싱 후 중복 제거 · 싫어요 제외) — 0 = 시드 없음.
+    #: 라우터가 M6 쿼터에 쓴다(§8-4, 원문 문자열 중복 제거가 아니라 이 값을 믿는다).
+    used_seeds: int = 0
 
 
 @dataclass(frozen=True)
@@ -177,7 +180,7 @@ class EngineAdapter(ABC):
             elif n not in native_seen:         # 파싱된(네이티브) 키 기준으로 중복 제거
                 native_seen.add(n); native.append(n)
         if not native:
-            return AdapterResult([], dropped, True)
+            return AdapterResult([], dropped, True, used_seeds=0)
         # 목록은 **후보에만** 건다 — 시드는 위에서 이미 확정됐다(목록에 없는 작품도 유효한 시드다).
         # 속성을 여기서 딱 한 번 읽어 둔다: 갱신이 요청 도중에 끼어들어도 한 요청은 한 목록만 본다.
         cat = self._catalog
@@ -185,7 +188,7 @@ class EngineAdapter(ABC):
                                 seen=self._known_only(seen), media=media,
                                 restrict=None if cat is None else cat.restrict)
         items = self._items(frame)
-        return AdapterResult(items, dropped, exhausted=len(items) < k)
+        return AdapterResult(items, dropped, exhausted=len(items) < k, used_seeds=len(native))
 
 
 class IntKeyMixin:

@@ -7,6 +7,19 @@ REC = Path(os.environ.get("AOD_REC_ROOT") or Path(__file__).resolve().parents[2]
 CORPORA = {"steam": "tags_full", "tmdb": "tmdb_v1", "webtoon": "wt_v1", "webnovel": "wn_v6"}
 
 
+# ── --allow-ties 는 Steam 전용 (I4, 아티팩트 없이 도는 hermetic 테스트) ────────────
+# argparse 오류는 `main()` 이 어댑터를 만들기(`_adapter`, 아티팩트 필요) 전에 나므로 아티팩트가
+# 없어도 검증할 수 있다 — 그래서 `@pytest.mark.artifacts` 를 안 붙였다.
+
+@pytest.mark.parametrize("platform", ["tmdb", "webtoon", "webnovel"])
+def test_allow_ties_is_an_argparse_error_for_non_steam_platforms(platform, capsys):
+    from aod_serving.tools import identity
+    with pytest.raises(SystemExit) as ex:
+        identity.main(["--platform", platform, "--allow-ties"])
+    assert ex.value.code == 2
+    assert "steam" in capsys.readouterr().err
+
+
 def _identity(platform: str, *args: str) -> dict:
     d = REC / platform / "artifacts" / CORPORA[platform]
     if not (d / "corpus_embeddings.npy").exists() or not (d / "manifest.json").exists():

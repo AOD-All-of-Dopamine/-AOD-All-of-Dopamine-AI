@@ -11,6 +11,7 @@ on:
       - "recommendation/schemas/**"
       - "recommendation/*/src/**"
       - "recommendation/crossdomain/mix.py"
+      - "recommendation/.dockerignore"
       - ".github/workflows/serving-tests.yml"
   push:
     branches: [main]
@@ -19,9 +20,17 @@ on:
       - "recommendation/schemas/**"
       - "recommendation/*/src/**"
       - "recommendation/crossdomain/mix.py"
+      - "recommendation/.dockerignore"
+      - ".github/workflows/serving-tests.yml"
 
 permissions:
   contents: read
+
+# 같은 브랜치(대개 같은 PR)에 새 커밋이 오면 진행 중이던 실행을 취소한다 — 이미지 빌드 4장 +
+# pytest 가 커밋마다 쌓이는 것을 막는다.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   test:
@@ -75,5 +84,11 @@ jobs:
             docker run --rm aod-rec-router:ci python -c "import sys, aod_serving.router.app; assert not {'numpy','pandas','pyarrow'} & set(sys.modules)"
           else
             docker build -f serving/Dockerfile --target engine --build-arg PLATFORM=${{ matrix.platform }} -t aod-rec-engine:ci .
-            docker run --rm aod-rec-engine:ci python -c "import aod_serving.engine.app"
+            # `import aod_serving.engine.app` 만으로는 Dockerfile 의 플랫폼별 COPY(${PLATFORM}/src)가
+            # 이미지 안에 실제로 들어갔는지 확인하지 못한다 — enter_platform 으로 그 플랫폼에 진입해
+            # `src.config`·`src.personalized_retrieve` 를 직접 불러 본다. 두 모듈 다 모듈 최상위에서
+            # 아티팩트(임베딩·parquet)를 읽지 않는다(경로 상수만 만든다·무거운 생성자는 함수 안) —
+            # 그래서 /artifacts 마운트 없이 CI 에서 돈다. 네 플랫폼 전부 확인됨(config.py·
+            # personalized_retrieve.py·postprocess.py·personalization/* 어디에도 모듈 최상위 파일 I/O 없음).
+            docker run --rm aod-rec-engine:ci python -c "from aod_serving.engine.bootstrap import enter_platform; enter_platform('${{ matrix.platform }}'); import src.config, src.personalized_retrieve"
           fi

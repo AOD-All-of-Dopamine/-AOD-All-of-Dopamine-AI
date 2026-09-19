@@ -61,6 +61,9 @@ class EngineResponse(_Model):
     factor_schema: str
     version: VersionInfo
     took_ms: int
+    #: 엔진이 실제로 랭커에 넘긴 네이티브 시드 수(파싱·중복 제거·싫어요 제외 후) — 라우터의 M6
+    #: 쿼터가 이 값을 쓴다(§8-4). 기본값 0 은 이 필드가 생기기 전 엔진과의 하위 호환용이다.
+    used_seeds: int = 0
 
 
 class RouterRequest(_Model):

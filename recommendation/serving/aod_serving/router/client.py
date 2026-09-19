@@ -27,6 +27,10 @@ class EngineClient:
     async def aclose(self) -> None:
         await self._http.aclose()
 
+    def platforms(self) -> tuple[str, ...]:
+        """주소가 설정된(=이 라우터가 아는) 플랫폼."""
+        return tuple(self._urls)
+
     async def recommend(self, platform: str, req: EngineRequest) -> EngineResponse:
         base = self._urls.get(platform)
         if not base:

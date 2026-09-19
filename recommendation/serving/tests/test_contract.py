@@ -94,6 +94,15 @@ def test_wrong_embedding_model_is_refused(corpus, wn_schema):
         validate_artifacts(corpus, wn_schema, corpus_version="wn_test", production=PROD)
 
 
+def test_manifest_dim_must_match_schema_embedding_dim(corpus, wn_schema):
+    write_manifest(corpus, wn_schema, corpus_version="wn_test")
+    m = json.loads((corpus / "manifest.json").read_text(encoding="utf-8"))
+    m["dim"] = wn_schema["embedding"]["dim"] + 1
+    (corpus / "manifest.json").write_text(json.dumps(m, ensure_ascii=False), encoding="utf-8")
+    with pytest.raises(ArtifactError, match="dim"):
+        validate_artifacts(corpus, wn_schema, corpus_version="wn_test", production=PROD)
+
+
 def test_min_interest_count_override_requires_nonempty_interest_count(corpus, wn_schema):
     ds = pd.read_parquet(corpus / "dataset.parquet"); ds["interest_count"] = pd.array([None] * len(ds), dtype="Int64")
     ds.to_parquet(corpus / "dataset.parquet")

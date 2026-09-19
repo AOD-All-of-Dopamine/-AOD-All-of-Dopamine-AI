@@ -4,7 +4,7 @@ import threading, time
 import pytest
 from fastapi.testclient import TestClient
 from aod_serving.engine.adapters.base import AdapterItem, AdapterResult
-from aod_serving.engine.app import Busy, EngineState, create_app
+from aod_serving.engine.app import Busy, EngineState, app_from_env, create_app
 from aod_serving.engine.contract import ArtifactError
 
 
@@ -18,7 +18,9 @@ class FakeAdapter:
         self.calls.append(kw); self.threads.append(threading.current_thread().name); time.sleep(self.delay)
         if kw.get("media") and not self.supports_media: raise ValueError("steam 은 media 를 받지 않는다")
         items = [AdapterItem(key="240", dominant_seed="730", final=1.19, sim=0.58, factors={"quality": 1.0})]
-        return AdapterResult(items, ["없는키"] if "없는키" in kw["seeds"] else [], exhausted=kw["k"] > 1)
+        dropped = ["없는키"] if "없는키" in kw["seeds"] else []
+        used = len(set(kw["seeds"]) - set(dropped))
+        return AdapterResult(items, dropped, exhausted=kw["k"] > 1, used_seeds=used)
 
 
 class RaisingAdapter(FakeAdapter):
@@ -74,6 +76,7 @@ def test_recommend_contract():
     assert body["items"] == [{"key": "240", "rank": 0, "dominantSeed": "730",
                               "score": {"final": 1.19, "sim": 0.58, "factors": {"quality": 1.0}}, "episodeCount": None}]
     assert isinstance(body["tookMs"], int)
+    assert body["usedSeeds"] == 1          # seeds=["730", "없는키"] 중 "없는키" 는 코퍼스 밖 — 1개만 랭커로 간다
 
 
 @pytest.mark.parametrize("payload", [{"k": 0, "seeds": []}, {"k": 5, "seeds": [730]}, {"k": 5, "seeds": ["1"], "bogus": 1},
@@ -330,7 +333,7 @@ def test_catalog_is_applied_after_warmup_and_before_ready_on_the_compute_thread(
     assert thread.startswith("engine-compute")
     body = c.get("/health").json()
     assert body["ready"] is True
-    assert body["catalog"] == {"enabled": True, "size": 2, "matched": 2, "source": "file",
+    assert body["catalog"] == {"enabled": True, "size": 2, "matched": 2, "source": "file", "blocking_all": False,
                                "last_error": None, "loaded_at": body["catalog"]["loaded_at"]}
     assert body["catalog"]["loaded_at"] is not None
 
@@ -367,3 +370,53 @@ def test_recommend_logs_warning_when_slow(caplog):
     assert r.status_code == 200
     lines = [rec for rec in caplog.records if rec.message.startswith("recommend platform=")]
     assert len(lines) == 1 and lines[0].levelno == logging.WARNING
+
+
+# ── SERVING_MODE 는 fail closed (I1) ──────────────────────────────────────────
+# `app_from_env()` 는 `EngineState` 를 만들 뿐 그 자리에서 적재를 돌리지 않는다(적재는
+# lifespan startup 이 계산 스레드에 맡긴다) — 그래서 `default_loader` 를 가짜로 갈아 끼우면
+# 진짜 아티팩트·플랫폼 코드 없이 mode 파싱만 hermetic 하게 검증할 수 있다.
+
+def _capture_mode(monkeypatch):
+    import aod_serving.engine.app as app_module
+    captured = {}
+
+    def fake_loader(platform, corpus_version, mode):
+        captured["platform"], captured["corpus_version"], captured["mode"] = platform, corpus_version, mode
+        return lambda: (None, "hash")
+
+    monkeypatch.setattr(app_module, "default_loader", fake_loader)
+    return captured
+
+
+def test_serving_mode_defaults_to_prod_when_unset(monkeypatch):
+    monkeypatch.setenv("PLATFORM", "steam")
+    monkeypatch.delenv("SERVING_MODE", raising=False)
+    captured = _capture_mode(monkeypatch)
+    app_from_env()
+    assert captured["mode"] == "prod"
+
+
+@pytest.mark.parametrize("raw", ["PROD ", " Prod", "prod", "PROD"])
+def test_serving_mode_is_trimmed_and_lowercased_to_prod(monkeypatch, raw):
+    monkeypatch.setenv("PLATFORM", "steam")
+    monkeypatch.setenv("SERVING_MODE", raw)
+    captured = _capture_mode(monkeypatch)
+    app_from_env()
+    assert captured["mode"] == "prod"
+
+
+def test_serving_mode_dev_is_accepted(monkeypatch):
+    monkeypatch.setenv("PLATFORM", "steam")
+    monkeypatch.setenv("SERVING_MODE", "dev")
+    captured = _capture_mode(monkeypatch)
+    app_from_env()
+    assert captured["mode"] == "dev"
+
+
+def test_unknown_serving_mode_exits(monkeypatch):
+    monkeypatch.setenv("PLATFORM", "steam")
+    monkeypatch.setenv("SERVING_MODE", "staging")
+    _capture_mode(monkeypatch)
+    with pytest.raises(SystemExit, match="staging"):
+        app_from_env()

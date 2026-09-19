@@ -26,12 +26,6 @@ class EnginesUnavailable(Exception):
         super().__init__(f"engines unavailable: {partial}"); self.partial = partial
 
 
-def _valid_seed_count(seeds: list[str], disliked: list[str], dropped: list[str]) -> int:
-    """엔진이 실제로 쓴 시드 수 — 어댑터 규칙(중복 제거 · 코퍼스 밖 제외 · 싫어요 우선)과 같은 셈."""
-    out = set(dropped) | set(disliked)
-    return sum(1 for s in dict.fromkeys(seeds) if s not in out)
-
-
 async def recommend(req: RouterRequest, call: EngineCall, *, router_sha: str) -> RouterResponse:
     plan = TAB_PLAN[req.tab]
     want = req.k + req.buffer
@@ -59,7 +53,9 @@ async def recommend(req: RouterRequest, call: EngineCall, *, router_sha: str) ->
     exhausted |= {p: r.exhausted for p, r in ok.items()}
     dropped = {p: r.dropped_seeds for p, r in ok.items() if r.dropped_seeds}
     if req.tab == "all":
-        n_seeds = {p: _valid_seed_count(req.seeds[p], req.disliked.get(p, []), r.dropped_seeds) for p, r in ok.items()}
+        # 엔진이 보고한 실제 사용 시드 수를 그대로 믿는다 — 원본 요청 문자열을 라우터가 다시 세면
+        # 어댑터의 파싱 후 중복 제거(예: "7"·"007" 이 같은 코퍼스 키)와 어긋난다(M6 쿼터가 틀어진다).
+        n_seeds = {p: r.used_seeds for p, r in ok.items()}
         ordered = mix_all({p: r.items for p, r in ok.items()}, n_seeds, k=want)
     else:
         ordered = [(p, i) for p, r in ok.items() for i in r.items][:want]

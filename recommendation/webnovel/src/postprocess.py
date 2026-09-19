@@ -87,6 +87,12 @@ def _lookup(meta: pd.DataFrame, cols: tuple[str, ...], ids, default=""):
     if meta.index.is_unique:
         pos = meta.index.get_indexer(ids)
         known = pos >= 0
+        # `meta` 가 비어 있으면(또는 아는 id 가 하나도 없으면) `get_indexer` 가 전부 -1 을 줘서
+        # `known` 도 전부 False 다 — 그때 `take(np.where(known, pos, 0))` 은 존재하지 않는 위치
+        # 0 을 가리켜 `IndexError` 가 난다(빈 인덱스는 위치 0 이 없다). 예전 `meta[c].get(i, default)`
+        # 라면 조용히 default 를 줬을 자리이므로, 여기서 바로 기본값 목록을 돌려준다 — 값은 같다.
+        if len(meta) == 0 or not known.any():
+            return known, [[default] * len(ids) for _ in cols]
         safe = np.where(known, pos, 0)
         out = []
         for c in cols:
