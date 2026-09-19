@@ -104,15 +104,15 @@ backend (Spring) ──POST /v1/recommend──▶ rec-router (FastAPI, :8080)
   `version`(엔진 `GIT_SHA` · `config_hash` · `corpus_version`).
 - `candidateSource: "content_sim"` · `isExploration: false` · `propensity: 1.0` 은 지금은 상수다(§8-e).
 - **오류**: 요청 스키마 위반(키 타입이 문자열이 아님·허용 안 된 필드 등) → `422`(FastAPI 자동 검증,
-  `RouterRequest` 는 `extra="forbid"`). 필요한 엔진이 전부 실패 → 위 `503`.
-- **입력 한도**: `k` 1~50(기본 20) · `buffer` 0~50(기본 10) — 이 둘은 `RouterRequest` 자체에 걸려 있어
-  어겼을 때 깔끔한 `422` 다. 플랫폼별 `seeds` ≤ 50 · `disliked`+`excluded`+`seen` 합계 ≤ 5,000 은
-  **`RouterRequest` 가 아니라 `EngineRequest`(라우터가 그 플랫폼을 부를 때 내부에서 만드는 요청)에
-  걸린 한도**다 — 실측 결과, 라우터가 받은 시드/제외 수가 이 한도를 넘으면 `router/service.py:one()` 이
-  `EngineRequest(...)` 를 만들 때 검증에서 막혀 예외가 나는데, 이 줄은 그 아래 `try`(엔진 실패를
-  `partial` 로 돌리는 코드) **바깥**이라 그 플랫폼만 빠지는 게 아니라 **요청 전체가 처리되지 않은
-  예외로 `500`** 이 난다(라우터에 전역 예외 핸들러가 없다 — 엔진 쪽 `app.py` 와 다르다). 백엔드는
-  플랫폼별 시드 50개·제외 합계 5,000 을 **자기 쪽에서 먼저 지켜서 보내는 편이 안전하다**(§6-4 참고).
+  `RouterRequest` 는 `extra="forbid"`). 필요한 엔진이 전부 실패 → 위 `503`. 그 밖의 처리되지 않은
+  예외는 전역 핸들러가 잡아 `500 { "error": "internal" }` 로 돌려준다(엔진 쪽 `app.py` 와 같은 모양).
+- **입력 한도**: `k` 1~50(기본 20) · `buffer` 0~50(기본 10) · 플랫폼별 `seeds` ≤ 50 ·
+  `disliked`+`excluded`+`seen` 합계 ≤ 5,000 — **전부 `RouterRequest` 자체에 걸려 있어** 어겼을 때
+  깔끔한 `422` 다(`aod_serving/common/models.py:RouterRequest`, `seeds`/`disliked`/`excluded`/`seen`
+  한도는 `model_validator` 가 플랫폼별로 검사한다). 라우터가 그 플랫폼을 부를 때 내부에서 만드는
+  `EngineRequest` 에도 같은 한도가 다시 걸려 있는데, 이건 방어적 이중화일 뿐이다 — `router/service.py:one()`
+  에서 `EngineRequest(...)` 생성을 그 플랫폼의 실패를 `partial` 로 돌리는 `try` **안**에서 하므로,
+  설령 여기서 막혀도(예: 잔여 버그) 요청 전체가 아니라 그 플랫폼만 `partial` 이 된다.
 
 `GET /health` — 라우터 자신은 **항상 200**. 매 호출마다 알고 있는 각 엔진의 `/health` 를 0.5초
 제한으로 실시간 조회해 본문에 담는다(캐시 아님): `{ "ready": true, "router_sha": "…", "engines": { "steam": {…엔진 /health 그대로…} } }`.
@@ -386,10 +386,11 @@ TMDB·웹툰 랭커 계측은 후속 범위).
 6. ECR 푸시·배포 자동화는 추천 호스트가 생긴 뒤의 범위다. 대신 아티팩트 없이 도는 테스트와 이미지
    빌드 가능성을 GitHub Actions(`.github/workflows/serving-tests.yml`)로 PR마다 확인한다.
 
-**(h) 라우터 입력 한도 초과는 `422` 가 아니라 `500` 이 날 수 있다(구현 확인, 이 문서 작성 중 발견).**
-플랫폼별 `seeds` ≤ 50·`disliked+excluded+seen` ≤ 5,000 한도는 `RouterRequest` 가 아니라 라우터가
-내부에서 만드는 `EngineRequest` 쪽에 걸려 있다. `router/service.py:one()` 에서 `EngineRequest(...)`
-생성이 `try`(엔진 실패를 `partial` 로 돌리는 코드) **바깥**에 있어서, 한도를 넘기면 그 플랫폼만
-빠지는 게 아니라 요청 전체가 처리되지 않은 예외로 `500 Internal Server Error` 가 난다(라우터에는
-엔진 쪽과 달리 전역 예외 핸들러가 없다) — 직접 재현해 확인했다(`TestClient` 로 시드 51개·제외
-5,001개를 보내면 둘 다 500). §2-1 에도 같은 내용을 적어 뒀다.
+**(h) 라우터 입력 한도는 라우터 자신이 검증한다(수정 완료).** 플랫폼별 `seeds` ≤ 50·
+`disliked+excluded+seen` ≤ 5,000 한도는 `RouterRequest` 의 `model_validator` 가 플랫폼별로 검사해
+어겼을 때 `422` 로 막는다 — 엔진까지 가지 않는다(`tests/test_models.py`, `tests/test_router_app.py`).
+`router/service.py:one()` 에서 만드는 `EngineRequest(...)` 는 같은 한도를 다시 검사하지만, 이제는
+그 플랫폼의 실패를 `partial` 로 돌리는 `try` **안**에서 만들어 방어적 이중화로만 남아 있다 — 설령
+여기서 막혀도 요청 전체가 아니라 그 플랫폼만 `partial` 이 된다(`tests/test_router_service.py`).
+라우터에는 그 밖의 처리되지 않은 예외를 잡는 전역 핸들러도 생겼다(엔진 쪽 `app.py` 와 같은 모양,
+`500 { "error": "internal" }`). §2-1 에도 같은 내용을 적어 뒀다.

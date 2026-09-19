@@ -40,9 +40,11 @@ async def recommend(req: RouterRequest, call: EngineCall, *, router_sha: str) ->
     exhausted = {p: True for p, _ in plan if not req.seeds.get(p)}
 
     async def one(p: str, media: str | None):
-        r = EngineRequest(k=engine_k, seeds=req.seeds[p], disliked=req.disliked.get(p, []),
-                          excluded=req.excluded.get(p, []), seen=req.seen.get(p, []), media=media)
         try:
+            # EngineRequest 생성도 try 안에서 — RouterRequest 가 이미 같은 한도를 검사하지만(422),
+            # 여기서도 실패하면 그 플랫폼만 partial 로 빠지게 방어적 이중화를 둔다(요청 전체 500 방지).
+            r = EngineRequest(k=engine_k, seeds=req.seeds[p], disliked=req.disliked.get(p, []),
+                              excluded=req.excluded.get(p, []), seen=req.seen.get(p, []), media=media)
             return p, await call(p, r)
         except Exception as e:                       # noqa: BLE001 — 어떤 실패든 그 플랫폼만 뺀다
             log.warning("엔진 %s 실패: %s: %s", p, type(e).__name__, e)

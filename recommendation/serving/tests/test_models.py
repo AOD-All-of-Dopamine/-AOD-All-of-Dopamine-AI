@@ -1,6 +1,7 @@
 import pytest
 from pydantic import ValidationError
-from aod_serving.common.models import EngineRequest, EngineResponse, EngineItem, Score, VersionInfo, RouterRequest
+from aod_serving.common.models import (EngineRequest, EngineResponse, EngineItem, Score, VersionInfo, RouterRequest,
+                                       MAX_SEEDS, MAX_EXCLUSIONS)
 
 
 def test_engine_request_defaults_and_limits():
@@ -39,3 +40,47 @@ def test_router_request_shape():
     assert r.seeds["tmdb"] == ["movie_603"] and r.seen == {} and r.buffer == 10
     with pytest.raises(ValidationError): RouterRequest.model_validate({"tab": "anime", "seeds": {}})
     with pytest.raises(ValidationError): RouterRequest.model_validate({"tab": "all", "seeds": {"netflix": ["1"]}})
+
+
+def test_router_request_seed_limit_per_platform():
+    ok = RouterRequest.model_validate({"tab": "game", "seeds": {"steam": [str(i) for i in range(MAX_SEEDS)]}})
+    assert len(ok.seeds["steam"]) == MAX_SEEDS
+    with pytest.raises(ValidationError):
+        RouterRequest.model_validate({"tab": "game", "seeds": {"steam": [str(i) for i in range(MAX_SEEDS + 1)]}})
+
+
+def test_router_request_seed_limit_is_per_platform_not_combined():
+    # 두 플랫폼 각각 한도(50)까지 — 합쳐서 100 이어도 OK
+    RouterRequest.model_validate({"tab": "all", "seeds": {"steam": [str(i) for i in range(MAX_SEEDS)],
+                                                          "tmdb": [str(i) for i in range(MAX_SEEDS)]}})
+
+
+def test_router_request_seed_limit_error_names_platform_and_limit():
+    with pytest.raises(ValidationError) as ex:
+        RouterRequest.model_validate({"tab": "game", "seeds": {"steam": [str(i) for i in range(MAX_SEEDS + 1)]}})
+    msg = str(ex.value)
+    assert "steam" in msg and str(MAX_SEEDS) in msg
+
+
+def test_router_request_combined_exclusion_limit_per_platform():
+    ok = RouterRequest.model_validate({"tab": "game", "seeds": {"steam": ["1"]},
+                                       "disliked": {"steam": [str(i) for i in range(MAX_EXCLUSIONS)]}})
+    assert len(ok.disliked["steam"]) == MAX_EXCLUSIONS
+    with pytest.raises(ValidationError):
+        RouterRequest.model_validate({"tab": "game", "seeds": {"steam": ["1"]},
+                                      "disliked": {"steam": [str(i) for i in range(MAX_EXCLUSIONS + 1)]}})
+
+
+def test_router_request_combined_exclusion_limit_counts_all_three_lists():
+    big = [str(i) for i in range(2000)]
+    with pytest.raises(ValidationError):
+        RouterRequest.model_validate({"tab": "game", "seeds": {"steam": ["1"]}, "disliked": {"steam": big},
+                                      "excluded": {"steam": big}, "seen": {"steam": big}})
+
+
+def test_router_request_exclusion_limit_error_names_platform_and_limit():
+    with pytest.raises(ValidationError) as ex:
+        RouterRequest.model_validate({"tab": "game", "seeds": {"steam": ["1"]},
+                                      "disliked": {"steam": [str(i) for i in range(MAX_EXCLUSIONS + 1)]}})
+    msg = str(ex.value)
+    assert "steam" in msg and str(MAX_EXCLUSIONS) in msg

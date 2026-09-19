@@ -97,3 +97,23 @@ def test_platform_whose_seeds_were_all_dropped_is_left_out_of_the_mix():
     e = Engines({"steam": resp("steam", 0, dropped=["x"], exhausted=True), "tmdb": resp("tmdb", 50)})
     out = run({"tab": "all", "k": 10, "buffer": 0, "seeds": {"steam": ["x"], "tmdb": ["1", "2"]}}, e)
     assert len(out.items) == 10 and {i.platform for i in out.items} == {"tmdb"} and out.exhausted["steam"] is True
+
+
+def test_engine_request_construction_failure_marks_only_that_platform_partial(monkeypatch):
+    """방어적 이중화 — `EngineRequest(...)` 생성 자체가 실패해도(잔여 버그 등) 그 플랫폼만 partial 로
+    빠지고 나머지 플랫폼은 정상 서빙돼야 한다(try 블록 안에서 만들어야 함)."""
+    import aod_serving.router.service as service_module
+    real_engine_request = service_module.EngineRequest
+
+    def flaky(**kw):
+        if kw["seeds"] == ["boom"]:
+            raise ValueError("simulated construction failure")
+        return real_engine_request(**kw)
+
+    monkeypatch.setattr(service_module, "EngineRequest", flaky)
+    e = Engines({"tmdb": resp("tmdb", 20), "webnovel": resp("webnovel", 20)})
+    out = run({"tab": "all", "k": 10, "buffer": 0,
+               "seeds": {"steam": ["boom"], "tmdb": ["c"], "webnovel": ["d"]}}, e)
+    assert out.partial == ["steam"]
+    assert "steam" not in e.calls          # 생성이 실패해서 엔진 호출까지 가지도 않았다
+    assert {i.platform for i in out.items} == {"tmdb", "webnovel"}

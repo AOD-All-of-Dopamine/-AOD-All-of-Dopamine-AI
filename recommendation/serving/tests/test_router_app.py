@@ -17,11 +17,16 @@ def engine(platform, n=30, status=200):
     return handler
 
 
-def app_with(status_by_platform):
-    handlers = {f"rec-{p}": engine(p, status=s) for p, s in status_by_platform.items()}
-    transport = httpx.MockTransport(lambda request: handlers[request.url.host](request))
+def make_app(status_by_platform, transport=None):
+    if transport is None:
+        handlers = {f"rec-{p}": engine(p, status=s) for p, s in status_by_platform.items()}
+        transport = httpx.MockTransport(lambda request: handlers[request.url.host](request))
     urls = {p: f"http://rec-{p}:8000" for p in status_by_platform}
-    return TestClient(create_app(EngineClient(urls, transport=transport), router_sha="r1"))
+    return create_app(EngineClient(urls, transport=transport), router_sha="r1")
+
+
+def app_with(status_by_platform):
+    return TestClient(make_app(status_by_platform))
 
 
 ALL_OK = {"steam": 200, "tmdb": 200, "webtoon": 200, "webnovel": 200}
@@ -62,3 +67,42 @@ def test_health_is_always_200_and_lists_engines():
     body = r.json()
     assert r.status_code == 200 and body["ready"] is True and body["router_sha"] == "r1"
     assert body["engines"]["steam"]["ready"] is True and body["engines"]["webtoon"]["ready"] is False
+
+
+def test_too_many_seeds_is_422_and_no_engine_is_called():
+    calls = []
+
+    def counting(request):
+        calls.append(request)
+        return engine("steam")(request)
+
+    app = make_app({"steam": 200}, transport=httpx.MockTransport(counting))
+    with TestClient(app) as c:
+        r = c.post("/v1/recommend", json={"tab": "game", "seeds": {"steam": [str(i) for i in range(51)]}})
+    assert r.status_code == 422
+    assert calls == []                     # 422 는 엔진을 부르기 전에 난다
+
+
+def test_too_many_exclusions_is_422():
+    with app_with(ALL_OK) as c:
+        r = c.post("/v1/recommend", json={"tab": "game", "seeds": {"steam": ["1"]},
+                                          "disliked": {"steam": [str(i) for i in range(5001)]}})
+    assert r.status_code == 422
+
+
+def test_unexpected_exception_returns_shaped_500_not_bare_text(monkeypatch):
+    """`recommend()` 가 예상 못 한 예외를 던져도(엔진 쪽 §8-a 의 전역 핸들러와 같은 모양으로) 바
+    text/plain 500 이 아니라 형태를 갖춘 JSON 500 이 나야 한다. `TestClient` 로 실제 바디를 보려면
+    엔진 쪽 테스트와 마찬가지로 `raise_server_exceptions=False` 가 필요하다(Starlette 가 등록된
+    핸들러로 응답한 뒤에도 예외를 다시 던지기 때문)."""
+    import aod_serving.router.app as app_module
+
+    async def boom(req, call, *, router_sha):
+        raise RuntimeError("boom")
+
+    monkeypatch.setattr(app_module, "recommend", boom)
+    app = make_app(ALL_OK)
+    c = TestClient(app, raise_server_exceptions=False)
+    r = c.post("/v1/recommend", json={"tab": "game", "seeds": {"steam": ["1"]}})
+    assert r.status_code == 500 and r.json() == {"error": "internal"}
+    assert r.headers["content-type"].startswith("application/json")

@@ -72,6 +72,20 @@ class RouterRequest(_Model):
     excluded: dict[Platform, list[Key]] = {}
     seen: dict[Platform, list[Key]] = {}
 
+    @model_validator(mode="after")
+    def _limit_per_platform(self):
+        # EngineRequest 가 플랫폼별로 거는 한도(seeds ≤ MAX_SEEDS, disliked+excluded+seen ≤ MAX_EXCLUSIONS)를
+        # 여기서도 검사해 라우터가 422 로 먼저 막는다 — service.py 의 EngineRequest 생성은 방어적 이중화일 뿐.
+        for p, seeds in self.seeds.items():
+            if len(seeds) > MAX_SEEDS:
+                raise ValueError(f"{p}: seeds {len(seeds)} > {MAX_SEEDS}")
+        platforms = self.disliked.keys() | self.excluded.keys() | self.seen.keys()
+        for p in platforms:
+            n = len(self.disliked.get(p, [])) + len(self.excluded.get(p, [])) + len(self.seen.get(p, []))
+            if n > MAX_EXCLUSIONS:
+                raise ValueError(f"{p}: disliked+excluded+seen 합계 {n} > {MAX_EXCLUSIONS}")
+        return self
+
 
 class RouterItem(_Model):
     platform: Platform

@@ -1,14 +1,16 @@
 """라우터 HTTP — POST /v1/recommend · GET /health (REC_TAB_DESIGN §4-2)."""
 from __future__ import annotations
-import asyncio, os
+import asyncio, logging, os
 from contextlib import asynccontextmanager
 
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
 
 from aod_serving.common.models import RouterRequest, RouterResponse
 from aod_serving.router.client import PLATFORMS, EngineClient, urls_from_env
 from aod_serving.router.service import EnginesUnavailable, recommend
+
+log = logging.getLogger("aod.router")
 
 
 def create_app(client: EngineClient, *, router_sha: str) -> FastAPI:
@@ -18,6 +20,13 @@ def create_app(client: EngineClient, *, router_sha: str) -> FastAPI:
         await client.aclose()
 
     app = FastAPI(title="aod-rec-router", lifespan=lifespan)
+
+    @app.exception_handler(Exception)
+    async def _unhandled(request: Request, exc: Exception):
+        # 엔진 쪽 app.py 와 같은 방어 — 예상 못 한 예외가 bare text/plain 500 으로 새 나가지 않게,
+        # 트레이스는 로그로만 남기고(요청 본문은 남기지 않는다) 형태를 갖춘 JSON 으로 돌려준다.
+        log.exception("처리되지 않은 예외 — %s %s", request.method, request.url.path)
+        return JSONResponse({"error": "internal"}, status_code=500)
 
     @app.post("/v1/recommend", response_model=RouterResponse)
     async def v1_recommend(req: RouterRequest):
