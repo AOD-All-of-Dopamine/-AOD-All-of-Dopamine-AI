@@ -3,13 +3,14 @@
 기준은 id 와 final_score 를 함께 담는다. 같은 머신에서의 비교는 **완전 일치**가 기준이고,
 다른 머신에서는 점수가 같은 자리끼리 순서만 바뀐 것(`--allow-ties`)을 허용한다 — 동점의 순서는
 pandas 기본 정렬(불안정)이 정하고 CPU 에 따라 달라진다.
+
+CLI·git sha·쪽 비교는 `baseline_common` 에 있다 — webnovel 쪽과 규칙이 갈라지지 않게 한 곳에 둔다.
 """
 from __future__ import annotations
-import argparse, json, platform as _pf, statistics, subprocess, sys, time
-from datetime import datetime, timezone
+import statistics, sys, time
 
 from aod_serving.engine.bootstrap import enter_platform, rec_root
-from aod_serving.tools.compare import pages_equal
+from aod_serving.tools import baseline_common as bc
 
 
 def _cases(profiles) -> list[dict]:
@@ -42,36 +43,13 @@ def _run(case, next_page, comps) -> list[dict]:
     return pages
 
 
-def _diff(want: dict, got: dict, allow_ties: bool) -> list[str]:
-    problems = []
-    for cid, wp in want.items():
-        gp = got[cid]
-        if len(wp) != len(gp):   # zip 이 조용히 잘라내지 않게 먼저 본다
-            problems.append(f"{cid} 쪽 수 다름: 기준 {len(wp)} · 결과 {len(gp)}")
-        for i, (w, g) in enumerate(zip(wp, gp)):
-            if w["ids"] == g["ids"] and w["scores"] == g["scores"]:
-                continue
-            if allow_ties and pages_equal(w["ids"], g["ids"], w["scores"], allow_ties=True):
-                print(f"  동점 순서 차이(허용) {cid} p{i + 1}", file=sys.stderr); continue
-            problems.append(f"{cid} p{i + 1}\n    want {w['ids']}\n    got  {g['ids']}")
-    return problems
-
-
 def main(argv=None) -> int:
-    ap = argparse.ArgumentParser(description=__doc__)
-    g = ap.add_mutually_exclusive_group(required=True)
-    g.add_argument("--out"); g.add_argument("--check"); g.add_argument("--bench", action="store_true")
-    ap.add_argument("--allow-ties", action="store_true")
-    ap.add_argument("--cases", help="사례 id 에 이 문자열이 든 것만 돌린다(개발용 빠른 반복). "
-                                    "--check 도 고른 사례만 비교한다 — 최종 확인은 필터 없이.")
-    a = ap.parse_args(argv)
-    if a.cases and (a.out or a.bench):
-        print("--cases 는 --check 에서만 쓴다 — 기준 목록(--out)은 전체로만 만들고 "
-              "--bench 는 고정 사례를 잰다", file=sys.stderr)
+    a = bc.parse_args(__doc__, argv)
+    if a is None:
         return 2
 
     enter_platform("steam")
-    import numpy, pandas as pd
+    import pandas as pd
     from src.personalized_retrieve import build_components, next_page
     comps = build_components()
     profiles = pd.read_parquet(rec_root() / "steam" / "artifacts" / "p1" / "profiles.parquet")
@@ -103,30 +81,13 @@ def main(argv=None) -> int:
         print(f"[{n}/{len(cases)}] {c['id']}", file=sys.stderr)
 
     if a.out:
-        try:
-            sha = subprocess.run(["git", "-C", str(rec_root()), "rev-parse", "--short", "HEAD"],
-                                 capture_output=True, text=True).stdout.strip()
-        except OSError:
-            sha = ""   # dev 이미지에는 git 이 없다 — 호스트 값으로 나중에 손으로 채운다
-        doc = {"meta": {"what": "Steam next_page 제품 경로 기준 목록 (서빙 동일성 테스트용)",
-                        "generated_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
-                        "machine": "팀장 PC · Docker python:3.12-slim (평가 서버 아님)", "cpu": _pf.processor() or _pf.machine(),
-                        "numpy": numpy.__version__, "pandas": pd.__version__, "corpus": "tags_full", "code_sha": sha or "unknown"},
+        doc = {"meta": bc.meta("Steam next_page 제품 경로 기준 목록 (서빙 동일성 테스트용)",
+                               "tags_full", bc.code_sha(rec_root())),
                "cases": [{**{k: c[k] for k in ("id", "seeds", "disliked", "page_size")}, "pages": got[c["id"]]} for c in cases]}
-        with open(a.out, "w", encoding="utf-8") as f:
-            json.dump(doc, f, ensure_ascii=False, indent=1)
+        bc.save(a.out, doc)
         print(f"저장 {a.out} — 사례 {len(cases)}개"); return 0
 
-    want_doc = json.load(open(a.check, encoding="utf-8"))
-    want = {c["id"]: c["pages"] for c in want_doc["cases"]}
-    if a.cases:   # 고른 사례만 비교한다 — 나머지를 "사례 없음"으로 세지 않는다
-        want = {k: v for k, v in want.items() if a.cases in k}
-    missing = set(want) - set(got)
-    problems = [f"사례 없음: {m}" for m in missing] + _diff({k: v for k, v in want.items() if k in got}, got, a.allow_ties)
-    print(f"사례 {len(want)} · 어긋남 {len(problems)}")
-    for p in problems[:10]:
-        print(" ", p)
-    return 1 if problems else 0
+    return bc.check(a.check, got, a.cases, a.allow_ties)
 
 
 if __name__ == "__main__":
