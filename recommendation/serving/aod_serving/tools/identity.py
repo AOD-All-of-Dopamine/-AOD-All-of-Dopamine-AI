@@ -81,7 +81,7 @@ def level2(platform: str, adapter, allow_ties: bool, limit: int | None) -> tuple
     return n, problems
 
 
-def _direct(platform: str, adapter, seeds, disliked, excluded, seen, k):
+def _direct(platform: str, adapter, seeds, disliked, excluded, seen, k, media: str | None = None):
     """평가 경로를 **어댑터를 거치지 않고** 직접 부른다 — §8-3 의 합치기 규칙을 여기서 독립적으로 다시 적는다."""
     if platform == "steam":
         from src.personalized_retrieve import next_page
@@ -92,7 +92,7 @@ def _direct(platform: str, adapter, seeds, disliked, excluded, seen, k):
         from src.personalized_retrieve import next_page
         row = adapter._row_of
         df = next_page([row[s] for s in seeds], seen_rows={row[x] for x in seen + excluded + disliked}, page_size=k,
-                       components=adapter._comps)
+                       components=adapter._comps, media=media)
         return [str(x) for x in df["item_id"]], [float(x) for x in df["final_score"]]
     if platform == "webtoon":
         df = adapter._fn.__self__.next_page([int(s) for s in seeds], k=k, seen=[int(x) for x in seen + excluded],
@@ -104,8 +104,14 @@ def _direct(platform: str, adapter, seeds, disliked, excluded, seen, k):
     return [str(int(x)) for x in df["item_id"]], [float(x) for x in df["final_score"]]
 
 
+#: L1 어댑터 결과의 첫 항목이 실어야 하는 factors 키 — 플랫폼별 `factor_schema` 와 어긋나면 문제로 센다.
+EXPECTED_FACTOR_KEYS = {"steam": {"rec_pct", "quality", "tag_fit", "has_mc"}, "tmdb": set(),
+                        "webtoon": set(), "webnovel": {"interest_pct"}}
+
+
 def level1(platform: str, adapter, limit: int | None) -> tuple[int, list[str]]:
     problems: list[str] = []; n = 0
+    expected_factors = EXPECTED_FACTOR_KEYS[platform]
     for pid, seeds in _profiles(platform, adapter)[: (limit or 5)]:
         first = [i.key for i in adapter.recommend(k=30, seeds=seeds).items]
         if len(first) < 15:
@@ -116,6 +122,29 @@ def level1(platform: str, adapter, limit: int | None) -> tuple[int, list[str]]:
         n += 1
         if [i.key for i in got.items] != want_ids or [i.final for i in got.items] != want_scores:
             problems.append(f"{pid}: want {want_ids[:10]}… got {[i.key for i in got.items][:10]}…")
+        if got.items and set(got.items[0].factors) != expected_factors:
+            problems.append(f"{pid}: factors {sorted(got.items[0].factors)} ≠ {sorted(expected_factors)}")
+    if platform == "tmdb":
+        n2, p2 = _level1_tmdb_media(adapter, limit)
+        n += n2; problems += p2
+    return n, problems
+
+
+def _level1_tmdb_media(adapter, limit: int | None) -> tuple[int, list[str]]:
+    """TMDB 전용 — L1 의 기본 경로는 media(영화/드라마 탭)를 한 번도 안 거친다. 어댑터 vs
+    직접 `next_page(..., media=…)` 를 movie·tv 둘 다 비교한다."""
+    problems: list[str] = []; n = 0
+    for pid, seeds in _profiles("tmdb", adapter)[: (limit or 5)]:
+        first = [i.key for i in adapter.recommend(k=30, seeds=seeds).items]
+        if len(first) < 15:
+            continue
+        disliked, excluded, seen = first[:2], first[2:5], first[5:15]
+        for media in ("movie", "tv"):
+            got = adapter.recommend(k=30, seeds=seeds, disliked=disliked, excluded=excluded, seen=seen, media=media)
+            want_ids, want_scores = _direct("tmdb", adapter, seeds, disliked, excluded, seen, 30, media=media)
+            n += 1
+            if [i.key for i in got.items] != want_ids or [i.final for i in got.items] != want_scores:
+                problems.append(f"{pid} media={media}: want {want_ids[:10]}… got {[i.key for i in got.items][:10]}…")
     return n, problems
 
 

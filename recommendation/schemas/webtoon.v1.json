@@ -1,5 +1,5 @@
 {
-  "platform": "webtoon", "schema_version": 1,
+  "platform": "webtoon", "schema_version": 1, "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
   "key": {"column": "item_id", "dtype": "int"},
   "embedding": {"dim": 1024, "dtype": "float32", "norm_tolerance": 0.01},
   "required_files": ["corpus_embeddings.npy", "corpus_index.parquet", "dataset.parquet"],

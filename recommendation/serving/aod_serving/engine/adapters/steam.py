@@ -6,8 +6,7 @@ from aod_serving.engine.adapters.base import EngineAdapter, IntKeyMixin, frame_i
 class SteamAdapter(IntKeyMixin, EngineAdapter):
     platform = "steam"
     factor_schema = "steam.v1"
-    FACTORS = {"rec_pct": "recommendations_percentile", "quality": "quality", "tag_fit": "tag_fit",
-               "has_mc": "has_mc", "trend": "trend_norm"}
+    FACTORS = {"rec_pct": "recommendations_percentile", "quality": "quality", "tag_fit": "tag_fit", "has_mc": "has_mc"}
 
     def load(self) -> None:
         from src.personalized_retrieve import build_components, next_page

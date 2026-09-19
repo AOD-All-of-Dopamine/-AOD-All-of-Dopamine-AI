@@ -1,4 +1,5 @@
 """아티팩트 없이 도는 테스트용 — 계약을 만족하는 아주 작은 가짜 코퍼스."""
+import aod_serving  # noqa: F401 — pyarrow 보다 먼저(메모리 풀 설정)
 import json
 from pathlib import Path
 import numpy as np, pandas as pd, pytest

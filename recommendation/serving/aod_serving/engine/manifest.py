@@ -12,7 +12,7 @@ def build_manifest(d: Path, schema: dict, *, corpus_version: str, text_builder_v
     import numpy as np
     d = Path(d)
     emb = np.load(d / "corpus_embeddings.npy", mmap_mode="r")
-    model = "Qwen3-Embedding-0.6B"
+    model = "Qwen/Qwen3-Embedding-0.6B"
     run_cfg = d / "qwen_run_config.json"
     if run_cfg.exists():
         cfg = json.loads(run_cfg.read_text(encoding="utf-8"))
@@ -24,9 +24,16 @@ def build_manifest(d: Path, schema: dict, *, corpus_version: str, text_builder_v
             "files": {name: sha256_file(d / name) for name in schema["required_files"]}}
 
 
-def write_manifest(d: Path, schema: dict, **kw) -> Path:
-    """임시 파일에 쓰고 이름을 바꾼다 — 반쯤 쓰인 manifest 를 엔진이 읽지 않게."""
+def write_manifest_dict(d: Path, manifest: dict) -> Path:
+    """이미 만든(그리고 검증까지 끝낸) manifest dict 를 임시 파일에 쓰고 이름을 바꾼다 —
+    반쯤 쓰인 manifest 를 엔진이 읽지 않게. 쓰기 전에 검증하고 싶으면 `build_manifest` 로
+    먼저 dict 를 만들어 `validate_artifacts(..., manifest=그 dict)` 로 본 뒤 이 함수로 쓴다."""
     d = Path(d); out = d / "manifest.json"; tmp = d / "manifest.json.tmp"
-    tmp.write_text(json.dumps(build_manifest(d, schema, **kw), ensure_ascii=False, indent=2), encoding="utf-8")
+    tmp.write_text(json.dumps(manifest, ensure_ascii=False, indent=2), encoding="utf-8")
     tmp.replace(out)
     return out
+
+
+def write_manifest(d: Path, schema: dict, **kw) -> Path:
+    """`build_manifest` + `write_manifest_dict` 를 합친 편의 함수(주로 테스트용) — 쓰기 전 검증은 하지 않는다."""
+    return write_manifest_dict(d, build_manifest(d, schema, **kw))

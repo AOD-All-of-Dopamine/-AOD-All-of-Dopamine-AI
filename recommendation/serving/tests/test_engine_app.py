@@ -21,6 +21,24 @@ class FakeAdapter:
         return AdapterResult(items, ["없는키"] if "없는키" in kw["seeds"] else [], exhausted=kw["k"] > 1)
 
 
+class RaisingAdapter(FakeAdapter):
+    """예열(1번째 호출)은 성공하고, 그 뒤 요청은 어댑터 안에서 예상 못 한 예외를 던진다."""
+
+    def recommend(self, **kw):
+        self.calls.append(kw)
+        if len(self.calls) == 1:
+            return AdapterResult([], [], True)          # 예열
+        raise RuntimeError("어댑터 내부 오류")
+
+
+class FakeClock:
+    """`EngineState(now=...)` 에 꽂는 가짜 시계 — 실제로 자지 않고 큐 마감을 검증한다."""
+
+    def __init__(self, t: float = 0.0): self.t = t
+    def __call__(self) -> float: return self.t
+    def advance(self, dt: float) -> None: self.t += dt
+
+
 def client(adapter=None, loader=None, **kw):
     adapter = adapter or FakeAdapter()
     state = EngineState(platform="steam", corpus_version="tags_full", engine_sha="abc123",
@@ -70,8 +88,8 @@ def test_requests_are_serialized_and_overflow_is_busy():
     # (내부 httpx.Client 연결 풀을 동시 접근) 스레드마다 같은 app 을 감싼 TestClient 를 새로 만든다.
     adapter = FakeAdapter(delay=0.3)
     state = EngineState(platform="steam", corpus_version="tags_full", engine_sha="abc123",
-                        loader=lambda: (adapter, "cfghash00000"))
-    app = create_app(state, load_in_background=False, max_queue=1)
+                        loader=lambda: (adapter, "cfghash00000"), max_queue=1)
+    app = create_app(state, load_in_background=False)
     state.load()
     codes = []
 
@@ -150,3 +168,134 @@ def test_health_answers_while_a_request_is_computing():
     waited = time.perf_counter() - t0
     t.join()
     assert r.status_code == 200 and waited < 0.5, f"/health 가 계산 뒤에 줄섰다 ({waited:.2f}s)"
+
+
+# ── 대기열 마감(§ 라우터가 1.5s 만에 포기한다) ─────────────────────────────────────
+
+def test_queue_deadline_skips_stale_work_without_computing_it():
+    """큐에서 마감을 넘긴 작업은 계산 스레드가 집어도 실행하지 않는다 — 503 busy, 어댑터는 안 불린다."""
+    clock = FakeClock()
+    adapter = FakeAdapter()
+    state = EngineState(platform="steam", corpus_version="tags_full", engine_sha="abc123",
+                        loader=lambda: (adapter, "cfghash00000"), max_queue=2,
+                        queue_deadline_s=1.0, now=clock)
+    state.load()                                        # 예열 — 마감과 무관하게 항상 계산된다(가짜 시계라도)
+
+    block, started, real_calls = threading.Event(), threading.Event(), []
+
+    def blocking(**kw):
+        started.set(); real_calls.append(kw); block.wait(5)
+        return AdapterResult([], [], True)
+
+    adapter.recommend = blocking                         # 이후 호출은 계산 스레드를 붙잡아 둔다
+
+    t1 = threading.Thread(target=lambda: state.call(adapter.recommend, k=1, seeds=["1"]))
+    t1.start(); assert started.wait(5)                    # 첫 작업이 계산 스레드를 잡고 블락 중
+
+    results = {}
+
+    def second():
+        try:
+            state.call(adapter.recommend, k=1, seeds=["1"]); results["second"] = "ok"
+        except Busy:
+            results["second"] = "busy"
+
+    t2 = threading.Thread(target=second); t2.start()
+    while state._pending < 2: time.sleep(0.01)            # 두 번째 작업이 대기열에 들어갈 때까지
+
+    clock.advance(2.0)                                     # 마감(1.0s)을 이미 넘겼다 — 아직 대기 중일 때
+    block.set()                                            # 첫 작업을 풀어 계산 스레드가 두 번째를 집게 한다
+    t1.join(5); t2.join(5)
+
+    assert results["second"] == "busy"
+    assert len(real_calls) == 1, "마감을 넘긴 두 번째 작업이 실제로 계산됐다"
+
+
+def test_queue_deadline_still_computes_job_within_deadline():
+    """마감을 넘기지 않은 작업은 평소대로 계산된다."""
+    clock = FakeClock()
+    adapter = FakeAdapter()
+    state = EngineState(platform="steam", corpus_version="tags_full", engine_sha="abc123",
+                        loader=lambda: (adapter, "cfghash00000"), queue_deadline_s=1.0, now=clock)
+    state.load()
+    calls_before = len(adapter.calls)
+    r = state.call(adapter.recommend, k=1, seeds=["730"])
+    assert isinstance(r, AdapterResult) and len(adapter.calls) == calls_before + 1
+
+
+def test_recommend_returns_busy_when_deadline_expired_in_queue():
+    """엔드포인트 관점: 마감을 넘긴 요청도 오버플로와 같은 503 busy 모양으로 나간다."""
+    clock = FakeClock()
+    adapter = FakeAdapter(delay=0.0)
+    state = EngineState(platform="steam", corpus_version="tags_full", engine_sha="abc123",
+                        loader=lambda: (adapter, "cfghash00000"), max_queue=2, queue_deadline_s=1.0, now=clock)
+    app = create_app(state, load_in_background=False)
+    state.load()
+
+    block, started = threading.Event(), threading.Event()
+    orig = adapter.recommend
+
+    def blocking(**kw):
+        started.set(); block.wait(5); return orig(**kw)
+
+    adapter.recommend = blocking
+    t1 = threading.Thread(target=lambda: TestClient(app).post("/engine/recommend", json={"k": 1, "seeds": ["730"]}))
+    t1.start(); assert started.wait(5)
+
+    codes = {}
+
+    def second():
+        codes["r"] = TestClient(app).post("/engine/recommend", json={"k": 1, "seeds": ["730"]}).status_code
+
+    t2 = threading.Thread(target=second); t2.start()
+    while state._pending < 2: time.sleep(0.01)
+
+    clock.advance(2.0)
+    block.set()
+    t1.join(5); t2.join(5)
+    assert codes["r"] == 503
+
+
+# ── 처리 안 된 예외 → 형태를 갖춘 500 ────────────────────────────────────────
+
+def test_unexpected_adapter_exception_returns_shaped_500_not_bare_text():
+    """`ServerErrorMiddleware` 는 등록된 500 핸들러로 응답을 보낸 뒤에도 항상 예외를 다시 던진다
+    (Starlette 의 의도된 동작 — 서버 로그·테스트 클라이언트가 원하면 잡게). 그래서 TestClient 로
+    실제 응답 바디를 보려면 `raise_server_exceptions=False` 가 필요하다 — 실제 클라이언트(uvicorn
+    뒤)는 이미 보내진 응답을 그대로 받는다."""
+    adapter = RaisingAdapter()
+    state = EngineState(platform="steam", corpus_version="tags_full", engine_sha="abc123",
+                        loader=lambda: (adapter, "cfghash00000"))
+    app = create_app(state, load_in_background=False)
+    state.load()
+    c = TestClient(app, raise_server_exceptions=False)
+    r = c.post("/engine/recommend", json={"k": 1, "seeds": ["1"]})
+    assert r.status_code == 500 and r.json() == {"error": "internal"}
+    assert r.headers["content-type"].startswith("application/json")
+
+
+# ── 요청 로그 한 줄 (플랫폼·개수만 — 시드/본문 없음) ──────────────────────────────
+
+def test_recommend_logs_one_line_with_counts_not_bodies(caplog):
+    import logging
+    c, _, _ = client()
+    with caplog.at_level(logging.INFO, logger="aod.engine"):
+        r = c.post("/engine/recommend", json={"k": 1, "seeds": ["730", "없는키"], "seen": ["5"]})
+    assert r.status_code == 200
+    lines = [rec for rec in caplog.records if rec.message.startswith("recommend platform=")]
+    assert len(lines) == 1 and lines[0].levelno == logging.INFO
+    msg = lines[0].message
+    assert "platform=steam" in msg and "seeds=2" in msg and "seen=1" in msg and "tookMs=" in msg and "queueWaitMs=" in msg
+    assert "730" not in msg and "없는키" not in msg     # 시드 값 자체는 로그에 없다
+
+
+def test_recommend_logs_warning_when_slow(caplog):
+    """tookMs 는 요청 전체를 재고, 1s 넘으면 WARNING. `time.perf_counter` 는 anyio/starlette 내부도
+    같이 쓰므로 전역으로 갈아 끼우면 무관한 호출까지 어긋난다 — 대신 어댑터를 실제로 느리게 만든다."""
+    import logging
+    c, _, _ = client(adapter=FakeAdapter(delay=1.05))     # 예열(1회) + 이 요청(1회) 모두 1.05s 씩 걸린다
+    with caplog.at_level(logging.INFO, logger="aod.engine"):
+        r = c.post("/engine/recommend", json={"k": 1, "seeds": ["730"]})
+    assert r.status_code == 200
+    lines = [rec for rec in caplog.records if rec.message.startswith("recommend platform=")]
+    assert len(lines) == 1 and lines[0].levelno == logging.WARNING

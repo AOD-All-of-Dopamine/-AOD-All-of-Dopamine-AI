@@ -32,6 +32,23 @@ def test_duplicate_seeds_keep_first_position():
     a = Fake(); a.recommend(k=3, seeds=["2", "1", "2"]); assert a.calls[0]["seeds"] == [2, 1]
 
 
+def test_seed_dedup_happens_on_parsed_key_not_raw_string():
+    """"2"·"002" 는 같은 코퍼스 키다 — 원문 문자열이 달라도 엔진에는 한 번만 들어가야 한다."""
+    a = Fake(); r = a.recommend(k=3, seeds=["2", "002"])
+    assert a.calls[0]["seeds"] == [2] and r.dropped_seeds == []
+
+
+def test_unknown_seed_dedup_is_on_raw_string():
+    a = Fake(); r = a.recommend(k=3, seeds=["abc", "abc", "xyz"])
+    assert r.dropped_seeds == ["abc", "xyz"] and a.calls == []
+
+
+def test_absurdly_long_numeric_seed_is_dropped_not_raised():
+    """`int(key)` 는 아주 긴 숫자 문자열에서 느려지거나(ValueError) 예외를 던질 수 있다 — 길이로 먼저 거른다."""
+    a = Fake(); r = a.recommend(k=3, seeds=["9" * 5000, "1"])
+    assert r.dropped_seeds == ["9" * 5000] and a.calls[0]["seeds"] == [1]
+
+
 def test_no_valid_seed_means_empty_and_exhausted_without_calling_engine():
     a = Fake(); r = a.recommend(k=3, seeds=["999"])
     assert (r.items, r.exhausted, r.dropped_seeds, a.calls) == ([], True, ["999"], [])

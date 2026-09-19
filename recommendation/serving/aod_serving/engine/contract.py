@@ -58,16 +58,22 @@ def _nonzero(production: dict, key: str) -> bool:
     return bool(v) and v != 0
 
 
-def validate_artifacts(d: Path, schema: dict, *, corpus_version: str, production: dict, verify_sha: bool = True) -> dict:
-    """계약 검증. 통과하면 요약(dict)을 돌려주고, 아니면 ArtifactError."""
+def validate_artifacts(d: Path, schema: dict, *, corpus_version: str, production: dict, verify_sha: bool = True,
+                       manifest: dict | None = None) -> dict:
+    """계약 검증. 통과하면 요약(dict)을 돌려주고, 아니면 ArtifactError.
+
+    `manifest` 를 주면 그 dict 를 그대로 쓴다(디스크에 쓰기 전에 먼저 검증할 때 — make_manifest 참고).
+    안 주면 평소대로 `d/manifest.json` 을 읽는다.
+    """
     import numpy as np, pandas as pd
     d = Path(d)
-    mf = d / "manifest.json"
-    if not mf.exists():
-        raise ArtifactError(f"manifest.json 없음: {d} — `python -m aod_serving.tools.make_manifest` 로 만든다")
-    manifest = json.loads(mf.read_text(encoding="utf-8"))
+    if manifest is None:
+        mf = d / "manifest.json"
+        if not mf.exists():
+            raise ArtifactError(f"manifest.json 없음: {d} — `python -m aod_serving.tools.make_manifest` 로 만든다")
+        manifest = json.loads(mf.read_text(encoding="utf-8"))
     for field, want in (("platform", schema["platform"]), ("corpus_version", corpus_version),
-                        ("schema_version", schema["schema_version"])):
+                        ("schema_version", schema["schema_version"]), ("embedding_model", schema["embedding_model"])):
         if manifest.get(field) != want:
             raise ArtifactError(f"manifest {field}={manifest.get(field)!r} ≠ {want!r}")
 

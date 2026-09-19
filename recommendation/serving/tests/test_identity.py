@@ -19,3 +19,5 @@ def test_service_results_equal_evaluation_path(platform):
     summary = json.loads(p.stdout.strip().splitlines()[-1])
     assert summary["l1"]["mismatch"] == 0 and summary["l2"]["mismatch"] == 0
     assert summary["l2"]["compared"] >= {"steam": 270, "tmdb": 260, "webtoon": 335, "webnovel": 156}[platform]
+    # tmdb 는 L1 에 media(영화/드라마 탭) 케이스가 더 붙는다 — 프로필 5개 × 2 media 만큼 늘어난다
+    assert summary["l1"]["compared"] >= {"steam": 5, "tmdb": 15, "webtoon": 5, "webnovel": 5}[platform]

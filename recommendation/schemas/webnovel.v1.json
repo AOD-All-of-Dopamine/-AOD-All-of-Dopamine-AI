@@ -1,5 +1,5 @@
 {
-  "platform": "webnovel", "schema_version": 1,
+  "platform": "webnovel", "schema_version": 1, "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
   "key": {"column": "item_id", "dtype": "int"},
   "embedding": {"dim": 1024, "dtype": "float32", "norm_tolerance": 0.01},
   "required_files": ["corpus_embeddings.npy", "corpus_index.parquet", "dataset.parquet"],
@@ -9,7 +9,7 @@
     "author": {"dtype": "str"}, "publisher": {"dtype": "str"}, "age_limit": {"dtype": "int"}, "status": {"dtype": "str"},
     "is_completed": {"dtype": "bool"}, "rating": {"dtype": "float"}, "url": {"dtype": "str"},
     "episode_count": {"dtype": "int"},
-    "interest_count": {"dtype": "int", "weights": ["pop_boost"]}
+    "interest_count": {"dtype": "int", "weights": ["pop_boost", "min_interest_count"]}
   },
   "conditional_files": []
 }

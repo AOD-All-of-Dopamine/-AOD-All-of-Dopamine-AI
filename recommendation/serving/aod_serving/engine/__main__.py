@@ -1,4 +1,9 @@
-"""python -m aod_serving.engine — 환경변수로 설정한다(app.py 머리말 참고)."""
+"""python -m aod_serving.engine — 환경변수로 설정한다(app.py 머리말 참고).
+
+주의: `WORKERS>1` 은 워커 프로세스마다 코퍼스 전체를 따로 적재한다(Steam 이면 워커당 상주 메모리
+약 1.9GB) — `mem_limit` 을 워커 수에 맞춰 늘려야 한다. 또 `/health` 는 그중 아무 워커나 붙잡고
+답하므로, 그 워커가 아직 적재 중이면 다른 워커가 준비돼 있어도 503 을 돌려줄 수 있다.
+"""
 # ── 이 두 줄이 맨 위에 있어야 한다 ──────────────────────────────────────────
 # `aod_serving` 패키지를 import 하는 순간 `harden_native_env()` 가 돌아 pyarrow 보다 먼저
 # `ARROW_DEFAULT_MEMORY_POOL` 을 잡는다(이유: aod_serving/native.py 머리말). 아래 import 들

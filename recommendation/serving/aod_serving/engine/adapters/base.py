@@ -52,7 +52,8 @@ def frame_items(frame, *, key_col: str, to_key: Callable, dominant_to_key: Calla
         out.append(AdapterItem(
             key=to_key(row[key_col]),
             dominant_seed=None if dom is None or (isinstance(dom, float) and math.isnan(dom)) else dominant_to_key(dom),
-            final=_num(row.get("final_score")) or 0.0, sim=_num(row.get("seed_similarity")) or 0.0,
+            final=v if (v := _num(row.get("final_score"))) is not None else 0.0,
+            sim=v if (v := _num(row.get("seed_similarity"))) is not None else 0.0,
             factors=factors, episode_count=episode_of(row[key_col]) if episode_of else None))
     return out
 
@@ -89,16 +90,18 @@ class EngineAdapter(ABC):
         if media is not None and not self.supports_media:
             raise ValueError(f"{self.platform} 은 media 를 받지 않는다")
         dis = self._known_only(disliked); dis_set = set(dis)
-        native, dropped, dup = [], [], set()
+        # 파싱을 먼저 하고 나서 중복을 없앤다 — 원문 문자열로 먼저 걸러내면 "7"·"007" 처럼 같은
+        # 코퍼스 키를 가리키는 다른 표기가 둘 다 살아남아 네이티브 시드가 중복된다(§8-2 재발 방지).
+        native, dropped, native_seen, dropped_seen = [], [], set(), set()
         for s in seeds:                      # 순서를 지킨다 — 시드 순서가 버킷 순서다(§6-4)
-            if s in dup:
-                continue
-            dup.add(s)
             n = self.parse_key(s)
             if n is None:
-                dropped.append(s)
-            elif n not in dis_set:           # 싫어요가 이긴다. 코퍼스 밖이 아니므로 dropped 에는 넣지 않는다
-                native.append(n)
+                if s not in dropped_seen:      # 모르는/잘못된 시드는 원문 문자열 기준으로 중복 제거
+                    dropped_seen.add(s); dropped.append(s)
+            elif n in dis_set:                 # 싫어요가 이긴다. 코퍼스 밖이 아니므로 dropped 에는 넣지 않는다
+                continue
+            elif n not in native_seen:         # 파싱된(네이티브) 키 기준으로 중복 제거
+                native_seen.add(n); native.append(n)
         if not native:
             return AdapterResult([], dropped, True)
         frame = self._next_page(k=k, seeds=native, disliked=dis, excluded=self._known_only(excluded),
@@ -113,6 +116,8 @@ class IntKeyMixin:
 
     def parse_key(self, key: str) -> int | None:
         if not (isinstance(key, str) and key.isascii() and key.isdigit()):
+            return None
+        if len(key) > 19:          # int64 자릿수 상한 — 이보다 길면 코퍼스 키일 수 없다(파싱만으로도 비싸질 수 있다)
             return None
         n = int(key)
         return n if n in self._known else None

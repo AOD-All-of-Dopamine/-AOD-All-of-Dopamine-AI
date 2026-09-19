@@ -7,18 +7,20 @@ from __future__ import annotations
 import sys
 
 from aod_serving.engine.bootstrap import BASELINE_CORPORA, default_artifacts
+from aod_serving.engine.contract import load_schema
 
 
 def seeds(platform: str, n: int = 12) -> list[str]:
     import pandas as pd
 
     d = default_artifacts(platform, BASELINE_CORPORA[platform])
+    key_col = load_schema(platform)["key"]["column"]      # steam 은 steam_appid, 나머지는 item_id — 계약서가 정한다
     # TMDB 의 밖으로 나가는 키(`movie_603`)는 dataset 에만 있다. 나머지는 corpus_index 로 충분하다.
     for name in (("dataset.parquet", "corpus_index.parquet") if platform == "tmdb"
                  else ("corpus_index.parquet", "dataset.parquet")):
         path = d / name
         if path.exists():
-            col = pd.read_parquet(path, columns=["item_id"])["item_id"]
+            col = pd.read_parquet(path, columns=[key_col])[key_col]
             step = max(1, len(col) // max(1, n))
             return [str(v) for v in col.iloc[::step].head(n)]
     raise SystemExit(f"{platform}: 코퍼스 인덱스를 못 찾았다 ({d})")

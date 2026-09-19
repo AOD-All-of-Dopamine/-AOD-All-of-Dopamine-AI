@@ -85,6 +85,23 @@ def test_weighted_column_may_be_absent_when_weight_is_zero(corpus, wn_schema):
     assert ok(corpus, wn_schema, {"pop_boost": 0.0})["rows"] == 6
 
 
+def test_wrong_embedding_model_is_refused(corpus, wn_schema):
+    write_manifest(corpus, wn_schema, corpus_version="wn_test")
+    m = json.loads((corpus / "manifest.json").read_text(encoding="utf-8"))
+    m["embedding_model"] = "other-model"
+    (corpus / "manifest.json").write_text(json.dumps(m, ensure_ascii=False), encoding="utf-8")
+    with pytest.raises(ArtifactError, match="embedding_model"):
+        validate_artifacts(corpus, wn_schema, corpus_version="wn_test", production=PROD)
+
+
+def test_min_interest_count_override_requires_nonempty_interest_count(corpus, wn_schema):
+    ds = pd.read_parquet(corpus / "dataset.parquet"); ds["interest_count"] = pd.array([None] * len(ds), dtype="Int64")
+    ds.to_parquet(corpus / "dataset.parquet")
+    assert ok(corpus, wn_schema, {"pop_boost": 0.0})["rows"] == 6            # 둘 다 꺼져 있으면 통과
+    with pytest.raises(ArtifactError, match="interest_count"):
+        ok(corpus, wn_schema, {"pop_boost": 0.0, "min_interest_count": 5000})
+
+
 def test_conditional_file_required_only_when_enabled(corpus, wn_schema):
     schema = {**wn_schema, "conditional_files": [{"path": "extra.parquet", "when": {"key": "extra_w", "nonzero": True}}]}
     assert ok(corpus, schema, {"pop_boost": 0.0, "extra_w": 0.0})["rows"] == 6
