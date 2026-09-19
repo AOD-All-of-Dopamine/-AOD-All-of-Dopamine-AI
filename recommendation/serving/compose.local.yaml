@@ -23,3 +23,6 @@ services:
   rec-router:
     build: { <<: *build, target: router, args: { GIT_SHA: "${GIT_SHA:-dev}" } }
     ports: !override ["127.0.0.1:18080:8080"]
+    # 이 PC 는 웹소설 k=50(전체 탭) 요청이 2~4s 걸린다(호스트 배포 §8-5 예산 1.5s 초과 — 이 PC 의 CPU 자원 한계로 보인다,
+    # 플랫폼 코드는 고치지 않는다). 기본값(compose.yaml, 운영용)은 그대로 두고 이 PC 에서만 넉넉히 늘린다.
+    environment: { ENGINE_TIMEOUT_MS: 8000 }
