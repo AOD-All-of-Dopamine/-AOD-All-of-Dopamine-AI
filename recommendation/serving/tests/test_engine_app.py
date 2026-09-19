@@ -289,6 +289,74 @@ def test_recommend_logs_one_line_with_counts_not_bodies(caplog):
     assert "730" not in msg and "없는키" not in msg     # 시드 값 자체는 로그에 없다
 
 
+# ── 서빙 가능 목록 (spec3 §10) ────────────────────────────────────────────────
+
+class CatalogAdapter(FakeAdapter):
+    """`set_catalog` 이 언제·어느 스레드에서 불렸는지 기록하는 어댑터."""
+
+    def __init__(self, delay=0.0):
+        super().__init__(delay); self.catalog_calls = []
+
+    def set_catalog(self, keys):
+        self.catalog_calls.append((list(keys), len(self.calls), threading.current_thread().name))
+        return len(keys), len(keys)
+
+
+def catalog_client(keys_text="1\n2\n", *, source_kind="file", fetcher=None, refresh_s=600.0, adapter=None):
+    from aod_serving.engine.catalog import CatalogLoader, CatalogSource
+    adapter = adapter or CatalogAdapter()
+    src = CatalogSource(source_kind, "keys.txt", refresh_s=refresh_s)
+    loader = CatalogLoader(src, fetcher=fetcher or (lambda s: keys_text))
+    state = EngineState(platform="steam", corpus_version="tags_full", engine_sha="abc123",
+                        loader=lambda: (adapter, "cfghash00000"), catalog=loader)
+    app = create_app(state, load_in_background=False)
+    state.load()
+    return TestClient(app), state, adapter, loader
+
+
+def test_health_catalog_is_disabled_when_no_env_is_set():
+    from aod_serving.engine.catalog import DISABLED
+    c, _, _ = client()
+    assert c.get("/health").json()["catalog"] == DISABLED
+
+
+def test_catalog_is_applied_after_warmup_and_before_ready_on_the_compute_thread():
+    """예열은 목록 없이(전체 코퍼스) 돌고, 목록은 `ready` 전에 적용된다 — healthy 가 되는 순간
+    이미 걸려 있다. 1회차는 **계산 스레드**에서 돌아 Arrow 스레드 계약(§8-a)을 건드리지 않는다."""
+    c, state, adapter, _ = catalog_client()
+    (keys, calls_before, thread), = adapter.catalog_calls
+    assert keys == ["1", "2"]
+    assert calls_before == 1                       # 예열 1회가 이미 끝난 뒤 = 예열은 목록 전
+    assert thread.startswith("engine-compute")
+    body = c.get("/health").json()
+    assert body["ready"] is True
+    assert body["catalog"] == {"enabled": True, "size": 2, "matched": 2, "source": "file",
+                               "last_error": None, "loaded_at": body["catalog"]["loaded_at"]}
+    assert body["catalog"]["loaded_at"] is not None
+
+
+def test_catalog_failure_at_startup_does_not_block_ready_and_serves_unfiltered():
+    def boom(src): raise OSError("백엔드가 없다")
+    c, _, adapter, _ = catalog_client(fetcher=boom)
+    body = c.get("/health").json()
+    assert body["ready"] is True and adapter.catalog_calls == []
+    assert body["catalog"]["loaded_at"] is None and "백엔드가 없다" in body["catalog"]["last_error"]
+    assert c.post("/engine/recommend", json={"k": 1, "seeds": ["730"]}).status_code == 200
+
+
+def test_periodic_refresh_runs_on_the_timer_thread_not_the_compute_thread():
+    c, state, adapter, _ = catalog_client(refresh_s=0.02)
+    for _ in range(200):
+        if len(adapter.catalog_calls) >= 2: break
+        time.sleep(0.01)
+    state.shutdown()
+    assert len(adapter.catalog_calls) >= 2
+    assert adapter.catalog_calls[0][2].startswith("engine-compute")          # 기동 1회차
+    assert all(t == "catalog-refresh" for _, _, t in adapter.catalog_calls[1:])   # 이후 갱신
+    n = len(adapter.catalog_calls); time.sleep(0.08)
+    assert len(adapter.catalog_calls) == n                                   # shutdown 이 타이머를 멈춘다
+
+
 def test_recommend_logs_warning_when_slow(caplog):
     """tookMs 는 요청 전체를 재고, 1s 넘으면 WARNING. `time.perf_counter` 는 anyio/starlette 내부도
     같이 쓰므로 전역으로 갈아 끼우면 무관한 호출까지 어긋난다 — 대신 어댑터를 실제로 느리게 만든다."""

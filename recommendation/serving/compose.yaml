@@ -18,25 +18,29 @@ x-engine: &engine
     start_period: 90s
     retries: 3
 
+#   서빙 가능 목록(spec3 §10): `<P>_CATALOG_URL` 이 비어 있으면 **기능 꺼짐**(전체 코퍼스, 지금까지와 동일).
+#   주소를 주면 백엔드 `GET /api/recommendations/catalog-keys?platform=<p>` 에서 한 줄 한 키를 받아
+#   후보를 그 목록으로 제한한다. 받기 실패는 서빙을 멈추지 않는다(직전 목록 유지, 한 번도 못 받았으면
+#   필터 없이). 자세한 의미론은 README §6-1 · `aod_serving/engine/catalog.py`.
 services:
   rec-steam:
     <<: *engine
     image: ${REGISTRY:-local}/aod-rec-engine:steam-${ENGINE_TAG:-dev}
-    environment: { CORPUS_VERSION: "${STEAM_CORPUS:-tags_full}", SERVING_MODE: "${SERVING_MODE:-prod}", OMP_NUM_THREADS: 2, OPENBLAS_NUM_THREADS: 2, MKL_NUM_THREADS: 2 }
+    environment: { CORPUS_VERSION: "${STEAM_CORPUS:-tags_full}", SERVING_MODE: "${SERVING_MODE:-prod}", CATALOG_KEYS_URL: "${STEAM_CATALOG_URL:-}", CATALOG_REFRESH_S: "${CATALOG_REFRESH_S:-600}", OMP_NUM_THREADS: 2, OPENBLAS_NUM_THREADS: 2, MKL_NUM_THREADS: 2 }
     volumes: ["${ARTIFACTS_BASE:-/srv/aod-artifacts}/steam:/artifacts:ro"]
     mem_limit: 3200m   # 실측 peak_mb 1958.6 (61%) — 여유 있음. 4개 중 유일하게 동시5 p95 관문 실패(LOADGATE_RESULTS.md 참고)
     cpus: 2.0
   rec-tmdb:
     <<: *engine
     image: ${REGISTRY:-local}/aod-rec-engine:tmdb-${ENGINE_TAG:-dev}
-    environment: { CORPUS_VERSION: "${TMDB_CORPUS:-tmdb_v1}", SERVING_MODE: "${SERVING_MODE:-prod}", OMP_NUM_THREADS: 2, OPENBLAS_NUM_THREADS: 2, MKL_NUM_THREADS: 2 }
+    environment: { CORPUS_VERSION: "${TMDB_CORPUS:-tmdb_v1}", SERVING_MODE: "${SERVING_MODE:-prod}", CATALOG_KEYS_URL: "${TMDB_CATALOG_URL:-}", CATALOG_REFRESH_S: "${CATALOG_REFRESH_S:-600}", OMP_NUM_THREADS: 2, OPENBLAS_NUM_THREADS: 2, MKL_NUM_THREADS: 2 }
     volumes: ["${ARTIFACTS_BASE:-/srv/aod-artifacts}/tmdb:/artifacts:ro"]
     mem_limit: 1600m   # 실측 peak_mb 710.2 (44%) — 여유 있음. 엔진 최적화(634f520·c8ec317) 후 동시1·5 모두 통과
     cpus: 1.5
   rec-webtoon:
     <<: *engine
     image: ${REGISTRY:-local}/aod-rec-engine:webtoon-${ENGINE_TAG:-dev}
-    environment: { CORPUS_VERSION: "${WEBTOON_CORPUS:-wt_v1}", SERVING_MODE: "${SERVING_MODE:-prod}", OMP_NUM_THREADS: 1, OPENBLAS_NUM_THREADS: 1, MKL_NUM_THREADS: 1 }
+    environment: { CORPUS_VERSION: "${WEBTOON_CORPUS:-wt_v1}", SERVING_MODE: "${SERVING_MODE:-prod}", CATALOG_KEYS_URL: "${WEBTOON_CATALOG_URL:-}", CATALOG_REFRESH_S: "${CATALOG_REFRESH_S:-600}", OMP_NUM_THREADS: 1, OPENBLAS_NUM_THREADS: 1, MKL_NUM_THREADS: 1 }
     volumes: ["${ARTIFACTS_BASE:-/srv/aod-artifacts}/webtoon:/artifacts:ro"]
     mem_limit: 500m    # 실측 peak_mb 141.1 (28%) — 여유 있음
     cpus: 1.0          # T17 후속: 0.5→1.0 — 엔진은 계산 스레드 1개뿐이라 코어 1개를 통째로 줘야 CFS 스로틀링이 없다
@@ -44,7 +48,7 @@ services:
   rec-webnovel:
     <<: *engine
     image: ${REGISTRY:-local}/aod-rec-engine:webnovel-${ENGINE_TAG:-dev}
-    environment: { CORPUS_VERSION: "${WEBNOVEL_CORPUS:-wn_v6}", SERVING_MODE: "${SERVING_MODE:-prod}", OMP_NUM_THREADS: 1, OPENBLAS_NUM_THREADS: 1, MKL_NUM_THREADS: 1 }
+    environment: { CORPUS_VERSION: "${WEBNOVEL_CORPUS:-wn_v6}", SERVING_MODE: "${SERVING_MODE:-prod}", CATALOG_KEYS_URL: "${WEBNOVEL_CATALOG_URL:-}", CATALOG_REFRESH_S: "${CATALOG_REFRESH_S:-600}", OMP_NUM_THREADS: 1, OPENBLAS_NUM_THREADS: 1, MKL_NUM_THREADS: 1 }
     volumes: ["${ARTIFACTS_BASE:-/srv/aod-artifacts}/webnovel:/artifacts:ro"]
     mem_limit: 900m    # 실측 peak_mb 403.0 (45%) — 여유 있음. 동시1·5 모두 통과
     cpus: 1.0

@@ -18,9 +18,18 @@ class WebtoonAdapter(IntKeyMixin, EngineAdapter):
     def first_key(self) -> str:
         return str(self._first)
 
-    def _next_page(self, *, k, seeds, disliked, excluded, seen, media):
-        merged = sorted(set(seen) | set(excluded))
-        return self._fn(seeds, k=k, seen=merged, disliked_ids=list(disliked) or None,
+    def _restrict_from(self, allowed: set) -> frozenset:
+        """웹툰만 **플랫폼 코드 변경이 없다.** `Engine.next_page(seen=…)` 는 제외 전용이라
+        (랭커의 `exclude_ids` 로만 가고 후처리에는 안 간다 — `personalized_retrieve.next_page`
+        docstring) 목록 밖 id 를 그냥 `seen` 에 합치면 된다. 코퍼스가 3,687편이라 집합 합치기
+        비용도 무시할 수 있다."""
+        return frozenset(self._known - allowed)
+
+    def _next_page(self, *, k, seeds, disliked, excluded, seen, media, restrict=None):
+        merged = set(seen) | set(excluded)
+        if restrict is not None:
+            merged |= restrict
+        return self._fn(seeds, k=k, seen=sorted(merged), disliked_ids=list(disliked) or None,
                         **self.config.production, **self.config.postprocess)
 
     def _items(self, frame):

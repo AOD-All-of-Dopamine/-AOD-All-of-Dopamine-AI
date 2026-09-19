@@ -68,9 +68,11 @@ class EngineState:
 
     def __init__(self, *, platform: str, corpus_version: str, engine_sha: str,
                  loader: Callable[[], tuple[object, str]], max_queue: int = 8,
-                 queue_deadline_s: float = 1.5, now: Callable[[], float] = time.monotonic):
+                 queue_deadline_s: float = 1.5, now: Callable[[], float] = time.monotonic,
+                 catalog=None):
         self.platform, self.corpus_version, self.engine_sha, self._loader = platform, corpus_version, engine_sha, loader
         self.adapter = None; self.config_hash = ""; self.ready = False; self.reason = "loading"
+        self.catalog = catalog                    # CatalogLoader | None — 서빙 가능 목록(spec3 §10)
         self.max_queue, self.queue_deadline_s, self._now = max_queue, queue_deadline_s, now
         self._pool = ThreadPoolExecutor(max_workers=1, thread_name_prefix="engine-compute")
         self._lock = threading.Lock()
@@ -120,6 +122,8 @@ class EngineState:
 
     def shutdown(self) -> None:
         self._pool.shutdown(wait=False, cancel_futures=True)   # SIGTERM 이 대기열을 다 비울 때까지 기다리지 않는다
+        if self.catalog is not None:
+            self.catalog.stop()
 
     # ── 적재 ─────────────────────────────────────────────────────────
     def _load(self) -> None:
@@ -127,6 +131,14 @@ class EngineState:
         try:
             adapter, self.config_hash = self._loader()
             adapter.recommend(k=10, seeds=[adapter.first_key()])      # 예열 — 임베딩 파일을 미리 읽혀 둔다(§8-6)
+            if self.catalog is not None:
+                # 서빙 가능 목록 1회차를 **예열 뒤·ready 전에, 계산 스레드에서** 돌린다:
+                #   · 예열 뒤 — 예열은 목록과 무관하게 항상 같은(전체 코퍼스) 경로로 돈다
+                #   · ready 전 — 컨테이너가 healthy 가 되는 순간 목록이 이미 적용돼 있다
+                #   · 매달리지 않는다 — 받기 제한 5초, 실패는 안에서 삼키고 경고만 남긴다
+                #     (한 번도 못 받으면 필터 없이 전체 코퍼스로 서빙한다)
+                self.catalog.bind(adapter)
+                self.catalog.refresh_once()
             self.adapter, self.ready, self.reason = adapter, True, ""
             if (warning := pool_warning()):
                 log.warning("%s", warning)
@@ -139,6 +151,12 @@ class EngineState:
             log.exception("적재 실패"); self.reason = f"load_failed: {type(e).__name__}: {e}"
         if not self.ready:
             log.error("%s 준비 실패 — %s", self.platform, self.reason)
+        elif self.catalog is not None:
+            self.catalog.start()        # 이후 주기 갱신은 타이머 스레드가 맡는다(계산 스레드를 안 쓴다)
+
+    def catalog_health(self) -> dict:
+        from aod_serving.engine.catalog import DISABLED
+        return dict(DISABLED) if self.catalog is None else self.catalog.health()
 
     def version(self) -> VersionInfo:
         return VersionInfo(sha=self.engine_sha, config=self.config_hash, corpus=self.corpus_version)
@@ -194,7 +212,7 @@ def create_app(state: EngineState, *, load_in_background: bool = True) -> FastAP
             return JSONResponse({"ready": False, "reason": state.reason}, status_code=503)
         return {"ready": True, "platform": state.platform, "corpus_version": state.corpus_version,
                 "engine_sha": state.engine_sha, "config_hash": state.config_hash,
-                "arrow_pool": arrow_pool_backend(), **memory_report()}
+                "arrow_pool": arrow_pool_backend(), "catalog": state.catalog_health(), **memory_report()}
 
     @app.post("/engine/recommend", response_model=EngineResponse)
     def recommend(req: EngineRequest):
@@ -226,12 +244,15 @@ def create_app(state: EngineState, *, load_in_background: bool = True) -> FastAP
 
 def app_from_env() -> FastAPI:
     from aod_serving.engine.bootstrap import BASELINE_CORPORA, PLATFORMS
+    from aod_serving.engine.catalog import CatalogLoader, source_from_env
     platform = os.environ.get("PLATFORM")
     if platform not in PLATFORMS:
         raise SystemExit(f"PLATFORM={platform!r} — {PLATFORMS} 중 하나")
     corpus = os.environ.get("CORPUS_VERSION") or BASELINE_CORPORA[platform]
+    src = source_from_env()          # CATALOG_KEYS_URL / CATALOG_KEYS_FILE 이 없으면 None = 기능 꺼짐
     state = EngineState(platform=platform, corpus_version=corpus, engine_sha=os.environ.get("GIT_SHA", "dev"),
                         loader=default_loader(platform, corpus, os.environ.get("SERVING_MODE", "dev")),
                         max_queue=int(os.environ.get("MAX_QUEUE", "8")),
-                        queue_deadline_s=int(os.environ.get("QUEUE_DEADLINE_MS", "1500")) / 1000)
+                        queue_deadline_s=int(os.environ.get("QUEUE_DEADLINE_MS", "1500")) / 1000,
+                        catalog=None if src is None else CatalogLoader(src))
     return create_app(state)

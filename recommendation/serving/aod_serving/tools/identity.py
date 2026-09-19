@@ -1,6 +1,7 @@
 """동일성 점검 — 서비스(어댑터) 결과 == 평가 경로 결과.
 
     python -m aod_serving.tools.identity --platform tmdb [--level l1|l2|all] [--allow-ties] [--limit N]
+    python -m aod_serving.tools.identity --platform tmdb --catalog-check      # 서빙 가능 목록(spec3 §10)
 
 종료 코드 0 = 전부 일치. 마지막 줄에 JSON 요약을 찍는다. 플랫폼마다 별도 프로세스로 돌린다(최상위 `src` 충돌).
 """
@@ -155,14 +156,84 @@ def _level1_tmdb_media(adapter, limit: int | None) -> tuple[int, list[str]]:
     return n, problems
 
 
+#: 실제 코퍼스로 돌리는 목록 점검의 크기 — 프로필 5개 × 3쪽 × k=30 (spec3 §10).
+CATALOG_PAGES, CATALOG_K, CATALOG_STRIDE = 3, 30, 7
+
+
+def catalog_check(platform: str, adapter, limit: int | None) -> tuple[int, list[str]]:
+    """서빙 가능 목록을 **실제 코퍼스**에 걸고 네 가지를 본다(spec3 §10).
+
+      (a) 돌려준 키가 전부 목록 안이다
+      (b) 쪽이 비지 않고, 쪽 사이에 중복이 없다
+      (c) 목록 = 코퍼스 전체 이면 목록을 끈 것과 **완전히** 같다(id·점수)
+      (d) 목록 밖 시드도 그대로 동작한다 — 시드는 목록과 무관하다
+
+    목록은 정렬한 코퍼스 키의 7번째마다로 **결정적으로** 만든다(기계마다 같은 목록).
+    """
+    problems: list[str] = []; n = 0
+    keys = sorted(adapter.corpus_keys())
+    every_nth = keys[::CATALOG_STRIDE]
+    allowed = set(every_nth)
+    profiles = _profiles(platform, adapter)[: (limit or 5)]
+    pages = lambda seeds: _pages(adapter, seeds, CATALOG_PAGES, CATALOG_K)
+    flat = lambda ps: [[(i.key, i.final) for i in p] for p in ps]
+
+    # (c) 목록이 코퍼스 전체면 결과가 기능 OFF 와 비트 단위로 같아야 한다
+    adapter.set_catalog(None)
+    off = {pid: flat(pages(seeds)) for pid, seeds in profiles}
+    size, matched = adapter.set_catalog(keys)
+    if matched != len(keys):
+        problems.append(f"(c) 코퍼스 전체를 넣었는데 matched={matched} ≠ 코퍼스 {len(keys)}")
+    for pid, seeds in profiles:
+        n += 1
+        if flat(pages(seeds)) != off[pid]:
+            problems.append(f"(c) {pid}: 목록=코퍼스 전체 인데 목록 없음과 결과가 다르다")
+
+    # (a)(b) 목록 = 7번째마다
+    adapter.set_catalog(every_nth)
+    for pid, seeds in profiles:
+        n += 1
+        got = pages(seeds); keys_seen: list[str] = []
+        for i, p in enumerate(got, 1):
+            if not p:
+                problems.append(f"(b) {pid} p{i}: 빈 쪽")
+            if bad := [x.key for x in p if x.key not in allowed]:
+                problems.append(f"(a) {pid} p{i}: 목록 밖 {bad[:5]}")
+            keys_seen += [x.key for x in p]
+        if len(keys_seen) != len(set(keys_seen)):
+            problems.append(f"(b) {pid}: 쪽 사이 중복")
+
+    # (d) 목록 밖 시드
+    outside = next(k for k in keys if k not in allowed)
+    n += 1
+    r = adapter.recommend(k=CATALOG_K, seeds=[outside])
+    if not r.items or r.dropped_seeds:
+        problems.append(f"(d) 목록 밖 시드 {outside}: items={len(r.items)} dropped={r.dropped_seeds}")
+    if bad := [x.key for x in r.items if x.key not in allowed]:
+        problems.append(f"(d) 목록 밖 시드 결과에 목록 밖 항목 {bad[:5]}")
+
+    adapter.set_catalog(None)
+    return n, problems
+
+
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--platform", required=True, choices=["steam", "tmdb", "webtoon", "webnovel"])
     ap.add_argument("--level", default="all", choices=["l1", "l2", "all"])
     ap.add_argument("--allow-ties", action="store_true"); ap.add_argument("--limit", type=int)
+    ap.add_argument("--catalog-check", action="store_true",
+                    help="서빙 가능 목록만 점검한다(L1·L2 는 건너뛴다) — spec3 §10")
     a = ap.parse_args(argv)
     adapter = _adapter(a.platform)
     summary = {"platform": a.platform}; failed = False
+    if a.catalog_check:
+        n, problems = catalog_check(a.platform, adapter, a.limit)
+        summary["catalog"] = {"compared": n, "mismatch": len(problems)}
+        failed = bool(problems) or n == 0
+        for p in problems[:5]:
+            print(f"[catalog] {p}", file=sys.stderr)
+        print(json.dumps(summary, ensure_ascii=False))
+        return 1 if failed else 0
     for name, run in (("l1", lambda: level1(a.platform, adapter, a.limit)),
                       ("l2", lambda: level2(a.platform, adapter, a.allow_ties, a.limit))):
         if a.level in (name, "all"):

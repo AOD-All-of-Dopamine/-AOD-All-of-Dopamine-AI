@@ -11,6 +11,7 @@
 4. [이 PC 에서 실행](#4-이-pc-에서-실행)
 5. [추천 호스트 배포](#5-추천-호스트-배포)
 6. [코퍼스 교체·설정·운영 모드](#6-코퍼스-교체되돌리기--configjson--운영-모드)
+6-1. [서빙 가능 목록](#6-1-서빙-가능-목록--백엔드에-있는-작품만-후보로)
 7. [검증 도구](#7-검증-도구)
 8. [알아 둘 것 / 알려진 한계](#8-알아-둘-것--알려진-한계)
 
@@ -153,14 +154,17 @@ snake_case 그대로 나간다**(`router_sha`·`corpus_version`·`engine_sha` �
 // GET /health
 // 200
 { "ready": true, "platform": "steam", "corpus_version": "tags_full", "engine_sha": "…",
-  "config_hash": "a10cb55f0cc0", "arrow_pool": "system", "rss_mb": 1893.0, "rss_file_mb": 740.0,
+  "config_hash": "a10cb55f0cc0", "arrow_pool": "system",
+  "catalog": { "enabled": false, "size": null, "matched": null, "loaded_at": null, "source": null, "last_error": null },
+  "rss_mb": 1893.0, "rss_file_mb": 740.0,
   "rss_anon_mb": …, "cgroup": { "current_mb": …, "peak_mb": …, "anon_mb": …, "file_mb": … } }
 // 503 { "ready": false, "reason": "loading" | "artifact_invalid: …" | "config_invalid: …" | "load_failed: …" }
 ```
 
 기동 순서: 아티팩트 검증 → 설정(`config.json`) 적용 → 적재 → **예열 1회**(dataset 첫 키로
-`next_page`) → `ready: true`. 검증·설정 오류가 나도 프로세스는 살아 있고 `/health` 가 503 과 구체적
-사유를 계속 보여준다(재시작 루프로 사유가 묻히지 않는다, §6).
+`next_page`) → **서빙 가능 목록 1회차**(켜져 있을 때만, §6-1) → `ready: true`. 검증·설정 오류가
+나도 프로세스는 살아 있고 `/health` 가 503 과 구체적 사유를 계속 보여준다(재시작 루프로 사유가
+묻히지 않는다, §6). `catalog` 필드는 §6-1 참고 — 기본은 위처럼 `enabled: false`(전체 코퍼스)다.
 
 ---
 
@@ -212,12 +216,15 @@ snake_case 그대로 나간다**(`router_sha`·`corpus_version`·`engine_sha` �
 
 **테스트 종류**
 - **hermetic**(마커 없음): `tests/conftest.py` 가 만드는 작은 가짜 코퍼스(6행)만으로 돈다 — 아티팩트가
-  없어도 통과한다. `dev.sh test -q -m "not artifacts"` → **130 passed, 4 deselected, 약 8초**
+  없어도 통과한다. 서빙 가능 목록(§6-1) 테스트도 여기 있다(HTTP 는 임시 포트에 띄운 `http.server`).
+  `dev.sh test -q -m "not artifacts"` → **184 passed, 8 deselected, 약 13초**
   (이 PC, dev 컨테이너 안에서 실측).
-- **`-m artifacts`**: 실제 코퍼스(위 경로)가 로컬에 있어야 돈다(없으면 `skip`). 전체(`dev.sh test -q`,
-  마커 없이) 를 이 PC 에서 돌리면 **134 passed, 약 3분 20초**(Steam 아티팩트 적재·다회 `next_page` 호출이
-  대부분을 차지한다) — CI(GitHub Actions, `.github/workflows/serving-tests.yml`)에는 아티팩트가 없으므로
-  이 4개는 CI 에서 돌지 않고(`-m "not artifacts"`), 나머지 130개만 PR 마다 돈다.
+- **`-m artifacts`**: 실제 코퍼스(위 경로)가 로컬에 있어야 돈다(없으면 `skip`). 8개 — 플랫폼별
+  동일성(`identity`) 4개 + 플랫폼별 목록 점검(`identity --catalog-check`) 4개이고, 전부 플랫폼마다
+  별도 프로세스를 띄운다(최상위 `src` 충돌). 전체(`dev.sh test -q`, 마커 없이)를 이 PC 에서 돌리면
+  **192 passed, 약 3분 51초**(Steam 아티팩트 적재·다회 `next_page` 호출이 대부분을 차지한다) —
+  CI(GitHub Actions, `.github/workflows/serving-tests.yml`)에는 아티팩트가 없으므로 이 8개는 CI 에서
+  돌지 않고(`-m "not artifacts"`), 나머지 184개만 PR 마다 돈다.
 
 ---
 
@@ -271,6 +278,9 @@ docker build -f serving/Dockerfile --target router \
 | 엔진 `WORKERS` | `1`(uvicorn 기본) | 워커 프로세스 수 — §8-b 의 대가 참고 |
 | 엔진 `MAX_QUEUE` | `8` | 대기열 최대 길이(코드 기본값, `EngineState`) |
 | 엔진 `QUEUE_DEADLINE_MS` | `1500` | 대기열 마감(ms) |
+| `STEAM_CATALOG_URL`/`TMDB_CATALOG_URL`/`WEBTOON_CATALOG_URL`/`WEBNOVEL_CATALOG_URL` | (빈 값 = 끔) | 엔진 `CATALOG_KEYS_URL` 로 들어간다 — 서빙 가능 목록 §6-1 |
+| 엔진 `CATALOG_KEYS_FILE` | (없음) | URL 대신 파일로 주기(테스트·로컬) — §6-1 |
+| `CATALOG_REFRESH_S` | `600` | 목록 갱신 주기(초) — §6-1 |
 | 라우터 `ENGINE_TIMEOUT_MS` | `1500`(compose.yaml 이 명시) | 엔진 호출 제한 시간(ms), 연결 0.3s 는 코드 고정값 |
 
 ### 5-4. 기동 순서·헬스체크
@@ -325,6 +335,103 @@ top-level 키는 `production`/`postprocess`/`verdict`/`approved` 넷만 허용�
 
 ---
 
+## 6-1. 서빙 가능 목록 — 백엔드에 있는 작품만 후보로
+
+**왜.** 코퍼스(Steam 173,691 · TMDB 59,780 · 웹소설 29,494 · 웹툰 3,687)는 백엔드 카탈로그보다
+훨씬 크다. 로컬 개발 DB 실측(Steam 894 · 웹툰 99 · 웹소설 63 · TMDB 6)으로 **코퍼스 중 DB 에 있는
+작품은 0.2~2.7%** 라, 후보 50개를 받아도 카드로 만들 수 있는 것이 0~1개다. 재임베딩(REC_TAB_DESIGN
+§8-5b)으로 코퍼스 = 카탈로그가 되기 전까지 엔진이 **백엔드에 있는 것만 후보로** 삼게 한다.
+TMDB 의 `media` 탭 필터와 같은 성격(제품이 정한 후보 범위)이고 **랭킹 공식은 그대로다.**
+
+### 설정 (엔진 환경변수)
+
+| 변수 | 기본값 | 의미 |
+|---|---|---|
+| `CATALOG_KEYS_URL` | (없음) | `GET` → `text/plain`, 한 줄에 외부 키 하나. 백엔드 `GET /api/recommendations/catalog-keys?platform=<p>` |
+| `CATALOG_KEYS_FILE` | (없음) | 같은 형식의 파일(테스트·로컬용). URL 이 있으면 URL 이 이긴다 |
+| `CATALOG_REFRESH_S` | `600` | 갱신 주기(초). 0 이하·숫자가 아니면 기본값 |
+
+**둘 다 없으면 기능이 꺼진다** — 동작이 지금까지와 완전히 같다(전체 코퍼스). `compose.yaml` 은
+플랫폼별 `${STEAM_CATALOG_URL:-}`·`${TMDB_CATALOG_URL:-}`·… 로 비워 두므로, 켜는 것은 호스트에서
+그 변수를 채우는 일이다. `compose.local.yaml` 은 이 PC 의 백엔드
+(`http://host.docker.internal:8080/api/…`)를 가리키도록 채워져 있는데 **그 엔드포인트는 아직 없다** —
+404·연결 거부면 경고 한 줄을 남기고 **필터 없이** 서빙한다(이 PC 의 정상 상태). 이 PC 에서 아예
+끄고 띄우려면 변수를 **빈 값으로** 내보내면 된다(`STEAM_CATALOG_URL= … dev.sh up` — local 쪽은
+`:-` 가 아니라 `-` 라 빈 값이 그대로 전달된다). 리눅스 호스트에서는 `extra_hosts` 로
+`host.docker.internal` 을 만들어 둔다(Docker Desktop 은 기본 제공).
+
+키는 API 의 문자열 키 그대로다(§2): Steam 은 `steam_appid` 문자열, TMDB 는 `movie_{id}`/`tv_{id}`,
+웹툰·웹소설은 `item_id` 문자열. 빈 줄·CRLF·앞뒤 공백·중복은 알아서 걸러지고, **코퍼스에 없는 키는
+조용히 무시**된다(`/health.catalog` 의 `size` vs `matched` 로 드러난다).
+
+### 무엇을 거르나 — 후보만, 랭커의 제외 단계에서만
+
+- **시드는 목록과 무관하다.** 좋아요한 작품은 목록에 문제가 있어도 유효한 시드다(백엔드 작품의
+  98~100% 는 어차피 코퍼스에 있다). `droppedSeeds` 도 목록 때문에 늘지 않는다.
+- 목록 밖 작품은 **랭커에 넘기는 후보에서만** 빠진다. "이미 본 것"을 뜻하는 자리에는 **절대**
+  넣지 않는다 — 넣으면 17만 개가 "이 사용자가 이미 본 것"이 되어 다음이 통째로 망가진다:
+  - Steam `bucket_offset = len(seen)` (시드 버킷 회전) · `series_session_max` / `series_counts(seen)`
+    (시리즈 세션 상한이 즉시 포화)
+  - 웹소설 `drop_excluded_series`(W-6) — 제외된 작품의 **다른 판본**까지 지우므로, 카탈로그 안에
+    있는 판본이 카탈로그 밖 판본 때문에 사라진다(코퍼스 29,494행 중 4,164행이 중복 키 그룹)
+- 그래서 플랫폼 코드에는 **기본값 `None` 인 선택 인자**만 붙였다 — `None` 이면 예전 코드와
+  비트 단위로 같은 결과다(세 기준 목록으로 확인, §7 `*_baseline --check`).
+
+| 플랫폼 | 인자 | 거는 자리 |
+|---|---|---|
+| Steam | `next_page(…, blocked_rows=)` → `run_multi` | 랭커에 넘기는 후보 프레임에서 뺀다(`exclude_appids`·후처리는 안 건드린다) |
+| 웹소설 | `next_page(…, blocked_rows=)` → `run_multi` | 같음. `drop_seed_series` 가 받는 `excluded` 에는 안 들어간다 |
+| TMDB | `next_page(…, servable_rows=)` → `recommend` | 기존 `retriever.servable` 에 AND — `media` 필터와 **같은 자리**라 풀 깊이 `rank_n` 이 유지된다 |
+| 웹툰 | (없음 — 코드 변경 없음) | `Engine.next_page(seen=)` 가 제외 전용이라(랭커 `exclude_ids` 로만 가고 후처리에는 안 간다) 어댑터가 `seen` 에 합친다 |
+
+**왜 집합이 아니라 불리언 배열인가.** Steam 규모(차단 약 17만)에서 요청마다 17만짜리 집합을
+합집합해 `isin` 하면 수십 ms 가 든다. 갱신 때 **한 번** 만든, 코퍼스 행 순서에 맞춘 읽기 전용
+불리언 배열을 재사용하면 요청당 비용이 마스킹 한 번으로 끝난다(실측은 아래 "측정").
+
+### 갱신·실패 의미론
+
+- 기동 1회차는 **예열 뒤·`ready` 전에, 전용 계산 스레드에서** 돈다 → 컨테이너가 healthy 가 되는
+  순간 이미 목록이 걸려 있다. 받기 제한 **5초**라 백엔드가 죽어 있어도 기동이 매달리지 않는다.
+- 이후 갱신은 `catalog-refresh` **타이머 스레드**가 맡는다. 그 스레드가 하는 일은 HTTP/파일 읽기 ·
+  문자열 파싱 · `adapter.set_catalog` 셋뿐이고 **pandas·pyarrow 를 건드리지 않는다** — Arrow 를
+  만지는 스레드를 계산 스레드 하나로 묶어 둔 계약(§8-a)이 깨지면 안 되기 때문이다. 어댑터가
+  쓰는 코퍼스 키는 `load()` 가 계산 스레드에서 numpy 배열·파이썬 집합으로 떠 둔 것뿐이다
+  (numpy 는 스레드와 무관하다 — 위험한 것은 Arrow 할당자다).
+- 새 목록은 **다 만든 뒤 한 번의 대입**으로 갈아 끼운다. 요청은 그 속성을 한 번만 읽으므로
+  반쯤 지어진 상태를 보지 않고, 한 요청은 한 목록만 본다.
+- **실패하면 직전 목록을 유지**하고 WARNING 을 남긴다. **한 번도 못 받았으면 필터 없이(전체
+  코퍼스) 서빙**하고 갱신 실패마다 경고를 남긴다 — 백엔드가 없다고 추천이 멈추지는 않는다.
+- **빈 목록(0줄)은 유효한 목록으로 받아들인다** (제품 결정). "아직 못 받음"과 "정말로 서빙할 게
+  없음"은 다르고, 빈 목록을 무시하면 카탈로그를 비운 운영자가 그 사실을 영영 모른다. 대신
+  ERROR 로 크게 남기고, 엔진은 빈 결과를 돌려준다 → 라우터에서 그 플랫폼이 `exhausted: true` 다.
+- **응답이 `text/plain` 이 아니면 거절**한다(직전 목록 유지). 주소를 잘못 잡아 엉뚱한 서비스의
+  HTML 이 200 으로 오면 그 본문이 "키"로 파싱돼 코퍼스와 하나도 안 겹치고 → 전부 차단이 된다.
+  "목록이 비어 있다"(의도)와 "응답이 목록이 아니다"(사고)를 가르는 선이다. 목록을 받긴 했는데
+  코퍼스와 겹치는 것이 **0개**면 적용은 하되 ERROR 로 남긴다(키 형식·코퍼스 버전 의심).
+
+### `/health.catalog`
+
+```jsonc
+"catalog": { "enabled": true, "size": 894, "matched": 871,
+             "loaded_at": "2026-09-19T05:12:33+00:00", "source": "url", "last_error": null }
+// 기능 꺼짐: { "enabled": false, "size": null, "matched": null, "loaded_at": null, "source": null, "last_error": null }
+```
+- `size` 받은 키 개수(중복 제거 후) · `matched` 그중 코퍼스에 실제로 있는 것 · `source` `"url"`|`"file"`
+- `enabled: true` 인데 `loaded_at: null` = **한 번도 못 받았다**(필터 없이 서빙 중). 사유는 `last_error`.
+- `loaded_at` 이 있는데 `last_error` 도 있으면 = 그 시각의 목록으로 서빙 중이고 **최근 갱신이 실패**했다.
+
+### 측정·검증
+
+- **결과 불변(기능 OFF)**: `steam_baseline`/`webnovel_baseline`/`tmdb_baseline` `--check` 세 개가
+  비트 단위로 통과해야 한다(§7). 목록 인자를 안 주면 플랫폼 함수의 호출 모양 자체가 예전과 같다.
+- **기능 ON**: `python -m aod_serving.tools.identity --platform <p> --catalog-check` — 정렬한 코퍼스
+  키의 7번째마다를 목록으로 걸고 (a) 돌려준 키가 전부 목록 안 (b) 쪽이 비지 않고 쪽 사이 중복 없음
+  (c) **목록 = 코퍼스 전체면 OFF 와 id·점수까지 완전히 같음** (d) 목록 밖 시드도 동작 을 본다.
+- 단위 테스트는 `tests/test_catalog.py`(파싱·실패 의미론·원자적 교체·스레드 규칙·`/health`)와
+  `tests/test_engine_app.py`(적용 시점·타이머 스레드).
+
+---
+
 ## 7. 검증 도구
 
 모두 `recommendation/serving/aod_serving/tools/` 아래, `dev.sh run`/`dev.sh net` 으로 돌린다.
@@ -332,6 +439,7 @@ top-level 키는 `production`/`postprocess`/`verdict`/`approved` 넷만 허용�
 | 도구 | 무엇을 확인하나 | 실행 |
 |---|---|---|
 | `identity` | **L1**: 어댑터 결과 == 같은 프로세스에서 평가 경로를 직접 부른 결과(id·순서·점수 완전 일치, 싫어요/제외/seen 조합 포함). **L2**: 어댑터 결과 == 커밋된 평가 기준 목록 — TMDB/웹툰/Steam 은 id 완전 일치 + 점수 오차 1e-6, **웹소설은 (제목, 작가) 키로 비교**(동점 판본 때문, §8-c) | `dev.sh run python -m aod_serving.tools.identity --platform steam [--level l1\|l2\|all] [--allow-ties] [--limit N]` |
+| `identity --catalog-check` | **서빙 가능 목록**(§6-1) — 정렬한 코퍼스 키의 7번째마다를 목록으로 걸고 프로필 5개 × 3쪽 × k=30 으로 (a) 결과가 전부 목록 안 (b) 빈 쪽·쪽 사이 중복 없음 (c) 목록 = 코퍼스 전체면 기능 OFF 와 id·점수까지 동일 (d) 목록 밖 시드도 동작 | `dev.sh run python -m aod_serving.tools.identity --platform steam --catalog-check` |
 | `e2e` | compose 로 띄운 상태에서 **L3**(라우터 전체 탭 결과 == 엔진 직접 호출 + `mix.M6` 재현) + 계약(스키마·422·코퍼스 밖 시드→`droppedSeeds`·빈 시드→`exhausted`) + 장애(엔진 중단 시 `partial`/503) | `dev.sh net python -m aod_serving.tools.e2e [--expect-partial steam] [--bundles N]` |
 | `loadgate` | 부하·메모리 관문(시드 1·10·50 × seen 0·200·500 × 동시 1·5·20) — **결과·판정은 `LOADGATE_RESULTS.md` 참고**(이 README 에는 수치를 옮기지 않는다 — 갱신 진행 중일 수 있다) | `dev.sh net python -m aod_serving.tools.loadgate --out <경로> [--platforms steam,tmdb,…] [--per-cell N] [--skip-router\|--skip-engines]` |
 | `{steam,webnovel,tmdb}_baseline` | 코드 변경(주로 지연 개선)이 **결과를 바꾸지 않았는지** — `--out` 으로 기준 목록 생성, `--check` 로 비교(같은 머신·같은 스레드 설정에서 **비트 단위** 완전 일치가 기준; 다른 머신 비교는 `--allow-ties` 로 동점 자리의 순서 차이만 허용), `--bench` 로 지연만 측정, `--cases <부분문자열>` 로 사례 필터 | `dev.sh run python -m aod_serving.tools.steam_baseline --check <기존 파일>` |
@@ -385,6 +493,17 @@ TMDB·웹툰 랭커 계측은 후속 범위).
 5. 웹소설 동일성은 id 가 아니라 (제목, 작가) 키 기준이다(위 (c)).
 6. ECR 푸시·배포 자동화는 추천 호스트가 생긴 뒤의 범위다. 대신 아티팩트 없이 도는 테스트와 이미지
    빌드 가능성을 GitHub Actions(`.github/workflows/serving-tests.yml`)로 PR마다 확인한다.
+7. **서빙 가능 목록(§6-1)이 추가됐다** — 문서에 없던 것이고, 코퍼스가 백엔드 카탈로그보다 100배쯤
+   커서 카드가 안 남는 실측(코퍼스의 0.2~2.7%만 DB 에 있음)에서 나왔다. 기본은 꺼짐이라 켜지 않으면
+   동작이 그대로다. 재임베딩(§8-5b)으로 코퍼스 = 카탈로그가 되면 없어질 임시 장치다.
+
+**(i) 목록을 켜면 Steam 은 오히려 빨라진다(부작용이 아니라 구조).** 후보 풀이 목록 크기로 줄어
+랭커·후처리가 보는 행이 줄기 때문이다. 실측(이 PC, dev 컨테이너, k=50 · 중앙값): 시드 3개
+225ms → 127ms(차단 172,822 · DB 규모), 시드 50개 529ms → 315ms. 목록을 거는 것 자체의 요청당 비용은
+불리언 마스킹 **약 1ms** 다(17만짜리 집합을 요청마다 합집합해 `isin` 하는 방식이었다면 약 21ms —
+합집합 5.5ms + `isin` 16.0ms). 갱신 1회의 마스크 생성은 약 17ms 이고 타이머 스레드에서 돈다.
+**대신 `exhausted` 가 흔해진다** — DB 규모 목록에서 k=50 요청이 11개만 돌려줬다. 그게 지금 카탈로그가
+작다는 사실 그대로이고(카드가 0~1개 나오던 문제의 정직한 표현), 재임베딩 전까지는 정상이다.
 
 **(h) 라우터 입력 한도는 라우터 자신이 검증한다(수정 완료).** 플랫폼별 `seeds` ≤ 50·
 `disliked+excluded+seen` ≤ 5,000 한도는 `RouterRequest` 의 `model_validator` 가 플랫폼별로 검사해
