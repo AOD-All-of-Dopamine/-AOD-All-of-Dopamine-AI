@@ -11,6 +11,20 @@ class PersonalizedRanker:
         self.dataset = pd.read_parquet(self.artifacts / "dataset.parquet")
         self.pop_boost = pop_boost
         self.dataset = self.dataset.set_index("item_id")
+        # 관심 수 백분위는 **요청과 무관**하다(코퍼스만 보고 정해진다). 예전에는 `rank()` 가
+        # 요청마다 29,494행에 다시 순위를 매겼다 (2026-09-19 서빙 지연). 처음 쓸 때 한 번만
+        # 만든다 — 기동 시가 아니라 지연 생성인 이유는, 관심 수 열이 없는 코퍼스에서
+        # 예전과 **같은 자리**(rank 호출 안)에서 터지게 두기 위해서다.
+        self._pct = None
+
+    def _interest_percentile(self) -> pd.Series:
+        """item_id → 관심 수 백분위. 두 번 만들어도 같은 값이라 경합에 안전하다.
+
+        **읽기 전용으로만 쓴다** — 이 Series 를 고치는 경로는 없다.
+        """
+        if self._pct is None:
+            self._pct = self.dataset["interest_count"].rank(pct=True, ascending=True)
+        return self._pct
 
     def rank(
         self,
@@ -41,7 +55,7 @@ class PersonalizedRanker:
         # coh_mmo 0.80→0.64). boost 를 0.08~0.15 로 스윕해도 전부 그렇다 — 리뷰 수의
         # 어떤 단조 변환으로도 대작 취향과 저리뷰 취향을 동시에 만족시킬 수 없다.
         # 이 도메인에서 `pop_boost` 를 맞출 때 그 함정을 처음부터 피해야 한다.
-        pct = self.dataset["interest_count"].rank(pct=True, ascending=True)
+        pct = self._interest_percentile()
 
         result["interest_percentile"] = (
             result["item_id"].map(pct).astype("float64").fillna(0.0)

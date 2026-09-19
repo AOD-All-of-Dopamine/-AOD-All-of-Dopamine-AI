@@ -1,0 +1,16 @@
+{
+  "platform": "steam",
+  "corpus_version": "tags_full",
+  "schema_version": 1,
+  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
+  "dim": 1024,
+  "rows": 173691,
+  "text_builder_version": "unknown",
+  "source": "external-crawl",
+  "created_at": "2026-09-19T07:24:35+00:00",
+  "files": {
+    "corpus_embeddings.npy": "6b63afc10be60117734acae85c8ece2bf179244e46fa1b57b42d367b420c9199",
+    "corpus_index.parquet": "eee729980fc54bf37a54be49d291b83ccf54146eedab6fc96e64125313e7e6ef",
+    "dataset.parquet": "2ac232ba35d382f691d923c1c65c5723ef4cc4db8da4850d95b1e294c48ea76c"
+  }
+}

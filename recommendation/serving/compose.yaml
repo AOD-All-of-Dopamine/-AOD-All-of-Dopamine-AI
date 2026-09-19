@@ -1,0 +1,84 @@
+# 추천 호스트용. 이 PC 에서는 compose.local.yaml 을 덮어 쓴다:
+#   docker compose -p aod-rec -f compose.yaml -f compose.local.yaml up -d --build
+# mem_limit · cpus 는 부하 관문(LOADGATE_RESULTS.md, T17, 2026-09-19 개발 PC 최종 재측정)에서 확정한
+# 값이다. TMDB 최적화(634f520·c8ec317) · steam 2차 최적화(e767fe4) · webtoon cpus 0.5→1.0 이후로는
+# 동시1 은 4개 엔진·라우터(세 시드 수 전부) 완전 통과, 동시5 도 tmdb·webtoon·webnovel 은 통과하고
+# 라우터도 seeds 1·10 은 통과다. **남은 실패는 steam 의 무거운 요청(seeds=50) 동시5 뿐**
+# (p95 최대 1825ms, busy 9/135 — 직전엔 2970ms/40 이었다, 계속 개선 중). 서빙 가능 목록(카탈로그)을
+# 켜서(896키) 다시 재 보니 이 busy 는 0 이 됐지만 p95(1722ms)는 아직 살짝 넘는다 — 백엔드 카탈로그가
+# 실제로 준비되면 공짜로 따라올 개선. 코드·cpus 는 이번에도 건드리지 않았다(범위 밖). mem_limit 은
+# 네 값 모두 peak_mb 가 80% 아래라 변경 없음. 자세한 수치·판정·용량 추정·권고는 LOADGATE_RESULTS.md.
+# **실제 호스트에서 같은 관문을 다시 돌려 확인할 것.**
+x-engine: &engine
+  restart: unless-stopped
+  read_only: true
+  tmpfs: ["/tmp"]
+  networks: [aod-rec]
+  healthcheck:
+    test: ["CMD", "python", "-c", "import urllib.request,sys; sys.exit(0 if urllib.request.urlopen('http://localhost:8000/health', timeout=2).status==200 else 1)"]
+    interval: 15s
+    timeout: 3s
+    # Steam 은 711MB 파일의 sha256 검증 + 적재 + 예열까지 겪는다 — 콜드 페이지 캐시에서는 90s 를
+    # 넘길 수 있다(라우터가 depends_on: service_healthy 라 여기서 막히면 라우터가 영영 안 뜬다).
+    start_period: 300s
+    retries: 3
+
+#   서빙 가능 목록(spec3 §10): `<P>_CATALOG_URL` 이 비어 있으면 **기능 꺼짐**(전체 코퍼스, 지금까지와 동일).
+#   주소를 주면 백엔드 `GET /api/recommendations/catalog-keys?platform=<p>` 에서 한 줄 한 키를 받아
+#   후보를 그 목록으로 제한한다. 받기 실패는 서빙을 멈추지 않는다(직전 목록 유지, 한 번도 못 받았으면
+#   필터 없이). 자세한 의미론은 README §6-1 · `aod_serving/engine/catalog.py`.
+services:
+  rec-steam:
+    <<: *engine
+    image: ${REGISTRY:-local}/aod-rec-engine:steam-${ENGINE_TAG:-dev}
+    environment: { CORPUS_VERSION: "${STEAM_CORPUS:-tags_full}", SERVING_MODE: "${SERVING_MODE:-prod}", CATALOG_KEYS_URL: "${STEAM_CATALOG_URL:-}", CATALOG_REFRESH_S: "${CATALOG_REFRESH_S:-600}", OMP_NUM_THREADS: 2, OPENBLAS_NUM_THREADS: 2, MKL_NUM_THREADS: 2 }
+    volumes: ["${ARTIFACTS_BASE:-/srv/aod-artifacts}/steam:/artifacts:ro"]
+    mem_limit: 3200m   # 실측 peak_mb 2088.8 (65%) — 여유 있음. 2차 최적화 후에도 seeds=50 동시5 만 여전히 실패(LOADGATE_RESULTS.md 참고)
+    cpus: 2.0
+  rec-tmdb:
+    <<: *engine
+    image: ${REGISTRY:-local}/aod-rec-engine:tmdb-${ENGINE_TAG:-dev}
+    environment: { CORPUS_VERSION: "${TMDB_CORPUS:-tmdb_v1}", SERVING_MODE: "${SERVING_MODE:-prod}", CATALOG_KEYS_URL: "${TMDB_CATALOG_URL:-}", CATALOG_REFRESH_S: "${CATALOG_REFRESH_S:-600}", OMP_NUM_THREADS: 2, OPENBLAS_NUM_THREADS: 2, MKL_NUM_THREADS: 2 }
+    volumes: ["${ARTIFACTS_BASE:-/srv/aod-artifacts}/tmdb:/artifacts:ro"]
+    mem_limit: 1600m   # 실측 peak_mb 711.3 (44%) — 여유 있음. 엔진 최적화(634f520·c8ec317) 후 동시1·5 모두 통과
+    cpus: 1.5
+  rec-webtoon:
+    <<: *engine
+    image: ${REGISTRY:-local}/aod-rec-engine:webtoon-${ENGINE_TAG:-dev}
+    environment: { CORPUS_VERSION: "${WEBTOON_CORPUS:-wt_v1}", SERVING_MODE: "${SERVING_MODE:-prod}", CATALOG_KEYS_URL: "${WEBTOON_CATALOG_URL:-}", CATALOG_REFRESH_S: "${CATALOG_REFRESH_S:-600}", OMP_NUM_THREADS: 1, OPENBLAS_NUM_THREADS: 1, MKL_NUM_THREADS: 1 }
+    volumes: ["${ARTIFACTS_BASE:-/srv/aod-artifacts}/webtoon:/artifacts:ro"]
+    mem_limit: 500m    # 실측 peak_mb 144.5 (29%) — 여유 있음
+    cpus: 1.0          # T17 후속: 0.5→1.0 — 엔진은 계산 스레드 1개뿐이라 코어 1개를 통째로 줘야 CFS 스로틀링이 없다
+                        # (실측으로 확인: 동시1 p95 1849→175ms, 동시5 p95 3495→929ms, busy 0/135)
+  rec-webnovel:
+    <<: *engine
+    image: ${REGISTRY:-local}/aod-rec-engine:webnovel-${ENGINE_TAG:-dev}
+    environment: { CORPUS_VERSION: "${WEBNOVEL_CORPUS:-wn_v6}", SERVING_MODE: "${SERVING_MODE:-prod}", CATALOG_KEYS_URL: "${WEBNOVEL_CATALOG_URL:-}", CATALOG_REFRESH_S: "${CATALOG_REFRESH_S:-600}", OMP_NUM_THREADS: 1, OPENBLAS_NUM_THREADS: 1, MKL_NUM_THREADS: 1 }
+    volumes: ["${ARTIFACTS_BASE:-/srv/aod-artifacts}/webnovel:/artifacts:ro"]
+    mem_limit: 900m    # 실측 peak_mb 414.2 (46%) — 여유 있음. 동시1·5 모두 통과
+    cpus: 1.0
+  rec-router:
+    image: ${REGISTRY:-local}/aod-rec-router:${ROUTER_TAG:-dev}
+    restart: unless-stopped
+    read_only: true
+    tmpfs: ["/tmp"]
+    networks: [aod-rec]
+    environment: { ENGINE_TIMEOUT_MS: 1500, ENGINE_STEAM_URL: "http://rec-steam:8000", ENGINE_TMDB_URL: "http://rec-tmdb:8000",
+                  ENGINE_WEBTOON_URL: "http://rec-webtoon:8000", ENGINE_WEBNOVEL_URL: "http://rec-webnovel:8000" }
+    ports: ["${BIND_IP:-127.0.0.1}:8080:8080"]     # 호스트 사설 IP 에만 바인딩 — 백엔드 API 서버의 보안 그룹만 허용
+    depends_on:
+      rec-steam: { condition: service_healthy }
+      rec-tmdb: { condition: service_healthy }
+      rec-webtoon: { condition: service_healthy }
+      rec-webnovel: { condition: service_healthy }
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request,sys; sys.exit(0 if urllib.request.urlopen('http://localhost:8080/health', timeout=2).status==200 else 1)"]
+      interval: 15s
+      timeout: 3s
+      start_period: 20s
+      retries: 3
+    mem_limit: 256m
+    cpus: 0.5
+
+networks:
+  aod-rec: {}

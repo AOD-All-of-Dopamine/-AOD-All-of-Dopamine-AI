@@ -1,0 +1,20 @@
+{
+  "platform": "steam", "schema_version": 1, "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
+  "key": {"column": "steam_appid", "dtype": "int"},
+  "embedding": {"dim": 1024, "dtype": "float32", "norm_tolerance": 0.01},
+  "required_files": ["corpus_embeddings.npy", "corpus_index.parquet", "dataset.parquet"],
+  "corpus_index_columns": {"embedding_row": "int", "steam_appid": "int", "name": "str"},
+  "dataset_columns": {
+    "steam_appid": {"dtype": "int"}, "name": {"dtype": "str"}, "short_description": {"dtype": "str"},
+    "genres": {"dtype": "list"}, "categories": {"dtype": "list"}, "publisher": {"dtype": "str"}, "developer": {"dtype": "str"},
+    "coming_soon": {"dtype": "bool"}, "has_recommendations": {"dtype": "bool"}, "content_descriptorids": {"dtype": "list"},
+    "recommendations_total": {"dtype": "int", "weights": ["rec_boost", "quality_w"]},
+    "metacritic_score": {"dtype": "int", "weights": ["mc_w"]},
+    "has_metacritic": {"dtype": "bool", "weights": ["mc_w"]},
+    "tags": {"dtype": "list", "weights": ["tag_w"]}
+  },
+  "conditional_files": [
+    {"path": "reviews", "when": {"key": "quality_src", "in": ["volume", "wilson", "blend"]}},
+    {"path": "trend_features.parquet", "when": {"key": "trend_weight", "nonzero": true}}
+  ]
+}

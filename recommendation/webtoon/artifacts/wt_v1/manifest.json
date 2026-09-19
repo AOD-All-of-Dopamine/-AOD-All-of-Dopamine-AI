@@ -1,0 +1,16 @@
+{
+  "platform": "webtoon",
+  "corpus_version": "wt_v1",
+  "schema_version": 1,
+  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
+  "dim": 1024,
+  "rows": 3687,
+  "text_builder_version": "unknown",
+  "source": "external-crawl",
+  "created_at": "2026-09-19T07:25:09+00:00",
+  "files": {
+    "corpus_embeddings.npy": "f0baa11779cce15cfe3a4f252615bd0ba4c5d32f65b075f832c6661ad029ef28",
+    "corpus_index.parquet": "33bf26c43f7f475c80b6a7c0b42156af5ff2643be32cd400cd4e6609a9bf53dd",
+    "dataset.parquet": "a751a0086c408868b94f320d53ecd59750ead36529ffe5ddf680edc3fbabe9b6"
+  }
+}

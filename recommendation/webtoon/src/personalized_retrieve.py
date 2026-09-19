@@ -94,5 +94,12 @@ class Engine:
 
     def next_page(self, seed_ids, k=50, seen=None, **kw):
         """제품 경로. `seen` 아래를 잇는다 — 새로고침해도 앞 페이지가 다시 나오지 않는다.
-        싫어요는 `disliked_ids=` 로 매 호출 현재 목록을 넘긴다 (`recommend` 참고)."""
+        싫어요는 `disliked_ids=` 로 매 호출 현재 목록을 넘긴다 (`recommend` 참고).
+
+        **`exclude`/`seen` 은 제외 전용이다** — `recommend` 안에서 `ex` 로 합쳐져 랭커의
+        `exclude_ids` 로만 가고, 후처리에는 넘어가지 않는다(후처리가 받는 것은 `seed_ids` 와
+        `drop_series_ids=disliked` 뿐이다). Steam 의 `bucket_offset`·`series_session_max` 나
+        웹소설의 `drop_excluded_series` 처럼 "이미 본 것"으로 해석되는 자리가 없다는 뜻이라,
+        서빙 가능 목록(백엔드 카탈로그 밖 작품)을 여기에 그대로 합쳐도 안전하다 — 웹툰만
+        별도 인자 없이 서빙이 붙는 이유다(2026-09-19)."""
         return self.recommend(seed_ids, k=k, exclude=seen or [], **kw)

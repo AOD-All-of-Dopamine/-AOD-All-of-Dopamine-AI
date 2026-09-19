@@ -859,7 +859,7 @@ networks:
 ## 10. 테스트 계획
 | 종류 | 내용 |
 |---|---|
-| **동일성** | 엔진 서비스 `next_page` 결과 == 평가 경로 결과. 기준 목록: TMDB `crossdomain/x27_tmdb_pages.json` · 웹툰 `webtoon/eval/t10_pages.json`(n0) · 웹소설 W-6 · Steam(**기준 파일 확정 필요** — X-20 목록 위치를 찾아 못박는다). 점수 인자 계측 전후 순서 동일 |
+| **동일성** | 엔진 서비스 `next_page` 결과 == 평가 경로 결과. 기준 목록: TMDB `crossdomain/x27_tmdb_pages.json` · 웹툰 `webtoon/eval/t10_pages.json`(n0) · 웹소설 W-6 · Steam `steam/eval/s3_pages.json`(`steam_baseline` 로 2026-09-19 팀장 PC 에서 생성). 점수 인자 계측 전후 순서 동일 |
 | 계약 | 라우터·엔진 요청/응답 JSON 스키마 · 코퍼스 밖·빈 시드 · `partial` |
 | 백엔드 단위 | 시드 규칙 · 조사 · 반응 상태 전이(좋아요→싫어요→되돌리기=좋아요) · 토글 API 응답 형태 불변 |
 | 백엔드 통합 | Testcontainers PostgreSQL 로 `V8` · 파티션 생성 · `event_seen` 중복 제거 · 체인 seen |

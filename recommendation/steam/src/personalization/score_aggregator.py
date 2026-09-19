@@ -52,7 +52,10 @@ class ScoreAggregator:
         # 후처리의 시드 인터리빙이 이걸로 묶기 때문에, 집계 전략과 상관없이 항상 채워야 한다.
         # 예전에는 max 에만 있었고 mean/top2_mean 은 None 이었다 — 그래서 전략을 바꾸면
         # 인터리빙이 조용히 죽어 약한 시드가 굶었다(test_refresh 가 이걸 잡았다).
-        dominant = [seed_appids[i] for i in sim_matrix.argmax(axis=0)]
+        # `argmax` 결과를 먼저 파이썬 정수로 바꾼 뒤 훑는다 — 코퍼스 17만 행만큼 일어나던
+        # np.int64 박싱이 사라진다 (2026-09-19 서빙 지연). 담기는 것은 `seed_appids[i]`
+        # 그대로라 목록의 값이 같다.
+        dominant = [seed_appids[i] for i in sim_matrix.argmax(axis=0).tolist()]
 
         if "max" in strategies:
             max_sim = sim_matrix.max(axis=0)

@@ -105,6 +105,87 @@ class PersonalizedRanker:
         va = self.dataset["vote_average"].astype(float)
         self.rating_norm = ((va - 5.0) / 5.0).clip(-1, 1).to_numpy()   # 5점=0, 10점=1
 
+        # ── 요청과 무관한 값은 처음 쓸 때 한 번만 만든다 (서빙 지연, 2026-09-19) ──
+        # 장르 역색인·매체 마스크·열 꺼내기는 **가중치가 아니라 코퍼스만 보고** 정해진다.
+        # 그래서 평가 스크립트가 생성 뒤에 계수를 바꿔도(v4_build `ranker.genre_w` ·
+        # v2/v3_build `ranker.director_w`) 낡지 않는다 — 캐시가 그 값에 의존하지 않는다.
+        # 기동 시가 아니라 **지연 생성**인 이유는, 장르를 안 쓰는 설정(genre_w=0)에서 쓰지도
+        # 않을 59,780행 색인을 짓지 않고, 열이 없는 코퍼스에서 예전과 같은 자리에서 터지게
+        # 두기 위해서다. 두 번 만들어도 같은 값이라 경합에 안전하다.
+        self._genre_rows = None
+        self._media_masks: dict = {}
+        self._cols: dict = {}
+
+    def column(self, name: str) -> np.ndarray:
+        """`dataset[name]` 을 numpy 로 한 번만 꺼내 둔다.
+
+        `recommend` 가 시드마다 `dataset.iloc[r]` 로 15열짜리 혼합 dtype 행을 통째로
+        조립하던 것을 없앤다. 같은 열의 같은 원소를 위치로 꺼낼 뿐이라 값이 같다.
+        **읽기 전용으로만 쓴다.**
+        """
+        c = self._cols.get(name)
+        if c is None:
+            c = self.dataset[name].to_numpy()
+            self._cols[name] = c
+        return c
+
+    def media_mask(self, media: str) -> np.ndarray:
+        """`_media == media` 를 매체값마다 한 번만 만든다 — 같은 `==` 비교라 값이 같다.
+
+        **읽기 전용으로만 쓴다** — `&`·`|`·`~` 는 새 배열을 만들므로 캐시가 안 바뀐다.
+        """
+        m = self._media_masks.get(media)
+        if m is None:
+            m = (self._media == media)
+            self._media_masks[media] = m
+        return m
+
+    def media_in(self, medias) -> np.ndarray:
+        """후보 매체가 `medias` 안에 드는가 — 코퍼스 전체 길이의 bool.
+
+        예전 `np.isin(self._media[r], list(seed_medias))` 와 같은 `==` 비교를 매체값마다
+        한 번만 하고 합집합을 낸다. `np.isin` 은 순서와 무관하므로 집합 순회 순서가 달라도
+        같은 값이다. `medias` 가 비면 `None` 을 돌려준다(호출부가 이미 걸러낸다).
+        """
+        out = None
+        for m in medias:
+            eq = self.media_mask(m)
+            out = eq if out is None else (out | eq)
+        return out
+
+    def genre_cover(self, seed_genres, r: np.ndarray) -> np.ndarray:
+        """시드 **개별** 최대 장르 피복률 |A∩S|/|S| — 행별 파이썬 집합 교집합의 벡터판.
+
+        교집합 크기는 "시드 장르 중 후보가 가진 것의 개수"다. 장르 → 행 번호 역색인에
+        1 씩 더해 세면 같은 정수가 나온다 — `_genres[i]` 가 frozenset 이라 한 행이 같은
+        장르로 두 번 세어지지 않는다. 나눗셈도 정수/정수 그대로라 float64 값이 같고,
+        `max` 도 음수가 없는 값들의 최댓값이라 `np.maximum` 누적과 같다.
+
+        **마지막 float32 캐스팅이 중요하다.** `1.0 + genre_w * gf` 가 float32 로 계산되고
+        (NEP 50 — 파이썬 float 는 배열 dtype 을 못 올린다) 그 결과가 점수에 들어간다.
+        예전 `np.array([...], dtype=np.float32)` 과 같은 반올림이어야 한다.
+
+        시드 50개 · 후보 59,780행에서 파이썬 집합 교집합 300만 번(호출당 1.1초)이 사라진다.
+        """
+        if self._genre_rows is None:
+            rows: dict = {}
+            for i, gs in enumerate(self._genres):
+                for g in gs:
+                    rows.setdefault(g, []).append(i)
+            self._genre_rows = {g: np.asarray(v, dtype=np.int64) for g, v in rows.items()}
+        n = len(self._genres)
+        best = np.zeros(n, dtype=np.float64)
+        for sg in dict.fromkeys(seed_genres):     # 장르 집합이 같은 시드는 최댓값이 같다
+            if not sg:
+                continue                          # 빈 시드의 기여는 0.0 — 0 인 best 를 못 올린다
+            cnt = np.zeros(n, dtype=np.int64)
+            for g in sg:
+                idx = self._genre_rows.get(g)     # 코퍼스에 없는 장르는 어떤 행과도 안 겹친다
+                if idx is not None:
+                    cnt[idx] += 1
+            np.maximum(best, cnt / len(sg), out=best)
+        return best[r].astype(np.float32)
+
     def rank(self, scored: pd.DataFrame, exclude_rows=None, top_n: int = 300,
              servable_mask: np.ndarray | None = None,
              seed_pct: float | None = None, seed_medias=None,
@@ -131,9 +212,7 @@ class PersonalizedRanker:
             # 분모에 후보 A 를 넣지 않는다 — 자카드(D-43)는 후보가 장르를 하나 더
             # 달았다는 이유로 벌점을 줘서 시드가 균질한 프로필(five_horror)의 랭킹을
             # 품질이 아닌 태그 일치도로 무너뜨렸다.
-            gf = np.array([max((len(self._genres[i] & sg) / len(sg) if sg else 0.0)
-                               for sg in seed_genres)
-                           for i in r], dtype=np.float32)
+            gf = self.genre_cover(seed_genres, r)   # 값은 같다 — 역색인으로 셀 뿐이다
             base = base * (1.0 + self.genre_w * gf)
         if self.kw_w and seed_kws:
             # 장르피복과 동일: 시드 **개별** 최대 피복률, 분모에 후보를 넣지 않는다(자카드 금지).
@@ -148,7 +227,7 @@ class PersonalizedRanker:
                             for i in r], dtype=np.float32)
             base = base * (1.0 + self.director_w * dfm)
         if self.media_w and seed_medias:
-            mis = ~np.isin(self._media[r], list(seed_medias))
+            mis = ~self.media_in(seed_medias)[r]    # 예전 `np.isin(self._media[r], …)` 과 같은 값
             base = base * (1.0 - self.media_w * mis)
         if self.align_w and seed_pct is not None:
             # 거리 페널티. 계수가 1 을 넘지 않도록 잘라 음수 점수를 막는다.

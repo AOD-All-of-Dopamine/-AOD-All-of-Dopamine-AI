@@ -37,6 +37,7 @@ def run_multi(
     postprocess_kwargs: dict | None = None,
     exclude_ids: set[int] | list[int] | None = None,
     drop_excluded_series: bool | None = None,   # None = PRODUCTION (W-6)
+    blocked_rows=None,
 ) -> dict[str, dict]:
     """`postprocess=True` 면 랭킹 뒤에 다양성 후처리(시드 인터리빙·시리즈 상한·hard filter)를 건다.
 
@@ -47,6 +48,17 @@ def run_multi(
       · 이미 보여준 것    (`aod_ai.rec_impression`)
       · 이미 아는 것      (LIKE / DISLIKE / bookmark / 리뷰 작성한 콘텐츠)
     시드(`liked_ids`)는 자동으로 합쳐지므로 따로 넣지 않아도 된다.
+
+    `blocked_rows` — **서빙 가능 목록**(2026-09-19). 코퍼스 행 순서(`full_corpus_frame()` 의 행
+    순서)에 맞춘 불리언 배열로, True 인 행은 후보에서 뺀다. 백엔드 카탈로그에 없는 작품을 추천해
+    봐야 카드로 못 만드는 것을 막는 **제품이 정한 후보 범위**이고 랭킹 공식은 그대로다. `None`
+    이면 아무것도 하지 않는다 — 기존 호출부·평가 하네스는 전부 이 경로라 결과가 비트 단위로 같다.
+
+    **`exclude_ids` 와는 다른 자리에 건다.** `exclude_ids` 는 아래에서 `drop_seed_series`(W-6)
+    에도 넘어가 "같은 작품의 다른 판본"까지 함께 지우는데, 서빙 가능 목록을 거기 넣으면 카탈로그에
+    **있는** 판본까지 자기 자신의 다른 판본 때문에 사라진다(코퍼스 29,494행 중 4,164행이 중복 키
+    그룹이다). 그래서 목록은 랭커에 넘기는 후보 프레임에서만 뺀다. 점수는 행마다 독립이고 정렬은
+    걸러낸 뒤이므로, 거르는 시점이 점수 계산 앞이든 뒤든 남는 행과 값이 같다.
     """
     if strategies is None:
         strategies = ["max", "mean", "top2_mean"]
@@ -62,8 +74,13 @@ def run_multi(
     rank_n = top_n * 5 if postprocess else top_n
     results = {}
     for strategy in strategies:
+        candidates = aggregated[strategy]
+        if blocked_rows is not None:
+            # 서빙 가능 목록 — 랭커에 넘기기 전에만 뺀다. 아래 `drop_seed_series` 가 받는
+            # `excluded` 에는 들어가지 않는다(위 docstring).
+            candidates = candidates[~blocked_rows]
         ranked = ranker.rank(
-            aggregated[strategy],
+            candidates,
             exclude_ids=excluded,
             top_n=rank_n,
         )
@@ -75,9 +92,12 @@ def run_multi(
                 # 제외는 id 로만 된다. 시드·이미 본 작품의 **다른 판본**(작가|제목 키가 같은 것)도 뺀다 —
                 # 없으면 1페이지에 시드 판본이, 2·3페이지에 앞 페이지 작품의 판본이 다시 뜬다(W-6).
                 from src.postprocess import drop_seed_series
-                ranked = drop_seed_series(ranked, ranker.dataset.reset_index(), list(excluded))
+                # 랭커가 이미 `item_id` 로 인덱싱해 둔 dataset 을 그대로 넘긴다. 예전에는
+                # 단계마다 `reset_index()` → `set_index()` 로 29,494행 인덱스를 다시 세웠다
+                # (2026-09-19 서빙 지연). 후처리는 이 프레임을 읽기만 한다.
+                ranked = drop_seed_series(ranked, ranker.dataset, list(excluded))
             ranked = apply_postprocess(
-                ranked, ranker.dataset.reset_index(), top_n=top_n,
+                ranked, ranker.dataset, top_n=top_n,
                 **(postprocess_kwargs or {}),
             )
         results[strategy] = ranked
@@ -124,8 +144,12 @@ def next_page(
     postprocess: bool = True,
     min_interest_count: int | None = REFRESH_MIN_INTEREST,
     drop_excluded_series: bool | None = None,   # None = PRODUCTION (W-6)
+    blocked_rows=None,
 ):
     """새로고침 한 번 = 이 함수 한 번. 서빙이 쓸 계약을 코드로 고정한다.
+
+    `blocked_rows` — 서빙 가능 목록(후보 제외 전용). `run_multi` 로 그대로 넘어간다.
+    `None`(기본값)이면 예전과 결과가 완전히 같다. 자세한 근거는 `run_multi` docstring.
 
     호출자는 반환된 `item_id` 를 `seen_ids` 에 누적해서 다음 호출에 넘겨야 한다.
     그 누적을 어디에 저장할지가 서빙의 과제다(`aod_ai.rec_impression`).
@@ -168,6 +192,9 @@ def next_page(
         postprocess_kwargs={"min_interest_count": min_interest_count},
         exclude_ids=seen,
         drop_excluded_series=drop_excluded_series,
+        # 서빙 가능 목록은 `exclude_ids` 와 합치지 않는다 — 합치면 `drop_excluded_series` 가
+        # 목록 안에 있는 판본까지 지운다(위 docstring).
+        blocked_rows=blocked_rows,
     )[strategy]
     return ranked.head(page_size).reset_index(drop=True)
 
