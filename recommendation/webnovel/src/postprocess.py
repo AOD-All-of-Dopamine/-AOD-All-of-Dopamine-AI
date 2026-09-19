@@ -9,7 +9,9 @@ Steam 판의 구조(hard filter → 시리즈 상한 → 다양성 인터리빙 
 새로고침 제품의 병목은 정확도가 아니라 변화량이다. 이 성질은 도메인과 무관하다.
 """
 import re
+from functools import lru_cache
 
+import numpy as np
 import pandas as pd
 
 from src.config import artifact_dir, PRODUCTION
@@ -29,6 +31,22 @@ _SERIES_NOISE = re.compile(
 _NON_WORD = re.compile(r"[^0-9a-z가-힣 ]")
 
 
+#: 이름 → 키 변환은 순수 함수이고 이름은 코퍼스(29,494편)로 한정된다. 후처리가 호출마다
+#: 후보 수천 개에 같은 정규식을 세 번씩 다시 돌리던 것을 메모이즈로 없앤다 (2026-09-19 서빙 지연).
+#: **전제: 위 정규식 상수(`_SERIES_BRACKET`·`_SERIES_NOISE`·`_NON_WORD`)를 런타임에 바꾸지
+#: 않는다.** 바꾸려면 `_series_key.cache_clear()` 를 함께 불러야 한다.
+_NAME_CACHE_MAX = 1 << 17
+
+
+@lru_cache(maxsize=_NAME_CACHE_MAX)
+def _series_key(s: str) -> str:
+    x = _SERIES_BRACKET.sub(" ", s).lower()
+    x = _SERIES_NOISE.sub(" ", x)
+    x = _NON_WORD.sub(" ", x)
+    toks = x.split()
+    return " ".join(toks[:2]) if toks else s.lower()
+
+
 def series_key(name: str) -> str:
     """시리즈 근사. 판본/부수 표기를 걷어내고 앞 2어절을 쓴다.
 
@@ -37,11 +55,56 @@ def series_key(name: str) -> str:
     Steam 판과 같은 한계가 있다 — 제목이 전혀 다른 같은 시리즈는 못 잡는다.
     그래서 `series_group` 에서 출판사를 함께 쓴다.
     """
-    s = _SERIES_BRACKET.sub(" ", str(name)).lower()
-    s = _SERIES_NOISE.sub(" ", s)
-    s = _NON_WORD.sub(" ", s)
-    toks = s.split()
-    return " ".join(toks[:2]) if toks else str(name).lower()
+    return _series_key(str(name))
+
+
+def meta_frame(dataset: pd.DataFrame) -> pd.DataFrame:
+    """`item_id` 를 인덱스로 가진 메타 프레임. 이미 인덱스면 그대로 돌려준다.
+
+    후처리 단계마다 따로 적혀 있던 `set_index("item_id")` 를 한 함수로 모은다. 서빙은
+    랭커가 이미 인덱싱해 둔 `ranker.dataset` 을 그대로 넘겨 그 반복 자체를 없앤다.
+    **읽기 전용으로만 쓴다** — 이 프레임을 고치는 후처리는 없다. 구 호출부(`item_id` 가
+    열인 평탄한 프레임, 예: `wn_eval.Engine`)는 예전과 똑같이 돈다.
+    """
+    return dataset.set_index("item_id") if "item_id" in dataset.columns else dataset
+
+
+def _lookup(meta: pd.DataFrame, cols: tuple[str, ...], ids, default=""):
+    """`[meta[c].get(i, default) for i in ids]` 를 열마다 한 번에 구한다.
+
+    후처리 지연의 대부분이 여기였다(2026-09-19 실측, k=50 에서 후보 7,500행):
+    행마다 `Series.get` 을 부르거나(`cap_series`·`cap_author`) `meta.loc[i]` 로 18열짜리
+    혼합 dtype 행을 통째로 조립했다(`drop_seed_series`). 값은 그대로다 — 같은 열의 같은
+    원소를 위치로 꺼내 올 뿐이다.
+
+    돌려주는 `known` 은 id 가 인덱스에 있었는지다. 예전에 모르는 id 에서 KeyError 를 내던
+    호출부가 그 조건을 그대로 판단할 수 있게 한다.
+
+    인덱스가 중복인 경우는 정상 코퍼스에 없다(랭커의 `map` 이 먼저 터진다). 그래도 값이
+    조용히 달라지지 않게, 그때는 예전처럼 행마다 `Series.get` 을 부른다.
+    """
+    ids = [int(i) for i in ids]
+    if meta.index.is_unique:
+        pos = meta.index.get_indexer(ids)
+        known = pos >= 0
+        # `meta` 가 비어 있으면(또는 아는 id 가 하나도 없으면) `get_indexer` 가 전부 -1 을 줘서
+        # `known` 도 전부 False 다 — 그때 `take(np.where(known, pos, 0))` 은 존재하지 않는 위치
+        # 0 을 가리켜 `IndexError` 가 난다(빈 인덱스는 위치 0 이 없다). 예전 `meta[c].get(i, default)`
+        # 라면 조용히 default 를 줬을 자리이므로, 여기서 바로 기본값 목록을 돌려준다 — 값은 같다.
+        if len(meta) == 0 or not known.any():
+            return known, [[default] * len(ids) for _ in cols]
+        safe = np.where(known, pos, 0)
+        out = []
+        for c in cols:
+            if c not in meta.columns:
+                out.append([default] * len(ids))
+                continue
+            v = meta[c].take(safe).tolist()
+            out.append(v if known.all() else [x if k else default for x, k in zip(v, known)])
+        return known, out
+    known = np.asarray(pd.Index(ids).isin(meta.index), dtype=bool)
+    return known, [[default] * len(ids) if c not in meta.columns
+                   else [meta[c].get(i, default) for i in ids] for c in cols]
 
 
 def series_group(name: str, publisher: str = "", author: str = "", by: str | None = None) -> str:
@@ -86,16 +149,21 @@ def apply_hard_filters(
     df = ranked.copy()
     if df.empty:
         return df.reset_index(drop=True)
-    meta = dataset.set_index("item_id") if "item_id" in dataset.columns else dataset
+    meta = meta_frame(dataset)
     keep = pd.Series(True, index=df.index)
 
     if drop_adult and "age_limit" in meta.columns:
-        ages = df["item_id"].map(lambda i: meta["age_limit"].get(i, 0))
+        _, (a,) = _lookup(meta, ("age_limit",), df["item_id"], default=0)
+        ages = pd.Series(a, index=df.index)
         keep &= ages.fillna(0) <= MAX_AGE_LIMIT
 
     if min_interest_count is not None and "interest_count" in meta.columns:
         # 결측(관심 수 미표기)도 하한 미달로 본다 — Steam 과 같은 취급이다.
-        counts = df["item_id"].map(lambda i: meta["interest_count"].get(i))
+        # 열 꺼내기는 람다 **밖**에서 한 번만 한다 — 안에 두면 후보 수만큼
+        # DataFrame.__getitem__ 이 돈다. 여기는 관심 수가 nullable(Int64)이라
+        # 값 경로를 바꾸지 않으려고 map 은 그대로 둔다.
+        count_col = meta["interest_count"]
+        counts = df["item_id"].map(lambda i: count_col.get(i))
         keep &= counts.fillna(0) >= min_interest_count
 
     return df[keep].reset_index(drop=True)
@@ -111,14 +179,24 @@ def drop_seed_series(df: pd.DataFrame, dataset: pd.DataFrame, seed_ids, series_b
     """
     if df.empty or not seed_ids:
         return df
-    meta = dataset.set_index("item_id") if "item_id" in dataset.columns else dataset
+    meta = meta_frame(dataset)
+
     def grp(i):
         r = meta.loc[int(i)]
         return series_group(str(r.get("name", "")), str(r.get("publisher", "")),
                             str(r.get("author", "") or ""), by=series_by)
-    seed_groups = {grp(i) for i in seed_ids}
+
+    def groups(ids) -> list[str]:
+        """위 `grp` 을 목록 전체에 대해 한 번에. 식은 그대로고 조회만 열 단위로 바뀐다."""
+        known, (nm, pb, au) = _lookup(meta, ("name", "publisher", "author"), ids)
+        if not known.all():   # 모르는 id 는 예전처럼 `meta.loc` 가 KeyError 를 내게 둔다
+            return [grp(i) for i in ids]
+        return [series_group(str(n), str(p), str(a or ""), by=series_by)
+                for n, p, a in zip(nm, pb, au)]
+
+    seed_groups = set(groups(list(seed_ids)))
     # 시드 자체는 상위에서 이미 제외되므로 여기서는 시리즈 동료만 거른다
-    keep = [g not in seed_groups for g in (grp(i) for i in df["item_id"])]
+    keep = [g not in seed_groups for g in groups(df["item_id"])]
     return df[pd.Series(keep, index=df.index)].reset_index(drop=True)
 
 
@@ -130,17 +208,11 @@ def cap_series(df: pd.DataFrame, dataset: pd.DataFrame, series_max: int = 1, ser
     """
     if df.empty:
         return df.reset_index(drop=True)
-    meta = dataset.set_index("item_id") if "item_id" in dataset.columns else dataset
-    has_pub = "publisher" in meta.columns
-    has_au = "author" in meta.columns
-    keys = df["item_id"].map(
-        lambda i: series_group(
-            meta["name"].get(i, ""),
-            meta["publisher"].get(i, "") if has_pub else "",
-            meta["author"].get(i, "") if has_au else "",
-            by=series_by,
-        )
-    )
+    meta = meta_frame(dataset)
+    # 세 열을 행마다 꺼내던 것(`meta["name"].get(i, "")` × 후보 수)을 한 번에 꺼낸다.
+    # 없는 열·모르는 id 는 `_lookup` 이 예전과 같은 기본값("")을 준다.
+    _, (names, pubs, authors) = _lookup(meta, ("name", "publisher", "author"), df["item_id"])
+    keys = [series_group(n, p, a, by=series_by) for n, p, a in zip(names, pubs, authors)]
     seen: dict[str, int] = {}
     keep = []
     for k in keys:
@@ -158,8 +230,9 @@ def cap_author(df: pd.DataFrame, dataset: pd.DataFrame, author_max: int = 2) -> 
     """
     if df.empty or "author" not in dataset.columns:
         return df.reset_index(drop=True)
-    meta = dataset.set_index("item_id") if "item_id" in dataset.columns else dataset
-    authors = df["item_id"].map(lambda i: str(meta["author"].get(i, "") or "").strip())
+    meta = meta_frame(dataset)
+    _, (au,) = _lookup(meta, ("author",), df["item_id"])
+    authors = [str(a or "").strip() for a in au]
     seen: dict[str, int] = {}
     keep = []
     for a in authors:

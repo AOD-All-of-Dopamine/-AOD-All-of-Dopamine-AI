@@ -39,13 +39,20 @@ POOL_FLOOR = 400   # = 평가 경로의 풀 깊이(k=50 × 8)
 
 def recommend(seed_rows, components=None, strategy: str = "top2_mean", top_n: int = 50,
               postprocess_on: bool = True, postprocess_kwargs: dict | None = None,
-              exclude_rows=None, media: str | None = None, **comp_kwargs) -> pd.DataFrame:
+              exclude_rows=None, media: str | None = None, servable_rows=None,
+              **comp_kwargs) -> pd.DataFrame:
     """`media` — "movie" | "tv" 면 그 매체만 후보로 남긴다(영화 탭 / 드라마 탭). `None` 은 혼합(현행).
 
     D-42 가 기각한 하드 필터는 **혼합 목록 안에서** 매체를 자르는 것이었다. 여기는 제품이
     탭을 나눈 뒤의 후보 범위라 다른 문제다. 시드는 매체와 무관하게 그대로 쓴다 —
     영화 시드로 드라마 탭을 채울 수 있어야 한다(시드 40/52 가 영화뿐).
     후보가 전부 한 매체면 `media_w` 페널티는 모든 후보에 같게 걸려 순서를 바꾸지 않는다.
+
+    `servable_rows` — **서빙 가능 목록**(2026-09-19). 코퍼스 행 순서에 맞춘 불리언 배열로 True
+    인 행만 후보로 남긴다(백엔드 카탈로그에 있는 작품). `media` 와 **같은 자리**에서 기존
+    `retriever.servable` 에 AND 로 합치므로 풀 깊이 `rank_n` 이 그대로 유지되고, 랭킹 공식은
+    건드리지 않는다 — `media` 탭 필터와 완전히 같은 성격의 후보 범위 제한이다. `None`(기본값)
+    이면 아무것도 하지 않는다: 기존 호출부·평가 하네스는 전부 이 경로라 결과가 비트 단위로 같다.
     """
     if media not in (None, "movie", "tv"):
         raise ValueError(f"media 는 None | 'movie' | 'tv' — {media!r}")
@@ -61,26 +68,35 @@ def recommend(seed_rows, components=None, strategy: str = "top2_mean", top_n: in
     rank_n = max(POOL_FLOOR, top_n * 8) if postprocess_on else top_n
     # 시드 인기 백분위 중앙 — 정합 항의 목표값 (D-31)
     seed_pct = float(np.median(ranker.vote_pct[list(int(r) for r in seed_rows)]))
-    seed_medias = {ranker.dataset.iloc[int(r)]["media"] for r in seed_rows}
+    # 시드 메타는 **열에서 위치로** 꺼낸다. 예전에는 시드마다 `dataset.iloc[r]` 로 15열짜리
+    # 혼합 dtype 행을 통째로 조립했다 — 시드 50개면 요청마다 100번이다 (2026-09-19 서빙 지연).
+    # `_media`·`column()` 은 같은 열을 numpy 로 들고 있는 것이라 원소가 같은 객체다.
+    seed_medias = {ranker._media[int(r)] for r in seed_rows}
     seed_genres = None
     if ranker.genre_w:
+        gcol = ranker.column("genres")
         seed_genres = []
         for rr in seed_rows:
-            g = ranker.dataset.iloc[int(rr)]["genres"]
+            g = gcol[int(rr)]
             seed_genres.append(frozenset(g.tolist() if hasattr(g, "tolist") else (g or [])))
     seed_kws = None
     if ranker.kw_w:
+        kcol = ranker.column("keywords")
         seed_kws = []
         for rr in seed_rows:
-            kk = ranker.dataset.iloc[int(rr)]["keywords"]
+            kk = kcol[int(rr)]
             seed_kws.append(frozenset(kk.tolist() if hasattr(kk, "tolist") else (kk or [])))
     seed_dirs = None
     if ranker.director_w:
         # 감독이 없는 시드(드라마 created_by 결측 등)는 빈 집합 → 그 시드 기여는 0 이다.
         seed_dirs = [ranker._dirs[int(rr)] for rr in seed_rows]
     servable = retriever.servable
+    if servable_rows is not None:   # 서빙 가능 목록 — media 와 같은 자리, 같은 방식(AND)
+        servable = servable & servable_rows
     if media is not None:   # 풀 자르기(head) 전에 거르므로 탭마다 풀 깊이 rank_n 이 유지된다
-        servable = servable & (ranker._media == media)
+        # `media_mask` 는 같은 `==` 비교를 매체값마다 한 번만 한다. `&` 가 새 배열을 만들어
+        # 캐시는 그대로다(요청이 `servable` 을 고치지 않는다).
+        servable = servable & ranker.media_mask(media)
     ranked = ranker.rank(scored, exclude_rows=excl, top_n=rank_n, seed_kws=seed_kws,
                          seed_dirs=seed_dirs,
                          servable_mask=servable, seed_pct=seed_pct,
@@ -108,11 +124,12 @@ def recommend(seed_rows, components=None, strategy: str = "top2_mean", top_n: in
 # 않는다 — 깊은 페이지에 별도 설정이 필요하다는 근거가 나오면 **그때 사전등록으로** 정한다.
 def next_page(seed_rows, seen_rows=None, page_size: int = 10, components=None,
               strategy: str | None = None, postprocess_kwargs: dict | None = None,
-              media: str | None = None, **comp_kwargs):
+              media: str | None = None, servable_rows=None, **comp_kwargs):
     """TMDB 새로고침 한 페이지. `seen_rows` 아래를 잇는다.
 
     반환은 `recommend` 와 같은 프레임이고 `row`(코퍼스 행)가 아이템 키다.
     `media` — "movie" | "tv" 탭 분리 (`recommend` 참고). 탭마다 `seen_rows` 를 따로 누적한다.
+    `servable_rows` — 서빙 가능 목록(후보 제외 전용, `recommend` 참고). `None` 이면 결과 불변.
 
     시드 0개는 계약 밖이다 — 개인화할 근거가 없다. 콜드스타트는 호출자가 별도 경로로
     처리해야 한다(Steam 이 같은 이유로 `ValueError` 를 던진다).
@@ -129,5 +146,6 @@ def next_page(seed_rows, seen_rows=None, page_size: int = 10, components=None,
         postprocess_kwargs=postprocess_kwargs,
         exclude_rows=seen,
         media=media,
+        servable_rows=servable_rows,
         **comp_kwargs,
     )

@@ -1,0 +1,38 @@
+# 이 PC 용. 레포의 recommendation/{platform}/artifacts 를 그대로 마운트한다(코퍼스 폴더에 manifest.json 필요 — make_manifest).
+#
+# 서빙 가능 목록(spec3 §10)은 로컬 백엔드(호스트 8080)를 본다. **그 엔드포인트는 아직 없다** —
+# 404·연결 거부면 엔진은 그대로 뜨고 경고 한 줄만 남긴 뒤 **필터 없이(전체 코퍼스)** 서빙한다
+# (`/health.catalog.last_error` 로 확인). 이 상태가 지금 이 PC 의 정상이다.
+# 변수를 **빈 값으로** 내보내면(`STEAM_CATALOG_URL= …`) 그 엔진만 목록을 끈 채로 뜬다(`:-` 가 아니라 `-`).
+# `extra_hosts` 는 리눅스에서 host.docker.internal 을 만들어 준다(Docker Desktop 은 기본 제공).
+x-build: &build
+  context: ..
+  dockerfile: serving/Dockerfile
+
+x-local-engine: &local-engine
+  extra_hosts: ["host.docker.internal:host-gateway"]
+
+services:
+  rec-steam:
+    <<: *local-engine
+    build: { <<: *build, target: engine, args: { PLATFORM: steam, GIT_SHA: "${GIT_SHA:-dev}" } }
+    environment: { SERVING_MODE: dev, CATALOG_KEYS_URL: "${STEAM_CATALOG_URL-http://host.docker.internal:8080/api/recommendations/catalog-keys?platform=steam}" }
+    volumes: !override ["../steam/artifacts:/artifacts:ro"]
+  rec-tmdb:
+    <<: *local-engine
+    build: { <<: *build, target: engine, args: { PLATFORM: tmdb, GIT_SHA: "${GIT_SHA:-dev}" } }
+    environment: { SERVING_MODE: dev, CATALOG_KEYS_URL: "${TMDB_CATALOG_URL-http://host.docker.internal:8080/api/recommendations/catalog-keys?platform=tmdb}" }
+    volumes: !override ["../tmdb/artifacts:/artifacts:ro"]
+  rec-webtoon:
+    <<: *local-engine
+    build: { <<: *build, target: engine, args: { PLATFORM: webtoon, GIT_SHA: "${GIT_SHA:-dev}" } }
+    environment: { SERVING_MODE: dev, CATALOG_KEYS_URL: "${WEBTOON_CATALOG_URL-http://host.docker.internal:8080/api/recommendations/catalog-keys?platform=webtoon}" }
+    volumes: !override ["../webtoon/artifacts:/artifacts:ro"]
+  rec-webnovel:
+    <<: *local-engine
+    build: { <<: *build, target: engine, args: { PLATFORM: webnovel, GIT_SHA: "${GIT_SHA:-dev}" } }
+    environment: { SERVING_MODE: dev, CATALOG_KEYS_URL: "${WEBNOVEL_CATALOG_URL-http://host.docker.internal:8080/api/recommendations/catalog-keys?platform=webnovel}" }
+    volumes: !override ["../webnovel/artifacts:/artifacts:ro"]
+  rec-router:
+    build: { <<: *build, target: router, args: { GIT_SHA: "${GIT_SHA:-dev}" } }
+    ports: !override ["127.0.0.1:18080:8080"]

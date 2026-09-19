@@ -1,0 +1,9 @@
+**/artifacts
+**/data
+**/__pycache__
+**/.venv
+**/.pytest_cache
+**/*.npy
+**/*.parquet
+**/*.jsonl
+tryout

@@ -9,6 +9,9 @@ TMDB 코퍼스 실태: 같은 기본 제목 3건 이상인 그룹 1,358개 · 5,
 semantic_text 에서 제목을 이미 뺐는데도 줄거리가 비슷해서 뭉친다.
 """
 import re
+import weakref
+from functools import lru_cache
+
 import numpy as np, pandas as pd
 
 # 시리즈 기본 제목 추출용. 부제·시즌·회차를 떼어낸다.
@@ -82,6 +85,57 @@ def franchise_key(name: str, prefixes: set[str] | None = None) -> str:
         if p and p in prefixes: return re.sub(r"\s+", "", p)
     return base_title(name)
 
+
+_BASE_CACHE: dict = {}
+_NAMES_CACHE: dict = {}
+
+
+def _by_dataset(cache: dict, dataset: pd.DataFrame, build):
+    """코퍼스마다 1회만 계산해 돌려준다 (2026-09-19 서빙 지연).
+
+    캐시 키는 `id(dataset)` 이지만 **약한 참조로 동일 객체인지 확인**한다 — dataset 은
+    오래 사는 `ranker.dataset` 이라, 랭커가 버려진 뒤 다른 코퍼스가 같은 주소에 들어오면
+    앞 코퍼스의 값을 돌려줄 수 있다 (Steam `_real_reviews` 와 같은 꼴).
+    죽은 항목은 캐시가 커질 때 치운다 — 평가 스크립트가 코퍼스를 여러 번 만드는 경우 때문이다.
+    두 번 만들어도 같은 값이라 경합에 안전하고, 돌려주는 것은 **읽기 전용**이다.
+    """
+    key = id(dataset)
+    hit = cache.get(key)
+    if hit is not None and hit[0]() is dataset:
+        return hit[1]
+    if len(cache) > 8:
+        for k in [k for k, v in cache.items() if v[0]() is None]:
+            del cache[k]
+    out = build()
+    cache[key] = (weakref.ref(dataset), out)
+    return out
+
+
+def franchise_base(dataset: pd.DataFrame) -> pd.Series:
+    """row → 시리즈 키. **요청과 무관한 값**이다.
+
+    예전에는 `cap_franchise` 가 호출마다 코퍼스 59,780개 이름에 `franchise_key`(정규식 6종)를
+    다시 돌렸다 — 실측 호출당 580 ms 로 TMDB 지연의 최대 항목이었다. 식은 그대로 옮겼다.
+
+    **전제 둘.** (1) `dataset` 의 `name`·`row` 는 기동 뒤 바뀌지 않는다(랭커가 만든 뒤 읽기만 한다).
+    (2) `franchise_prefixes` 는 예전부터 **첫 dataset 의 접두사를 전역 캐시**로 들고 있었고,
+    여기서도 그 함수를 그대로 부르므로 접두사 집합은 예전과 같은 것이 쓰인다.
+    """
+    def build():
+        pref = franchise_prefixes(dataset)
+        return dataset.set_index("row")["name"].map(lambda n: franchise_key(n, pref))
+    return _by_dataset(_BASE_CACHE, dataset, build)
+
+
+def name_by_row(dataset: pd.DataFrame) -> pd.Series:
+    """row → name. `set_index("row")` 는 59,780행 인덱스 재구성이라 단계마다 반복하지 않는다.
+
+    `row` 열이 없는 구 호출부(평가 하네스의 평탄한 프레임)는 예전과 똑같이 `dataset["name"]` 이다.
+    """
+    return _by_dataset(_NAMES_CACHE, dataset,
+                       lambda: dataset.set_index("row")["name"]
+                       if "row" in dataset.columns else dataset["name"])
+
 # ── 시드 반복작 (D-46) ──────────────────────────────────────────────────────
 # `franchise_key` 는 접두어/기본제목 기반이라 **시드의 다른 편을 하나도 못 잡았다.**
 # 실측(52프로필 top-50, 2026-08-26): 할로윈→할로윈 엔드·킬즈·H20·데스데이,
@@ -97,25 +151,31 @@ def franchise_key(name: str, prefixes: set[str] | None = None) -> str:
 _PERIOD = re.compile(r"^\d+\s*(일|주|개월|월|년|시간|분)$")
 _NUMBERED = re.compile(r"^(\d+|[ivx]{1,4})$")
 
+#: 이름 → 토큰열은 순수 함수이고 이름은 코퍼스(59,780편)로 한정된다. `drop_seed_iterations`
+#: 가 호출마다 후보 × 시드 만큼 같은 정규식을 다시 돌리던 것을 메모이즈로 없앤다
+#: (2026-09-19 서빙 지연 — 시드 50개 · k=50 에서 호출당 148 ms).
+#: **전제: 위 정규식 상수(`_MARKS`·`_PERIOD`)를 런타임에 바꾸지 않는다.** 바꾸려면
+#: `_tok.cache_clear()` 를 함께 불러야 한다.
+_NAME_CACHE_MAX = 1 << 17
+
+@lru_cache(maxsize=_NAME_CACHE_MAX)
+def _tok(s: str) -> tuple[str, ...]:
+    """캐시 본체. **튜플**을 돌려준다 — 캐시가 넘긴 객체를 호출부가 고칠 수 없게."""
+    x = _MARKS.sub("", s)
+    x = re.sub(r"[^0-9A-Za-z가-힣 ]", " ", x)
+    return tuple("#기간" if _PERIOD.match(t) else t for t in x.lower().split() if t)
+
 def _tokseq(name: str) -> list[str]:
     """제목을 토큰열로. `28일`·`20년` 은 **기간 슬롯**으로 뭉갠다 —
     `28일 후`와 `28주 후`를 갈라놓는 것이 오직 그 한 토큰이기 때문이다."""
-    s = _MARKS.sub("", str(name))
-    s = re.sub(r"[^0-9A-Za-z가-힣 ]", " ", s)
-    return ["#기간" if _PERIOD.match(t) else t for t in s.lower().split() if t]
+    return list(_tok(str(name)))
 
-def is_seed_iteration(seed_name: str, cand_name: str, numbered_only: bool = False) -> bool:
-    """후보가 **시드 제목을 통째로 품고 더 뻗은** 것인가.
+def _is_iter(s: tuple[str, ...], c: tuple[str, ...], numbered_only: bool) -> bool:
+    """토큰열끼리의 판정 — `is_seed_iteration` 의 본체를 그대로 떼어낸 것이다.
 
-    방향이 핵심이다. `시드 ⊂ 후보` 만 본다 — 반대는 속편이 아니다:
-        시드 `드라큐라 백작부인` → 후보 `드라큐라`      (다른 영화)
-        시드 `다크 나이트`      → 후보 `다크`          (독일 드라마)
-    한 토큰짜리 시드는 **후보의 맨 앞**에서만 인정한다. 안 그러면
-        시드 `대부` → 후보 `리오네 사니타의 대부`(g=3) 를 잘못 지운다.
-
-    `numbered_only=True` 면 뻗은 부분이 숫자/로마숫자일 때만 — Steam 규칙에 해당한다.
+    시드 토큰열을 후보마다 다시 만들지 않으려고 이름이 아니라 토큰열을 받는다.
+    리스트가 튜플로 바뀌었을 뿐 비교(`!=`·슬라이스·`rest[0]`)의 값은 같다.
     """
-    s, c = _tokseq(seed_name), _tokseq(cand_name)
     if not s or len(c) < len(s):
         return False
     for i in range(len(c) - len(s) + 1):
@@ -129,6 +189,19 @@ def is_seed_iteration(seed_name: str, cand_name: str, numbered_only: bool = Fals
         return True
     return False
 
+def is_seed_iteration(seed_name: str, cand_name: str, numbered_only: bool = False) -> bool:
+    """후보가 **시드 제목을 통째로 품고 더 뻗은** 것인가.
+
+    방향이 핵심이다. `시드 ⊂ 후보` 만 본다 — 반대는 속편이 아니다:
+        시드 `드라큐라 백작부인` → 후보 `드라큐라`      (다른 영화)
+        시드 `다크 나이트`      → 후보 `다크`          (독일 드라마)
+    한 토큰짜리 시드는 **후보의 맨 앞**에서만 인정한다. 안 그러면
+        시드 `대부` → 후보 `리오네 사니타의 대부`(g=3) 를 잘못 지운다.
+
+    `numbered_only=True` 면 뻗은 부분이 숫자/로마숫자일 때만 — Steam 규칙에 해당한다.
+    """
+    return _is_iter(_tok(str(seed_name)), _tok(str(cand_name)), numbered_only)
+
 def drop_seed_iterations(df: pd.DataFrame, dataset: pd.DataFrame, seed_rows,
                          numbered_only: bool = False) -> pd.DataFrame:
     """시드의 다른 편을 뺀다. 컷 전에 돌려 빈칸이 뒤에서 채워지게 한다.
@@ -139,14 +212,17 @@ def drop_seed_iterations(df: pd.DataFrame, dataset: pd.DataFrame, seed_rows,
     """
     if df.empty or seed_rows is None or len(list(seed_rows)) == 0:
         return df
-    names = dataset.set_index("row")["name"] if "row" in dataset.columns else dataset["name"]
+    names = name_by_row(dataset)
     seed_names = [str(names.get(int(r), "")) for r in seed_rows]
     seed_names = [n for n in seed_names if n]
     if not seed_names:
         return df
+    # 시드 토큰열은 후보와 무관하다 — 후보마다 다시 만들지 않는다. 같은 이름의 시드가
+    # 겹쳐도 `any` 의 값은 같으므로 중복은 한 번만 본다(시드 50개 경로).
+    seed_toks = list(dict.fromkeys(_tok(n) for n in seed_names))
     def bad(r):
-        cn = str(names.get(int(r), ""))
-        return any(is_seed_iteration(sn, cn, numbered_only) for sn in seed_names)
+        c = _tok(str(names.get(int(r), "")))
+        return any(_is_iter(s, c, numbered_only) for s in seed_toks)
     return df[~df["row"].map(bad)].reset_index(drop=True)
 
 
@@ -166,8 +242,7 @@ def cap_franchise(df: pd.DataFrame, dataset: pd.DataFrame, franchise_max: int = 
     (`토이 스토리` → `토이 스토리 3`). **어느 쪽이 나은지는 측정 대상이다.**
     """
     if df.empty: return df
-    pref = franchise_prefixes(dataset)
-    base = dataset.set_index("row")["name"].map(lambda n: franchise_key(n, pref))
+    base = franchise_base(dataset)      # 코퍼스마다 1회 — 예전에는 호출마다 59,780행을 다시 훑었다
     df = df.copy()
     df["fbase"] = df["row"].map(base)
     seed_bases = set(base.loc[list(seed_rows)]) if seed_rows else set()

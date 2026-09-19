@@ -56,6 +56,7 @@ def run_multi(
     exclude_appids: set[int] | list[int] | None = None,
     disliked_appids: list[int] | None = None,
     dislike_weight: float = 0.0,
+    blocked_rows=None,
 ) -> dict[str, dict]:
     """`postprocess=True` 면 랭킹 뒤에 다양성 후처리(시드 인터리빙·시리즈 상한·hard filter)를 건다.
 
@@ -66,6 +67,23 @@ def run_multi(
       · 이미 보여준 것    (`aod_ai.rec_impression`)
       · 이미 아는 것      (LIKE / DISLIKE / bookmark / 리뷰 작성한 콘텐츠)
     시드(`liked_appids`)는 자동으로 합쳐지므로 따로 넣지 않아도 된다.
+
+    `blocked_rows` — **서빙 가능 목록**(2026-09-19). 코퍼스 행 순서(`full_corpus_frame()` 의
+    행 순서)에 맞춘 불리언 배열로, True 인 행은 후보에서 뺀다. 백엔드 카탈로그에 없는 작품을
+    추천해 봐야 카드로 못 만드는 것을 막는 **제품이 정한 후보 범위**이고, 랭킹 공식은 그대로다
+    (TMDB 의 `media` 탭 필터와 같은 성격). `None` 이면 아무것도 하지 않는다 — 기존 호출부·평가
+    하네스는 전부 이 경로라 결과가 비트 단위로 같다.
+
+    거는 자리가 중요하다: **랭커에 넘기는 후보 프레임에서만** 뺀다. `exclude_appids` 나 후처리의
+    `seen_appids`·`bucket_offset`·`series_session_max` 에는 절대 넣지 않는다 — 그 셋은 "이
+    사용자가 이미 본 것"을 뜻해서, 17만 개를 넣으면 버킷 회전이 망가지고 시리즈 세션 상한이
+    통째로 포화된다. 점수는 행마다 독립이고(랭커의 백분위·품질·태그 표는 코퍼스 기준으로 생성
+    시 한 번 고정된다) 정렬은 걸러낸 뒤에 하므로, 거르는 시점이 점수 계산 앞이든 뒤든 남는 행과
+    그 값이 같다.
+
+    집합이 아니라 **배열**인 이유는 비용이다 — 17만짜리 집합을 요청마다 합집합해 `isin` 하면
+    수십 ms 가 든다. 갱신 때 한 번 만든 불리언 배열을 재사용하면 요청당 비용이 행 수에 비례하는
+    마스킹 한 번으로 끝난다.
     """
     if strategies is None:
         strategies = ["max", "mean", "top2_mean"]
@@ -109,8 +127,13 @@ def run_multi(
     rank_n = max(POOL_FLOOR, top_n * 5) if postprocess else top_n
     results = {}
     for strategy in strategies:
+        candidates = aggregated[strategy]
+        if blocked_rows is not None:
+            # 서빙 가능 목록 — 랭커에 넘기기 전에 후보에서 뺀다(위 docstring). 풀 깊이(rank_n)는
+            # 그대로라 목록이 얕아지는 만큼만 결과가 짧아진다.
+            candidates = candidates[~blocked_rows]
         ranked = ranker.rank(
-            aggregated[strategy],
+            candidates,
             exclude_appids=excluded,
             top_n=rank_n,
             seed_appids=list(liked_appids),
@@ -120,8 +143,10 @@ def run_multi(
 
             pk = dict(postprocess_kwargs or {})
             pk.setdefault("seed_appids", list(liked_appids))
+            # 인덱스된 dataset 을 그대로 넘긴다 — 후처리 단계마다 17만 행을 복사·재인덱스하던
+            # `reset_index()` + 단계별 `set_index()` 왕복을 없앤다. 메타 내용은 같다.
             ranked = apply_postprocess(
-                ranked, ranker.dataset.reset_index(), top_n=top_n, **pk,
+                ranked, ranker.dataset, top_n=top_n, **pk,
             )
         results[strategy] = ranked
         if output_dir:
@@ -280,8 +305,12 @@ def next_page(
     seed_scaled_floor: float = REFRESH_SEED_SCALED_FLOOR,
     disliked_appids: list[int] | None = None,
     dislike_weight: float | None = None,
+    blocked_rows=None,
 ):
     """새로고침 한 번 = 이 함수 한 번. 서빙이 쓸 계약을 코드로 고정한다.
+
+    `blocked_rows` — 서빙 가능 목록(후보 제외 전용). `run_multi` 로 그대로 넘어간다.
+    `None`(기본값)이면 예전과 결과가 완전히 같다. 자세한 근거는 `run_multi` docstring.
 
     호출자는 반환된 `steam_appid` 를 `seen_appids` 에 누적해서 다음 호출에 넘겨야 한다.
     그 누적을 어디에 저장할지가 서빙의 과제다(`aod_ai.rec_impression`).
@@ -360,31 +389,45 @@ def next_page(
     # 시드가 1개면 top2_mean 이 max 와 같아져 집계 레버가 안 듣는다 — 그 구멍만 태그로 메운다.
     # 다시드에는 절대 걸지 않는다(희귀 태그 합집합이 "공통점"이 아니라 "한 시드의 특이점"이 된다).
     from src.postprocess import (POPULAR_SEED_REVIEWS, consensus_seed_tags, load_dataset,
-                                 rare_seed_tags)
+                                 meta_frame, rare_seed_tags)
 
     # **반드시 랭킹에 쓰는 데이터셋을 그대로 쓴다.** 예전에는 `load_dataset()` 를 인자 없이
     # 불러서 기본 아티팩트(s1_v2)를 읽었다 — components 가 tags_full 이어도 태그 필터만
     # 다른 코퍼스에서 계산됐다. max_df 는 코퍼스 크기에 정의되므로(21,883 vs 173,691)
     # "희귀"·"합의"의 기준 자체가 달라졌고, 작은 쪽에 없는 시드에서는 그냥 터졌다.
+    #
+    # 랭커의 dataset 은 이미 `steam_appid` 인덱스다 — `reset_index()` 복사를 하지 않고
+    # 그대로 쓴다.
     ds = (
-        components[3].dataset.reset_index()
+        components[3].dataset
         if components is not None
         else load_dataset()
     )
 
     # reindex 로 뽑는다: `.get()` 은 없는 시드에 None 을 줘서 nanmedian 이 터진다.
-    rt = ds.set_index("steam_appid")["recommendations_total"]
+    rt = meta_frame(ds)["recommendations_total"]
     med = float(np.nanmedian(rt.reindex([int(a) for a in liked_appids]).astype("float")))
+
+    def tag_df():
+        """태그 문서 빈도(17만 행 집계) — 랭커가 기동 시 만든 것을 재사용한다.
+
+        **태그 필터를 실제로 부르는 분기에서만** 부른다. 다시드·비인기 취향은 아예
+        필요 없고(첫 요청 ~590ms), 태그 열이 없는 코퍼스에서는 랭커를 건드리지 않고
+        `None` 을 줘서 저쪽이 예전처럼 `set()` 으로 넘어가게 한다.
+        """
+        if components is None or "tags" not in ds.columns:
+            return None
+        return components[3].tag_document_frequency()
 
     solo_tags = cons_tags = None
     if len(liked_appids) == 1:
-        solo_tags = rare_seed_tags(liked_appids, ds) or None
+        solo_tags = rare_seed_tags(liked_appids, ds, tag_df=tag_df()) or None
     else:
         # 인기 시드(리뷰 중앙 10만+) 취향에만 합의 태그를 요구한다. 니치·롱테일은 건드리지
         # 않는다 — 무조건 걸면 그쪽이 깎여 이득이 상쇄된다(postprocess docstring 참고).
         # "합의"는 시드 2개 이상에서만 정의되므로 이 분기에만 남는다.
         if med >= POPULAR_SEED_REVIEWS:
-            cons_tags = consensus_seed_tags(liked_appids, ds) or None
+            cons_tags = consensus_seed_tags(liked_appids, ds, tag_df=tag_df()) or None
 
     # 시드 인기도에 비례하는 하한. 임계값을 손으로 고르지 않으려는 연속 규칙이다.
     # 대작 취향(시드 중앙 176만)에는 큰 하한이, 니치 장르에는 약한 하한이 걸린다.
@@ -428,6 +471,9 @@ def next_page(
                             # 영영 안 나온다(실측: 시드 15개 중 11~15번째가 20페이지 내 0회).
                             "bucket_offset": len(seen)},
         exclude_appids=seen,
+        # 서빙 가능 목록은 **후보 프레임에서만** 빠진다 — 바로 위 `seen_appids`·`bucket_offset`·
+        # `series_session_max` 에는 들어가지 않는다(그쪽은 "이미 본 것"의 의미다).
+        blocked_rows=blocked_rows,
     )[strategy]
     return ranked.head(page_size).reset_index(drop=True)
 
@@ -447,16 +493,18 @@ def cold_start_page(
 
     _, retriever, _, ranker = components or build_components(REFRESH_REC_BOOST)
     seen = set(int(a) for a in (seen_appids or ()))
-    ds = ranker.dataset.reset_index()
-    pool = ds[["steam_appid", "name"]].copy()
-    rv = ds["recommendations_total"].astype("float").fillna(0.0)
+    # 후처리에는 인덱스된 dataset 을 그대로 넘긴다(`run_multi` 과 같은 방식) — 17만 행
+    # 전체를 `reset_index()` 로 복사하지 않는다. 풀을 만들 때만 평탄한 두 열이 필요하다.
+    meta = ranker.dataset
+    pool = meta[["name"]].reset_index()
+    rv = meta["recommendations_total"].astype("float").fillna(0.0)
     pool["seed_similarity"] = 0.0
     pool["dominant_seed"] = None
     pool["final_score"] = rv.rank(pct=True).values
     pool = pool[~pool["steam_appid"].astype(int).isin(seen)]
     pool = pool.sort_values("final_score", ascending=False).head(page_size * 30)
     out = apply_postprocess(
-        pool.reset_index(drop=True), ds, top_n=page_size,
+        pool.reset_index(drop=True), meta, top_n=page_size,
         seed_interleave=False,
         seen_appids=seen, series_session_max=REFRESH_SERIES_SESSION_MAX,
         drop_dead_mp=REFRESH_DROP_DEAD_MP,

@@ -1,0 +1,7 @@
+numpy==2.5.1
+pandas==3.0.5
+pyarrow==25.0.0
+PyYAML==6.0.3
+fastapi
+uvicorn
+pydantic>=2

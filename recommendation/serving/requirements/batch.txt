@@ -1,0 +1,10 @@
+# 재임베딩 배치 전용 — 서빙 이미지에는 들어가지 않는다 (REC_TAB_DESIGN §8-6)
+numpy==2.5.1
+pandas==3.0.5
+pyarrow==25.0.0
+PyYAML==6.0.3
+scikit-learn==1.9.0
+scipy==1.18.0
+torch==2.13.0          # CPU 빌드: --index-url https://download.pytorch.org/whl/cpu
+transformers==5.14.1
+sentence-transformers==5.6.1
