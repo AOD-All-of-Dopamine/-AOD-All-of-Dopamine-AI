@@ -1,0 +1,25 @@
+# 이 PC 용. 레포의 recommendation/{platform}/artifacts 를 그대로 마운트한다(코퍼스 폴더에 manifest.json 필요 — make_manifest).
+x-build: &build
+  context: ..
+  dockerfile: serving/Dockerfile
+
+services:
+  rec-steam:
+    build: { <<: *build, target: engine, args: { PLATFORM: steam, GIT_SHA: "${GIT_SHA:-dev}" } }
+    environment: { SERVING_MODE: dev }
+    volumes: !override ["../steam/artifacts:/artifacts:ro"]
+  rec-tmdb:
+    build: { <<: *build, target: engine, args: { PLATFORM: tmdb, GIT_SHA: "${GIT_SHA:-dev}" } }
+    environment: { SERVING_MODE: dev }
+    volumes: !override ["../tmdb/artifacts:/artifacts:ro"]
+  rec-webtoon:
+    build: { <<: *build, target: engine, args: { PLATFORM: webtoon, GIT_SHA: "${GIT_SHA:-dev}" } }
+    environment: { SERVING_MODE: dev }
+    volumes: !override ["../webtoon/artifacts:/artifacts:ro"]
+  rec-webnovel:
+    build: { <<: *build, target: engine, args: { PLATFORM: webnovel, GIT_SHA: "${GIT_SHA:-dev}" } }
+    environment: { SERVING_MODE: dev }
+    volumes: !override ["../webnovel/artifacts:/artifacts:ro"]
+  rec-router:
+    build: { <<: *build, target: router, args: { GIT_SHA: "${GIT_SHA:-dev}" } }
+    ports: !override ["127.0.0.1:18080:8080"]

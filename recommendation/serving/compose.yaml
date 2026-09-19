@@ -1,0 +1,67 @@
+# 추천 호스트용. 이 PC 에서는 compose.local.yaml 을 덮어 쓴다:
+#   docker compose -p aod-rec -f compose.yaml -f compose.local.yaml up -d --build
+# mem_limit · cpus 는 부하 관문(LOADGATE_RESULTS.md)에서 확정한 값이다.
+x-engine: &engine
+  restart: unless-stopped
+  read_only: true
+  tmpfs: ["/tmp"]
+  networks: [aod-rec]
+  healthcheck:
+    test: ["CMD", "python", "-c", "import urllib.request,sys; sys.exit(0 if urllib.request.urlopen('http://localhost:8000/health', timeout=2).status==200 else 1)"]
+    interval: 15s
+    timeout: 3s
+    start_period: 90s
+    retries: 3
+
+services:
+  rec-steam:
+    <<: *engine
+    image: ${REGISTRY:-local}/aod-rec-engine:steam-${ENGINE_TAG:-dev}
+    environment: { CORPUS_VERSION: "${STEAM_CORPUS:-tags_full}", SERVING_MODE: "${SERVING_MODE:-prod}", OMP_NUM_THREADS: 2, OPENBLAS_NUM_THREADS: 2, MKL_NUM_THREADS: 2 }
+    volumes: ["${ARTIFACTS_BASE:-/srv/aod-artifacts}/steam:/artifacts:ro"]
+    mem_limit: 3200m
+    cpus: 2.0
+  rec-tmdb:
+    <<: *engine
+    image: ${REGISTRY:-local}/aod-rec-engine:tmdb-${ENGINE_TAG:-dev}
+    environment: { CORPUS_VERSION: "${TMDB_CORPUS:-tmdb_v1}", SERVING_MODE: "${SERVING_MODE:-prod}", OMP_NUM_THREADS: 2, OPENBLAS_NUM_THREADS: 2, MKL_NUM_THREADS: 2 }
+    volumes: ["${ARTIFACTS_BASE:-/srv/aod-artifacts}/tmdb:/artifacts:ro"]
+    mem_limit: 1600m
+    cpus: 1.5
+  rec-webtoon:
+    <<: *engine
+    image: ${REGISTRY:-local}/aod-rec-engine:webtoon-${ENGINE_TAG:-dev}
+    environment: { CORPUS_VERSION: "${WEBTOON_CORPUS:-wt_v1}", SERVING_MODE: "${SERVING_MODE:-prod}", OMP_NUM_THREADS: 1, OPENBLAS_NUM_THREADS: 1, MKL_NUM_THREADS: 1 }
+    volumes: ["${ARTIFACTS_BASE:-/srv/aod-artifacts}/webtoon:/artifacts:ro"]
+    mem_limit: 500m
+    cpus: 0.5
+  rec-webnovel:
+    <<: *engine
+    image: ${REGISTRY:-local}/aod-rec-engine:webnovel-${ENGINE_TAG:-dev}
+    environment: { CORPUS_VERSION: "${WEBNOVEL_CORPUS:-wn_v6}", SERVING_MODE: "${SERVING_MODE:-prod}", OMP_NUM_THREADS: 1, OPENBLAS_NUM_THREADS: 1, MKL_NUM_THREADS: 1 }
+    volumes: ["${ARTIFACTS_BASE:-/srv/aod-artifacts}/webnovel:/artifacts:ro"]
+    mem_limit: 900m
+    cpus: 1.0
+  rec-router:
+    image: ${REGISTRY:-local}/aod-rec-router:${ROUTER_TAG:-dev}
+    restart: unless-stopped
+    read_only: true
+    tmpfs: ["/tmp"]
+    networks: [aod-rec]
+    environment: { ENGINE_TIMEOUT_MS: 1500 }
+    ports: ["${BIND_IP:-127.0.0.1}:8080:8080"]     # 호스트 사설 IP 에만 바인딩 — 백엔드 API 서버의 보안 그룹만 허용
+    depends_on:
+      rec-steam: { condition: service_healthy }
+      rec-tmdb: { condition: service_healthy }
+      rec-webtoon: { condition: service_healthy }
+      rec-webnovel: { condition: service_healthy }
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request,sys; sys.exit(0 if urllib.request.urlopen('http://localhost:8080/health', timeout=2).status==200 else 1)"]
+      interval: 15s
+      timeout: 3s
+      retries: 3
+    mem_limit: 256m
+    cpus: 0.5
+
+networks:
+  aod-rec: {}
