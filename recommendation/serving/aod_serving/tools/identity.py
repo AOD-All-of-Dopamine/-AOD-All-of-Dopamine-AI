@@ -11,6 +11,9 @@ from pathlib import Path
 from aod_serving.engine.bootstrap import default_artifacts, enter_platform, rec_root
 from aod_serving.tools.compare import pages_equal
 
+#: 기준 목록과의 점수 허용 오차. 순서 비교에는 쓰지 않는다 — id 목록은 항상 완전 일치여야 한다.
+SCORE_TOL = 1e-6
+
 
 def _adapter(platform: str):
     from aod_serving.engine.adapters import ADAPTERS
@@ -58,7 +61,11 @@ def level2(platform: str, adapter, allow_ties: bool, limit: int | None) -> tuple
             for i, (w, g) in enumerate(zip(c["pages"], got)):
                 n += 1
                 gi, gs = [int(x.key) for x in g], [x.final for x in g]
-                same = (w["ids"] == gi and w["scores"] == gs) or (allow_ties and pages_equal(w["ids"], gi, w["scores"], True))
+                # 목록(id·순서)은 완전 일치, 점수는 SCORE_TOL 안. BLAS 스레드 수가 다르면 행렬 곱의 누적 순서가 달라져
+                # 점수 끝자리가 바뀐다(실측: 스레드 2 에서 271쪽 중 7쪽, 순서가 바뀐 쪽은 0). 같은 머신·같은 설정에서의
+                # 비트 단위 비교는 `steam_baseline --check` 가 맡는다.
+                close = len(w["scores"]) == len(gs) and all(abs(a - b) <= SCORE_TOL for a, b in zip(w["scores"], gs))
+                same = (w["ids"] == gi and close) or (allow_ties and pages_equal(w["ids"], gi, w["scores"], True))
                 if not same: problems.append(f"{c['id']} p{i + 1}: want {w['ids']} got {gi}")
         return n, problems
 
