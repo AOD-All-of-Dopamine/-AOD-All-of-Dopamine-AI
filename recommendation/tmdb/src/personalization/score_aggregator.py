@@ -18,7 +18,12 @@ class ScoreAggregator:
         if strategies is None: strategies = ["max", "mean", "top2_mean"]
         seed_rows = list(seed_embeddings.keys())
         n = sim_matrix.shape[0]
-        dominant = [seed_rows[i] for i in sim_matrix.argmax(axis=0)]
+        # argmax 결과를 **먼저 파이썬 정수로** 바꾼 뒤 훑는다 — 59,780번의 np.int64 박싱과
+        # `__index__` 왕복이 사라진다 (2026-09-19 서빙 지연). 같은 리스트를 만들 뿐이라
+        # 값도 dtype 도 같다. 시드 키를 numpy 배열로 바꾸지 **않는** 이유는 크로스도메인
+        # (`xseed.build_seed_dict`)이 'steam:730' 같은 문자열 키를 섞어 쓰기 때문이다 —
+        # 이 함수의 계약은 "키는 아무 타입이나"이다.
+        dominant = [seed_rows[i] for i in sim_matrix.argmax(axis=0).tolist()]
         out = {}
         if "max" in strategies:
             out["max"] = self._frame(corpus_df, sim_matrix.max(axis=0), "MAX", dominant)

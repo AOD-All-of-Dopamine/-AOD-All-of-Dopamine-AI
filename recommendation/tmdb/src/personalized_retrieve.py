@@ -61,18 +61,23 @@ def recommend(seed_rows, components=None, strategy: str = "top2_mean", top_n: in
     rank_n = max(POOL_FLOOR, top_n * 8) if postprocess_on else top_n
     # 시드 인기 백분위 중앙 — 정합 항의 목표값 (D-31)
     seed_pct = float(np.median(ranker.vote_pct[list(int(r) for r in seed_rows)]))
-    seed_medias = {ranker.dataset.iloc[int(r)]["media"] for r in seed_rows}
+    # 시드 메타는 **열에서 위치로** 꺼낸다. 예전에는 시드마다 `dataset.iloc[r]` 로 15열짜리
+    # 혼합 dtype 행을 통째로 조립했다 — 시드 50개면 요청마다 100번이다 (2026-09-19 서빙 지연).
+    # `_media`·`column()` 은 같은 열을 numpy 로 들고 있는 것이라 원소가 같은 객체다.
+    seed_medias = {ranker._media[int(r)] for r in seed_rows}
     seed_genres = None
     if ranker.genre_w:
+        gcol = ranker.column("genres")
         seed_genres = []
         for rr in seed_rows:
-            g = ranker.dataset.iloc[int(rr)]["genres"]
+            g = gcol[int(rr)]
             seed_genres.append(frozenset(g.tolist() if hasattr(g, "tolist") else (g or [])))
     seed_kws = None
     if ranker.kw_w:
+        kcol = ranker.column("keywords")
         seed_kws = []
         for rr in seed_rows:
-            kk = ranker.dataset.iloc[int(rr)]["keywords"]
+            kk = kcol[int(rr)]
             seed_kws.append(frozenset(kk.tolist() if hasattr(kk, "tolist") else (kk or [])))
     seed_dirs = None
     if ranker.director_w:
@@ -80,7 +85,9 @@ def recommend(seed_rows, components=None, strategy: str = "top2_mean", top_n: in
         seed_dirs = [ranker._dirs[int(rr)] for rr in seed_rows]
     servable = retriever.servable
     if media is not None:   # 풀 자르기(head) 전에 거르므로 탭마다 풀 깊이 rank_n 이 유지된다
-        servable = servable & (ranker._media == media)
+        # `media_mask` 는 같은 `==` 비교를 매체값마다 한 번만 한다. `&` 가 새 배열을 만들어
+        # 캐시는 그대로다(요청이 `servable` 을 고치지 않는다).
+        servable = servable & ranker.media_mask(media)
     ranked = ranker.rank(scored, exclude_rows=excl, top_n=rank_n, seed_kws=seed_kws,
                          seed_dirs=seed_dirs,
                          servable_mask=servable, seed_pct=seed_pct,
