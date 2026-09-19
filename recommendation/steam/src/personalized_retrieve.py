@@ -120,8 +120,10 @@ def run_multi(
 
             pk = dict(postprocess_kwargs or {})
             pk.setdefault("seed_appids", list(liked_appids))
+            # 인덱스된 dataset 을 그대로 넘긴다 — 후처리 단계마다 17만 행을 복사·재인덱스하던
+            # `reset_index()` + 단계별 `set_index()` 왕복을 없앤다. 메타 내용은 같다.
             ranked = apply_postprocess(
-                ranked, ranker.dataset.reset_index(), top_n=top_n, **pk,
+                ranked, ranker.dataset, top_n=top_n, **pk,
             )
         results[strategy] = ranked
         if output_dir:
@@ -360,31 +362,35 @@ def next_page(
     # 시드가 1개면 top2_mean 이 max 와 같아져 집계 레버가 안 듣는다 — 그 구멍만 태그로 메운다.
     # 다시드에는 절대 걸지 않는다(희귀 태그 합집합이 "공통점"이 아니라 "한 시드의 특이점"이 된다).
     from src.postprocess import (POPULAR_SEED_REVIEWS, consensus_seed_tags, load_dataset,
-                                 rare_seed_tags)
+                                 meta_frame, rare_seed_tags)
 
     # **반드시 랭킹에 쓰는 데이터셋을 그대로 쓴다.** 예전에는 `load_dataset()` 를 인자 없이
     # 불러서 기본 아티팩트(s1_v2)를 읽었다 — components 가 tags_full 이어도 태그 필터만
     # 다른 코퍼스에서 계산됐다. max_df 는 코퍼스 크기에 정의되므로(21,883 vs 173,691)
     # "희귀"·"합의"의 기준 자체가 달라졌고, 작은 쪽에 없는 시드에서는 그냥 터졌다.
+    #
+    # 랭커의 dataset 은 이미 `steam_appid` 인덱스다 — `reset_index()` 복사를 하지 않고
+    # 그대로 쓴다. 태그 문서 빈도(17만 행 집계)도 랭커가 기동 시 만든 것을 재사용한다.
     ds = (
-        components[3].dataset.reset_index()
+        components[3].dataset
         if components is not None
         else load_dataset()
     )
+    tag_df = components[3].tag_document_frequency() if components is not None else None
 
     # reindex 로 뽑는다: `.get()` 은 없는 시드에 None 을 줘서 nanmedian 이 터진다.
-    rt = ds.set_index("steam_appid")["recommendations_total"]
+    rt = meta_frame(ds)["recommendations_total"]
     med = float(np.nanmedian(rt.reindex([int(a) for a in liked_appids]).astype("float")))
 
     solo_tags = cons_tags = None
     if len(liked_appids) == 1:
-        solo_tags = rare_seed_tags(liked_appids, ds) or None
+        solo_tags = rare_seed_tags(liked_appids, ds, tag_df=tag_df) or None
     else:
         # 인기 시드(리뷰 중앙 10만+) 취향에만 합의 태그를 요구한다. 니치·롱테일은 건드리지
         # 않는다 — 무조건 걸면 그쪽이 깎여 이득이 상쇄된다(postprocess docstring 참고).
         # "합의"는 시드 2개 이상에서만 정의되므로 이 분기에만 남는다.
         if med >= POPULAR_SEED_REVIEWS:
-            cons_tags = consensus_seed_tags(liked_appids, ds) or None
+            cons_tags = consensus_seed_tags(liked_appids, ds, tag_df=tag_df) or None
 
     # 시드 인기도에 비례하는 하한. 임계값을 손으로 고르지 않으려는 연속 규칙이다.
     # 대작 취향(시드 중앙 176만)에는 큰 하한이, 니치 장르에는 약한 하한이 걸린다.

@@ -119,6 +119,35 @@ class PersonalizedRanker:
         self._mc = (self.dataset["has_metacritic"].fillna(False).astype(float)
                     if mc_w else None)
 
+        # ── 요청과 무관한 값은 여기서 한 번만 만든다 (서빙 지연, 2026-09-19) ──
+        # 예전에는 rank() 가 요청마다 17만 행에 백분위를 다시 매기고 행별 파이썬 람다로
+        # 조회했고, tag_fit 은 후보 17만 × 시드 N 번의 파이썬 집합 교집합이었다.
+        # 값은 그대로다 — steam/eval/s3_pages.json 과 id·점수가 완전히 같아야 한다.
+        self._pct = (self.dataset["recommendations_total"].fillna(0)
+                     .rank(pct=True, ascending=True).astype("float64"))
+        self._qf = self._q.astype("float64") if self._q is not None else None
+        self._pos = pd.Series(range(len(self.dataset)), index=self.dataset.index)
+        self._tag_rows = None
+        if self._tags is not None:
+            import numpy as np
+            rows: dict[str, list[int]] = {}
+            for i, a in enumerate(self.dataset.index):
+                for t in self._tags[a]:
+                    rows.setdefault(t, []).append(i)
+            self._tag_rows = {t: np.asarray(v, dtype=np.int64) for t, v in rows.items()}
+        self._tag_df = None     # 태그 문서 빈도 캐시 — 합의/희귀 태그가 쓴다
+
+    def tag_document_frequency(self) -> tuple[dict[str, int], int]:
+        """태그 → 그 태그를 가진 작품 수, 그리고 전체 작품 수.
+
+        `postprocess.rare/consensus_seed_tags` 가 호출마다 17만 행을 세던 값이다.
+        같은 함수로 세므로 값이 같다. 두 번 만들어도 같은 값이라 경합에 안전하다.
+        """
+        if self._tag_df is None:
+            from src.postprocess import tag_document_frequency
+            self._tag_df = tag_document_frequency(self.dataset["tags"])
+        return self._tag_df
+
     def _build_quality(self) -> pd.Series:
         """appid → 품질 사전분포 ∈ [0, 1]. `log10(1+리뷰수) / cap` 을 자른 값이다.
 
@@ -190,33 +219,44 @@ class PersonalizedRanker:
         (Iron Harvest RTS·Mechs 리뷰 11,628 g=0)이 올라온다. 태그 정합으로 가른다.
         신호 실측(2,600쌍): 프로필 내부 상관 중앙 +0.390 · 부호일치 **52/52**.
         """
+        import numpy as np
         result = candidates.copy()
 
-        rec_col = self.dataset["recommendations_total"].fillna(0)
-        pct = rec_col.rank(pct=True, ascending=True)
-
-        result["recommendations_percentile"] = result["steam_appid"].map(
-            lambda x: pct.get(x, 0.0)
-        )
+        result["recommendations_percentile"] = (
+            result["steam_appid"].map(self._pct).fillna(0.0).astype("float64"))
         boost = result["recommendations_percentile"] * self.rec_boost
 
-        if self._q is not None:
-            result["quality"] = result["steam_appid"].map(lambda x: float(self._q.get(x, 0.0)))
+        if self._qf is not None:
+            result["quality"] = result["steam_appid"].map(self._qf).fillna(0.0).astype("float64")
             boost = boost + result["quality"] * self.quality_w
 
         if self.trend is not None:
-            result["trend_norm"] = result["steam_appid"].map(lambda x: float(self.trend.get(x, 0.0)))
+            result["trend_norm"] = (
+                result["steam_appid"].map(self.trend).fillna(0.0).astype("float64"))
             boost = boost + result["trend_norm"] * self.trend_weight
 
         if self.tag_w and seed_appids and self._tags is not None:
             # 시드 **개별** 최대 피복 |A∩S_i|/|S_i|. 합집합은 시드가 많을수록 느슨해진다.
             # 분모에 후보 A 를 넣지 않는다 — TMDB D-43 에서 자카드가 후보의 추가 태그에
             # 벌점을 줘 품질 높은 것을 밀어냈다.
+            #
+            # 교집합 크기는 역색인(태그 → 행 번호)으로 센다. 정수 나눗셈이 그대로라
+            # 행별 파이썬 집합 교집합과 값이 완전히 같다 (2026-09-19 서빙 지연).
             ss = [self._tags.get(int(a), frozenset()) for a in seed_appids]
             ss = [x for x in ss if x]
             if ss:
-                result["tag_fit"] = result["steam_appid"].map(
-                    lambda a: max(len(self._tags.get(int(a), frozenset()) & s) / len(s) for s in ss))
+                n = len(self.dataset)
+                best = np.zeros(n, dtype=np.float64)
+                for s in ss:
+                    cnt = np.zeros(n, dtype=np.int64)
+                    for t in s:
+                        cnt[self._tag_rows[t]] += 1
+                    np.maximum(best, cnt / len(s), out=best)
+                pos = self._pos.reindex(result["steam_appid"]).to_numpy(dtype="float64")
+                known = ~np.isnan(pos)
+                fit = np.zeros(len(result), dtype=np.float64)
+                fit[known] = best[pos[known].astype(np.int64)]
+                result["tag_fit"] = fit
                 boost = boost + result["tag_fit"] * self.tag_w
         if self.mc_w and self._mc is not None:
             result["has_mc"] = result["steam_appid"].map(self._mc).fillna(0.0)

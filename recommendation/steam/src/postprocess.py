@@ -11,6 +11,7 @@
     새로고침 제품의 병목은 정확도가 아니라 변화량이다.
 """
 import re
+from functools import lru_cache
 from pathlib import Path
 
 import pandas as pd
@@ -89,18 +90,28 @@ _SERIES_NOISE = re.compile(
 )
 
 
+#: 이름 → 키 변환은 순수 함수이고 이름은 코퍼스(17만)로 한정된다. 후처리가 호출마다
+#: 후보 수천 개에 같은 정규식을 다시 돌리던 것을 메모이즈로 없앤다 (2026-09-19 서빙 지연).
+_NAME_CACHE_MAX = 1 << 18
+
+
+@lru_cache(maxsize=_NAME_CACHE_MAX)
+def _series_key(s: str) -> str:
+    low = _SERIES_STRIP.sub("", s).lower()
+    low = _HANGUL_DIGIT.sub(" ", low)      # '페르소나3' → '페르소나 3' — 숫자는 노이즈로 떨어진다
+    low = re.sub(r"[^a-z0-9가-힣 ]", " ", low)
+    low = _SERIES_NOISE.sub(" ", low)
+    toks = low.split()
+    return " ".join(toks[:2]) if toks else s.lower()
+
+
 def series_key(name: str) -> str:
     """시리즈 근사. 개발사/퍼블리셔 필드가 dataset 에 없어 이름으로 추정한다.
 
     'Counter-Strike 2' 와 'Counter-Strike: Source' → 'counter strike'
     'MadOut' 과 'MadOut Ice Storm' → 'madout ice'  (완벽하지 않다 — 앞 2단어 근사)
     """
-    s = _SERIES_STRIP.sub("", str(name)).lower()
-    s = _HANGUL_DIGIT.sub(" ", s)          # '페르소나3' → '페르소나 3' — 숫자는 노이즈로 떨어진다
-    s = re.sub(r"[^a-z0-9가-힣 ]", " ", s)
-    s = _SERIES_NOISE.sub(" ", s)
-    toks = s.split()
-    return " ".join(toks[:2]) if toks else str(name).lower()
+    return _series_key(str(name))
 
 
 def _load_release_dates() -> pd.Series:
@@ -127,6 +138,17 @@ def _has_adult_descriptor(ids) -> bool:
         return bool(ADULT_DESCRIPTOR_IDS & {int(i) for i in ids})
     except TypeError:
         return False
+
+
+def meta_frame(dataset: pd.DataFrame) -> pd.DataFrame:
+    """`steam_appid` 를 인덱스로 가진 메타 프레임. 이미 인덱스면 그대로 돌려준다.
+
+    17만 행 `set_index` 는 프레임 복사 + 인덱스 해시테이블 재구성이라, 후처리 단계마다
+    반복하면 호출당 수백 ms 다(2026-09-19 서빙 지연). 서빙은 랭커가 이미 인덱스해 둔
+    `ranker.dataset` 을 그대로 넘겨 그 반복을 없앤다. **읽기 전용으로만 쓴다** —
+    이 프레임을 고치는 후처리는 없다. 구 호출부(steam_appid 가 열인 프레임)는 그대로 돈다.
+    """
+    return dataset.set_index("steam_appid") if "steam_appid" in dataset.columns else dataset
 
 
 _REAL_CACHE: dict = {}
@@ -186,11 +208,14 @@ def apply_hard_filters(
     올리면 다시 떨어진다 — 유명작만 남아 발견의 가치가 사라지기 때문이다.
     """
     df = ranked.copy()
-    meta = dataset.set_index("steam_appid") if "steam_appid" in dataset.columns else dataset
+    meta = meta_frame(dataset)
     keep = pd.Series(True, index=df.index)
 
+    # 열 꺼내기(`meta["…"]`)는 람다 **밖**에서 한 번만 한다. 안에 두면 후보 수만큼
+    # DataFrame.__getitem__ 이 돈다(호출당 6천 회 실측). 꺼낸 Series 는 같은 객체다.
     if drop_adult:
-        genres = df["steam_appid"].map(lambda a: set(meta["genres"].get(a, [])))
+        genre_col = meta["genres"]
+        genres = df["steam_appid"].map(lambda a: set(genre_col.get(a, [])))
         keep &= ~genres.map(lambda g: bool(g & ADULT_GENRES))
         if "content_descriptorids" in meta.columns:
             # parquet 는 리스트를 numpy 배열로 돌려준다 — `x or ()` 는 배열에서
@@ -200,11 +225,13 @@ def apply_hard_filters(
                 lambda a: _has_adult_descriptor(cd.get(a)))
 
     if drop_vr_only and "categories" in meta.columns:
-        cats = df["steam_appid"].map(lambda a: set(meta["categories"].get(a, [])))
+        cat_col = meta["categories"]
+        cats = df["steam_appid"].map(lambda a: set(cat_col.get(a, [])))
         keep &= ~cats.map(lambda c: VR_ONLY_CATEGORY in c)
 
     if require_known_reviews and "has_recommendations" in meta.columns:
-        keep &= df["steam_appid"].map(lambda a: bool(meta["has_recommendations"].get(a, False)))
+        known_col = meta["has_recommendations"]
+        keep &= df["steam_appid"].map(lambda a: bool(known_col.get(a, False)))
 
     if min_reviews > 0:
         # D-40. `real_reviews=True` 면 D-39 크롤(실측)을 쓴다. 기본은 구 필드라 재현된다.
@@ -226,7 +253,8 @@ def apply_hard_filters(
 
     if drop_unreleased and "coming_soon" in meta.columns:
         # dataset 이 직접 들고 있으면 그것을 쓴다 — 전체 코퍼스에 적용된다
-        keep &= ~df["steam_appid"].map(lambda a: bool(meta["coming_soon"].get(a, False)))
+        soon_col = meta["coming_soon"]
+        keep &= ~df["steam_appid"].map(lambda a: bool(soon_col.get(a, False)))
     elif drop_unreleased:
         # 구 dataset 에는 컬럼이 없다 → trend_features 로 폴백(커버리지 11%)
         dates = _load_release_dates()
@@ -279,14 +307,15 @@ def cap_publisher(df: pd.DataFrame, dataset: pd.DataFrame, publisher_max: int = 
     """
     if df.empty or publisher_max <= 0:
         return df.reset_index(drop=True)
-    meta = dataset.set_index("steam_appid") if "steam_appid" in dataset.columns else dataset
+    meta = meta_frame(dataset)
     if "publisher" not in meta.columns:
         return df.reset_index(drop=True)
 
+    pub_col = meta["publisher"]          # 루프 밖에서 한 번만 꺼낸다
     seen: dict[str, int] = {}
     keep = []
     for a in df["steam_appid"]:
-        pub = str(meta["publisher"].get(a, "") or "").strip().lower()
+        pub = str(pub_col.get(a, "") or "").strip().lower()
         if not pub:  # 퍼블리셔 미상은 제한하지 않는다
             keep.append(True)
             continue
@@ -297,14 +326,16 @@ def cap_publisher(df: pd.DataFrame, dataset: pd.DataFrame, publisher_max: int = 
 
 def series_counts(appids, dataset: pd.DataFrame) -> dict[str, int]:
     """appid 목록의 시리즈 키별 등장 횟수. cap_series 의 세션 사전값으로 쓴다."""
-    meta = dataset.set_index("steam_appid") if "steam_appid" in dataset.columns else dataset
+    meta = meta_frame(dataset)
     has_pub = "publisher" in meta.columns
+    name_col = meta["name"]
+    pub_col = meta["publisher"] if has_pub else None
     out: dict[str, int] = {}
     for a in appids:
         a = int(a)
         k = series_group(
-            meta["name"].get(a, ""),
-            meta["publisher"].get(a, "") if has_pub else "",
+            name_col.get(a, ""),
+            pub_col.get(a, "") if has_pub else "",
         )
         out[k] = out.get(k, 0) + 1
     return out
@@ -331,12 +362,14 @@ def cap_series(df: pd.DataFrame, dataset: pd.DataFrame, series_max: int = 1,
     """
     if df.empty:
         return df.reset_index(drop=True)
-    meta = dataset.set_index("steam_appid") if "steam_appid" in dataset.columns else dataset
+    meta = meta_frame(dataset)
     has_pub = "publisher" in meta.columns
+    name_col = meta["name"]
+    pub_col = meta["publisher"] if has_pub else None
     keys = df["steam_appid"].map(
         lambda a: series_group(
-            meta["name"].get(a, ""),
-            meta["publisher"].get(a, "") if has_pub else "",
+            name_col.get(a, ""),
+            pub_col.get(a, "") if has_pub else "",
         )
     )
     prior = dict(prior_counts or {})
@@ -424,23 +457,34 @@ RARE_TAG_MAX_DF = 0.05
 SEED_TAG_TOPN = 15
 
 
+def _tag_names(x) -> list[str]:
+    if x is None or isinstance(x, float):
+        return []
+    return [t["name"] if isinstance(t, dict) else str(t) for t in x]
+
+
+def tag_document_frequency(tags) -> tuple[dict[str, int], int]:
+    """태그 → 문서 빈도, 전체 문서 수. 17만 행을 도는 값이라 서빙은 기동 시 한 번만 만든다."""
+    df_count: dict[str, int] = {}
+    for x in tags:
+        for t in set(_tag_names(x)):
+            df_count[t] = df_count.get(t, 0) + 1
+    return df_count, len(tags)
+
+
 def rare_seed_tags(seed_appids, dataset: pd.DataFrame,
-                   max_df: float = RARE_TAG_MAX_DF, topn: int = SEED_TAG_TOPN) -> set[str]:
-    """시드의 상위 태그 중 코퍼스에서 드문 것들 — 그 취향을 정의하는 태그."""
-    tags = dataset.set_index("steam_appid")["tags"] if "tags" in dataset.columns else None
+                   max_df: float = RARE_TAG_MAX_DF, topn: int = SEED_TAG_TOPN,
+                   tag_df: tuple[dict[str, int], int] | None = None) -> set[str]:
+    """시드의 상위 태그 중 코퍼스에서 드문 것들 — 그 취향을 정의하는 태그.
+
+    `tag_df` 를 주면 문서 빈도를 다시 세지 않는다(서빙). 안 주면 예전과 똑같이 매번 센다.
+    """
+    tags = meta_frame(dataset)["tags"] if "tags" in dataset.columns else None
     if tags is None:
         return set()
 
-    def names(x):
-        if x is None or isinstance(x, float):
-            return []
-        return [t["name"] if isinstance(t, dict) else str(t) for t in x]
-
-    df_count: dict[str, int] = {}
-    for x in tags:
-        for t in set(names(x)):
-            df_count[t] = df_count.get(t, 0) + 1
-    n = len(tags)
+    names = _tag_names
+    df_count, n = tag_df if tag_df is not None else tag_document_frequency(tags)
     out = set()
     for a in seed_appids:
         for t in names(tags.get(int(a))) [:topn]:
@@ -468,7 +512,8 @@ CONSENSUS_TAG_MAX_DF = 0.15
 
 
 def consensus_seed_tags(seed_appids, dataset: pd.DataFrame, min_seeds: int = 2,
-                        max_df: float = CONSENSUS_TAG_MAX_DF, topn: int = SEED_TAG_TOPN) -> set[str]:
+                        max_df: float = CONSENSUS_TAG_MAX_DF, topn: int = SEED_TAG_TOPN,
+                        tag_df: tuple[dict[str, int], int] | None = None) -> set[str]:
     """시드 `min_seeds` 개 이상이 **함께** 가진 태그 중 흔하지 않은 것.
 
     `rare_seed_tags` 와 다른 점: 저쪽은 합집합이라 "한 시드의 특이점"까지 통과시킨다.
@@ -478,21 +523,15 @@ def consensus_seed_tags(seed_appids, dataset: pd.DataFrame, min_seeds: int = 2,
 
         coh_arpg  → Action RPG · Fantasy · Open World · Third Person
         coh_cozy  → Building · Crafting · Sandbox · Open World
+
+    `tag_df` 를 주면 문서 빈도를 다시 세지 않는다(서빙). 안 주면 예전과 똑같이 매번 센다.
     """
-    tags = dataset.set_index("steam_appid")["tags"] if "tags" in dataset.columns else None
+    tags = meta_frame(dataset)["tags"] if "tags" in dataset.columns else None
     if tags is None:
         return set()
 
-    def names(x):
-        if x is None or isinstance(x, float):
-            return []
-        return [t["name"] if isinstance(t, dict) else str(t) for t in x]
-
-    df_count: dict[str, int] = {}
-    for x in tags:
-        for t in set(names(x)):
-            df_count[t] = df_count.get(t, 0) + 1
-    n = len(tags)
+    names = _tag_names
+    df_count, n = tag_df if tag_df is not None else tag_document_frequency(tags)
 
     shared: dict[str, int] = {}
     for a in seed_appids:
@@ -506,7 +545,7 @@ def keep_sharing_tags(df: pd.DataFrame, dataset: pd.DataFrame, wanted: set[str],
     """후보의 상위 태그가 `wanted` 와 하나라도 겹치는 것만 남긴다."""
     if not wanted:
         return df
-    tags = dataset.set_index("steam_appid")["tags"]
+    tags = meta_frame(dataset)["tags"]
 
     def hit(a):
         x = tags.get(int(a))
@@ -554,8 +593,9 @@ def drop_dead_multiplayer(df: pd.DataFrame, dataset: pd.DataFrame) -> pd.DataFra
     """
     if "categories" not in dataset.columns:
         return df
-    cats = dataset.set_index("steam_appid")["categories"]
-    known = dataset.set_index("steam_appid")["has_recommendations"]
+    meta = meta_frame(dataset)
+    cats = meta["categories"]
+    known = meta["has_recommendations"]
 
     def dead(a):
         a = int(a)
@@ -597,7 +637,7 @@ def consensus_overlap_boost(df: pd.DataFrame, dataset: pd.DataFrame, wanted: set
     """
     if not wanted or weight <= 0:
         return df
-    tags = dataset.set_index("steam_appid")["tags"]
+    tags = meta_frame(dataset)["tags"]
 
     def hits(a):
         x = tags.get(int(a))
@@ -618,12 +658,17 @@ _ITER_MARK = re.compile(
     r"complete|goty|anniversary|enhanced|redux|reawakened|\bhd\b|디피니티브|컴플리트)\s*$")
 
 
-def _is_iteration(name: str) -> bool:
-    """이름이 넘버링/에디션 꼴로 끝나는가 — '문명 VII' · '리마스터' · 'GOTY'."""
-    low = _SERIES_STRIP.sub("", str(name)).lower()
+@lru_cache(maxsize=_NAME_CACHE_MAX)
+def _is_iteration_str(s: str) -> bool:
+    low = _SERIES_STRIP.sub("", s).lower()
     low = _HANGUL_DIGIT.sub(" ", low)
     low = re.sub(r"[^a-z0-9가-힣 ]", " ", low).strip()
     return bool(_ITER_MARK.search(low))
+
+
+def _is_iteration(name: str) -> bool:
+    """이름이 넘버링/에디션 꼴로 끝나는가 — '문명 VII' · '리마스터' · 'GOTY'."""
+    return _is_iteration_str(str(name))
 
 
 def drop_seed_iterations(df: pd.DataFrame, dataset: pd.DataFrame, seed_appids) -> pd.DataFrame:
@@ -634,7 +679,7 @@ def drop_seed_iterations(df: pd.DataFrame, dataset: pd.DataFrame, seed_appids) -
     """
     if df.empty or not seed_appids:
         return df
-    meta = dataset.set_index("steam_appid") if "steam_appid" in dataset.columns else dataset
+    meta = meta_frame(dataset)
     names = meta.get("name")
     if names is None:
         return df
@@ -668,7 +713,7 @@ def promote_seed_companions(df: pd.DataFrame, dataset: pd.DataFrame,
     """
     if df.empty or not seed_appids:
         return df
-    meta = dataset.set_index("steam_appid") if "steam_appid" in dataset.columns else dataset
+    meta = meta_frame(dataset)
     names = meta["name"] if "name" in meta.columns else None
     if names is None:
         return df
