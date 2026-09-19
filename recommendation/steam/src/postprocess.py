@@ -15,6 +15,7 @@ import weakref
 from functools import lru_cache
 from pathlib import Path
 
+import numpy as np
 import pandas as pd
 
 from src.config import PROJECT_ROOT, artifact_dir
@@ -85,6 +86,21 @@ def same_series(key_a: str, key_b: str) -> bool:
     if key_a == key_b:
         return True
     return key_b in _ALIAS_OF.get(key_a, ())
+
+
+def _match_keys(seed_keys) -> frozenset:
+    """`any(same_series(sk, k) for sk in seed_keys)` 와 **정확히 같은** 판정을 하는 집합.
+
+    `same_series(sk, k)` 는 `sk == k` 또는 `k ∈ _ALIAS_OF[sk]` 이므로, 시드 쪽 별칭을 미리
+    펼쳐 두면 후보마다 시드 수만큼 돌던 OR 가 집합 조회 한 번이 된다(같은 원소들의 합집합이라
+    값이 같다). 시드 50개 · 후보 6,500개에서 32만 번이던 비교가 사라진다 (2026-09-19 2차).
+    """
+    out = set(seed_keys)
+    for sk in seed_keys:
+        out.update(_ALIAS_OF.get(sk, ()))
+    return frozenset(out)
+
+
 _SERIES_NOISE = re.compile(
     r"\b(\d+|i{1,3}|iv|v|vi|vii|viii|ix|x|remastered|enhanced|definitive|special|"
     r"complete|collection|edition|goty|hd|vr|classic|source|deluxe|ultimate)\b"
@@ -106,6 +122,17 @@ def _series_key(s: str) -> str:
     low = _SERIES_NOISE.sub(" ", low)
     toks = low.split()
     return " ".join(toks[:2]) if toks else s.lower()
+
+
+@lru_cache(maxsize=_NAME_CACHE_MAX)
+def _series_group(name: str, pub_raw: str) -> str:
+    """`series_group` 의 본체. 두 문자열의 순수 함수라 메모이즈한다 (2026-09-19 2차)."""
+    key = _series_key(name)
+    pub = pub_raw.strip().lower()
+    if not pub:
+        return key
+    head = key.split()[0] if key.split() else key
+    return f"{pub}|{head}"
 
 
 def series_key(name: str) -> str:
@@ -154,7 +181,166 @@ def meta_frame(dataset: pd.DataFrame) -> pd.DataFrame:
     return dataset.set_index("steam_appid") if "steam_appid" in dataset.columns else dataset
 
 
+def _take(col: pd.Series, pos, known, default):
+    """위치 배열로 한 번에 꺼내고, 모르는 id 자리만 기본값으로 바꾼다."""
+    v = col.take(np.where(known, pos, 0)).tolist()
+    return v if known.all() else [x if k else default for x, k in zip(v, known)]
+
+
+def _lookup_col(col: pd.Series, ids, default=""):
+    """`[col.get(i, default) for i in ids]` 를 위치(`get_indexer`+`take`)로 한 번에 구한다.
+
+    후처리 지연의 대부분이 여기였다(2026-09-19 2차 실측, k=50 에서 후보 7,500행):
+    후보마다 `Series.get` 을 부르느라 호출당 5만~8만 번의 해시 조회가 돌았다.
+    **값은 그대로다** — 같은 열의 같은 원소를 위치로 꺼내 올 뿐이고, 모르는 id 의 기본값도
+    예전과 같다. 인덱스가 중복이면(정상 코퍼스엔 없다) 예전처럼 행마다 `Series.get` 을 부른다.
+    """
+    ids = [int(i) for i in ids]
+    if not col.index.is_unique:
+        return [col.get(i, default) for i in ids]
+    pos = col.index.get_indexer(ids)
+    return _take(col, pos, pos >= 0, default)
+
+
+def _lookup(meta: pd.DataFrame, cols: tuple[str, ...], ids, default=""):
+    """`_lookup_col` 의 여러 열 판. 위치 계산(`get_indexer`)을 열마다 반복하지 않는다.
+
+    돌려주는 `known` 은 id 가 인덱스에 있었는지다 — 없는 id 에서 예전 경로로 되돌아가야 하는
+    호출부가 그 조건을 그대로 판단할 수 있게 한다. 없는 **열**은 예전처럼 기본값으로 채운다.
+    """
+    ids = [int(i) for i in ids]
+    if meta.index.is_unique:
+        pos = meta.index.get_indexer(ids)
+        known = pos >= 0
+        return known, [[default] * len(ids) if c not in meta.columns
+                       else _take(meta[c], pos, known, default) for c in cols]
+    known = np.asarray(pd.Index(ids).isin(meta.index), dtype=bool)
+    return known, [[default] * len(ids) if c not in meta.columns
+                   else [meta[c].get(i, default) for i in ids] for c in cols]
+
+
+def _row_dtypes_round_trip(dtypes) -> bool:
+    """`pd.DataFrame(행 Series 목록)` 의 열 추론이 원래 dtype 을 그대로 되돌려주는가.
+
+    되돌려주는 것만 허용한다: 정수·실수·불리언 numpy dtype(int64·float32·float64·bool)과
+    pandas 3.0 의 기본 문자열 dtype(`str` — 결측이 NaN). 실측으로 확인했고, 문자열 열에
+    결측이 섞여도 같다.
+
+    **`object` 는 일부러 뺀다.** 값이 전부 정수인 object 열은 추론이 int64 로 **좁혀서**
+    dtype 이 달라진다(결측 `dominant_seed` 를 섞은 합성 프레임에서 실제로 걸렸다).
+    nullable `Int64`/`Float64`·arrow·Categorical 도 같은 이유로 뺀다. 이런 프레임에서는
+    예전 경로(행 Series 조립)를 그대로 쓰므로 결과가 달라지지 않는다.
+    """
+    for d in dtypes:
+        if isinstance(d, np.dtype) and d.kind in "iufb":
+            continue
+        if isinstance(d, pd.StringDtype) and getattr(d, "na_value", None) is np.nan:
+            continue
+        return False
+    return True
+
+
+def _is_missing(x) -> bool:
+    """`groupby` 가 결측으로 보고 그룹에서 빼는 값인가(dropna 기본값). 스칼라 전용이다.
+
+    리스트 같은 것이 들어오면 `pd.isna` 가 배열을 돌려주는데, 그런 값은 애초에 groupby 의
+    키가 될 수 없으므로(해시 불가) 결측이 아닌 것으로 둔다 — 예전처럼 그 자리에서 터진다.
+    """
+    try:
+        return bool(pd.isna(x))
+    except (TypeError, ValueError):
+        return False
+
+
+def _by_dataset(cache: dict, dataset: pd.DataFrame, build):
+    """코퍼스마다 1회만 계산해 돌려준다 (2026-09-19 서빙 지연).
+
+    캐시 키는 `id(dataset)` 이지만 **약한 참조로 동일 객체인지 확인**한다 — dataset 은
+    오래 사는 `ranker.dataset` 이라, 랭커가 버려진 뒤 다른 코퍼스가 같은 주소에 들어오면
+    앞 코퍼스의 값을 돌려줄 수 있다. 죽은 항목은 캐시가 커질 때 치운다(평가 스크립트가
+    코퍼스를 여러 번 만든다). 두 번 만들어도 같은 값이라 경합에 안전하고, 돌려주는 것은
+    **읽기 전용**이다.
+    """
+    key = id(dataset)
+    hit = cache.get(key)
+    if hit is not None and hit[0]() is dataset:
+        return hit[1]
+    if len(cache) > 8:
+        for k in [k for k, v in cache.items() if v[0]() is None]:
+            del cache[k]
+    out = build()
+    cache[key] = (weakref.ref(dataset), out)
+    return out
+
+
 _REAL_CACHE: dict = {}
+_TOTALS_CACHE: dict = {}
+_FLAG_CACHE: dict = {}
+_TAGSET_CACHE: dict = {}
+
+
+def _flag_by_appid(meta: pd.DataFrame, name: str, ids, fetch, judge) -> list:
+    """appid → 불리언 판정을 **코퍼스 단위로 한 번만** 세어 기억한다 (2026-09-19 2차).
+
+    성인 장르·성인 등급·VR 전용·미출시·멀티 전용 판정은 전부 코퍼스 값만 본다 — 요청이
+    바뀌어도 같은 작품이면 답이 같은데, 예전에는 호출마다 후보 7,500개에 다시 셌다.
+    `judge` 는 열 값을 받아 불리언을 주는 **순수** 함수이고 `fetch(appids)` 가 그 값들을
+    순서대로 준다. 식이 그대로라 값이 같고, 처음 보는 행만 채우므로 기동도 느려지지 않는다.
+
+    저장은 코퍼스 길이의 불리언 배열 두 개(값·계산됨)라 17만 행에 판정당 346 KB 다.
+    인덱스가 중복이거나 모르는 id 면 캐시를 쓰지 않고 예전처럼 그 자리에서 센다.
+    두 번 세도 같은 값이라 경합에 안전하다.
+    """
+    ids = [int(a) for a in ids]
+    if not meta.index.is_unique:
+        return [judge(v) for v in fetch(ids)]
+    st = _by_dataset(_FLAG_CACHE, meta, dict)
+    ent = st.get(name)
+    if ent is None:
+        n = len(meta.index)
+        ent = st[name] = (np.zeros(n, dtype=bool), np.zeros(n, dtype=bool))
+    vals, done = ent
+    pos = meta.index.get_indexer(ids)
+
+    todo_pos, todo_ids, seen = [], [], set()
+    for p, a in zip(pos, ids):
+        if p >= 0 and not done[p] and p not in seen:
+            seen.add(p); todo_pos.append(p); todo_ids.append(a)
+    if todo_ids:
+        for p, v in zip(todo_pos, fetch(todo_ids)):
+            vals[p] = judge(v); done[p] = True
+
+    unknown = {}
+    miss = [a for p, a in zip(pos, ids) if p < 0]
+    if miss:
+        unknown = dict(zip(miss, (judge(v) for v in fetch(miss))))
+    return [bool(vals[p]) if p >= 0 else unknown[a] for p, a in zip(pos, ids)]
+
+
+def _top_tag_names(meta: pd.DataFrame, ids, topn: int) -> list:
+    """appid → 상위 `topn` 태그 이름 **튜플**. 코퍼스만 보고 정해지는 값이라 기억해 둔다.
+
+    `keep_sharing_tags`·`consensus_overlap_boost` 가 호출마다 후보 수천 개에 다시 만들던
+    집합이다. 집합 대신 튜플을 담아 메모리를 줄였다 — 쓰는 쪽은 `wanted.intersection(got)`
+    이라 `wanted & set(got)` 과 값이 같다. 태그가 없는 행(`None`·NaN)은 빈 튜플이고,
+    그때 교집합이 비는 것은 예전에 곧바로 `False`/`0` 을 주던 것과 결과가 같다.
+    """
+    ids = [int(a) for a in ids]
+    col = meta["tags"]
+    if not col.index.is_unique:
+        return [_names_of(x, topn) for x in (col.get(a) for a in ids)]
+    memo = _by_dataset(_TAGSET_CACHE, meta, dict).setdefault(topn, {})
+    miss = [a for a in dict.fromkeys(ids) if a not in memo]
+    if miss:
+        for a, x in zip(miss, _lookup_col(col, miss, None)):
+            memo[a] = _names_of(x, topn)
+    return [memo[a] for a in ids]
+
+
+def _names_of(x, topn: int) -> tuple:
+    if x is None or isinstance(x, float):
+        return ()
+    return tuple(t["name"] if isinstance(t, dict) else str(t) for t in x[:topn])
 
 
 def _real_reviews(meta: pd.DataFrame) -> pd.Series:
@@ -178,6 +364,12 @@ def _real_reviews(meta: pd.DataFrame) -> pd.Series:
     out = rv["total_reviews"].astype(float).reindex(meta.index).fillna(0.0)
     _REAL_CACHE[key] = (weakref.ref(meta), out)
     return out
+
+
+def _review_totals(meta: pd.DataFrame) -> pd.Series:
+    """`recommendations_total` 을 float 로 눕힌 것. 코퍼스만 보고 정해지는 값이라 1회만 만든다."""
+    return _by_dataset(_TOTALS_CACHE, meta,
+                       lambda: meta["recommendations_total"].astype("float").fillna(0.0))
 
 
 def apply_hard_filters(
@@ -219,30 +411,35 @@ def apply_hard_filters(
     df = ranked.copy()
     meta = meta_frame(dataset)
     keep = pd.Series(True, index=df.index)
+    ids = df["steam_appid"]
 
-    # 열 꺼내기(`meta["…"]`)는 람다 **밖**에서 한 번만 한다. 안에 두면 후보 수만큼
-    # DataFrame.__getitem__ 이 돈다(호출당 6천 회 실측). 꺼낸 Series 는 같은 객체다.
-    # 밖으로 빼면 열이 없을 때 즉시 KeyError 가 되므로 다른 열들과 같은 가드를 붙인다.
+    def mask(flags) -> pd.Series:
+        return pd.Series(flags, index=df.index, dtype=bool)
+
+    def col_of(name, default):
+        return lambda aa: _lookup_col(meta[name], aa, default)
+
+    # 행별 `Series.get` 을 열 단위 한 번(`_lookup_col`)으로 바꾸고, 판정 자체는 코퍼스만
+    # 보는 값이라 `_flag_by_appid` 가 기억한다. 조건식은 글자 그대로다.
+    # 열이 없을 때 즉시 KeyError 가 나지 않게 가드는 그대로 둔다.
     if drop_adult:
         if "genres" in meta.columns:
-            genre_col = meta["genres"]
-            genres = df["steam_appid"].map(lambda a: set(genre_col.get(a, [])))
-            keep &= ~genres.map(lambda g: bool(g & ADULT_GENRES))
+            keep &= mask(_flag_by_appid(meta, "ok_genres", ids, col_of("genres", ()),
+                                        lambda g: not (set(g) & ADULT_GENRES)))
         if "content_descriptorids" in meta.columns:
             # parquet 는 리스트를 numpy 배열로 돌려준다 — `x or ()` 는 배열에서
             # "truth value is ambiguous" 로 터진다. None 검사를 명시적으로 한다.
-            cd = meta["content_descriptorids"]
-            keep &= ~df["steam_appid"].map(
-                lambda a: _has_adult_descriptor(cd.get(a)))
+            keep &= mask(_flag_by_appid(meta, "ok_descriptor", ids,
+                                        col_of("content_descriptorids", None),
+                                        lambda x: not _has_adult_descriptor(x)))
 
     if drop_vr_only and "categories" in meta.columns:
-        cat_col = meta["categories"]
-        cats = df["steam_appid"].map(lambda a: set(cat_col.get(a, [])))
-        keep &= ~cats.map(lambda c: VR_ONLY_CATEGORY in c)
+        keep &= mask(_flag_by_appid(meta, "ok_vr", ids, col_of("categories", ()),
+                                    lambda c: VR_ONLY_CATEGORY not in set(c)))
 
     if require_known_reviews and "has_recommendations" in meta.columns:
-        known_col = meta["has_recommendations"]
-        keep &= df["steam_appid"].map(lambda a: bool(known_col.get(a, False)))
+        keep &= mask(_flag_by_appid(meta, "known_reviews", ids,
+                                    col_of("has_recommendations", False), bool))
 
     if min_reviews > 0:
         # D-40. `real_reviews=True` 면 D-39 크롤(실측)을 쓴다. 기본은 구 필드라 재현된다.
@@ -256,16 +453,18 @@ def apply_hard_filters(
             totals = _real_reviews(meta)
         elif "recommendations_total" in meta.columns:
             # Int64 결측을 0 으로 눕혀야 한다 — pd.NA 는 비교에서 불리언이 되지 않는다.
-            totals = meta["recommendations_total"].astype("float").fillna(0.0)
+            # 17만 행 astype 은 코퍼스만 보고 정해지므로 코퍼스마다 1회만 만든다(읽기 전용).
+            totals = _review_totals(meta)
         else:
             totals = None
     if min_reviews > 0 and totals is not None:
-        keep &= df["steam_appid"].map(lambda a: totals.get(a, 0.0) >= min_reviews)
+        tv = _lookup_col(totals, ids, 0.0)
+        keep &= mask([x >= min_reviews for x in tv])
 
     if drop_unreleased and "coming_soon" in meta.columns:
         # dataset 이 직접 들고 있으면 그것을 쓴다 — 전체 코퍼스에 적용된다
-        soon_col = meta["coming_soon"]
-        keep &= ~df["steam_appid"].map(lambda a: bool(soon_col.get(a, False)))
+        keep &= mask(_flag_by_appid(meta, "released", ids, col_of("coming_soon", False),
+                                    lambda x: not bool(x)))
     elif drop_unreleased:
         # 구 dataset 에는 컬럼이 없다 → trend_features 로 폴백(커버리지 11%)
         dates = _load_release_dates()
@@ -296,12 +495,8 @@ def series_group(name: str, publisher: str = "") -> str:
 
     구 데이터처럼 퍼블리셔가 없으면 이름 기반으로 자동 폴백한다.
     """
-    key = series_key(name)
-    pub = str(publisher or "").strip().lower()
-    if not pub:
-        return key
-    head = key.split()[0] if key.split() else key
-    return f"{pub}|{head}"
+    # `publisher or ""` 를 먼저 하는 순서까지 그대로다 — NaN 은 참이라 예전처럼 'nan' 이 된다.
+    return _series_group(str(name), str(publisher or ""))
 
 
 def cap_publisher(df: pd.DataFrame, dataset: pd.DataFrame, publisher_max: int = 2) -> pd.DataFrame:
@@ -322,11 +517,11 @@ def cap_publisher(df: pd.DataFrame, dataset: pd.DataFrame, publisher_max: int = 
     if "publisher" not in meta.columns:
         return df.reset_index(drop=True)
 
-    pub_col = meta["publisher"]          # 루프 밖에서 한 번만 꺼낸다
+    pubs = _lookup_col(meta["publisher"], df["steam_appid"], "")   # 열 단위 한 번
     seen: dict[str, int] = {}
     keep = []
-    for a in df["steam_appid"]:
-        pub = str(pub_col.get(a, "") or "").strip().lower()
+    for p in pubs:
+        pub = str(p or "").strip().lower()
         if not pub:  # 퍼블리셔 미상은 제한하지 않는다
             keep.append(True)
             continue
@@ -339,15 +534,10 @@ def series_counts(appids, dataset: pd.DataFrame) -> dict[str, int]:
     """appid 목록의 시리즈 키별 등장 횟수. cap_series 의 세션 사전값으로 쓴다."""
     meta = meta_frame(dataset)
     has_pub = "publisher" in meta.columns
-    name_col = meta["name"]
-    pub_col = meta["publisher"] if has_pub else None
+    _, (names, pubs) = _lookup(meta, ("name", "publisher"), appids, "")
     out: dict[str, int] = {}
-    for a in appids:
-        a = int(a)
-        k = series_group(
-            name_col.get(a, ""),
-            pub_col.get(a, "") if has_pub else "",
-        )
+    for nm, pb in zip(names, pubs):
+        k = series_group(nm, pb if has_pub else "")
         out[k] = out.get(k, 0) + 1
     return out
 
@@ -375,14 +565,10 @@ def cap_series(df: pd.DataFrame, dataset: pd.DataFrame, series_max: int = 1,
         return df.reset_index(drop=True)
     meta = meta_frame(dataset)
     has_pub = "publisher" in meta.columns
-    name_col = meta["name"]
-    pub_col = meta["publisher"] if has_pub else None
-    keys = df["steam_appid"].map(
-        lambda a: series_group(
-            name_col.get(a, ""),
-            pub_col.get(a, "") if has_pub else "",
-        )
-    )
+    # 두 열을 행마다 꺼내던 것(`meta["name"].get(a, "")` × 후보 수)을 한 번에 꺼낸다.
+    # 없는 열·모르는 id 는 `_lookup` 이 예전과 같은 기본값("")을 준다.
+    _, (names, pubs) = _lookup(meta, ("name", "publisher"), df["steam_appid"], "")
+    keys = [series_group(nm, pb if has_pub else "") for nm, pb in zip(names, pubs)]
     prior = dict(prior_counts or {})
     seen: dict[str, int] = {}
     keep = []
@@ -443,21 +629,41 @@ def interleave_by_seed(ranked: pd.DataFrame, top_n: int = 100,
     # 이것 때문에 조용히 무효가 됐고(측정값이 소수점까지 동일해서 의심하게 됐다),
     # 원인을 찾는 데 시간을 썼다. 순서를 세우는 후처리를 앞에 넣으려면 이 함수가
     # 그것을 보존해야 한다.
-    buckets = [g for _, g in ranked.groupby("dominant_seed", sort=False)]
+    # 2026-09-19 (2차) — 버킷을 부분 프레임이 아니라 **행 번호 목록**으로 만든다.
+    # `groupby(sort=False)` 는 그룹을 첫 등장 순서로 내고 결측 키는 어느 그룹에도 넣지
+    # 않는데(dropna 기본값), 아래 한 번의 훑기가 그 규칙을 그대로 옮긴 것이다. 고르는 행도
+    # 예전과 같다 — 부분 프레임은 `ranked` 의 슬라이스라 `g.iloc[d]` 와 `ranked.iloc[전역위치]`
+    # 가 같은 값·같은 dtype 의 행 Series 다. 사라지는 것은 후보 7,500행을 시드 수만큼
+    # 쪼개 복사하던 비용뿐이다(시드 50개 · k=50 에서 호출당 198 ms).
+    order: dict = {}
+    for i, s in enumerate(ranked["dominant_seed"].tolist()):
+        if _is_missing(s):
+            continue
+        order.setdefault(s, []).append(i)
+    buckets = list(order.values())
     if bucket_offset and len(buckets) > 1:
         k = bucket_offset % len(buckets)
         buckets = buckets[k:] + buckets[:k]
 
+    # 고를 **위치**만 모은다. 순서를 정하는 규칙(깊이 우선 라운드로빈 · top_n 에서 끊기)은
+    # 그대로다 — 예전에 행 Series 를 붙이던 자리에 행 번호를 붙일 뿐이다.
     picked, depth = [], 0
     while len(picked) < top_n and any(depth < len(b) for b in buckets):
         for b in buckets:
             if depth < len(b):
-                picked.append(b.iloc[depth])
+                picked.append(b[depth])
                 if len(picked) >= top_n:
                     break
         depth += 1
 
-    out = pd.DataFrame(picked).reset_index(drop=True)
+    # 예전에는 `ranked.iloc[위치]` 로 행 하나씩 Series 를 만들어(1,500행 × 11열 조립,
+    # 호출당 186 ms) `pd.DataFrame(picked)` 로 다시 쌓았다. `take` 는 열 단위라 값이 같고,
+    # 추론이 왕복하는 dtype 만 있을 때는 dtype 도 같다(`_row_dtypes_round_trip`).
+    # 빈 선택은 예전 경로로 둔다 — `pd.DataFrame([])` 는 열이 없는 프레임이라 모양이 다르다.
+    if picked and _row_dtypes_round_trip(ranked.dtypes):
+        out = ranked.take(picked).reset_index(drop=True)
+    else:
+        out = pd.DataFrame([ranked.iloc[p] for p in picked]).reset_index(drop=True)
     out["rank"] = range(1, len(out) + 1)
     return out
 
@@ -556,16 +762,11 @@ def keep_sharing_tags(df: pd.DataFrame, dataset: pd.DataFrame, wanted: set[str],
     """후보의 상위 태그가 `wanted` 와 하나라도 겹치는 것만 남긴다."""
     if not wanted:
         return df
-    tags = meta_frame(dataset)["tags"]
-
-    def hit(a):
-        x = tags.get(int(a))
-        if x is None or isinstance(x, float):
-            return False
-        got = {t["name"] if isinstance(t, dict) else str(t) for t in x[:topn]}
-        return bool(wanted & got)
-
-    keep = df["steam_appid"].map(hit)
+    meta = meta_frame(dataset)
+    # 상위 태그 이름은 코퍼스만 보고 정해지므로 작품마다 한 번만 만든다. `wanted` 만 요청에
+    # 따라 달라지고, `wanted.intersection(튜플)` 은 예전 `wanted & set(...)` 과 값이 같다.
+    got = _top_tag_names(meta, df["steam_appid"], topn)
+    keep = pd.Series([bool(wanted.intersection(g)) for g in got], index=df.index, dtype=bool)
     return df[keep] if keep.any() else df
 
 
@@ -605,14 +806,16 @@ def drop_dead_multiplayer(df: pd.DataFrame, dataset: pd.DataFrame) -> pd.DataFra
     if "categories" not in dataset.columns:
         return df
     meta = meta_frame(dataset)
-    cats = meta["categories"]
-    known = meta["has_recommendations"]
+    ids = df["steam_appid"]
 
-    def dead(a):
-        a = int(a)
-        if bool(known.get(a, False)):
+    def fetch(aa):
+        return zip(_lookup_col(meta["has_recommendations"], aa, False),
+                   _lookup_col(meta["categories"], aa, None))
+
+    def dead(kn_c):
+        kn, c = kn_c
+        if bool(kn):
             return False
-        c = cats.get(a)
         if c is None or isinstance(c, float) or len(c) == 0:
             return False
         names = [x.get("description", "") if isinstance(x, dict) else str(x) for x in c]
@@ -625,7 +828,9 @@ def drop_dead_multiplayer(df: pd.DataFrame, dataset: pd.DataFrame) -> pd.DataFra
             return True
         return not has_solo
 
-    keep = ~df["steam_appid"].map(dead)
+    # 판정은 코퍼스만 보므로 작품마다 한 번만 센다(마커 훑기가 후처리 최대 항목이었다).
+    keep = pd.Series([not x for x in _flag_by_appid(meta, "dead_mp", ids, fetch, dead)],
+                     index=df.index, dtype=bool)
     return df[keep] if keep.any() else df
 
 
@@ -648,17 +853,12 @@ def consensus_overlap_boost(df: pd.DataFrame, dataset: pd.DataFrame, wanted: set
     """
     if not wanted or weight <= 0:
         return df
-    tags = meta_frame(dataset)["tags"]
-
-    def hits(a):
-        x = tags.get(int(a))
-        if x is None or isinstance(x, float):
-            return 0
-        got = {t["name"] if isinstance(t, dict) else str(t) for t in x[:topn]}
-        return len(wanted & got)
-
+    meta = meta_frame(dataset)
     out = df.copy()
-    frac = out["steam_appid"].map(hits) / max(len(wanted), 1)
+    got = _top_tag_names(meta, out["steam_appid"], topn)   # keep_sharing_tags 와 같은 캐시
+    n_hits = pd.Series([len(wanted.intersection(g)) for g in got],
+                       index=out.index, dtype="int64")
+    frac = n_hits / max(len(wanted), 1)
     score_col = "final_score" if "final_score" in out.columns else out.columns[-1]
     out[score_col] = out[score_col] * (1.0 + frac * weight)
     return out.sort_values(score_col, ascending=False).reset_index(drop=True)
@@ -696,10 +896,11 @@ def drop_seed_iterations(df: pd.DataFrame, dataset: pd.DataFrame, seed_appids) -
         return df
     seed_keys = {series_key(str(names.get(a, ""))) for a in seed_appids}
     seed_keys.discard("")
-    def bad(a):
-        nm = str(names.get(a, "")); k = series_key(nm)
-        return any(same_series(sk, k) for sk in seed_keys) and _is_iteration(nm)
-    return df[~df["steam_appid"].map(bad)].reset_index(drop=True)
+    hit = _match_keys(seed_keys)
+    nms = _lookup_col(names, df["steam_appid"], "")
+    keep = pd.Series([not (series_key(nm) in hit and _is_iteration(nm)) for nm in map(str, nms)],
+                     index=df.index, dtype=bool)
+    return df[keep].reset_index(drop=True)
 
 
 def promote_seed_companions(df: pd.DataFrame, dataset: pd.DataFrame,
@@ -730,13 +931,18 @@ def promote_seed_companions(df: pd.DataFrame, dataset: pd.DataFrame,
         return df
     seed_keys = {series_key(str(names.get(a, ""))) for a in seed_appids}
     seed_keys.discard("")
+    hit = _match_keys(seed_keys)
+    cap_n = cap or 0
     comp_idx = []
-    for i, a in zip(df.index, df["steam_appid"]):
-        nm = str(names.get(a, ""))
-        k = series_key(nm)
-        if any(same_series(sk, k) for sk in seed_keys) and not _is_iteration(nm):
+    # 앞에서부터 `cap_n` 개만 쓰므로(`comp_idx[:cap_n]`) 그만큼 모이면 멈춘다 — 같은 수열의
+    # 같은 접두부다. 이름 조회도 열 단위 한 번이다.
+    nms = _lookup_col(names, df["steam_appid"], "")
+    for i, nm in zip(df.index, nms):
+        if len(comp_idx) >= cap_n:
+            break
+        nm = str(nm)
+        if series_key(nm) in hit and not _is_iteration(nm):
             comp_idx.append(i)
-    comp_idx = comp_idx[: (cap or 0)]
     rest = df.index[~df.index.isin(set(comp_idx))]
     return pd.concat([df.loc[comp_idx], df.loc[rest]]).reset_index(drop=True)
 

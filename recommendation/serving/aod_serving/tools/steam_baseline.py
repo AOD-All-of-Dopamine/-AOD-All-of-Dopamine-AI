@@ -57,12 +57,17 @@ def main(argv=None) -> int:
 
     if a.bench:
         next_page(cases[0]["seeds"], seen_appids=set(), page_size=10, components=comps)      # 예열
-        for cid in ("profile:" + profiles.sort_values("profile_order").profile_id.iloc[0], "synthetic:seeds10", "synthetic:seeds50"):
+        first = "profile:" + profiles.sort_values("profile_order").profile_id.iloc[0]
+        # k=50 은 **전체 탭이 실제로 쓰는 쪽 크기**다. 후보 풀이 rank_n=7,500 으로 커져
+        # k=10(1,500)과 병목이 다르므로 같이 잰다. k=10 줄의 형식은 그대로 둔다.
+        for cid, k in ((first, 10), ("synthetic:seeds10", 10), ("synthetic:seeds50", 10),
+                       (first, 50), ("synthetic:seeds50", 50)):
             c = next(x for x in cases if x["id"] == cid); ts = []
             for _ in range(5):
-                t0 = time.perf_counter(); next_page(c["seeds"], seen_appids=set(), page_size=10, components=comps)
+                t0 = time.perf_counter(); next_page(c["seeds"], seen_appids=set(), page_size=k, components=comps)
                 ts.append((time.perf_counter() - t0) * 1000)
-            print(f"{cid:28s} seeds={len(c['seeds']):2d}  median {statistics.median(ts):7.0f} ms  max {max(ts):7.0f} ms")
+            tag = "" if k == 10 else f"  k={k}"
+            print(f"{cid:28s} seeds={len(c['seeds']):2d}{tag}  median {statistics.median(ts):7.0f} ms  max {max(ts):7.0f} ms")
         return 0
 
     # 싫어요 사례: 첫 프로필의 1쪽 상위 2개를 싫어요로 넣고 다시 뽑는다

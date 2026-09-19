@@ -265,11 +265,17 @@ class PersonalizedRanker:
             if ss:
                 n = len(self.dataset)
                 best = np.zeros(n, dtype=np.float64)
+                # 버퍼를 시드마다 새로 잡지 않고 재사용한다(시드 50개면 17만짜리 배열
+                # 100개 할당이 사라진다). `np.divide(..., out=)` 는 `cnt / len(s)` 와
+                # 같은 true_divide 라 값이 비트 단위로 같다.
+                cnt = np.zeros(n, dtype=np.int64)
+                cov = np.empty(n, dtype=np.float64)
                 for s in ss:
-                    cnt = np.zeros(n, dtype=np.int64)
+                    cnt.fill(0)
                     for t in s:
                         cnt[self._tag_rows[t]] += 1
-                    np.maximum(best, cnt / len(s), out=best)
+                    np.divide(cnt, len(s), out=cov)
+                    np.maximum(best, cov, out=best)
                 pos = self._pos.reindex(result["steam_appid"]).to_numpy(dtype="float64")
                 known = ~np.isnan(pos)
                 fit = np.zeros(len(result), dtype=np.float64)
