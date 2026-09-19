@@ -1,0 +1,16 @@
+{
+  "platform": "webtoon", "schema_version": 1,
+  "key": {"column": "item_id", "dtype": "int"},
+  "embedding": {"dim": 1024, "dtype": "float32", "norm_tolerance": 0.01},
+  "required_files": ["corpus_embeddings.npy", "corpus_index.parquet", "dataset.parquet"],
+  "corpus_index_columns": {"embedding_row": "int", "item_id": "int", "name": "str"},
+  "dataset_columns": {
+    "item_id": {"dtype": "int"}, "name": {"dtype": "str"}, "synopsis": {"dtype": "str"}, "genres": {"dtype": "list"},
+    "author": {"dtype": "str"}, "artists": {"dtype": "list"}, "episode_count": {"dtype": "int"}, "adult": {"dtype": "bool"},
+    "age_type": {"dtype": "str"}, "finished": {"dtype": "bool"}, "rest": {"dtype": "bool"}, "url": {"dtype": "str"},
+    "tags": {"dtype": "list", "weights": ["tag_w"]},
+    "favorite_count": {"dtype": "int", "weights": ["pop_boost"]},
+    "star_score": {"dtype": "float", "weights": ["star_boost"]}
+  },
+  "conditional_files": []
+}

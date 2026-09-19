@@ -1,0 +1,18 @@
+{
+  "platform": "tmdb", "schema_version": 1,
+  "key": {"column": "item_id", "dtype": "str"},
+  "embedding": {"dim": 1024, "dtype": "float32", "norm_tolerance": 0.01},
+  "required_files": ["corpus_embeddings.npy", "corpus_index.parquet", "dataset.parquet"],
+  "corpus_index_columns": {"embedding_row": "int", "item_id": "str", "name": "str"},
+  "dataset_columns": {
+    "item_id": {"dtype": "str"}, "tmdb_id": {"dtype": "int"}, "name": {"dtype": "str"}, "overview": {"dtype": "str"},
+    "overview_len": {"dtype": "int"}, "lang": {"dtype": "str"}, "vote_count": {"dtype": "int"}, "date": {"dtype": "str"}, "adult": {"dtype": "bool"},
+    "media": {"dtype": "str"},
+    "genres": {"dtype": "list", "weights": ["genre_w"]},
+    "keywords": {"dtype": "list", "weights": ["kw_w"]},
+    "vote_average": {"dtype": "float", "weights": ["rating_boost"]}
+  },
+  "conditional_files": [
+    {"path": "directors.parquet", "when": {"key": "director_w", "nonzero": true}}
+  ]
+}
