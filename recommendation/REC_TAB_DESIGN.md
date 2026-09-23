@@ -1,14 +1,82 @@
 # 추천 탭 설계 — 화면 · 로그 · 백엔드 · 프론트 · 추천 서비스
 
-- 상태: **v2.4** (2026-09-21) — 변경 이력
+- 상태: **v2.7** (2026-09-23) — 변경 이력
+  - **v2.7**: §2-9 U1~U4 프론트 수정 계획 신설 · **운영 보안 절차는 이 저장소에 두지 않는다** — 이 문서는 공개라 §0-3·부록 D A1 은 "할 일"만 적고 절차·배경은 저장소 밖 운영 메모로 옮겼다
+  - **v2.6**: **§2-8 배포본 대조** 신설 — 추천 탭이 이미 배포돼 있음을 확인하고 설계와 어긋난 5건(U1~U5)을 남은 UI 작업으로 정리 · §5-10 로깅 구현 대조(클라 6종·서버 4종 모두 배선됨) · §2-4 피드백 노출 방식을 **상시 노출**로 확정 · §1-3 사실 표 5행 갱신
+  - **v2.6 검수**: 백엔드 `origin/main` 과 한 줄씩 대조해 **문서가 틀린 곳 8건**을 고쳤다 — `log_dropped_total`→`rec.log.dropped` · `CorpusMapRepository`→`CorpusKeyService`(그리고 `corpus_map` 테이블 미사용) · `reason.type` 의 `exploration` 삭제 · `buffer` 10→50−size · `rec_chain` 삭제 주기 매시간→매일 · `event_seen` 중복 판정 방식 · `/api/rec-events` 가 JSON 도 수용 · 서버 이벤트 payload 키(`state`·`isNew`·`source`). 문서에 없던 구현 3건(V9 `skipped_keys` · `RecEventRateLimiter` 120/분 · 로그 지표 4종)도 편입 (부록 D B19·B20)
   - v1 → **v2**: 코드 대조 독립 리뷰 23건 반영 (부록 B)
   - **v2.1**: §8-6 서빙 컨테이너 구성 · 메모리 실측 · 아티팩트 스키마 계약 · 코퍼스별 설정 덮어쓰기 · 백엔드 크롤링 필드 차이(§8-5b)
   - **v2.3**: 자체 검토 12건 반영 — DEFAULT 파티션 누락 · `hasMore` 규칙 충돌 · 없는 라이브러리 전제(Resilience4j·Guava) · 대체 응답 로깅 · `user_agent` 보관 방식 · 부하 관문 시드 축 · 버퍼 탈락 기록 · 경보 문턱 · 구현 체크리스트(부록 C)
+  - **v2.5**: **§0 현재 상태 진단** 신설 — 실제 서빙 결과가 개인화가 아니라 대체 목록이었던 원인(비로그인), 인증 설정 정비(P0), 토큰 1시간·갱신 없음, 가입→온보딩 연결 끊김, 비로그인에서 피드백이 저장되지 않는 전제
   - **v2.4**: §2-4 피드백을 **카드 표면**으로 — 호버(마우스)·상시(터치)·포커스(키보드) 분기, 싫어요는 **자리를 유지한 가려짐 + 그 자리 되돌리기**(토스트 아님), 라벨 정리(👎 관심 없어요 / ⋯ 이번엔 넘길게요), 낙관적 반영·실패 복구, 가려진 카드는 노출 추적 제외
 - 작성: 2026-09-15 · 최종 수정: 2026-09-16
 - 관련 문서: `INDUSTRY_COMPARISON.md`(유튜브·당근 사례) · `TRANSITION_ROADMAP.md`(로그 기반 전환 단계) · `crossdomain/DESIGN.md`(플랫폼 혼합)
 - 대상 시스템: 프론트 `allofdophamin.com`(Vite + React SPA) · 백엔드 `-AOD-All-of-Dopamine-back`(Spring Boot 3.4, Java 17, PostgreSQL) · 추천기 이 리포(Python, 플랫폼 4개)
 - **이 문서가 로그 테이블·이벤트 이름·지표의 기준이다.** `TRANSITION_ROADMAP.md` §8 은 근거 조사이고, 이름은 이 문서를 따른다.
+
+---
+
+## 0. 현재 상태 진단 (2026-09-22)
+
+추천 탭이 배포된 뒤 "추천이 이상하다"는 보고가 있었다. 실제로 재현해 원인을 확인했다.
+
+### 0-1. 증상과 원인 — 개인화가 아니라 대체 목록이었다
+게임 3개(To the Moon · Limbus Company · Dead by Daylight)를 좋아요한 사용자에게 PUBG · 어벤져스 · 심슨 가족 · 웹소설이 섞여 나왔다.
+
+**원인: 그 요청이 비로그인으로 나갔다.** 토큰 없이 같은 API 를 부른 응답이 화면에 보인 목록과 **항목·순서까지 완전히 같았다**:
+```
+GET /api/recommendations?tab=all&size=20   (토큰 없음)
+→ fallback: true · fallbackReason: "anonymous"
+   PUBG · 엘 차포를 체포하라 · 아메리칸 대드! · 이번 생은 무역왕 · 이터널 리턴 …
+```
+게임 → 영화 → 시리즈 → 웹소설이 반복되는 것은 추천이 아니라 **대체 목록(도메인별 인기작 번갈아 뽑기, §2-7)** 이다.
+
+**추천기 자체는 정상이다.** 같은 시드 3개를 엔진에 직접 넣으면:
+페르소나4 더 골든 · Little Nightmares · DOOM Eternal · 클레르 옵스퀴르 33 원정대 · OMORI · Manhunt · FINAL FANTASY IX · Layers of Fear 2 · … · Undertale · Corpse Party
+— "스토리 중심 + 호러 + 턴제 JRPG" 로 세 시드를 모두 반영한다.
+
+**진단 방법**: 응답의 `fallbackReason` 을 본다.
+| 값 | 뜻 | 할 일 |
+|---|---|---|
+| `anonymous` | 토큰 없음 | 로그인 상태 확인 (§0-2) |
+| `no_seed` | 좋아요·북마크·평점 4↑ 리뷰가 0 | 온보딩(§2-5) |
+| `no_seed_platform` | 좋아요는 있는데 `corpus_map` 매핑 실패 | 코퍼스 매핑·커버리지 점검(§8-5b) |
+| `service_error`·`timeout`·`circuit_open` | 추천 서비스 연결 실패 | 라우터·엔진 상태(§11) |
+| `disabled` | 기능 플래그 꺼짐 | 플래그 확인 |
+| (`fallback:false`) | 정상 추천 | — |
+
+### 0-2. 로그인이 한 시간마다 끊긴다
+- 토큰 수명 **1시간**(`JwtTokenProvider`), **리프레시 토큰 없음**. 만료되면 프론트가 401 을 받고 토큰을 지워 로그아웃된다.
+- 추천 탭은 그때부터 대체 목록 + "로그인하면 취향 추천을 볼 수 있어요" 배너를 보여준다(화면은 정상 동작).
+- **1시간 만료 자체는 정상이다.** 문제는 갱신 수단이 없어 활동 중에도 끊긴다는 것이다.
+- 변경안: 백엔드 리포 `docs/jwt-session-change-proposal.md` (P1 슬라이딩 세션 → P2 리프레시 토큰).
+
+### 0-3. [P0] 인증 설정 정비가 먼저다
+- JWT 서명 키를 **환경변수로 옮기고 기동 시 검증**한다(없거나 짧으면 기동 중단). 적용하면 전원 재로그인한다.
+- 경로별 인증 정책도 함께 정리한다(§6·부록 D B10).
+- 추천 품질과 무관하게 **가장 먼저 처리할 항목**이다. 상세·절차는 **저장소에 두지 않는다**(운영 메모 참조) — 이 문서는 공개다.
+
+### 0-4. 가입 → 온보딩 연결이 끊겨 있다
+- 백엔드는 가입 응답에 `needsOnboarding` 을 준다(§6-3 그대로 구현됨).
+- 프론트는 가입 후 "로그인하면 좋아하는 작품을 고를 수 있어요" 알림만 띄우고 **`/login` 으로** 보낸다. **로그인 뒤에도 `/onboarding` 으로 보내지 않는다**(2026-09-22 번들 확인 — 가입 핸들러의 이동 경로는 `/login` 하나뿐이고, 로그인 성공 경로에 `needsOnboarding` 분기가 없다).
+- 온보딩 화면 자체는 완성돼 있다(작품 고르기·검색·건너뛰기·`source:onboarding` 저장) — **연결만 빠졌다.**
+- 연결되지 않으면 신규 사용자는 시드 0 → `no_seed` → 대체 목록만 본다.
+
+### 0-5. 피드백은 로그인해야 쌓인다
+§2-4 대로 카드 표면에 👍/👎 를 올려도 **비로그인 상태에서는 저장되지 않는다**(대체 목록에는 반응 대상 자체가 없다).
+따라서 피드백 UI 작업은 §0-2(로그인 유지) 해결과 **같은 순서에 묶어야** 효과가 난다.
+
+### 0-6. 가입 흐름 결함 2건 (사용자 제보, 코드로 확인)
+- **중복확인이 실제 API 에 연결돼 있지 않다** — 백엔드 `check-duplicate` 는 이미 있는데 화면이 부르지 않아, 실제 중복이면 가입 제출 단계에서야 실패한다.
+- **비밀번호 규칙이 화면마다 다르다** — 가입 4자 · 로그인 안내 8자. 서버 검증도 함께 맞춘다.
+- 고치는 법은 부록 D **A3·A4**.
+
+### 0-7. 처리 순서
+1. **인증 설정 정비**(§0-3) — 즉시
+2. **로그인 유지**(슬라이딩 세션) — 이게 없으면 아래 모든 것이 한 시간짜리다
+3. 가입 → 온보딩 연결(§0-4) · 카드 표면 피드백(§2-4)
+4. `corpus_map` 커버리지·카탈로그 엔드포인트 연결(§8-5b) — 추천 품질 자체
+5. 대시보드에 `fallbackReason` 분포(§5-6) — 이런 상황을 사용자보다 먼저 안다
 
 ---
 
@@ -32,19 +100,21 @@
 | 프론트 라우트 | `home` · `explore` · `ranking` · `new` · `collections`(+`new`·`:id`·`:id/edit`) · `profile`(+`likes`·`bookmarks`·`reviews`) · `work/:id` · `review/:id` · `search` · `login` · `signup` · `onboarding` · `internal/ranking` |
 | 메뉴 | 홈 · 탐색 · 랭킹 · 신작 · 컬렉션 · 프로필 — 이미 6개 |
 | 레이아웃 | 홈은 `max-w-[1280px]`(데스크톱 폭), 온보딩·리뷰·컬렉션 폼만 `max-w-[720px]` |
-| 온보딩 | 장르 18개 중 최대 5개 선택 → **`console.log` 만 하고 저장하지 않음**. `/onboarding` 으로 가는 링크 0곳. 백엔드 `SignUpRequest.preferredGenres` 도 어디서도 쓰지 않음 |
+| 온보딩 | **작품 고르기로 교체·배포됨**(2026-09-22): "좋아하는 작품을 골라주세요" · 랭킹 그리드 + 검색 · 건너뛰기 · 저장은 `state:LIKE, source:"onboarding"`. **다만 가입 후 `/onboarding` 으로 보내지 않는다**(부록 D A8). 백엔드 `SignUpRequest.preferredGenres` 는 여전히 미사용 |
 | 상세 페이지 | "볼 수 있는 곳" = `platformInfo.url` 외부 링크(`target="_blank"`) (`WorkApiService.java:427-441`) |
-| 프론트 계측 | `IntersectionObserver` · `sendBeacon` · 분석 SDK 없음. `localStorage` 키는 `token` 하나. API 는 다른 오리진 `https://api.allofdophamin.com` |
-| 좋아요·싫어요·북마크 | `POST /api/works/{id}/like·dislike·bookmark` **토글**. 같은 타입 재호출 = 행 삭제, 좋아요↔싫어요 = 같은 행 덮어씀 (`LikeService.java:57-68`, `BookmarkService.java:50`). 예외는 전부 400 |
+| 프론트 계측 | **트래커 구현·배포됨**(2026-09-22 번들 확인): `anon_id`(localStorage)·`session_id`(sessionStorage) · `IntersectionObserver` 노출 · `sendBeacon`/`keepalive` 로 `POST /api/rec-events`. 분석 SDK 는 없다. API 는 다른 오리진 `https://api.allofdophamin.com` |
+| 프론트 추천 탭 | **배포됨** — `/for-you` · 칩 6개 · 그리드 2/3/4열 · 더 보기 · 체인 · 이유 한 줄 · 카드 하단 피드백 바. 설계와의 차이는 §2-8 |
+| 좋아요·싫어요·북마크 | **상태 지정 API `PUT /api/works/{id}/reaction` 이 추가됐다**(`previousState` 반환·멱등). 기존 `POST /api/works/{id}/like·dislike·bookmark` **토글**도 남아 있고 내부에서 같은 서비스를 거친다. 같은 타입 재호출 = 행 삭제, 좋아요↔싫어요 = 같은 행 덮어씀 (`LikeService.java:57-68`, `BookmarkService.java:50`). 예외는 전부 400 |
 | 카드 DTO | `WorkSummaryDTO` (id · domain · title · thumbnail · score · genres · platforms · creator …) |
-| 추천 API | main 에 없음. `feature/m2-recommend-serving` 브랜치에 뼈대 — 익명 콜드스타트만, 로그는 요청 스레드에서 작품마다 동기 INSERT, `V4` 번호가 main 과 충돌 |
-| 인증·보안 | JWT(subject = username), 컨트롤러가 헤더 직접 파싱. `SecurityConfig` 전부 `permitAll`. 회원 탈퇴 API 없음 |
+| 추천 API | **main 에 병합·배포됨**(2026-09-22 확인). `GET /api/recommendations` 가 `requestId`·`chainId`·`pageDepth`·항목별 `impressionId` 를 실제로 반환한다. 반응 상태 API·관심 없음·`/api/rec-events` 도 있다 |
+| 로그 적재 | **구현됨** — `aod_log` 테이블(V8·V9) · `LogQueue`/`LogWriter`(가득 차면 버리고 `rec.log.dropped` 증가) · 서버 이벤트 4종(`RecEventRecorder`) · 클라 이벤트 6종 화이트리스트(`RecEventTypes`). 운영 DB 적재 여부는 §5-10 확인 절차로 |
+| 인증·보안 | JWT(subject = username), 컨트롤러가 헤더 직접 파싱. 경로별 인증 정책과 키 관리가 **정비 대상**(§0-3·부록 D A1·B10). 회원 탈퇴 API 없음. **토큰 1시간·리프레시 없음**(§0-2) |
 | HTTP 클라이언트 | `RestTemplate` 빈에 타임아웃 없음 (`RestTemplateConfig.java:15-16`) |
 | 백엔드 의존성 | api 모듈 `build.gradle` 의존성 35개에 **서킷 브레이커(Resilience4j)·Guava 없음**. actuator·micrometer-prometheus 는 있다 → 서킷·해시는 **새 의존성 없이** 구현한다(§6-2·§5-5) |
 | 추천기 저장소 | 네 플랫폼 모두 이 리포 `recommendation/` 아래 — 웹소설은 2026-09-15 `main` 병합(merge `6bd8542`). 옛 사본 `/home/ubuntu/aod-webnovel` 은 치웠고, 옛 경로를 쓰는 봉인된 평가 스크립트 38개는 그대로 둔다 |
 | 추천기 — 기본 코퍼스 | 환경변수 없을 때: Steam `tags_full` · TMDB `tmdb_v1` · 웹툰 `wt_v1` · 웹소설 **`wn_v6`**(2026-09-16 `wn_v1`→`wn_v6` 수정, 확정값을 잰 코퍼스로 맞춤) |
 | 추천기 — 싫어요 감점 | Steam `w=2.0`(미채점) · 웹툰 **`dislike_w=0`**(T-11 기각 — 닮은 작품 감소 0.54~0.62배로 문턱 0.50 미달) · TMDB·웹소설 인자 없음 |
-| DB 마이그레이션 | api 모듈 Flyway V1·V3~V6 (V7 은 `perf/works-review-count-index` 가 선점). 크롤러 모듈에도 V2·V3 파일이 있으나 크롤러는 Flyway 를 쓰지 않는다 |
+| DB 마이그레이션 | api 모듈 Flyway V1·V3~**V9**. `V8__create_rec_schemas.sql`(aod_rec·aod_log·파티션) · `V9__rec_chain_skipped_keys.sql`(버린 키 기억). 크롤러 모듈에도 V2·V3 파일이 있으나 크롤러는 Flyway 를 쓰지 않는다 |
 | 추천기 — 공통 | 네 플랫폼 모두 `next_page` 와 주도 시드(`dominant_seed`) 계산이 있고 후처리에 난수가 없어 **같은 입력이면 같은 결과** |
 | 추천기 — 프로세스 | 네 플랫폼 모두 최상위 패키지가 `src` 이고 `os.chdir`·`AOD_ARTIFACTS` 환경변수를 쓴다 → **한 프로세스에 둘 이상 적재할 수 없다** (시험대가 플랫폼마다 프로세스를 따로 띄우는 이유) |
 | 추천기 — 시드 검증 | 코퍼스 밖 시드: Steam·TMDB·웹소설 **예외**, 웹툰만 조용히 제외. 빈 시드: Steam·TMDB `ValueError` |
@@ -112,12 +182,9 @@
 - **라벨**: 👎 는 `관심 없어요`(작품이 싫다), ⋯ 안의 것은 `이번엔 넘길게요`(지금 보기 싫다). 지금 프론트의 `별로예요` 는 뜻이 모호하다.
 - **좋아요는 카드를 숨기지 않는다.** 긍정 신호라 가릴 이유가 없고, 좋아요한 작품은 시드가 되어 **다음 목록부터 자동으로 빠진다**.
 
-**노출 방식 — 호버만으로는 안 된다**
-| 입력 | 규칙 |
-|---|---|
-| 마우스(`hover: hover`) | 카드에 올리면 나타난다 |
-| 터치(모바일·태블릿) | **항상 보인다** — 호버가 없어 안 그러면 모바일 사용자는 영영 못 누른다 |
-| 키보드 | 카드에 포커스가 가면 호버와 같게 나타난다 · 버튼마다 `aria-label` |
+**노출 방식 — 상시 노출로 확정 (2026-09-22)**
+- 입력 장치에 따라 호버/상시를 나누던 초안을 버리고 **모든 입력에서 카드 하단에 항상 보이게** 한다. 배포본이 이미 그렇게 구현돼 있고(§2-8), 호버 분기는 터치·키보드 예외를 늘리기만 한다.
+- 버튼마다 `aria-label`(상태에 따라 `좋아요`/`좋아요 취소`), 토글은 `aria-pressed`. ⋯ 메뉴는 `role="menu"` + 화살표 키 이동.
 
 - 버튼은 **카드 클릭(상세 이동)을 가리지 않는다** — 썸네일 구석이나 카드 하단 한 줄.
 - 👍 와 👎 사이를 충분히 띄운다(오조작 방지). 연타는 무시한다(멱등 API + 진행 중 비활성).
@@ -176,6 +243,102 @@
   비로그인이면 `user_id` 는 null, `anon_id` 는 항상 있다. **대체 응답을 빼면 노출·클릭 분모가 틀어진다** — 추천과 대체를 나눠 보되 둘 다 센다.
 - 당근 동네생활은 추천 엔진이 늦거나 실패하면 후보의 기본 순서로 대체한다.
 
+### 2-8. 배포본 대조 — 추천 탭 UI 붙이기 (2026-09-22)
+
+**추천 탭은 이미 배포돼 있다.** 배포 번들(`/assets/index-zZocBGgn.js`, 2026-09-22 확인)을 뜯어 §2 설계와 한 줄씩 대조했다.
+남은 일은 화면을 새로 만드는 것이 아니라 **어긋난 곳을 맞추는 것**이다.
+
+**설계대로 붙어 있는 것**
+| 항목 | 배포본 |
+|---|---|
+| 라우트·칩 | `/for-you` · 칩 6개 (`{all:"전체", movie:"영화", tv:"시리즈", game:"게임", webtoon:"웹툰", webnovel:"웹소설"}`) |
+| 그리드 | 2열(모바일) → 3열(768px↑) → 4열(1201px↑). 설계의 "모바일 1열"보다 촘촘하지만 카드가 작아 문제없다 — **2열로 확정** |
+| 더 보기·체인 | `size=20` · 칩별 `chainId` 를 `sessionStorage` 에 보관 · 체인 상한에서 "여기까지 / 새로 보기" |
+| 추천 이유 | 카드에 `reason.text` 한 줄 (강조색) |
+| 피드백 | 카드 하단 **상시 노출 바** — 좋아요 토글(`aria-pressed`) + ⋯ 메뉴(`별로예요`·`관심 없음`·`북마크`) |
+| 반응 API | `PUT /api/works/{id}/reaction {state, source:"rec_tab", requestId, impressionId}` · 관심 없음 `PUT`/`DELETE` · 되돌리기는 응답 `previousState` 로 복원 |
+| 대체 처리 | 비로그인 대체(`fallbackReason="anonymous"`)면 피드백 바를 끈다 — 눌러도 401 로 죽지 않는다 |
+| 로그 | §5-2 클라이언트 이벤트 6종 전부 배선 (대조는 §5-10) |
+| 온보딩 | `/onboarding` 라우트 · 가입 응답 `needsOnboarding` 을 읽는다 (다만 이동은 안 한다 — 부록 D A8) |
+
+**설계와 어긋난 것 — 남은 UI 작업**
+
+#### U1. 👎 가 카드 표면에 없다 〔프〕
+- **문제**: 표면에는 좋아요 버튼 하나뿐이고 부정 신호는 전부 ⋯ 메뉴 안이다. §2-4 가 카드 표면으로 올린 이유(메뉴 안은 아무도 누르지 않는다)가 그대로 남아 있다.
+- **고치는 법**: 하단 바에 👎 버튼을 추가해 **👍/👎 두 개를 표면**에 두고, ⋯ 메뉴에는 `이번엔 넘길게요`·`북마크`만 남긴다. 두 버튼 사이는 오조작이 안 나게 띄운다.
+- **근거**: 카드 컴포넌트가 `onToggleLike` 버튼 + ⋯ 메뉴만 렌더한다 · 부록 D B9 와 같은 항목
+
+#### U2. 싫어요가 카드를 목록에서 빼고 되돌리기는 토스트다 〔프〕
+- **문제**: 지금은 카드를 배열에서 제거하고 화면 아래 토스트로 "되돌리기"를 준다. 토스트는 시간이 지나면 사라져 **되돌릴 수단이 없어지고**, 카드가 빠지면서 아래가 밀려 올라와 방금 누른 자리가 사라진다. §2-4 는 **자리를 유지한 가려짐 + 그 자리 되돌리기**로 정했다.
+- **고치는 법**: `hide` 를 배열 제거가 아니라 **카드 상태 전환**으로 바꾼다(흐린 카드 + "덜 보여드릴게요 · 되돌리기"). 정리 시점은 페이지 이탈 또는 다음 "더 보기". 토스트는 실패 알림에만 쓴다.
+- **참고**: 지금 구현도 낙관적 반영·실패 복구·`previousState` 복원은 이미 맞다 — 바꿀 것은 **가려짐의 표현 위치**뿐이다.
+
+#### U3. 라벨이 설계와 다르다 〔프〕
+- **문제**: ⋯ 메뉴가 `별로예요`(뜻이 모호)·`관심 없음`이다. §2-4 는 `관심 없어요`(작품이 싫다)와 `이번엔 넘길게요`(지금 보기 싫다)로 구분했다.
+- **고치는 법**: U1 과 함께 라벨을 바꾼다 — 표면 👎 = `관심 없어요`, ⋯ 메뉴 = `이번엔 넘길게요`. 토스트 문구도 짝을 맞춘다(`덜 보여드릴게요` / `이번엔 넘길게요`).
+
+#### U4. 좋아요 아이콘이 하트다 〔프·문〕
+- **문제**: 설계는 👍/👎 인데 구현은 하트다. 하트는 "찜"으로 읽혀 북마크와 겹친다.
+- **고치는 법**: 엄지로 통일한다(넷플릭스가 별점 → 엄지로 바꾼 뒤 평가 활동 200% 증가). 하트를 유지할 거면 §2-4 표기를 하트로 고치고 ⋯ 메뉴의 북마크와 아이콘을 확실히 구분한다. **둘 중 하나로 문서와 코드를 일치시킨다.**
+
+#### U5. 배치 크기 10 vs 20 · 새로고침 〔결정 필요〕
+- **문제**: 2026-09-22 프로토타입은 **10개씩 + 새로고침**이고, §2-6 은 **20개 "더 보기" · 새로고침 버튼 없음**이다. 배포본은 20개다.
+- **권고**: 배치 **10개**로 줄이고(한 화면에 들어와 끝까지 본다), 버튼 이름은 **"더 보기"를 유지**한다. "새로고침"이라는 이름은 같은 목록이 다시 나올 것 같은 인상을 주는데, 실제 동작은 **이어지는 다음 10개**라 이름이 동작을 배신한다.
+- 목록을 처음부터 다시 받는 진짜 새로고침이 필요하면 체인 상한 화면의 **"새로 보기"(새 체인)** 를 그대로 쓴다 — 이미 구현돼 있다.
+- **정하면**: §2-6 과 `size` 기본값(`x9=20`)·§4-1 예시를 같이 고친다. §12-10.
+
+### 2-9. U1~U4 프론트 수정 계획 (2026-09-23)
+
+U5(배치 크기)는 결정 대기라 뺀다. **백엔드·로그는 한 줄도 건드리지 않는다.**
+
+**손댈 곳** — 프론트 저장소가 아직 이 머신에 없어 배포 번들에서 읽은 구조로 적는다. 저장소를 받으면 실제 이름으로 바꾼다.
+
+| 역할 | 번들 심볼 | 하는 일 |
+|---|---|---|
+| 피드 페이지 | `bj({tab, chain})` | 숨김 리듀서 · 좋아요 상태 · 핸들러 |
+| 숨김 리듀서 | `r7` | `hide`·`confirm`·`restore`·`clear` |
+| 카드 목록 조립 | `t7(pages, hiddenIdSet)` | **숨긴 id 를 목록에서 빼는 곳 — U2 의 핵심** |
+| 카드 | `xj({card, liked, feedbackEnabled, onToggleLike, onDislike, onNotInterested, onBookmark})` | 하단 피드백 바 |
+| ⋯ 메뉴 | `gj` | `별로예요`·`관심 없음`·`북마크` |
+| 숨김 핸들러 | `W(card, "dislike" \| "not_interested")` | 낙관적 숨김 + 토스트 |
+| 되돌리기 | `I(contentId)` | `previousState` 로 복원 |
+
+세션 보존(`{hidden, liked}` 를 체인 키로 저장) · 낙관적 반영 · 실패 복구 · `previousState` 복원은 **이미 설계대로다. 건드리지 않는다.**
+
+**1단계. U2 — 가려짐을 자리에 남긴다** (가장 크다, 먼저)
+1. 숨김 항목에 `slotVisible` 추가. `hide` 시 `true`, **"더 보기" 성공·탭 이탈 시 전부 `false`** (항목은 집합에 남아 다시 나타나지 않는다)
+2. `t7` 이 **`slotVisible:false` 인 것만** 목록에서 빼게 한다. `true` 면 그 자리에 `HiddenCardSlot` 을 렌더
+3. `HiddenCardSlot`: 흐린 썸네일 + 제목 + 사유 문구 + `되돌리기` 버튼 · `role="status"`
+4. **노출 추적을 멈춘다** — 카드가 노출 훅을 무조건 호출한다. 가려진 동안 훅을 태우지 않도록 슬롯을 별도 컴포넌트로 분리 (§5-4: 가려진 상태는 "보인 노출"이 아니다)
+5. 되돌리기 **토스트 제거** — 되돌릴 자리가 둘이면 혼란스럽다. 토스트는 **실패 알림에만** 남긴다
+
+**2단계. U1·U3 — 표면 👎 와 라벨**
+6. 하단 바에 👎 추가 → 기존 `W(card,"dislike")` 를 그대로 호출. `aria-label` 은 `{제목} 관심 없어요`
+7. 👍/👎 사이에 여백(오조작 방지) · 진행 중 비활성은 이미 있다
+8. ⋯ 메뉴에서 `별로예요` 삭제 · `관심 없음` → **`이번엔 넘길게요`** (호출 대상 `W(card,"not_interested")` 는 그대로)
+9. 슬롯 문구를 신호별로: 싫어요 `덜 보여드릴게요` · 넘김 `이번엔 넘길게요`
+
+**3단계. U4 — 아이콘**
+10. 하트 → **엄지**(`ThumbsUp` 은 이미 번들에 있다) · `ThumbsDown` 추가. 채워짐/윤곽으로 on/off
+11. ⋯ 메뉴의 북마크와 뜻이 겹치지 않는지 확인 — 하트를 유지하면 겹친다(그래서 엄지로 간다)
+
+**4단계.** §2-8 U1~U4 에 반영 표시 · §12-11(아이콘) 결정을 닫는다.
+
+**건드리지 않는 것**
+- **백엔드 0줄** — `PUT /api/works/{id}/reaction` · 관심 없음 API · `previousState` 가 필요한 것을 이미 다 준다
+- **로그 0줄** — `reaction_changed`·`not_interested_changed` 는 서버가 남기고, 되돌리기는 역방향 이벤트로 이미 구분된다(§5-10)
+- `feedbackEnabled = !(fallback && anonymous)` — 비로그인 401 방지가 이미 맞다
+
+**검증**
+- 가려진 카드가 `impression_viewed` 를 더 보내지 않는다
+- 되돌리기 후 좋아요였던 작품이 **좋아요로** 돌아온다 (`previousState=LIKE`)
+- "더 보기" 뒤 가려진 자리가 사라지고 그 작품이 **다음 페이지에 다시 나오지 않는다**
+- 뒤로가기 복원에서 가려짐 상태가 유지된다
+- 모바일 2열에서 👍/👎/⋯ 가 카드 클릭 영역을 침범하지 않는다
+
+**규모**: 1~1.5일 · 파일 4개(피드 페이지 · 목록 조립 · 카드 · 신규 슬롯).
+**전제**: 프론트 저장소 경로 — 아직 없다. 받는 즉시 1단계부터 시작한다.
+
 ---
 
 ## 3. 시스템 구조
@@ -223,7 +386,7 @@ X-Anon-Id: <uuid>   X-Session-Id: <uuid>
   "items": [
     { "impressionId": "uuid", "rank": 0,
       "work": { WorkSummaryDTO },
-      "reason": { "type": "like|bookmark|review|exploration", "seedContentId": 123, "text": "코코를 좋아해서" } }
+      "reason": { "type": "like|bookmark|review", "seedContentId": 123, "text": "코코를 좋아해서" } }   // 주도 시드가 있는 항목만
   ],
   "hasMore": true
 }
@@ -253,11 +416,11 @@ DELETE /api/recommendations/not-interested/{contentId}
 
 **이벤트 묶음**
 ```
-POST /api/rec-events          Content-Type: text/plain (본문은 JSON) — sendBeacon/keepalive 호환
+POST /api/rec-events          Content-Type: text/plain (본문은 JSON) 또는 application/json — sendBeacon/keepalive 호환
 { "anonId": "…", "sessionId": "…", "appVersion": "…", "device": "mobile|desktop",
   "events": [ { "eventId": "uuid", "type": "impression_viewed", "clientTs": "…Z",
                 "requestId": "…", "impressionId": "…", "contentId": 123, "payload": { … } } ] }
-202 { "accepted": 18, "rejected": 2 }      429 속도 제한
+202 { "accepted": 18, "rejected": 2 }      429 속도 제한 (`RecEventRateLimiter` — anonId 당 분당 120건, 메모리 고정창)
 ```
 - 식별자는 **헤더가 아니라 본문**에 담는다 — `sendBeacon` 은 헤더를 실을 수 없고, `text/plain` 은 교차 오리진 사전 요청이 필요 없다.
 - 인증 헤더가 있으면 user_id 를 붙인다. 없으면(비콘) `session_id` 로 같은 세션의 인증 요청에서 user_id 를 뒤에 채운다.
@@ -266,7 +429,7 @@ POST /api/rec-events          Content-Type: text/plain (본문은 JSON) — send
 ### 4-2. 백엔드 ↔ 추천 라우터
 ```
 POST /v1/recommend
-{ "tab": "all|movie|tv|game|webtoon|webnovel", "k": 20, "buffer": 10,
+{ "tab": "all|movie|tv|game|webtoon|webnovel", "k": 20, "buffer": 30,   // 구현: 라우터 예산 고정 50 → buffer = 50 − size
   "seeds":    { "steam": [730], "tmdb": [4821], "webtoon": [], "webnovel": [] },   // 코퍼스 키 (TMDB 는 행 번호)
   "disliked": { … 같은 모양 … },
   "excluded": { … 관심 없음 … },
@@ -315,9 +478,9 @@ POST /v1/recommend
 | `outbound_clicked` | 클라이언트 | "볼 수 있는 곳" 링크. `platform`·`detail_open_id` | **강함 (주 지표)** |
 | `rec_loaded_more` · `rec_tab_changed` | 클라이언트 | 탐색 행동 | 맥락 |
 | `reaction_changed` | **서버** (반응 서비스) | `from`·`to`(LIKE/DISLIKE/NONE)·`source` — 기존 토글 API 경유도 포함 | 좋아요 매우 강함 · 싫어요 강한 부정 |
-| `bookmark_changed` | **서버** | `on`/`off`·`source` | 강함 |
-| `not_interested_changed` | **서버** | `on`/`off` | 부정 (노출 한정) |
-| `review_saved` | **서버** | `rating`·신규/수정 | 강함 |
+| `bookmark_changed` | **서버** | `state`(`"on"`/`"off"`)·`source` | 강함 |
+| `not_interested_changed` | **서버** | `state`(`"on"`/`"off"`)·`source` | 부정 (노출 한정) |
+| `review_saved` | **서버** | `rating`·`isNew`·`source` | 강함 |
 
 - **반응·북마크·리뷰는 서버 쓰기 경로에서** — 클라이언트 유실이 없고, 백엔드 테이블이 지우거나 덮어써도 `from→to` 이력이 남는다.
 - 노출·클릭·체류·외부 링크는 클라이언트만 안다.
@@ -334,7 +497,8 @@ CREATE TABLE aod_rec.rec_chain (
   seen_ids    bigint[] NOT NULL DEFAULT '{}',   -- content_id, 최대 500
   page_depth  int    NOT NULL DEFAULT 0,
   updated_at  timestamptz NOT NULL
-);                                               -- 24시간 지난 행은 매시간 삭제
+  skipped_keys text[] NOT NULL DEFAULT '{}'      -- V9. 카드가 되지 못해 버린 코퍼스 키(최대 2,000) — 다음 요청에 excluded 로 돌려보낸다
+);                                               -- 24시간 지난 행은 매일 1회 삭제 (PartitionMaintenanceJob, 04:15 KST)
 
 CREATE TABLE aod_rec.not_interested (
   user_id bigint NOT NULL, content_id bigint NOT NULL, created_at timestamptz NOT NULL,
@@ -484,7 +648,7 @@ CREATE TABLE aod_log.client_agent_default    PARTITION OF aod_log.client_agent  
 
 ### 5-7. 품질 점검
 1. 일별 건수 추세·필드 누락률 경보
-2. `impression_viewed` → `rec_item_served` 조인율 — **로그 큐 유실(`log_dropped_total`)이 0 인 날만** "보인 수 > 응답 수" 경보를 판정
+2. `impression_viewed` → `rec_item_served` 조인율 — **로그 큐 유실(`rec.log.dropped`)이 0 인 날만** "보인 수 > 응답 수" 경보를 판정
 3. `card_clicked` 대비 `detail_viewed` 유실률
 4. `rejected_event` 비율 · DEFAULT 파티션 행 수
 5. 봇: `client_agent` 를 `session_id` 로 조인한 user_agent 규칙 + 초당 클릭 수 이상치 → 분석에서 제외(원본 보관)
@@ -495,9 +659,9 @@ CREATE TABLE aod_log.client_agent_default    PARTITION OF aod_log.client_agent  
 - **서빙 상태**(`rec_chain` upsert 1회/요청, `not_interested`)는 요청 트랜잭션에서 동기로.
 - **로그**는 요청 스레드가 메모리 큐(최대 10,000건)에 넣기만 하고, `LogWriter` 스레드가 1초 또는 200건마다 **JDBC 배치 INSERT**.
   - `LogWriter` 는 **별도 Hikari 풀(연결 2개)** — 서비스 풀과 경쟁하지 않는다
-  - 큐가 가득 차면 버리고 `log_dropped_total` 증가. 추천 응답을 로그 때문에 늦추지 않는다
+  - 큐가 가득 차면 버리고 `rec.log.dropped` 증가. 추천 응답을 로그 때문에 늦추지 않는다
   - 종료 시 큐를 비운다(graceful shutdown, 최대 10초)
-  - 이벤트는 `event_seen` 에 `INSERT … ON CONFLICT DO NOTHING RETURNING` 으로 새 것만 `event` 에 넣는다
+  - 이벤트는 `event_seen` 에 `INSERT … ON CONFLICT (event_id) DO NOTHING` 을 배치로 넣고, **배치 반환 카운트가 0인 행**을 중복으로 보고 `event` 에서 뺀다(`RETURNING` 을 쓰지 않는다 — 배치 경로라 반환 집합을 못 받는다)
 - 규모 어림: 일 사용자 1,000 × 요청 5 × 작품 20 = `rec_item_served` 10만 행/일. uuid·jsonb·인덱스 포함 행당 약 1KB → **약 100MB/일**, 이벤트 포함 약 300MB/일. 1년 보관 시 약 100GB — 월 파티션·보관 기간이 필요한 규모.
 - **이전 조건**: 로그 쓰기가 DB CPU 20% 초과 또는 일 1,000만 행 초과 시 로그 전용 저장소로.
 
@@ -506,6 +670,30 @@ CREATE TABLE aod_log.client_agent_default    PARTITION OF aod_log.client_agent  
 - IP 는 저장하지 않는다. `user_agent` 는 로그 본체가 아니라 `aod_log.client_agent`(세션 단위)에만 두고 **90일 지난 파티션을 DROP** 한다.
 - 보관: 원시 요청·이벤트 로그 **1년**(파티션 DROP), 집계는 기간 제한 없음.
 - 삭제: 탈퇴 API 가 아직 없다. 탈퇴 기능을 만들 때 `user_id` 행과 **그 사용자와 같이 쓰인 `anon_id`·`session_id` 행**을 함께 지우는 작업을 포함한다(anon_id 만 남으면 재연결 가능). 그 전까지는 요청 시 운영 스크립트로 삭제.
+
+### 5-10. 구현 대조 (2026-09-22)
+
+§5-2 의 이벤트 10종이 **전부 배선돼 있다.** 백엔드 `origin/main` 과 배포 프론트 번들을 대조한 결과다.
+
+| 이벤트 | 기록 위치 | 구현 |
+|---|---|---|
+| `rec_request` · `rec_item_served` | 서버 | `RecommendService` 가 응답과 함께 큐에 적재(대체 응답 포함). 라이브 응답이 `requestId`·항목별 `impressionId` 를 실제로 돌려준다 |
+| `impression_viewed` | 클라 | `IntersectionObserver` + `visible_ms`·`max_visible_ratio` |
+| `card_clicked` · `rec_loaded_more` · `rec_tab_changed` | 클라 | 각각 카드 클릭·더 보기·칩 전환 핸들러에서 발행(`rec_tab_changed` 는 `from`/`to`) |
+| `detail_viewed` | 클라 | `detail_open_id` + 활동 기반 체류 누적 |
+| `outbound_clicked` | 클라 | 상세 "볼 수 있는 곳" 클릭에 `platform`·`detail_open_id` |
+| `reaction_changed` | 서버 | `ReactionService` → `RecEventRecorder.reactionChanged(from, to, source)`. 기존 토글 API 도 이 경로를 거친다 |
+| `bookmark_changed` · `review_saved` | 서버 | `BookmarkService` · `ReviewService` |
+| `not_interested_changed` | 서버 | `NotInterestedService` (`on`/`off`) |
+
+- **되돌리기는 별도 이벤트가 아니다** — 역방향 `reaction_changed`(`DISLIKE→이전 상태`) 또는 `not_interested_changed(off)` 로 남는다. 분석에서는 `from`/`to` 로 취소를 구분한다.
+- **클라이언트 이벤트는 신뢰 구간이 다르다.** 서버 이벤트 타입은 `RecEventTypes.CLIENT_TYPES` 화이트리스트에서 막히고 속도 제한·본문 크기 제한도 걸리지만, 노출·클릭은 클라이언트가 보고하는 값이다 → 분석은 `client_agent` 봇 판별을 거친 뒤 한다. 경로별 인증 정책은 부록 D B10.
+- **미확인 — 운영 DB 적재**: 적재는 비동기라 응답이 정상이어도 행이 쌓였다는 보장이 아니다. 배포 후 한 번 확인한다:
+  ```sql
+  SELECT event_type, count(*) FROM aod_log.event
+   WHERE server_ts > now() - interval '1 day' GROUP BY 1 ORDER BY 2 DESC;
+  ```
+  0행이면 V8·V9 미적용 또는 `LogWriter`(`rec.log.writer.enabled`) 중단을 의심한다. 유실은 `rec.log.dropped` 카운터로 본다(§11).
 
 ---
 
@@ -522,7 +710,7 @@ CREATE TABLE aod_log.client_agent_default    PARTITION OF aod_log.client_agent  
 | `ReactionController`·`ReactionService` | `PUT /api/works/{id}/reaction` · 기존 토글 API 도 내부적으로 이 서비스를 호출 · `reaction_changed` 발행 |
 | `RecEventController` | `POST /api/rec-events` (`text/plain` 수용) · 타입 화이트리스트 · 속도 제한 · 거절 표본 저장 |
 | `SeedResolver` | 시드 규칙(§6-4) · 싫어요 · 관심 없음 |
-| `CorpusMapRepository` | content_id ↔ 플랫폼 코퍼스 키 (현재 `corpus_version`) |
+| `CorpusKeyService`·`CorpusKeyMapper` | content_id ↔ 플랫폼 코퍼스 키. **구현은 `aod_rec.corpus_map` 을 쓰지 않고** `platform_data.platform_specific_id` 를 즉석 변환한다 — 표의 `corpus_map` 테이블은 현재 스키마만 있고 비어 있다 |
 | `ChainService` | `rec_chain` 생성·조회·갱신. **seen 이 500 에 닿으면 `hasMore=false`**(§2-6 화면 문구·`새로 보기`) · 24시간 지난 체인 정리 |
 | `RecRouterClient` | 전용 `RestTemplate` 빈(연결 300ms · 읽기 2.0초) + **의존성 없는 서킷**(연속 실패 10회 → 30초 열림, 열린 동안 바로 대체, 30초 뒤 1건만 시험) + 동시 호출 제한(세마포어 20). Resilience4j 는 백엔드에 없어 도입하지 않는다(§1-3) |
 | `CardAssembler` | 코퍼스 키 → content_id → `WorkSummaryDTO` 배치 조회 · DB 없음·성인 제외 · 20개 채우기 |
@@ -551,15 +739,17 @@ CREATE TABLE aod_log.client_agent_default    PARTITION OF aod_log.client_agent  
 ## 7. 프론트 추가 사항 (React)
 
 ### 7-1. 화면·컴포넌트
-| 추가 | 내용 |
-|---|---|
-| 라우트 `/for-you` · 홈 세그먼트(모바일) · 상단 메뉴(데스크톱) | §2-1 |
-| `RecTabPage` | 칩 · 그리드 · 더 보기 · 빈 상태 · 스크롤 복원 |
-| `RecCard` | 기존 카드 + 이유 + **표면 👍/👎**(호버·터치·포커스 규칙 §2-4) + ⋯ 메뉴(이번엔 넘길게요·북마크) |
-| `HiddenCardSlot` | 싫어요·넘김 뒤 **자리를 유지한 가려짐 상태** + 되돌리기(§2-4) |
-| `OnboardingPickWorks` | 장르 온보딩 교체 · 건너뛰기 · 플랫폼별 권장 안내 |
-| 가입 흐름 | 가입 완료 → `needsOnboarding` 이면 `/onboarding` |
-| 상세 페이지 | `rid`·`iid` 읽기 · `detail_open_id` · 체류 · "볼 수 있는 곳" 클릭 이벤트 |
+> **2026-09-22 기준 대부분 배포 완료.** 아래 표는 설계 기준이고, 배포본과의 차이(남은 작업 U1~U5)는 **§2-8**에 있다.
+
+| 추가 | 내용 | 배포본 |
+|---|---|---|
+| 라우트 `/for-you` · 홈 세그먼트(모바일) · 상단 메뉴(데스크톱) | §2-1 | ✅ |
+| `RecTabPage` | 칩 · 그리드 · 더 보기 · 빈 상태 · 스크롤 복원 | ✅ |
+| `RecCard` | 기존 카드 + 이유 + **표면 👍/👎**(§2-4) + ⋯ 메뉴(이번엔 넘길게요·북마크) | ⚠️ 👍만 표면 — U1·U3·U4 |
+| `HiddenCardSlot` | 싫어요·넘김 뒤 **자리를 유지한 가려짐 상태** + 되돌리기(§2-4) | ❌ 지금은 목록에서 제거 + 토스트 — U2 |
+| `OnboardingPickWorks` | 장르 온보딩 교체 · 건너뛰기 · 플랫폼별 권장 안내 | ✅ "좋아하는 작품을 골라주세요" · "최소 3개, 분야마다 2개 이상" · 저장은 `state:LIKE, source:"onboarding"` |
+| 가입 흐름 | 가입 완료 → `needsOnboarding` 이면 `/onboarding` | ❌ 알림만 띄우고 `/login` — 부록 D A8 |
+| 상세 페이지 | `rid`·`iid` 읽기 · `detail_open_id` · 체류 · "볼 수 있는 곳" 클릭 이벤트 | ✅ |
 
 ### 7-2. 데이터
 - `recApi.get({tab, chainId})` · `recApi.setReaction(id, state, ctx)` · `recApi.notInterested(id, on)`.
@@ -898,12 +1088,14 @@ networks:
 | 대체 비율 | 10분 평균 > 10% |
 | 부분 응답 | 10분 평균 > 5% |
 | 지연 | 추천 API p95 > **2.0초** (예산 2.5초보다 낮게 — 예산과 같게 두면 정상 운영에서도 울린다) |
-| 로그 유실 | `log_dropped_total` 증가 |
+| 로그 유실 | `rec.log.dropped` 증가 (Prometheus 표기 `rec_log_dropped_total`) |
+| 로그 적재 | `rec.log.written` 정체 · `rec.log.failed` 증가 · `rec.log.queue.size` 가 상한(10,000)에 근접 · `rec.log.duplicates` 급증 |
 | DEFAULT 파티션 | 행 수 > 0 |
 | 엔진 | `/health` 실패 · 컨테이너 재시작(OOM 포함) · 메모리 > `mem_limit` 의 85% · 코퍼스 버전 불일치(엔진 ↔ `corpus_map`) |
 | 이벤트 | 일 건수 전주 대비 ±50% · 거절 비율 > 2% |
 
-- 킬 스위치: `RecFeatureFlag` 끄면 추천 탭 숨김 · API 는 랭킹 대체만.
+- **구현 상태(2026-09-22)**: 앱 안 계측은 로그 파이프라인 4종(`rec.log.written`·`dropped`·`duplicates`·`failed`)과 큐 게이지뿐이다. **대체 비율·부분 응답·지연 p95·이벤트 건수·거절 비율에는 대응 지표가 없다** — 지금은 `aod_log.rec_request`·`rejected_event` 를 SQL 로 집계해야 한다. 경보를 켜려면 이 값들을 먼저 내보내야 한다(부록 D B15).
+- 킬 스위치: `RecFeatureFlag` 끄면 추천 탭 숨김 · API 는 랭킹 대체만. 대상 제한은 `rec.enabled` + `rec.allowed-users`.
 - 담당: 추천 서비스(AI 리포) · 백엔드 API · 프론트 트래커 — 담당자 지정은 열린 결정.
 
 ---
@@ -918,8 +1110,14 @@ networks:
 7. 담당자
 8. 추천 호스트 사양 (초안: 16GB · 4코어 이상)
 9. 엔진 하나가 준비되지 않아도 라우터를 띄울지 (초안: 전부 준비 후 시작)
+10. **한 배치 10개 vs 20개 · "새로고침" 도입 여부** (§2-8 U5. 초안: 10개 · 이름은 "더 보기" 유지 · 처음부터 다시 받기는 기존 "새로 보기"로)
+11. 좋아요 아이콘 — 엄지 vs 하트 (§2-8 U4. 초안: 엄지로 통일)
 
 ## 13. 후속
+> 전체 할 일 목록은 **부록 D**(반드시 고칠 것 / 고치면 좋은 것 / 나중에)에 모았다.
+- **[P0] JWT 서명 키 환경변수화·기동 검증** (§0-3 · 부록 D A1)
+- **로그인 유지** — 슬라이딩 세션 → 리프레시 토큰 (§0-2)
+- **가입 → 온보딩 연결** 확인·수정 (§0-4)
 - 전체 탭에 웹툰 넣기 (M6 확장 사전등록)
 - 싫어요 유사 감점 플랫폼 정렬 (T-11 후속)
 - 상세 페이지 "비슷한 작품" · 홈 추천 섹션 · 넷플릭스식 가로 행
@@ -1007,19 +1205,21 @@ v1 을 코드(백엔드·프론트 번들·Python 추천기)와 대조한 독립
 4. `ReactionService` + `PUT /api/works/{id}/reaction` — 상태 지정·`previousState`·멱등 · 기존 토글 API 는 이 서비스 호출(응답 형태 불변) · `reaction_changed` 발행 (§4-1·§6-3)
 5. `BookmarkService`·`ReviewService` 이벤트 발행 (§5-2)
 6. `POST /api/rec-events` — `text/plain` 수용 · 타입 화이트리스트 · 속도 제한 · 거절 1% 표본 (§4-1·§6-2)
-7. `SeedResolver`(시드 규칙 7개) · `CorpusMapRepository` · `ChainService`(seen 500 상한) (§6-4·§6-2)
+7. `SeedResolver`(시드 규칙 7개) · `CorpusKeyService`(코퍼스 키 변환) · `ChainService`(seen 500 · skipped 2,000 상한) (§6-4·§6-2)
 8. `RecRouterClient`(전용 타임아웃·의존성 없는 서킷·세마포어) · `FallbackProvider` · `CardAssembler`(k+buffer·탈락 기록) · `ReasonBuilder`(조사 규칙) · `ExperimentAssigner`(SHA-256) (§6-2)
 9. `GET /api/recommendations` · 관심 없음 `PUT/DELETE` · `RecFeatureFlag` 킬 스위치 (§4-1·§6-2)
 10. 테스트: 반응 상태 전이 · 시드 규칙 · Testcontainers 로 V8·파티션·중복 제거 (§10)
 
-### 프론트 (React)
-1. `tracker.ts` — `anon_id`·`session_id` · 큐 5초/20건 · `keepalive` · `sendBeacon`(`text/plain`) · `event_id` (§7-3)
-2. `useImpressionTracker`(50%·1초 교차 1회 + 최종) · `useDwellTracker`(`detail_open_id`·15초 누적·최댓값) (§5-4)
-3. 상세 페이지 — `?rid`·`iid` 읽기 · "볼 수 있는 곳" `outbound_clicked` (§5-2)
-4. `/for-you` · 모바일 홈 세그먼트 · 칩 · 반응형 그리드 · 더 보기 · 빈 상태·대체 (§2-1·§2-2·§2-7)
-5. `RecCard`(이유 · 표면 👍/👎 · 호버/터치/포커스 분기 · ⋯ 메뉴) · 가려짐 자리 + 되돌리기(`previousState`) · 낙관적 반영과 실패 복구 (§2-3·§2-4)
-6. react-query — 키 `['rec', tab, chainNonce]` · `staleTime: Infinity` · 뒤로가기 복원 · 404 처리 (§7-2)
-7. `OnboardingPickWorks` + 가입 흐름(`needsOnboarding`) (§2-5·§6-3)
+### 프론트 (React) — 2026-09-22 배포본 기준 상태 표시
+
+- [x] 1. `tracker.ts` — `anon_id`·`session_id` · 묶음 전송 · `keepalive` · `sendBeacon`(`text/plain`) · `event_id` (§7-3)
+- [x] 2. `useImpressionTracker`(노출 임계·최종값) · `useDwellTracker`(`detail_open_id`·체류 누적) (§5-4)
+- [x] 3. 상세 페이지 — `?rid`·`iid` 읽기 · "볼 수 있는 곳" `outbound_clicked` (§5-2)
+- [x] 4. `/for-you` · 칩 · 반응형 그리드 · 더 보기 · 빈 상태·대체 (§2-1·§2-2·§2-7)
+- [ ] 5. `RecCard` — 이유·좋아요·⋯ 메뉴는 붙었으나 **표면 👎·가려짐 자리·라벨·아이콘이 설계와 다르다 → §2-8 U1~U4**
+- [x] 6. react-query — 칩별 체인 · 뒤로가기 복원 · 체인 만료 처리 (§7-2)
+- [x] 7. `OnboardingPickWorks`(작품 고르기·건너뛰기·`source:onboarding` 저장) — **다만 가입 후 이동은 아직 없다(부록 D A8)** (§2-5·§6-3)
+- [ ] 8. 배치 크기·새로고침 결정 반영 (§2-8 U5 · §12-10)
 
 ### 추천 서비스 (Python, 이 리포)
 1. 의존성 고정 — **서빙용**(numpy 2.5.1·pandas 3.0.5·pyarrow)과 **배치용**(torch·transformers) 분리 (§8-6)
@@ -1035,3 +1235,135 @@ v1 을 코드(백엔드·프론트 번들·Python 추천기)와 대조한 독립
 - 백엔드 1~6 과 프론트 1~3 은 **추천 탭 없이** 먼저 나간다(로그 선행, §9 1~2단계).
 - 추천 서비스 1~8 은 지금 코퍼스로 진행한다 — 재임베딩(§8-5b)을 기다리지 않는다.
 - 개인정보 처리방침(§5-9)은 **로그 수집보다 먼저**(§9 0단계).
+
+---
+## 부록 D. 할 일 목록 (2026-09-22)
+
+§0 진단 · 서빙 코드 리뷰 · 부하 관문 · PR #1 자진 신고 · 사용자 제보를 모았다.
+항목마다 **문제 → 고치는 법 → 근거** 를 적는다. 영역: 백=백엔드 · 프=프론트 · 추=추천 서비스 · 문=문서.
+
+---
+
+### A. 반드시 고칠 것
+
+#### A1. JWT 서명 키 환경변수화 〔백〕
+- **할 일**: 서명 키를 환경변수(`JWT_SECRET`)로 옮기고, 기동 시 **없거나 32바이트 미만이면 기동을 중단**한다. 적용은 전원 재로그인을 수반한다(프론트는 이미 401 → 로그아웃 처리).
+- 같이: jjwt 0.11.5 권장 API 로 교체(`Keys.hmacShaKeyFor` · `Jwts.parserBuilder()`).
+- **절차·배경은 이 저장소에 두지 않는다** — 공개 문서다. 운영 메모와 백엔드 `docs/jwt-session-change-proposal.md`(미추적) 참조.
+- 우선순위: **최우선**(§0-3)
+
+#### A2. 로그인 유지 — 슬라이딩 세션 〔백·프〕
+- **문제**: 토큰 1시간, 리프레시 없음 → 활동 중에도 로그아웃되고 추천이 대체 목록으로 바뀐다.
+- **고치는 법**
+  1. 백: `JwtAuthenticationFilter` 의 인증 성공 블록에서 남은 수명 < 30분이면 새 토큰을 `X-Renewed-Token` 응답 헤더로
+  2. 백: `SecurityConfig` CORS 에 `setExposedHeaders(List.of("X-Renewed-Token"))` — **빠뜨리면 브라우저가 헤더를 프론트에 넘기지 않는다**
+  3. 프: 응답 인터셉터에서 그 헤더가 있으면 저장된 토큰 교체
+  4. 다음 단계(P2)로 리프레시 토큰(HttpOnly 쿠키·회전·폐기)
+- **근거**: §0-2 · 변경안 P1
+
+#### A3. 회원가입 "중복확인"이 실제로 확인하지 않는다 〔프〕
+- **문제**: 중복확인 버튼이 백엔드 `POST /api/auth/check-duplicate` 에 연결돼 있지 않아, 실제 중복이면 가입 제출 단계에서야 400 으로 실패한다.
+- **고치는 법**
+  1. 프: 버튼 클릭 → `authApi.checkDuplicate({username})` 호출 → 결과로 통과/실패 표시(중복이면 "이미 사용 중인 아이디입니다")
+  2. 프: 아이디를 수정하면 확인 상태를 **해제**(옛 결과로 통과되지 않게)
+  3. 프: 이메일도 같은 방식으로 확인(가입 시 이메일 중복도 400 사유다)
+  4. 백: 가입 실패 응답의 사유를 필드 단위로 구분(`field: "username" | "email"`)해 프론트가 해당 입력칸에 표시
+- **근거**: 배포 번들 회원가입 핸들러 · `AuthController.registerUser`
+
+#### A4. 비밀번호 규칙이 화면마다 다르고 서버 검증이 없다 〔백·프〕
+- **문제**: 가입 화면은 **4자 이상**, 로그인 화면 안내는 **8자 이상**으로 규칙이 갈린다. 서버 쪽 검증도 함께 맞춰야 한다.
+- **고치는 법**
+  1. 규칙을 하나로 정한다 — 제안: **8자 이상 72바이트 이하**(bcrypt 상한), 공백만은 금지
+  2. 백: `SignUpRequest` 에 `@NotBlank @Size(min=8, max=72)`(+username·email 제약) 추가하고 컨트롤러에 `@Valid`. 위반 시 필드별 400
+  3. 프: 가입 화면 검사를 8자로 맞추고 안내 문구도 통일
+  4. 기존 8자 미만 사용자는 그대로 로그인되게 둔다(가입 시점 검증만) — 강제 변경은 별건
+- **근거**: 배포 번들 가입 핸들러 · 로그인 화면 안내 문구 · `SignUpRequest`
+
+#### A5. 전체 탭 M6 혼합 k 〔추〕
+- **문제**: 라우터가 `k+buffer`(30)로 섞고 상위 20 만 쓴다. M6 쿼터는 k 의 함수라 평가된 배분과 달라진다(시드 조합 3개 모두 상위 20 이 달랐다). §1-2 "알고리즘 불변" 위반.
+- **고치는 법**: 둘 중 하나를 고르고 문서에 남긴다
+  - (권장) **k 로 먼저 섞고**, 버퍼는 혼합 뒤 각 플랫폼 잔여분에서 순서대로 이어 붙인다 → 상위 20 이 평가된 M6@20 과 같아진다
+  - 또는 지금 방식을 유지하되 **사전등록 후 판정**해 "M6@k+buffer" 를 새 규칙으로 확정
+- **검증**: 기존 e2e 는 자기 일관성만 본다 → `M6(k=20)` 과 상위 20 이 일치하는지 보는 테스트 추가
+- **근거**: `router/service.py:31,59`
+
+#### A6. Steam 동일성 기준 보강 〔추〕
+- **문제**: 기준 사례에 **k=30(게임 탭)** 과 **seen 누적(전체 탭 2쪽 이후)** 이 없다. Steam 은 풀 깊이가 페이지 크기에 비례하고 이번에 후처리를 가장 크게 재작성했다.
+- **고치는 법**: `tools/steam_baseline.py` 의 `_cases` 에 `k30:*`(2쪽)·`seen500:*` 를 추가(TMDB·웹소설과 같은 모양) → 기준 재생성 → `--check` 로 현재 코드와 대조
+- **근거**: `tools/steam_baseline.py` vs `tmdb_baseline.py:34-72`
+
+#### A7. 카탈로그(서빙 가능 목록) 연결 〔백·추〕
+- **문제**: 백엔드 `GET /api/recommendations/catalog-keys` 는 있는데 엔진이 보지 않는다. 코퍼스의 0.2~2.7% 만 카드가 되어 인기작으로 채워진다.
+- **고치는 법**
+  1. 엔진 환경변수 `CATALOG_KEYS_URL` 을 실제 엔드포인트로 지정하고 `/health.catalog` 로 적용 확인
+  2. **켜면 순위가 바뀐다**(후보 풀이 줄어 후처리 결과가 달라짐) → 켜기 전에 사전등록 판정을 열지 결정
+  3. 빈 목록 방어(B3)를 같이 넣는다
+- **근거**: 백엔드 `0da0be3` · `LOADGATE_RESULTS.md`
+
+#### A8. 가입 → 온보딩 연결 〔프〕
+- **문제**: 백엔드가 `needsOnboarding` 을 주는데 프론트는 알림만 띄우고 `/login` 으로 보낸다. 신규 사용자가 시드 0 으로 남는다.
+- **고치는 법**: 가입 성공 → 자동 로그인(또는 로그인 직후) → `needsOnboarding` 이면 `/onboarding` 으로 이동. 온보딩에서 고른 작품은 `source=onboarding` 으로 좋아요 저장
+- **근거**: §0-4 · 번들 가입 핸들러
+
+#### A9. `corpus_map` 커버리지 점검 〔백〕
+- **문제**: 좋아요가 코퍼스 키로 매핑되지 않으면 로그인해도 `no_seed_platform` 대체다.
+- **고치는 법**: 플랫폼별 매핑률·시드 탈락률을 한 번 집계한다. **주의 — 구현은 `aod_rec.corpus_map` 테이블을 쓰지 않는다**(`CorpusKeyService` 가 `platform_data.platform_specific_id` 를 즉석 변환). 따라서 (1) 변환 실패율을 `dropped_seed_ids` 기준으로 재고, (2) `corpus_map` 을 살릴지 지울지부터 정한다 — 스키마만 남은 테이블이 문서·코드 불일치의 원인이다. 지표로 상시 관찰(§5-6)
+- **근거**: §0-1 표 · §8-5b
+
+#### A10. 부하 관문 실제 호스트 재측정 〔추〕
+- **문제**: 동시 5 에서 Steam(시드 50) 미달 상태로 머지됐다. §9 3단계 완료 조건을 못 맞춘다.
+- **고치는 법**: 추천 호스트에서 `loadgate` 재실행 → 미달이면 (a) 카탈로그 켜기(A7) (b) Steam 컨테이너 복제 (c) `cpus`+`WORKERS` 동반 상향 순으로 시도
+- **근거**: `LOADGATE_RESULTS.md` §판정과 권고
+
+#### A11. 계약 문서 갱신(§4-2) 〔문〕
+- **문제**: 구현은 문자열 키·`usedSeeds`·`episodeCount`·busy 503·422 인데 문서는 옛 계약이라, 문서만 보고 만들면 전부 422 를 맞는다.
+- **고치는 법**: §4-2 예시를 실제 스키마(`common/models.py`)에 맞춰 고치고, 리포 밖 스펙 인용(B14)도 같이 편입
+- **근거**: `common/models.py` · `tests/test_router_app.py:69`
+
+---
+
+### B. 고치면 좋은 것
+
+| # | 문제 | 고치는 법 | 영역 |
+|---|---|---|---|
+| B1 | TMDB·웹툰 `score.factors` 가 항상 `{}` — 로그 분석·학습 피처가 빈다 | 랭커의 곱셈 인자를 **순서를 바꾸지 않게** 계측해 프레임 컬럼으로 싣고 어댑터 `factor_cols` 에 연결. 동일성 테스트로 순서 불변 확인 | 추 |
+| B2 | TMDB `keywords` 계약 검증이 항상 통과 | `kw_w` 가 확정값·허용 키에 없으므로, 스키마의 `weights` 를 실제 쓰는 키로 바꾸거나 `keywords` 를 무조건 필수로 승격 | 추 |
+| B3 | 빈 카탈로그(0줄)가 플랫폼 전면 차단 | 직전 목록 대비 급감(예: 50% 이하)이면 거절하고 직전 목록 유지 · `blocking_all` 을 §11 경보에 등록 | 추 |
+| B4 | `hasMore` 를 백엔드가 잘못 계산할 수 있다 | 서빙 README·§8-4 에 "partial 플랫폼은 '더 있을 수 있음'으로 본다" 명시 | 문·백 |
+| B5 | 키 길이 상한 없음 | `Key = StrictStr(max_length=64)` · 본문 크기 상한 | 추 |
+| B6 | `SERVING_MODE=staging` 이면 기동 실패 | 허용 값에 `staging` 추가(운영 게이트는 prod 에서만) 또는 문서를 dev/prod 로 정정 | 추·문 |
+| B7 | 라우터 `/health` 가 엔진이 다 죽어도 200 | 엔진 전멸이면 503 으로 내리고 compose 헬스체크가 잡게 한다 | 추 |
+| B8 | 웹소설 동점 판본이 CPU 마다 다른 순서 | 동점이면 관심 수 큰 판본을 고르는 안정 정렬(사전등록 후 적용) | 추 |
+| B9 | 피드백 UI 가 설계와 어긋난다(👎가 ⋯ 메뉴 안 · 가려짐이 토스트 · 라벨·아이콘 불일치) | **§2-8 U1~U4** 참조 — 표면 👍/👎 · 자리 유지 가려짐 · 라벨 통일 · 아이콘 확정. A2(로그인 유지) 와 함께 내보낸다 | 프 |
+| B10 | 경로별 인증 정책 정리 | 인증이 필요한 경로를 `authenticated()` 로 옮기고 컨트롤러의 수동 헤더 파싱을 줄인다 | 백 |
+| B11 | 가입 실패 응답 메시지 정리 | 예외 메시지를 그대로 내보내지 않고 고정 문구 + 서버 로그로. 동시 가입 시 유니크 제약 위반도 같은 400 으로 처리 | 백 |
+| B12 | 아이디 공백 처리 불일치 — 중복검사는 `trim`, 가입은 안 한다 | 가입에서도 `trim` 후 저장(대소문자 정책도 함께 결정) | 백 |
+| B13 | 쓰지 않는 CORS 출처(Vercel 프리뷰) | 목록에서 제거 | 백 |
+| B14 | 회원 탈퇴 API·로그 삭제 경로 없음 | 탈퇴 엔드포인트 + `user_id`·연결된 `anon_id`/`session_id` 삭제 작업(§5-9) | 백 |
+| B15 | `fallbackReason` 분포를 볼 곳이 없다 · §11 경보 대부분에 대응 지표가 없다 | `rec_request` 기준 대체 비율·부분 응답·지연 p95·거절 비율을 Micrometer 로 내보내고 대시보드에 올린다. 지금 있는 것은 로그 파이프라인 4종뿐(§11) | 백 |
+| B19 | `aod_rec.corpus_map` 이 스키마만 있고 아무도 읽지 않는다 | 살릴지(코퍼스 빌드 산출물 적재) 지울지 정한다. 살린다면 `CorpusKeyService` 를 이 테이블 기준으로 바꾸고, 지운다면 §5-3·§6-2·§8-5b 의 언급을 걷어낸다 | 백·문 |
+| B20 | `rec_chain.skipped_keys`(V9)·`RecEventRateLimiter`(분당 120)·`event_seen` 중복 판정 방식이 문서에 없었다 | v2.6 에서 §5-3·§4-1·§5-8 에 반영함. 이후 백엔드 변경은 **이 문서를 같이 고친다** — 대조 없이 두면 문서만 보고 만든 쪽이 틀린다 | 문 |
+| B16 | 리포 밖 스펙 인용("spec3 §10") | 해당 내용을 이 문서로 편입하고 코드 주석의 참조를 바꾼다 | 문 |
+| B17 | 기준 목록 이름이 혼동(`s3_pages.json` 이 TMDB·웹소설에도) | 플랫폼별 이름으로 정리하거나 README 에 유래 명시 | 추 |
+| B18 | "결과 불변"을 막아 주는 자동 관문 없음 | 작은 고정 코퍼스(수백 행)+커밋된 기준으로 CI 동일성 테스트 | 추 |
+
+---
+
+### C. 나중에
+
+| # | 항목 | 선행 조건 |
+|---|---|---|
+| C1 | 전체 탭에 웹툰 넣기 | M6 확장 사전등록 판정 |
+| C2 | 싫어요 유사 감점 정렬(플랫폼 차이 해소) | T-11 후속(floor 낮춘 라운드) |
+| C3 | 탐색 칸 · 인터리빙 | 로그 수집 시작 후(`TRANSITION_ROADMAP.md` 1단계) |
+| C4 | 상세 "비슷한 작품" · 홈 추천 섹션 · 가로 행 | 추천 탭 안정화 |
+| C5 | 피드백 기록 확인·초기화 · 작가/개발사 단위 추천 안 함 | — |
+| C6 | 백엔드 크롤링 데이터로 재임베딩 | 크롤러 필드 추가(§8-5b) → 결측 리포트 → P@k 회귀 판정 |
+
+---
+
+### 권장 순서
+**A1 → A2 → A3·A4(가입 흐름) → A8·B9 → A7·A9 → A5·A6 → A10·A11 → B → C**
+
+A1·A2 는 다른 모든 작업의 전제다. A3·A4 는 **신규 사용자가 가입조차 못 하는** 문제라 그다음이다.
+A5·A6 는 추천 결과의 정확성 문제라 출시 전에 정리한다.
