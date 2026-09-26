@@ -138,7 +138,7 @@ curl -s http://<VM프라이빗IP>:8080/health
 
 1. 팀이 한 시간쯤 써 보고 이상이 없으면
 2. 비밀값 **`REC_ALLOWED_USERS` 를 삭제**(GitHub 는 빈 값을 못 넣는다 — 삭제하면 전원 허용) → Run workflow
-3. **홈 추천 릴 켜기**: Vercel → 프로젝트 → Settings → Environment Variables → `VITE_HOME_REC` = `1`(Production) → Deployments → 최신 배포 **Redeploy**
+3. 끝. **프론트는 할 일이 없다** — 홈 추천 릴은 이미 항상 켜져 있다(프론트 #52, 2026-09-26). 추천 서버가 붙기 전·허용 목록 밖에서는 릴이 인기 목록으로 보이다가, 전체 공개하면 로그인 사용자 홈에 개인화 추천이 뜬다.
 
 ### 문제가 생기면
 
@@ -303,7 +303,7 @@ GitHub → 백엔드 저장소 → Settings → Secrets and variables → Action
    ```
    팀 계정 요청의 `fallback = false` 비율이 높고 `timeout` 이 거의 없으면 통과.
 4. **전체 공개**: `REC_ALLOWED_USERS` 비밀값을 비우고 백엔드를 다시 배포(허용 목록이 비면 전원 허용).
-5. 홈 추천 릴을 켠다: Vercel 에 `VITE_HOME_REC=1` → 재배포 (프론트 `docs/superpowers/specs/2026-09-25-home-rec-rail-design.md`). 이제 로그인 사용자 홈에 "내 취향 추천"이 뜬다.
+5. 홈은 따로 켤 것이 없다 — 추천 릴은 플래그 없이 항상 나간다(프론트 #52, 예전 `VITE_HOME_REC` 는 삭제됨). 전체 공개 뒤로 로그인 사용자 홈에 "내 취향 추천"이 뜬다.
 
 ---
 
@@ -338,4 +338,4 @@ GitHub → 백엔드 저장소 → Settings → Secrets and variables → Action
 - [ ] 4 보안 그룹 · API 서버에서 `/health` 보임 · 인터넷에서 안 보임
 - [x] 5-1 백엔드 통로(`REC_ROUTER_BASE_URL` · `REC_ALLOWED_USERS` · `REC_ENABLED`) — 백엔드 #126 병합·배포
 - [ ] 5-2 비밀값 등록
-- [ ] 6 팀 계정 `fallback:false` 확인 → 한 시간 관찰 → 전체 공개 → 홈 릴 켜기
+- [ ] 6 팀 계정 `fallback:false` 확인 → 한 시간 관찰 → 전체 공개 (홈 릴은 이미 켜져 있음)
