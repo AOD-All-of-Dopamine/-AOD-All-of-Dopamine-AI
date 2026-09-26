@@ -3,7 +3,7 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-from src.config import artifact_dir
+from src.config import artifact_dir, dataset_columns
 
 
 class CandidateRetriever:
@@ -12,7 +12,8 @@ class CandidateRetriever:
         self.artifacts = d
         self.embeddings = np.load(d / "corpus_embeddings.npy", mmap_mode="r")
         self.index = pd.read_parquet(d / "corpus_index.parquet")
-        self.dataset = pd.read_parquet(d / "dataset.parquet")
+        self.dataset = pd.read_parquet(d / "dataset.parquet",
+                                       columns=dataset_columns(d / "dataset.parquet"))
 
     #: 허브니스 보정 계수. 0 이면 끔. 원리는 compute_similarity_matrix docstring.
     #

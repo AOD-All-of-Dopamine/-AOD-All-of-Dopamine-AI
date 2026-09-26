@@ -99,3 +99,18 @@ PRODUCTION = {
     "tag_w": 0.40,          # D-49 확정
     "mc_w": 0.20,           # D-56 확정. has_metacritic (점수가 아니라 **보유 여부**)
 }
+
+
+#: `dataset.parquet` 에서 **서빙·평가 경로가 읽지 않는** 컬럼.
+#: 임베딩을 만들 때 쓴 원문(`semantic_text`)과 표시용 메타로, 랭커·후처리 어디에서도 참조하지 않는다.
+#: 2026-09-24 실측: 17열 230MB 중 이 6열이 135MB — 검색기와 랭커가 각각 한 벌씩 읽어 두 배로 든다.
+#: **빼는 쪽을 적는다** — 코퍼스에 새 컬럼이 생겨도 조용히 사라지지 않게.
+DATASET_UNUSED_COLUMNS = ("semantic_text", "short_description", "release_date",
+                          "developer", "metacritic_score", "steam_rank")
+
+
+def dataset_columns(path: str | Path) -> list[str]:
+    """`dataset.parquet` 에서 읽을 컬럼. 순서는 파일 그대로라 값도 그대로다."""
+    import pyarrow.parquet as pq
+    # `schema` 는 parquet 물리 스키마라 리스트 컬럼이 `element` 로 평탄화된다 — arrow 스키마를 본다.
+    return [c for c in pq.ParquetFile(path).schema_arrow.names if c not in DATASET_UNUSED_COLUMNS]
