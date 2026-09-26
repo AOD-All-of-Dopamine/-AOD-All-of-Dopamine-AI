@@ -20,5 +20,7 @@ artifacts/
 !artifacts/p1/grades_*.py
 !artifacts/p1/*_key.json
 artifacts/p1/chunks/
-artifacts/tmdb_v1/
+# 서빙 아티팩트는 커밋하지 않되 무결성 기준(manifest.json, sha256)만은 추적한다 — steam·webtoon·webnovel 과 같다
+artifacts/tmdb_v1/*
+!artifacts/tmdb_v1/manifest.json
 artifacts/*.npy
