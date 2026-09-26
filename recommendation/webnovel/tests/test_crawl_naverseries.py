@@ -59,13 +59,15 @@ class TestKoreanCount:
 
 
 class TestCleanTitle:
+    # 대괄호 태그는 시즌 구분 정보 — 보존하고 공백만 정리한다 (2026-09)
     @pytest.mark.parametrize("raw,expected", [
-        ("죽여주는 호텔지배인 [독점]", "죽여주는 호텔지배인"),
-        ("전당포는 영업 중 [단행본]", "전당포는 영업 중"),
-        ("망장천 [독점][단행본]", "망장천"),
+        ("죽여주는 호텔지배인 [독점]", "죽여주는 호텔지배인 [독점]"),
+        ("  전당포는 영업 중   [단행본] ", "전당포는 영업 중 [단행본]"),
+        ("망장천 [독점][단행본]", "망장천 [독점][단행본]"),
+        ("화산귀환 [2부]", "화산귀환 [2부]"),
         ("개룡전기", "개룡전기"),
     ])
-    def test_strips_bracket_tags(self, raw, expected):
+    def test_keeps_bracket_tags_and_collapses_whitespace(self, raw, expected):
         assert clean_title(raw) == expected
 
     def test_none_becomes_empty(self):

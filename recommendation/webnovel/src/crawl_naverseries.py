@@ -58,8 +58,6 @@ GENRE_CODES = {
 }
 LIST_PAGE_CAP = 400  # 25개 × 400 = 10,000 (그 이상은 서버가 빈 목록을 준다)
 
-# 제목의 [독점] · [단행본] · [시리즈 에디션] 류 태그
-_TITLE_TAG = re.compile(r"\s*\[[^\]]+\]\s*")
 _WS = re.compile(r"\s+")
 _INTEREST = re.compile(r"관심\s*([\d.,]+\s*(?:억|만|천)|[\d,]+)")
 _NUM = re.compile(r"\d+(?:\.\d+)?")
@@ -129,10 +127,11 @@ def parse_korean_count(s: str | None) -> int | None:
 
 
 def clean_title(raw: str | None) -> str:
-    """[독점] 류 태그 제거. Java `cleanTitle` 포팅."""
+    """공백만 정리. [독점]·[단행본]·[2부] 같은 대괄호 태그는 다른 시즌을 구분하는
+    정보라 제거하지 않는다 (백엔드 `cleanTitle` 삭제와 동기화, 2026-09)."""
     if not raw:
         return ""
-    return _WS.sub(" ", _TITLE_TAG.sub(" ", raw)).strip()
+    return _WS.sub(" ", raw).strip()
 
 
 def _text(node) -> str:
