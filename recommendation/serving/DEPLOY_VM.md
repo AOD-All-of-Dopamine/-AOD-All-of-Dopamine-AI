@@ -1,0 +1,199 @@
+# 추천 서빙 — 리눅스 VM 배포 런북
+
+작성: 2026-09-26 · 대상: 추천 엔진 4개(Steam · TMDB · 웹툰 · 웹소설) + 라우터를 VM 한 대에 올려 백엔드와 잇는다.
+
+- **서버를 띄우는 법**은 `scripts/deploy.sh` 가 한다(README §5-0). 이 문서는 그 앞뒤 — **VM 준비와, 띄운 서버를 서비스에 붙이는 법**까지 순서대로 적는다.
+- 단계마다 **누가**(직접 = 콘솔·서버 작업 / 코드 = 저장소 수정)와 **성공하면 보이는 것**을 적었다. 성공 표시가 안 보이면 다음 단계로 가지 않는다.
+
+```
+0 VM 결정 → 1 코드 준비 → 2 VM 준비 → 3 기동·검증 → 4 네트워크 → 5 백엔드 연결 → 6 팀만 켜기 → 전체 공개
+```
+
+---
+
+## 0. VM 결정 〔직접〕
+
+### 위치 — 이것부터 정한다
+
+| VM 위치 | 백엔드와 통신 | 할 일 |
+|---|---|---|
+| **AWS 서울(ap-northeast-2), 백엔드 API 서버와 같은 VPC** (권장) | 사설 IP 로 직접 | 보안 그룹만 연다 |
+| 그 밖(다른 클라우드 · 사내·집 서버) | 공인 인터넷을 거친다 | **VPN(Tailscale · WireGuard) 필수** — 라우터에는 인증이 없어 인터넷에 열면 누구나 부를 수 있다 |
+
+### 사양
+
+| 항목 | 최소 | 권장 | 근거 |
+|---|---|---|---|
+| 메모리 | 6 GB | **8 GB** | 4개 엔진 실측 약 3.3 GB(anon 2.0 + 임베딩 캐시 1.3) + 라우터·OS. 4 GB 는 여유가 없어 Steam 캐시가 밀리면 요청마다 디스크를 다시 읽는다 |
+| vCPU | 2 | **4 이상** | compose 한도 합계 5.5. 부족하면 동시 요청에서 스로틀링 |
+| 디스크 | 15 GB | 20 GB | 이미지 5장 + 아티팩트 1.2 GB |
+| OS | Ubuntu 22.04 / 24.04 | | Docker 공식 지원 |
+| CPU 종류 | x86_64 · arm64 모두 | | 이미지를 VM 에서 빌드하므로 상관없다 |
+
+AWS 예: `m6i.large`(2 vCPU · 8 GB, 최소) · `m6i.xlarge`(4 vCPU · 16 GB, 여유) · `c6i.2xlarge`(8 vCPU · 16 GB).
+
+**성공하면**: VM 에 SSH 로 들어갈 수 있고, VM 의 사설 IP 를 알고 있다.
+
+---
+
+## 1. 코드 준비 〔코드 — 완료〕
+
+배포 전에 막히던 것들. 브랜치 `feature/serving-deploy-prep` 에서 끝냈다.
+
+| 커밋 | 내용 |
+|---|---|
+| `87bd068` | Steam 이 서빙에 안 쓰는 컬럼 6개를 적재하지 않는다 — 피크 메모리 2,151 → 1,824 MB, 결과 불변(기준선 59 사례 어긋남 0) |
+| `b407bd7` | TMDB `manifest.json` — 없으면 운영 모드에서 TMDB 엔진이 기동을 거부했다 |
+| `2c0b06b` | 전체 탭 앞 k 개를 평가된 M6@k 그대로(REC_TAB_DESIGN 부록 D A5) |
+| `9eb9e20` | `scripts/deploy.sh` |
+
+**성공하면**: 이 브랜치가 `main` 에 병합돼 있다. VM 은 `main` 을 clone 한다.
+
+---
+
+## 2. VM 준비 〔직접〕
+
+1. **Docker · Compose 설치**
+   ```bash
+   curl -fsSL https://get.docker.com | sh
+   sudo usermod -aG docker $USER      # 그 뒤 로그아웃·재로그인
+   docker compose version             # 플러그인 확인
+   ```
+2. **저장소 clone** (`main`)
+   ```bash
+   git clone https://github.com/AOD-All-of-Dopamine/-AOD-All-of-Dopamine-AI.git
+   ```
+3. **아티팩트 보내기** — **개발 PC 에서** 돌린다. 임베딩(`.npy`)과 TMDB 파일은 git 에 없어서 따로 보내야 한다
+   ```bash
+   recommendation/serving/scripts/deploy.sh push ubuntu@<VM>
+   ```
+   코퍼스 4개(steam 764M · tmdb 281M · webnovel 143M · webtoon 17M, 약 1.2 GB)를 `/srv/aod-artifacts/` 로 보내고 읽기 권한까지 준다. 다음부터는 바뀐 파일만 간다.
+4. **설정 파일**
+   ```bash
+   cd -AOD-All-of-Dopamine-AI/recommendation/serving
+   cp deploy.env.example deploy.env
+   # BIND_IP= 에 VM 사설 IP (hostname -I 로 확인)
+   ```
+   `deploy.env` 는 커밋되지 않는다(gitignore).
+
+**성공하면**: `scripts/deploy.sh check` 가 `✓ 점검 통과` 로 끝난다.
+
+---
+
+## 3. 기동 · 검증 〔직접 — 명령 하나〕
+
+```bash
+scripts/deploy.sh all
+```
+
+| 단계 | 하는 일 | 실패하면 |
+|---|---|---|
+| `check` | 도커 권한 · 메모리 · vCPU · 디스크 · 아티팩트 4종과 권한 · `BIND_IP` | `✗` 줄을 고친다 |
+| `build` | 엔진 4장 + 라우터 1장 빌드(태그 = git 커밋) · 첫 빌드 수 분 | 네트워크(pip) 확인 |
+| `verify` | 전송된 파일을 커밋된 manifest 의 sha256 과 대조 | `push` 를 다시 하고 `verify` |
+| `up` | 기동, 라우터 응답까지 대기(최대 15분 — Steam 이 가장 길다) | `scripts/deploy.sh logs rec-steam` |
+| `smoke` | 라우터 `/health` + 게임 탭 추천 한 건 | 로그 확인 |
+
+**성공하면**: 마지막에 `✓ 항목 5 개 · [...] · partial []` 와 `✓ 끝` 이 보인다.
+
+### 3-1. 이 VM 에서 부하 관문 다시 재기 (권장)
+
+지금 `compose.yaml` 의 메모리·CPU 한도는 **개발 PC 에서 잰 값**이다(`LOADGATE_RESULTS.md`). 실제 VM 에서 다시 잰다.
+
+```bash
+docker run --rm --network aod-rec_aod-rec -v "$PWD/..:/rec:ro" --tmpfs /tmp aod-rec-dev:latest \
+  python -m aod_serving.tools.loadgate --out /tmp/g.json --platforms steam --skip-router
+```
+(`aod-rec-dev` 는 `docker build -f Dockerfile --target dev -t aod-rec-dev:latest ..` 로 한 번 만든다.)
+동시 5 에서 Steam p95 가 예산(2.5초)을 넘으면 `LOADGATE_RESULTS.md` "판정과 권고"의 순서(카탈로그 켜기 → Steam 복제 → cpus 상향)를 따른다.
+
+---
+
+## 4. 네트워크 〔직접〕
+
+1. **보안 그룹 · 방화벽**: VM 의 **8080 을 백엔드 API 서버에서 오는 것만** 허용한다.
+   - AWS 같은 VPC: VM 보안 그룹 인바운드 `TCP 8080` · 소스 = API 서버의 보안 그룹
+   - 엔진 포트 8000 은 열지 않는다(compose 가 호스트에 노출하지 않는다)
+2. **API 서버에서 불러 보기** — API 서버에 SSH 로 들어가서
+   ```bash
+   curl -s http://<VM 사설 IP>:8080/health
+   ```
+3. (카탈로그를 켤 때만) VM → `api.allofdophamin.com` 으로 나가는 HTTPS 가 열려 있어야 한다.
+
+**성공하면**: API 서버에서 `{"ready":true, ... "engines":{...}}` 가 보인다. **인터넷에서는 안 보여야 한다**(개인 PC 에서 같은 주소가 막히는지도 확인).
+
+---
+
+## 5. 백엔드 연결 〔코드 + 직접〕
+
+지금 백엔드는 라우터 주소를 받을 통로가 없다 — 기본값 `http://localhost:18080` 으로 부르다 실패해 **모든 요청이 대체 목록**으로 끝난다.
+
+### 5-1. 코드 (백엔드 저장소, PR — 아직 안 함)
+
+| 파일 | 추가 |
+|---|---|
+| `.github/workflows/main.yml` · Deploy API 단계 `env:` | `REC_ROUTER_BASE_URL: ${{ secrets.REC_ROUTER_BASE_URL }}` · `REC_ALLOWED_USERS: ${{ secrets.REC_ALLOWED_USERS }}` |
+| 같은 단계 원격 셸 | `export REC_ROUTER_BASE_URL="${REC_ROUTER_BASE_URL}"` · `export REC_ALLOWED_USERS="${REC_ALLOWED_USERS}"` |
+| `-AOD-All-of-Dopamine-api/docker-compose.yml` `environment:` | `REC_ROUTER_BASE_URL: ${REC_ROUTER_BASE_URL}` · `REC_ALLOWED_USERS: ${REC_ALLOWED_USERS}` |
+
+Spring 이 환경변수 `REC_ROUTER_BASE_URL` 을 `rec.router.base-url` 로, `REC_ALLOWED_USERS` 를 `rec.allowed-users` 로 읽는다(코드 변경 없음).
+
+### 5-2. 비밀값 등록 〔직접〕
+
+GitHub → 백엔드 저장소 → Settings → Secrets and variables → Actions:
+- `REC_ROUTER_BASE_URL` = `http://<VM 사설 IP>:8080`
+- `REC_ALLOWED_USERS` = 팀원 아이디를 쉼표로 (6단계에서 비운다)
+
+**주의**: 백엔드는 `main` 에 병합하면 **바로 운영에 배포**된다(`main.yml`). 5-1 PR 과 5-2 비밀값이 같이 준비된 뒤 병합한다.
+
+---
+
+## 6. 팀만 켜기 → 전체 공개 〔직접〕
+
+1. 5-1 PR 병합 → 배포 끝나기 기다림
+2. **팀 계정**으로 로그인해 `/for-you` 를 연다. 응답을 개발자 도구에서 보면:
+   - `"fallback": false` → **엔진에서 온 추천** (성공)
+   - `"fallbackReason": "disabled"` → 허용 목록 밖 계정 (정상 — 팀 외 사용자는 이렇게 보인다)
+   - `"fallbackReason": "service_error" | "timeout" | "circuit_open"` → 라우터에 못 닿는다 → 4단계로
+3. 한 시간쯤 지켜본다
+   ```sql
+   SELECT fallback, fallback_reason, count(*) FROM aod_log.rec_request
+    WHERE served_at > now() - interval '1 hour' GROUP BY 1, 2 ORDER BY 3 DESC;
+   ```
+   팀 계정 요청의 `fallback = false` 비율이 높고 `timeout` 이 거의 없으면 통과.
+4. **전체 공개**: `REC_ALLOWED_USERS` 비밀값을 비우고 백엔드를 다시 배포(허용 목록이 비면 전원 허용).
+5. 홈 추천 릴을 켠다: Vercel 에 `VITE_HOME_REC=1` → 재배포 (프론트 `docs/superpowers/specs/2026-09-25-home-rec-rail-design.md`). 이제 로그인 사용자 홈에 "내 취향 추천"이 뜬다.
+
+---
+
+## 되돌리기
+
+| 상황 | 할 일 | 결과 |
+|---|---|---|
+| 추천이 이상하다 · 느리다 | 백엔드 `REC_ENABLED=false` 로 재배포(킬 스위치 `RecFeatureFlag`) | 모든 요청이 대체 목록(`disabled`). 화면은 정상 |
+| VM 이 죽었다 | 할 일 없음 | 백엔드 서킷이 열려 대체 목록으로 답한다(`circuit_open`). VM 이 살아나면 30초 뒤 다시 시도 |
+| 배포한 버전이 문제다 | VM 에서 이전 커밋으로 `git checkout` → `scripts/deploy.sh build && scripts/deploy.sh up` | 이미지 태그가 커밋이라 이전 이미지가 남아 있으면 빌드도 금방 |
+| 서버를 내린다 | `scripts/deploy.sh down` | 컨테이너만 내린다. 아티팩트·이미지는 남는다 |
+
+(`REC_ENABLED` 도 5-1 처럼 통로를 만들어 둬야 비밀값만으로 끌 수 있다 — 5-1 PR 에 같이 넣는 것을 권한다.)
+
+---
+
+## 운영
+
+- **상태**: `scripts/deploy.sh ps` · 메모리 `docker stats --no-stream` · 로그 `scripts/deploy.sh logs rec-steam`
+- **재부팅**: 컨테이너가 `restart: unless-stopped` 라 도커가 켜지면 같이 뜬다(`sudo systemctl enable docker`)
+- **코퍼스 교체**(새 임베딩): 새 폴더를 `push` → `deploy.env` 의 `*_CORPUS` 변경 → `scripts/deploy.sh verify && scripts/deploy.sh up`. 평가 기준과 다른 코퍼스는 운영 모드에서 `config.json` 승인이 있어야 뜬다(README §6)
+- **알려진 한계**: 라우터 `/health` 는 엔진이 모두 죽어도 200 이다(REC_TAB_DESIGN 부록 D B7) — 장애 감시는 엔진 쪽(`ps` 의 health 상태)을 본다
+
+---
+
+## 체크리스트
+
+- [ ] 0 VM 위치·사양 결정, SSH 가능
+- [x] 1 코드 준비 (`feature/serving-deploy-prep`) — `main` 병합 필요
+- [ ] 2 Docker 설치 · clone · `push` · `deploy.env` → `check` 통과
+- [ ] 3 `all` → `✓ 끝` · (권장) 부하 관문 재측정
+- [ ] 4 보안 그룹 · API 서버에서 `/health` 보임 · 인터넷에서 안 보임
+- [ ] 5 백엔드 통로 PR(`REC_ROUTER_BASE_URL` · `REC_ALLOWED_USERS` · `REC_ENABLED`) · 비밀값 등록
+- [ ] 6 팀 계정 `fallback:false` 확인 → 한 시간 관찰 → 전체 공개 → 홈 릴 켜기

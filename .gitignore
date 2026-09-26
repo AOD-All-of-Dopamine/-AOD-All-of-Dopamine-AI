@@ -4,3 +4,6 @@ recommendation/rankings/data/collect.log
 __pycache__/
 *.pyc
 recommendation/webnovel/artifacts/*/corpus_embeddings.npy
+
+# 추천 서빙 VM 설정 — 주소가 들어간다(scripts/deploy.sh, 예시는 deploy.env.example)
+recommendation/serving/deploy.env

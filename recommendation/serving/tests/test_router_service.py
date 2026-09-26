@@ -1,6 +1,7 @@
 import asyncio
 import pytest
 from aod_serving.common.models import EngineItem, EngineResponse, RouterRequest, Score, VersionInfo
+from aod_serving.router.mixing import mix_all
 from aod_serving.router.service import EnginesUnavailable, recommend
 
 
@@ -58,6 +59,24 @@ def test_all_tab_calls_three_platforms_with_k50_and_mixes():
     assert set(e.calls) == {"steam", "tmdb", "webnovel"} and all(r.k == 50 for r in e.calls.values())
     assert len(out.items) == 30 and [i.platform for i in out.items[:3]] == ["tmdb", "steam", "webnovel"]
     assert [i.rank for i in out.items] == list(range(30))
+
+
+def test_all_tab_head_is_exactly_m6_at_k_and_buffer_follows():
+    """A5 — 앞 k 개는 평가된 M6@k 와 같아야 한다. k+buffer 로 섞으면 쿼터가 달라진다
+    (시드 1개인 플랫폼은 쿼터 절반 → k 가 바뀌면 절반의 반올림이 바뀐다)."""
+    lists = {"steam": resp("steam", 50, used_seeds=1), "tmdb": resp("tmdb", 50, used_seeds=3),
+             "webnovel": resp("webnovel", 50, used_seeds=2)}
+    out = run({"tab": "all", "k": 20, "buffer": 10, "seeds": {"steam": ["a"], "tmdb": ["c", "d", "e"], "webnovel": ["f", "g"]}},
+              Engines(lists))
+    items = {p: r.items for p, r in lists.items()}
+    n_seeds = {"steam": 1, "tmdb": 3, "webnovel": 2}
+    m6_at_k = [(p, i.key) for p, i in mix_all(items, n_seeds, k=20)]
+    m6_at_want = [(p, i.key) for p, i in mix_all(items, n_seeds, k=30)]
+    got = [(i.platform, i.key) for i in out.items]
+    assert got[:20] == m6_at_k
+    assert m6_at_want[:20] != m6_at_k, "이 시드 조합은 k 에 따라 쿼터가 달라야 한다(테스트가 의미 있으려면)"
+    assert len(got) == 30 and len(set(got)) == 30
+    assert got[20:] == [x for x in m6_at_want if x not in set(m6_at_k)][:10]
 
 
 def test_platform_without_seeds_is_not_called_and_marked_exhausted():

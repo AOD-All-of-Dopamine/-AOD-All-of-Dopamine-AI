@@ -2,7 +2,7 @@ from pathlib import Path
 
 import pandas as pd
 
-from src.config import PROJECT_ROOT, artifact_dir
+from src.config import PROJECT_ROOT, artifact_dir, dataset_columns
 
 TREND_DIR = PROJECT_ROOT / "artifacts" / "trend_v2"
 REVIEW_DIR = PROJECT_ROOT / "artifacts" / "reviews"
@@ -115,7 +115,8 @@ class PersonalizedRanker:
                  quality_w: float = 0.0, quality_cap: float = 5.0,
                  quality_src: str = "dataset", tag_w: float = 0.0, mc_w: float = 0.0):
         self.artifacts = artifact_dir(artifacts)
-        self.dataset = pd.read_parquet(self.artifacts / "dataset.parquet")
+        self.dataset = pd.read_parquet(self.artifacts / "dataset.parquet",
+                                       columns=dataset_columns(self.artifacts / "dataset.parquet"))
         self.rec_boost = rec_boost
         self.trend_weight = trend_weight
         self.quality_w = quality_w          # D-37. 0 이면 끔 — 기존 실험이 그대로 재현된다

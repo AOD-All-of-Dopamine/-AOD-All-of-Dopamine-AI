@@ -239,27 +239,51 @@ snake_case 그대로 나간다**(`router_sha`·`corpus_version`·`engine_sha` �
 
 ## 5. 추천 호스트 배포
 
+### 5-0. 리눅스 VM 한 대에 한 번에 올리기 (`scripts/deploy.sh`)
+
+아래 5-1~5-5 를 순서대로 묶은 스크립트다. 필요한 것: VM 에 Docker + Compose 플러그인, 이 저장소 clone,
+그리고 개발 PC → VM SSH.
+
+> **처음 올린다면 [`DEPLOY_VM.md`](DEPLOY_VM.md) 부터** — VM 위치·사양 결정, 네트워크, 백엔드 연결, 팀만 켜기, 되돌리기까지
+> 순서대로 적은 런북이다. 이 절은 그중 "서버를 띄우는" 부분이다.
+
+```bash
+# 1) 개발 PC 에서 — 아티팩트 4개 코퍼스를 VM 으로 (약 1.2GB, 다음부터는 바뀐 것만)
+recommendation/serving/scripts/deploy.sh push ubuntu@<VM>
+
+# 2) VM 에서 — 설정 한 번
+cd recommendation/serving && cp deploy.env.example deploy.env   # BIND_IP 에 VM 사설 IP
+
+# 3) VM 에서 — 점검 → 이미지 5장 빌드 → sha256 검증 → 기동 → 확인
+scripts/deploy.sh all
+```
+
+- `all` 은 `check` → `build` → `verify` → `up` → `smoke` 를 차례로 돈다. 각각 따로도 된다(`scripts/deploy.sh help`).
+- `check` 는 아무것도 바꾸지 않는다 — 메모리(6GB 미만이면 중단, 8GB 권장)·vCPU·디스크·아티팩트 4종과 읽기 권한·`BIND_IP` 가 이 VM 주소인지 본다.
+- `verify` 는 **커밋된 manifest 의 sha256** 과 대조만 한다(컨테이너에서 읽기 전용) — 전송 중 깨진 파일을 여기서 잡는다.
+- `up` 은 라우터가 응답할 때까지 기다린다(최대 15분). Steam 첫 기동이 가장 길다(파일 검증·적재·예열).
+- 이미지는 VM 에서 직접 빌드한다 — 개발 PC(ARM)와 VM(대개 x86)의 CPU 가 달라도 상관없다. 태그는 git 커밋.
+- 끝나면 백엔드에 `REC_ROUTER_BASE_URL=http://<BIND_IP>:8080` 을 넣는다. **라우터에는 인증이 없다** — 방화벽·보안 그룹에서 8080 을 백엔드 API 서버에만 연다(§5-5).
+- 운영: `scripts/deploy.sh ps` · `logs [rec-steam]` · `down`. 코퍼스를 바꿀 때는 §6.
+
 ### 5-1. 아티팩트 배치
 
 `/srv/aod-artifacts/{platform}/{corpus_version}/` 에 `manifest.json`·`corpus_embeddings.npy`·
 `corpus_index.parquet`·`dataset.parquet`(+ 플랫폼별 부가 파일)를 둔다(REC_TAB_DESIGN §8-6).
 
-- **Steam·웹툰·웹소설**: `corpus_index.parquet`·`dataset.parquet`·`manifest.json` 이 이미 **git 에
-  추적**돼 있다(gitignore 는 `corpus_embeddings.npy` 만 막는다) — 호스트에 파일을 복사한 뒤
+- **Steam·웹툰·웹소설·TMDB**: `manifest.json` 이 **git 에 추적**돼 있다(TMDB 는 2026-09-26 추가 —
+  그 전에는 없어서 운영 모드 기동이 막혔다). 호스트에 파일을 복사한 뒤
   `python -m aod_serving.tools.make_manifest --platform <p> --dir /srv/aod-artifacts/<p>/<corpus>`
   를 돌리면 **새로 만들지 않고 커밋된 manifest 의 sha256 으로 지금 폴더를 검증만 한다** — 즉 "복사한
   `corpus_embeddings.npy` 가 평가 때와 바이트 단위로 같은가"를 확인하는 무결성 점검이다. 통과하면
   `기존 manifest 와 일치 — 검증 통과 · …행 × …` 를 출력하고 끝난다(`tools/make_manifest.py`).
-- **TMDB**: `recommendation/tmdb/artifacts/tmdb_v1/` 폴더 전체가 gitignore 라 커밋된 manifest 가
-  없다. 파일을 호스트에 올린 뒤 같은 명령으로 **처음부터 만든다**(신규 생성 경로). 서빙 컨테이너는
-  `/artifacts` 를 읽기 전용으로 마운트하므로(§5-5), manifest 를 **쓰려면** 엔진 이미지(또는 `dev`
-  이미지)를 그 폴더에 읽기·쓰기로 한 번만 띄워 돌린다 — 추천 호스트에서:
+- **TMDB 참고**: `tmdb/artifacts/tmdb_v1/` 은 폴더 안 파일을 gitignore 하되 `manifest.json` 만 예외로 추적한다.
+  예전처럼 manifest 가 없는 새 코퍼스를 올릴 때는, 엔진 이미지를 그 폴더에 **읽기·쓰기로** 한 번 띄워 만든다
+  (서빙 컨테이너는 `:ro` 라 쓸 수 없다):
   ```bash
   docker run --rm -v /srv/aod-artifacts/tmdb:/artifacts <REGISTRY>/aod-rec-engine:tmdb-<TAG> \
-    python -m aod_serving.tools.make_manifest --platform tmdb --dir /artifacts/tmdb_v1
+    python -m aod_serving.tools.make_manifest --platform tmdb --dir /artifacts/<새 코퍼스>
   ```
-  (`:ro` 를 안 붙였다 — 여기서는 새로 써야 한다. compose 로 띄우는 서빙 컨테이너의 `:ro` 마운트와는
-  다른 별개의 1회성 실행이다.)
 - **`--force`**: manifest.json 이 이미 있어도 **다시 만든다**(sha256 을 지금 폴더 기준으로 재계산). 무결성
   기준 자체를 새로 세우는 것이므로, 정말로 새 코퍼스를 게시할 때만 쓴다 — 복사가 깨졌는지 확인하는
   용도로는 쓰면 안 된다(깨진 파일에 기준을 맞춰버린다).
