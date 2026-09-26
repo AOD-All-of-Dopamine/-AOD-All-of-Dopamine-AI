@@ -1,6 +1,6 @@
 # 추천 서빙 — 리눅스 VM 배포 런북
 
-작성: 2026-09-26 · 대상: 추천 엔진 4개(Steam · TMDB · 웹툰 · 웹소설) + 라우터를 VM 한 대에 올려 백엔드와 잇는다.
+작성: 2026-09-26 (같은 날 명령어 모음 추가) · 대상: 추천 엔진 4개(Steam · TMDB · 웹툰 · 웹소설) + 라우터를 VM 한 대에 올려 백엔드와 잇는다.
 
 - **서버를 띄우는 법**은 `scripts/deploy.sh` 가 한다(README §5-0). 이 문서는 그 앞뒤 — **VM 준비와, 띄운 서버를 서비스에 붙이는 법**까지 순서대로 적는다.
 - 단계마다 **누가**(직접 = 콘솔·서버 작업 / 코드 = 저장소 수정)와 **성공하면 보이는 것**을 적었다. 성공 표시가 안 보이면 다음 단계로 가지 않는다.
@@ -8,6 +8,138 @@
 ```
 0 VM 결정 → 1 코드 준비 → 2 VM 준비 → 3 기동·검증 → 4 네트워크 → 5 백엔드 연결 → 6 팀만 켜기 → 전체 공개
 ```
+
+---
+
+## 따라 하기 — 명령어 모음
+
+처음 올리는 사람이 **위에서부터 그대로** 따라 하면 끝나도록 적었다. 각 단계의 이유·배경은 아래 0~6절에 있다.
+
+> ⚠️ **임베딩 파일(약 1.2GB)은 GitHub 에 없다**(`.gitignore`). 코퍼스를 만든 개발 머신에만 있으므로 **③ push 는 그 머신에서** 돌린다.
+> VM 의 SSH 키(.pem)를 그 머신에 두거나, 그 머신에서 VM 으로 SSH 가 되게 한다.
+
+### ① VM 만들기 — AWS 콘솔
+
+1. **API 서버 정보 확인**: EC2 → 인스턴스 → 백엔드 API 서버 → **네트워킹** 탭에서 VPC ID · 서브넷 ID · **보안 그룹 ID(`sg-…`)** 를 적는다.
+2. **인스턴스 시작**
+
+   | 항목 | 값 |
+   |---|---|
+   | 이름 | `aod-rec` |
+   | AMI | **Ubuntu Server 24.04 LTS** |
+   | 인스턴스 유형 | **`m6i.xlarge`**(4 vCPU · 16GB, 권장) / 최소 `m6i.large`(2 vCPU · 8GB) |
+   | 키 페어 | 새로 만들고 `aod-rec.pem` 다운로드 |
+   | 네트워크 | 1번의 **같은 VPC · 같은 서브넷** |
+   | 퍼블릭 IP 자동 할당 | 활성화 (SSH 용) |
+   | 스토리지 | **30GB gp3** |
+
+3. **보안 그룹** 새로 만들기(`aod-rec-sg`)
+
+   | 유형 | 포트 | 소스 |
+   |---|---|---|
+   | SSH | 22 | 작업자 IP · push 할 개발 머신 IP |
+   | 사용자 지정 TCP | **8080** | **1번의 API 서버 보안 그룹 ID** |
+
+   8080 을 `0.0.0.0/0` 으로 열면 **안 된다** — 라우터에는 인증이 없다.
+4. 시작 후 **퍼블릭 IP**(SSH 용)와 **프라이빗 IP**(`10.x.x.x`, 서비스 용)를 적는다.
+
+### ② VM 설정 — 작업자 PC 에서 SSH
+
+```bash
+chmod 400 aod-rec.pem
+ssh -i aod-rec.pem ubuntu@<퍼블릭IP>
+```
+```bash
+# ── VM 안 ──
+curl -fsSL https://get.docker.com | sudo sh
+sudo usermod -aG docker ubuntu
+sudo systemctl enable docker
+exit                                   # docker 그룹 반영을 위해 다시 접속
+```
+```bash
+ssh -i aod-rec.pem ubuntu@<퍼블릭IP>
+docker compose version                 # 버전이 나오면 OK
+
+git clone https://github.com/AOD-All-of-Dopamine/-AOD-All-of-Dopamine-AI.git
+cd -AOD-All-of-Dopamine-AI/recommendation/serving
+
+cp deploy.env.example deploy.env
+sed -i "s/^BIND_IP=.*/BIND_IP=$(hostname -I | awk '{print $1}')/" deploy.env
+grep BIND_IP deploy.env                # BIND_IP=10.x.x.x 면 OK
+```
+
+### ③ 임베딩 보내기 — **임베딩이 있는 개발 머신에서**
+
+```bash
+chmod 400 ~/aod-rec.pem
+cat >> ~/.ssh/config <<'EOF'
+Host aod-rec
+  HostName <퍼블릭IP>
+  User ubuntu
+  IdentityFile ~/aod-rec.pem
+EOF
+
+cd <이 저장소 경로>
+git pull
+recommendation/serving/scripts/deploy.sh push aod-rec
+```
+끝에 `✓ 전송 끝` 이 보이면 OK (약 1.2GB, 수 분).
+
+### ④ 띄우기 — VM 에서
+
+```bash
+cd ~/-AOD-All-of-Dopamine-AI/recommendation/serving
+scripts/deploy.sh all
+```
+점검 → 이미지 빌드(첫 빌드 수 분) → 파일 검증 → 기동(Steam 최대 5분) → 추천 한 건. 성공하면 마지막 줄:
+```
+✓ 항목 5 개 · [...] · partial []
+✓ 끝. 백엔드에 REC_ROUTER_BASE_URL=http://10.x.x.x:8080 를 넣으면 ...
+```
+이 `http://10.x.x.x:8080` 을 복사해 둔다.
+
+### ⑤ 백엔드에서 닿는지 — API 서버에서
+
+```bash
+# API 서버(EC2)에 SSH 로 들어가서
+curl -s http://<VM프라이빗IP>:8080/health
+```
+`{"ready":true, ... "engines":{...}}` 가 나오면 OK. **작업자 PC 에서** `curl http://<VM퍼블릭IP>:8080/health` 는 **응답이 없어야** 정상(외부 차단).
+
+### ⑥ 백엔드 연결 — GitHub
+
+1. 백엔드 저장소 → Settings → Secrets and variables → Actions → **New repository secret**
+
+   | 이름 | 값 |
+   |---|---|
+   | `REC_ROUTER_BASE_URL` | `http://<VM프라이빗IP>:8080` |
+   | `REC_ALLOWED_USERS` | 팀원 로그인 아이디를 쉼표로 (예: `user1,user2`) |
+
+2. Actions → **CI/CD Pipeline - API & Crawler** → **Run workflow** → `main` → 초록불까지 대기(약 5분)
+3. 팀 계정으로 https://allofdophamin.com 로그인 → `/for-you` → 개발자 도구 → Network → `recommendations` 응답
+
+   | 응답 | 뜻 |
+   |---|---|
+   | `"fallback": false` | ✅ 성공 — 추천 엔진 결과 |
+   | `"fallbackReason": "disabled"` | 허용 목록 밖 계정 (아이디 확인) |
+   | `"timeout"` · `"service_error"` · `"circuit_open"` | 백엔드가 VM 에 못 닿음 → ⑤ 다시 |
+   | `"no_seed"` | 좋아요가 없는 계정 → 작품 좋아요 후 다시 |
+
+### ⑦ 전체 공개
+
+1. 팀이 한 시간쯤 써 보고 이상이 없으면
+2. 비밀값 **`REC_ALLOWED_USERS` 를 삭제**(GitHub 는 빈 값을 못 넣는다 — 삭제하면 전원 허용) → Run workflow
+3. **홈 추천 릴 켜기**: Vercel → 프로젝트 → Settings → Environment Variables → `VITE_HOME_REC` = `1`(Production) → Deployments → 최신 배포 **Redeploy**
+
+### 문제가 생기면
+
+| 증상 | 명령 · 조치 |
+|---|---|
+| `deploy.sh all` 이 `✗` 로 멈춤 | 그 줄 안내대로 고친 뒤 `scripts/deploy.sh all` |
+| 기동이 15분 넘게 안 끝남 | `scripts/deploy.sh logs rec-steam` |
+| 상태 보기 | `scripts/deploy.sh ps` · `docker stats --no-stream` |
+| **추천을 급히 꺼야 함** | 비밀값 `REC_ENABLED` = `false` 추가 → Run workflow (화면은 인기 목록으로 정상) |
+| VM 을 내림 | `scripts/deploy.sh down` (백엔드는 자동으로 인기 목록으로 돌아간다) |
 
 ---
 
@@ -47,7 +179,7 @@ AWS 예: `m6i.large`(2 vCPU · 8 GB, 최소) · `m6i.xlarge`(4 vCPU · 16 GB, �
 | `2c0b06b` | 전체 탭 앞 k 개를 평가된 M6@k 그대로(REC_TAB_DESIGN 부록 D A5) |
 | `9eb9e20` | `scripts/deploy.sh` |
 
-**성공하면**: 이 브랜치가 `main` 에 병합돼 있다. VM 은 `main` 을 clone 한다.
+**완료**: AI #2 로 `main` 에 병합됐다(2026-09-26 `2a5f0fe`). VM 은 `main` 을 clone 한다.
 
 ---
 
@@ -128,7 +260,7 @@ docker run --rm --network aod-rec_aod-rec -v "$PWD/..:/rec:ro" --tmpfs /tmp aod-
 
 지금 백엔드는 라우터 주소를 받을 통로가 없다 — 기본값 `http://localhost:18080` 으로 부르다 실패해 **모든 요청이 대체 목록**으로 끝난다.
 
-### 5-1. 코드 (백엔드 저장소, PR — 아직 안 함)
+### 5-1. 코드 (백엔드 저장소) — ✅ 완료 (#126, 2026-09-26 운영 배포)
 
 | 파일 | 추가 |
 |---|---|
@@ -175,7 +307,7 @@ GitHub → 백엔드 저장소 → Settings → Secrets and variables → Action
 | 배포한 버전이 문제다 | VM 에서 이전 커밋으로 `git checkout` → `scripts/deploy.sh build && scripts/deploy.sh up` | 이미지 태그가 커밋이라 이전 이미지가 남아 있으면 빌드도 금방 |
 | 서버를 내린다 | `scripts/deploy.sh down` | 컨테이너만 내린다. 아티팩트·이미지는 남는다 |
 
-(`REC_ENABLED` 도 5-1 처럼 통로를 만들어 둬야 비밀값만으로 끌 수 있다 — 5-1 PR 에 같이 넣는 것을 권한다.)
+(`REC_ENABLED` 통로도 #126 에 들어갔다 — 비밀값 `REC_ENABLED=false` 만으로 끌 수 있다. 비밀값이 없으면 `true`.)
 
 ---
 
@@ -191,9 +323,10 @@ GitHub → 백엔드 저장소 → Settings → Secrets and variables → Action
 ## 체크리스트
 
 - [ ] 0 VM 위치·사양 결정, SSH 가능
-- [x] 1 코드 준비 (`feature/serving-deploy-prep`) — `main` 병합 필요
+- [x] 1 코드 준비 — AI #2 병합(`2a5f0fe`)
 - [ ] 2 Docker 설치 · clone · `push` · `deploy.env` → `check` 통과
 - [ ] 3 `all` → `✓ 끝` · (권장) 부하 관문 재측정
 - [ ] 4 보안 그룹 · API 서버에서 `/health` 보임 · 인터넷에서 안 보임
-- [ ] 5 백엔드 통로 PR(`REC_ROUTER_BASE_URL` · `REC_ALLOWED_USERS` · `REC_ENABLED`) · 비밀값 등록
+- [x] 5-1 백엔드 통로(`REC_ROUTER_BASE_URL` · `REC_ALLOWED_USERS` · `REC_ENABLED`) — 백엔드 #126 병합·배포
+- [ ] 5-2 비밀값 등록
 - [ ] 6 팀 계정 `fallback:false` 확인 → 한 시간 관찰 → 전체 공개 → 홈 릴 켜기
