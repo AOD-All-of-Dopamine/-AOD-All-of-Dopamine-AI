@@ -56,7 +56,14 @@ async def recommend(req: RouterRequest, call: EngineCall, *, router_sha: str) ->
         # 엔진이 보고한 실제 사용 시드 수를 그대로 믿는다 — 원본 요청 문자열을 라우터가 다시 세면
         # 어댑터의 파싱 후 중복 제거(예: "7"·"007" 이 같은 코퍼스 키)와 어긋난다(M6 쿼터가 틀어진다).
         n_seeds = {p: r.used_seeds for p, r in ok.items()}
-        ordered = mix_all({p: r.items for p, r in ok.items()}, n_seeds, k=want)
+        lists = {p: r.items for p, r in ok.items()}
+        # M6 의 플랫폼 쿼터는 k 의 함수다 — k+buffer 로 섞고 앞 k 개를 자르면 평가된 M6@k 와 다른 목록이 된다
+        # (시드 조합 3개 모두 상위 20 이 달랐다, REC_TAB_DESIGN 부록 D A5). 그래서 **앞 k 개는 M6@k 그대로** 두고,
+        # 버퍼(백엔드가 DB 에 없는·성인 작품을 뺀 자리를 채우는 여분)는 M6@(k+buffer) 순서에서 아직 안 나온 것으로 잇는다.
+        head = mix_all(lists, n_seeds, k=req.k)
+        used = {(p, i.key) for p, i in head}
+        tail = [(p, i) for p, i in mix_all(lists, n_seeds, k=want) if (p, i.key) not in used]
+        ordered = head + tail[: want - len(head)]
     else:
         ordered = [(p, i) for p, r in ok.items() for i in r.items][:want]
 
