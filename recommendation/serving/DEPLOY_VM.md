@@ -15,8 +15,8 @@
 
 처음 올리는 사람이 **위에서부터 그대로** 따라 하면 끝나도록 적었다. 각 단계의 이유·배경은 아래 0~6절에 있다.
 
-> ⚠️ **임베딩 파일(약 1.2GB)은 GitHub 에 없다**(`.gitignore`). 코퍼스를 만든 개발 머신에만 있으므로 **③ push 는 그 머신에서** 돌린다.
-> VM 의 SSH 키(.pem)를 그 머신에 두거나, 그 머신에서 VM 으로 SSH 가 되게 한다.
+> ⚠️ **임베딩 파일(약 1.2GB)은 GitHub 에 없다**(`.gitignore`). 코퍼스를 만든 개발 머신(`guest-a`, 저장소 `/home/ubuntu/-AOD-All-of-Dopamine-AI`)에만 있으므로 **③ push 는 그 머신에서** 돌린다.
+> 다른 PC 에서 clone 해 push 하면 `… 가 없다` 로 멈춘다. VM 의 SSH 키(.pem)를 그 머신에 두거나, 그 머신에서 VM 으로 SSH 가 되게 한다.
 
 ### ① VM 만들기 — AWS 콘솔
 
@@ -61,7 +61,7 @@ ssh -i aod-rec.pem ubuntu@<퍼블릭IP>
 docker compose version                 # 버전이 나오면 OK
 
 git clone https://github.com/AOD-All-of-Dopamine/-AOD-All-of-Dopamine-AI.git
-cd -AOD-All-of-Dopamine-AI/recommendation/serving
+cd ./-AOD-All-of-Dopamine-AI/recommendation/serving   # './' 필수 — '-' 로 시작하면 cd 가 옵션으로 읽는다
 
 cp deploy.env.example deploy.env
 sed -i "s/^BIND_IP=.*/BIND_IP=$(hostname -I | awk '{print $1}')/" deploy.env
@@ -69,6 +69,15 @@ grep BIND_IP deploy.env                # BIND_IP=10.x.x.x 면 OK
 ```
 
 ### ③ 임베딩 보내기 — **임베딩이 있는 개발 머신에서**
+
+보내는 것 — 저장소 `/home/ubuntu/-AOD-All-of-Dopamine-AI` 안의 코퍼스 4개를 VM 의 `/srv/aod-artifacts/` 로 복사한다(`deploy.env` 의 `ARTIFACTS_BASE` · `*_CORPUS` 기본값).
+
+| 플랫폼 | 원본 (개발 머신) | 도착 (VM) | 용량 |
+|---|---|---|---|
+| steam | `recommendation/steam/artifacts/tags_full/` | `/srv/aod-artifacts/steam/tags_full/` | 764M |
+| tmdb | `recommendation/tmdb/artifacts/tmdb_v1/` | `/srv/aod-artifacts/tmdb/tmdb_v1/` | 281M |
+| webnovel | `recommendation/webnovel/artifacts/wn_v6/` | `/srv/aod-artifacts/webnovel/wn_v6/` | 143M |
+| webtoon | `recommendation/webtoon/artifacts/wt_v1/` | `/srv/aod-artifacts/webtoon/wt_v1/` | 17M |
 
 ```bash
 chmod 400 ~/aod-rec.pem
@@ -79,7 +88,7 @@ Host aod-rec
   IdentityFile ~/aod-rec.pem
 EOF
 
-cd <이 저장소 경로>
+cd /home/ubuntu/-AOD-All-of-Dopamine-AI
 git pull
 recommendation/serving/scripts/deploy.sh push aod-rec
 ```
@@ -202,7 +211,7 @@ AWS 예: `m6i.large`(2 vCPU · 8 GB, 최소) · `m6i.xlarge`(4 vCPU · 16 GB, �
    코퍼스 4개(steam 764M · tmdb 281M · webnovel 143M · webtoon 17M, 약 1.2 GB)를 `/srv/aod-artifacts/` 로 보내고 읽기 권한까지 준다. 다음부터는 바뀐 파일만 간다.
 4. **설정 파일**
    ```bash
-   cd -AOD-All-of-Dopamine-AI/recommendation/serving
+   cd ./-AOD-All-of-Dopamine-AI/recommendation/serving
    cp deploy.env.example deploy.env
    # BIND_IP= 에 VM 사설 IP (hostname -I 로 확인)
    ```
