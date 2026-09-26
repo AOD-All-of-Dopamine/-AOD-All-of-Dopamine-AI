@@ -244,6 +244,9 @@ snake_case 그대로 나간다**(`router_sha`·`corpus_version`·`engine_sha` �
 아래 5-1~5-5 를 순서대로 묶은 스크립트다. 필요한 것: VM 에 Docker + Compose 플러그인, 이 저장소 clone,
 그리고 개발 PC → VM SSH.
 
+> **처음 올린다면 [`DEPLOY_VM.md`](DEPLOY_VM.md) 부터** — VM 위치·사양 결정, 네트워크, 백엔드 연결, 팀만 켜기, 되돌리기까지
+> 순서대로 적은 런북이다. 이 절은 그중 "서버를 띄우는" 부분이다.
+
 ```bash
 # 1) 개발 PC 에서 — 아티팩트 4개 코퍼스를 VM 으로 (약 1.2GB, 다음부터는 바뀐 것만)
 recommendation/serving/scripts/deploy.sh push ubuntu@<VM>
