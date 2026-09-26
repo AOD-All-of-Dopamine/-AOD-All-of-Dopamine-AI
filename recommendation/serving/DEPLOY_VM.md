@@ -125,7 +125,7 @@ curl -s http://<VM프라이빗IP>:8080/health
    | `REC_ALLOWED_USERS` | 팀원 로그인 아이디를 쉼표로 (예: `user1,user2`) |
 
 2. Actions → **CI/CD Pipeline - API & Crawler** → **Run workflow** → `main` → 초록불까지 대기(약 5분)
-3. 팀 계정으로 https://allofdophamin.com 로그인 → `/for-you` → 개발자 도구 → Network → `recommendations` 응답
+3. 팀 계정으로 https://allofdophamin.com 로그인 → **홈**(`/home`) → 개발자 도구 → Network → `recommendations` 응답 (추천 탭은 2026-09-26 홈으로 합쳤다)
 
    | 응답 | 뜻 |
    |---|---|
@@ -292,7 +292,7 @@ GitHub → 백엔드 저장소 → Settings → Secrets and variables → Action
 ## 6. 팀만 켜기 → 전체 공개 〔직접〕
 
 1. 5-1 PR 병합 → 배포 끝나기 기다림
-2. **팀 계정**으로 로그인해 `/for-you` 를 연다. 응답을 개발자 도구에서 보면:
+2. **팀 계정**으로 로그인해 **홈**(`/home`)을 연다. 추천 한 줄의 요청 응답을 개발자 도구에서 보면:
    - `"fallback": false` → **엔진에서 온 추천** (성공)
    - `"fallbackReason": "disabled"` → 허용 목록 밖 계정 (정상 — 팀 외 사용자는 이렇게 보인다)
    - `"fallbackReason": "service_error" | "timeout" | "circuit_open"` → 라우터에 못 닿는다 → 4단계로
